@@ -3,10 +3,12 @@
 
     Last modified: 2017-7-4
     
-    Filename: Object.h
+    Filename: test.lua
     
     Description: 
 ]]
+
+
 local Object = require "libObject"
 
 local  obj = Object.new("老司机",1024)

@@ -3,10 +3,12 @@
 
     Last modified: 2017-7-4
     
-    Filename: Object.h
+    Filename: lua_object.cpp
     
     Description: 
 */
+
+
 
 #include <lua.hpp>
 #include <lauxlib.h>
