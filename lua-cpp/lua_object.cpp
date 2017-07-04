@@ -65,27 +65,27 @@ extern "C" int objectGc(lua_State* L)
 
 extern "C"  int luaopen_libObject(lua_State *L)
 {
-	luaL_Reg  funcs[] =
-	{
+    luaL_Reg  funcs[] =
+    {
         {"new",newObject},
-		{"getValue",getValue},
-		{"getName",getName},
-		{"setValue",setValue},
-		{"__gc", objectGc},
-		{ NULL, NULL }
-	};
+        {"getValue",getValue},
+        {"getName",getName},
+        {"setValue",setValue},
+        {"__gc", objectGc},
+        { NULL, NULL }
+    };
 
 
-	//create table and push.
-	luaL_newmetatable(L,"object");
+    //create table and push.
+    luaL_newmetatable(L,"object");
     //coyp and push top element.
-	lua_pushvalue(L,-1);
-	//pop and new index.
-	lua_setfield(L, -2, "__index");
-	//set element to userdata.
-	luaL_setfuncs(L,funcs,0);
+    lua_pushvalue(L,-1);
+    //pop and new index.
+    lua_setfield(L, -2, "__index");
+    //set element to userdata.
+    luaL_setfuncs(L,funcs,0);
     //create new table.
     //luaL_newlib(L, apis);
 
-	return 1;
+    return 1;
 }
