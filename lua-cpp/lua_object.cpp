@@ -1,3 +1,13 @@
+/*
+    Author: object_he@yeah.net
+
+    Last modified: 2017-7-4
+    
+    Filename: Object.h
+    
+    Description: 
+*/
+
 #include <lua.hpp>
 #include <lauxlib.h>
 #include <lualib.h>

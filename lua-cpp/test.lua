@@ -1,3 +1,12 @@
+--[[
+    Author: object_he@yeah.net
+
+    Last modified: 2017-7-4
+    
+    Filename: Object.h
+    
+    Description: 
+]]
 local Object = require "libObject"
 
 local  obj = Object.new("老司机",1024)

@@ -1,5 +1,15 @@
-#ifndef TEST_H
-#define TEST_H
+/*
+    Author: object_he@yeah.net
+
+    Last modified: 2017-7-4
+    
+    Filename: Object.h
+    
+    Description: 
+*/
+
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #include <iostream>
 
@@ -32,4 +42,4 @@ public :
         name = str;
     }
 };
-#endif // TEST_H
+#endif 
