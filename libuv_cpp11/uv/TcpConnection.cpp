@@ -13,45 +13,6 @@ struct write_arg_t
     AfterWriteCallback callback;
 };
 
-void  onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf)
-{
-    auto connection = (TcpConnection*)(client->data);
-    if (nread > 0)
-    {
-        connection->onMessage(buf->base,nread);
-        delete [] (buf->base);
-        return;
-    }
-    else if (nread < 0)
-    {
-        cout<< uv_err_name(nread)<<endl;
-        delete [] (buf->base);
-
-        if (nread != UV_EOF)
-        {
-            connection->onClose();
-            return;
-        }
-
-        uv_shutdown_t* sreq = new uv_shutdown_t;
-        sreq->data = static_cast<void*>(connection);
-        ::uv_shutdown(sreq,(uv_stream_t*)client,
-        [](uv_shutdown_t* req, int status)
-        {
-            auto connection = (TcpConnection*)(req->data);
-            connection->onClose();
-            delete req;
-        });
-    }
-    else
-    {
-        cout<<"read"<<0<<endl;
-        /* Everything OK, but nothing read. */
-        delete [] (buf->base);
-    }
-
-}
-
 TcpConnection::TcpConnection(uv_loop_t* loop,TcpServer* server,uv_tcp_t* client)
     :loop(loop),
     server(server),
@@ -72,7 +33,7 @@ TcpConnection::TcpConnection(uv_loop_t* loop,TcpServer* server,uv_tcp_t* client)
         buf->base = new char [suggested_size];
         buf->len = suggested_size;
     },
-    onMesageReceive);
+    &TcpConnection::onMesageReceive);
 }
 
 TcpConnection:: ~TcpConnection()
@@ -139,4 +100,43 @@ void TcpConnection::setElement(shared_ptr<ConnectionElement> conn)
 std::weak_ptr<ConnectionElement> TcpConnection::Element()
 {
     return element;
+}
+
+void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf)
+{
+    auto connection = (TcpConnection*)(client->data);
+    if (nread > 0)
+    {
+        connection->onMessage(buf->base,nread);
+        delete [] (buf->base);
+        return;
+    }
+    else if (nread < 0)
+    {
+        cout<< uv_err_name(nread)<<endl;
+        delete [] (buf->base);
+
+        if (nread != UV_EOF)
+        {
+            connection->onClose();
+            return;
+        }
+
+        uv_shutdown_t* sreq = new uv_shutdown_t;
+        sreq->data = static_cast<void*>(connection);
+        ::uv_shutdown(sreq,(uv_stream_t*)client,
+        [](uv_shutdown_t* req, int status)
+        {
+            auto connection = (TcpConnection*)(req->data);
+            connection->onClose();
+            delete req;
+        });
+    }
+    else
+    {
+        cout<<"read"<<0<<endl;
+        /* Everything OK, but nothing read. */
+        delete [] (buf->base);
+    }
+
 }

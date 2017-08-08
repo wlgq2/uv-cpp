@@ -16,7 +16,7 @@
 
 namespace uv
 {
-
+//timeout ctrl.
 
 struct write_req_t
 {
@@ -24,11 +24,7 @@ struct write_req_t
     uv_buf_t buf;
 } ;
 
-
-
 typedef void (* AfterWriteCallback)(char* buf,unsigned int size);
-
-//timeout ctrl.
 
 class TcpServer;
 class ConnectionElement;
@@ -49,6 +45,8 @@ public :
 
     void setElement(std::shared_ptr<ConnectionElement> conn);
     std::weak_ptr<ConnectionElement> Element();
+
+    static void  onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf);
 private :
     uv_loop_t* loop;
     TcpServer* server;

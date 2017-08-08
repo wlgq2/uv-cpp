@@ -1,6 +1,7 @@
 #include <iostream>
 #include "EchoServer.h"
-#include "SignalCtrl.h"
+#include "uv/SignalCtrl.h"
+#include "Clinet.h"
 
 using namespace uv;
 
@@ -14,5 +15,7 @@ int main(int argc,char** args)
     server.setTimeout(10);
     server.start();
 
+    Client client(loop);
+    client.connect("192.168.141.73",10010);
     return ::uv_run(loop, UV_RUN_DEFAULT);
 }
