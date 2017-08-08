@@ -1,3 +1,12 @@
+/*
+   Copyright 2017, object_he@yeah.net  All rights reserved.
+
+   Author: object_he@yeah.net 
+    
+   Last modified: 2017-8-8
+    
+   Description: 
+*/
 #ifndef TIMER_H
 #define TIMER_H
 

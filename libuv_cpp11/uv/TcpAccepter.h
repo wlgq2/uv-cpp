@@ -1,3 +1,13 @@
+/*
+   Copyright 2017, object_he@yeah.net  All rights reserved.
+
+   Author: object_he@yeah.net 
+    
+   Last modified: 2017-8-8
+    
+   Description: 
+*/
+
 #ifndef TCP_ACCEPTER_H
 #define TCP_ACCEPTER_H
 
