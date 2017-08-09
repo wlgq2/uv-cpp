@@ -15,22 +15,33 @@ public:
         setConnectCallback(std::bind(&Client::onConnect,this,std::placeholders::_1));
     }
 
+    void connectToServer(std::string& ip,int port)
+    {
+        this->port = port;
+        this->ip = ip;
+        std::cout<<ip<<port<<std::endl;
+        connect(ip.c_str(),port);
+    }
+
     void onConnectClose()
     {
-        connect("127.0.0.1",10010);
+        connect(ip.c_str(),port);
     }
     void onConnect(bool successed)
     {
-        if(successed)
+        if(!successed)
         {
-            connect("127.0.0.1",10010);
+            connect(ip.c_str(),port);
         }
     }
 
     void newMessage(const char* buf,ssize_t size)
     {
-        //write(buf,size,nullptr);
+        write(buf,size,nullptr);
     }
 
+private:
+    std::string ip;
+    int port;
 };
 #endif
