@@ -1,11 +1,11 @@
 /*
    Copyright 2017, object_he@yeah.net  All rights reserved.
 
-   Author: object_he@yeah.net 
-    
+   Author: object_he@yeah.net
+
    Last modified: 2017-8-8
-    
-   Description: 
+
+   Description:
 */
 
 #include "TcpConnection.h"
@@ -23,10 +23,11 @@ struct write_arg_t
     AfterWriteCallback callback;
 };
 
-TcpConnection::TcpConnection(uv_loop_t* loop,TcpServer* server,uv_tcp_t* client)
-    :loop(loop),
-    server(server),
-    client(client)
+TcpConnection::TcpConnection(uv_loop_t* loop,uv_tcp_t* client,bool isConnected)
+    :connected(isConnected),
+    loop(loop),
+    client(client),
+    onMessageCallback(nullptr)
 {
     ::uv_async_init(loop, &asyncWriteHandle, [](uv_async_t* handle)
     {
@@ -59,30 +60,35 @@ TcpConnection:: ~TcpConnection()
 
 void TcpConnection::onMessage(const char* buf,ssize_t size)
 {
-    server->onMessage(shared_from_this(),buf,size);
+    if(onMessageCallback)
+        onMessageCallback(shared_from_this(),buf,size);
 }
 
 void TcpConnection::onClose()
 {
-    server->closeConnection(client);
+    if(onConnectCloseCallback)
+        onConnectCloseCallback(client);
 }
 
 void TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback callback)
 {
-    write_req_t* req = new write_req_t;
-    req->buf = uv_buf_init((char*)buf, size);
-    ::uv_write((uv_write_t*) req, (uv_stream_t*) client, &req->buf, 1,
-    [](uv_write_t *req, int status)
+    if(connected)
     {
-        if (status)
+        write_req_t* req = new write_req_t;
+        req->buf = uv_buf_init((char*)buf, size);
+        ::uv_write((uv_write_t*) req, (uv_stream_t*) client, &req->buf, 1,
+        [](uv_write_t *req, int status)
         {
-            cout<< "Write error "<<uv_strerror(status)<<endl;
-        }
-        write_req_t *wr = (write_req_t*) req;
+            if (status)
+            {
+                cout<< "Write error "<<uv_strerror(status)<<endl;
+            }
+            write_req_t *wr = (write_req_t*) req;
 
-        //delete [] (wr->buf.base);
-        delete wr ;
-    });
+            //delete [] (wr->buf.base);
+            delete wr ;
+        });
+    }
     if(nullptr != callback)
     {
         callback((char*)buf,size);
@@ -123,6 +129,7 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     }
     else if (nread < 0)
     {
+        connection->setConnectState(false);
         cout<< uv_err_name(nread)<<endl;
         delete [] (buf->base);
 

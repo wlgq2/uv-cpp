@@ -1,11 +1,11 @@
 /*
    Copyright 2017, object_he@yeah.net  All rights reserved.
 
-   Author: object_he@yeah.net 
-    
+   Author: object_he@yeah.net
+
    Last modified: 2017-8-8
-    
-   Description: 
+
+   Description:
 */
 
 #include "TcpServer.h"
@@ -31,9 +31,11 @@ TcpServer::TcpServer(uv_loop_t* loop,int port ,const char* ip )
         ::uv_tcp_getpeername(client,(struct sockaddr *)&addr,&len);
         cout<<"new connect :"<<inet_ntoa(addr.sin_addr)<<":"<<htons(addr.sin_port)<<endl;
 
-        shared_ptr<TcpConnection> proxy(new TcpConnection(loop,this,client));
+        shared_ptr<TcpConnection> proxy(new TcpConnection(loop,client));
         if(proxy)
         {
+            proxy->setMessageCallback(std::bind(&TcpServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
+            proxy->setConnectCloseCallback(std::bind(&TcpServer::closeConnection,this,placeholders::_1));
             addConnnection(client,proxy);
             timerWheel.insertNew(proxy);
         }

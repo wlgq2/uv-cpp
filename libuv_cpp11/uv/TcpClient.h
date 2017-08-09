@@ -1,11 +1,11 @@
 /*
    Copyright 2017, object_he@yeah.net  All rights reserved.
 
-   Author: object_he@yeah.net 
-    
+   Author: object_he@yeah.net
+
    Last modified: 2017-8-8
-    
-   Description: 
+
+   Description:
 */
 
 #ifndef   TCP_CLIENT_H
@@ -13,6 +13,7 @@
 
 #include  <uv.h>
 #include  <functional>
+#include  "TcpConnection.h"
 
 namespace uv
 {
@@ -30,8 +31,18 @@ public:
     void connect(const char* ip, unsigned short port);
 
     void onConnect(bool successed);
-    void onConnectClose();
-    void onMessage(const char* buf,ssize_t size);
+    void onConnectClose(uv_tcp_t* socket);
+    void onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size);
+
+    void write(const char* buf,unsigned int size,AfterWriteCallback callback = nullptr)
+    {
+        tcpConnection->write(buf,size,callback);
+
+    }
+    void writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback)
+    {
+        tcpConnection->writeInLoop(buf,size,callback);
+    }
 
     void setConnectCallback(ConnectCallback callback)
     {
@@ -46,12 +57,9 @@ public:
         onConnectCloseCallback = callback;
     }
 
-    static void  onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf);
-
 protected:
     uv_loop_t* loop;
 private:
-    bool connected;
     uv_tcp_t* socket;
     uv_connect_t* connect_;
     struct sockaddr_in dest;
@@ -59,6 +67,7 @@ private:
     NewMessageCallback onMessageCallback;
     OnConnectClose onConnectCloseCallback;
 
+    std::shared_ptr<TcpConnection> tcpConnection;
     void updata();
 };
 

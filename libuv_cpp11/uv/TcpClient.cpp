@@ -1,11 +1,11 @@
 /*
    Copyright 2017, object_he@yeah.net  All rights reserved.
 
-   Author: object_he@yeah.net 
-    
+   Author: object_he@yeah.net
+
    Last modified: 2017-8-8
-    
-   Description: 
+
+   Description:
 */
 
 #include <iostream>
@@ -21,7 +21,8 @@ TcpClient::TcpClient(uv_loop_t* loop)
     connect_(new uv_connect_t()),
     connectCallback(nullptr),
     onMessageCallback(nullptr),
-    onConnectCloseCallback(nullptr)
+    onConnectCloseCallback(nullptr),
+    tcpConnection(nullptr)
 {
     ::uv_tcp_init(loop, socket);
     socket->data = (void*)this;
@@ -47,14 +48,6 @@ void TcpClient::connect(const char* ip, unsigned short port)
             return;
         }
 
-        ::uv_read_start(req->handle,
-        [](uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
-        {
-            buf->base = new char[suggested_size];
-            buf->len = suggested_size;
-        },
-        &TcpClient::onMesageReceive);
-
         handle->onConnect(true);
 
     });
@@ -62,59 +55,32 @@ void TcpClient::connect(const char* ip, unsigned short port)
 
 void TcpClient::onConnect(bool successed)
 {
+    if(successed)
+    {
+        shared_ptr<TcpConnection> connection(new TcpConnection(loop,socket));
+        tcpConnection = connection;
+        tcpConnection->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
+        tcpConnection->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
+    }
     if(connectCallback)
         connectCallback(successed);
 }
-void TcpClient::onConnectClose()
+void TcpClient::onConnectClose(uv_tcp_t* socket)
 {
+    socket = socket;
     updata();
     if(onConnectCloseCallback)
         onConnectCloseCallback();
 }
-void TcpClient::onMessage(const char* buf,ssize_t size)
+void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
 {
     if(onMessageCallback)
         onMessageCallback(buf,size);
 }
 
-void  TcpClient::onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf)
-{
-    auto handle = (TcpClient*)(client->data);
-    if (nread > 0)
-    {
-        handle->onMessage(buf->base,nread);
-        delete[](buf->base);
-        return;
-    }
-    else if (nread < 0)
-    {
-        if (nread != UV_EOF)
-            cout << "Read error" << uv_err_name(nread) << endl;
-
-        cout << "连接断开" << endl;
-        delete[](buf->base);
-        uv_shutdown_t* sreq = new uv_shutdown_t;
-
-        ::uv_shutdown(sreq, (uv_stream_t*)client,
-        [](uv_shutdown_t* req, int status)
-        {
-            ::uv_close((uv_handle_t*)req->handle,
-            [](uv_handle_t* peer)
-            {
-                auto handle = (TcpClient*)(peer->data);
-                handle->onConnectClose();
-            });
-            delete req;
-        });
-    }
-    else
-    {
-        delete[](buf->base);
-    }
-
-}
-
 void TcpClient::updata()
 {
+    socket = new uv_tcp_t();
     ::uv_tcp_init(loop, socket);
+    socket->data = (void*)this;
 }
