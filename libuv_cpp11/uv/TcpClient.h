@@ -48,9 +48,10 @@ public:
 
     static void  onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf);
 
+protected:
+    uv_loop_t* loop;
 private:
     bool connected;
-    uv_loop_t* loop;
     uv_tcp_t* socket;
     uv_connect_t* connect_;
     struct sockaddr_in dest;
