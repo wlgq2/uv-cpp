@@ -13,6 +13,7 @@ public:
     {
         setConnectCloseCallback(std::bind(&Client::onConnectClose,this));
         setConnectCallback(std::bind(&Client::onConnect,this,std::placeholders::_1));
+        setMessageCallback(std::bind(&Client::newMessage,this,std::placeholders::_1,std::placeholders::_2));
     }
 
     void connectToServer(std::string& ip,int port)
