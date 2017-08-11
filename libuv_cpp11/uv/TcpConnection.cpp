@@ -70,13 +70,14 @@ void TcpConnection::onClose()
         onConnectCloseCallback(client);
 }
 
-void TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback callback)
+int TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback callback)
 {
+    int rst;
     if(connected)
     {
         write_req_t* req = new write_req_t;
         req->buf = uv_buf_init((char*)buf, size);
-        ::uv_write((uv_write_t*) req, (uv_stream_t*) client, &req->buf, 1,
+        rst = ::uv_write((uv_write_t*) req, (uv_stream_t*) client, &req->buf, 1,
         [](uv_write_t *req, int status)
         {
             if (status)
@@ -89,10 +90,15 @@ void TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback c
             delete wr ;
         });
     }
+    else
+    {
+        rst = -1;
+    }
     if(nullptr != callback)
     {
         callback((char*)buf,size);
     }
+    return rst;
 }
 
 void TcpConnection::writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback)

@@ -52,7 +52,7 @@ public :
     void onMessage(const char* buf,ssize_t size);
     void onClose();
 
-    void write(const char* buf,unsigned int size,AfterWriteCallback callback);
+    int write(const char* buf,unsigned int size,AfterWriteCallback callback);
     void writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback);
     typedef  std::chrono::duration<int, std::ratio<1>> SecondType;
 
