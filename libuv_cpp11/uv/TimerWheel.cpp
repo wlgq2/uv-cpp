@@ -43,6 +43,8 @@ void TimerWheel::start()
 
 void TimerWheel::insert(shared_ptr<TcpConnection> connnection)
 {
+    if(!timeoutSec)
+        return;
     shared_ptr<ConnectionElement> conn = connnection->Element().lock();
     if(conn)
     {
@@ -53,6 +55,8 @@ void TimerWheel::insert(shared_ptr<TcpConnection> connnection)
 
 void TimerWheel::insertNew(shared_ptr<TcpConnection> connection)
 {
+    if(!timeoutSec)
+        return;
     shared_ptr<ConnectionElement> conn(new ConnectionElement(connection));
     connection->setElement(conn);
     wheel[index].insert(conn);
@@ -60,6 +64,8 @@ void TimerWheel::insertNew(shared_ptr<TcpConnection> connection)
 
 void TimerWheel::wheelCallback()
 {
+    if(!timeoutSec)
+        return;
     if(++index ==timeoutSec)
     {
         index=0;
