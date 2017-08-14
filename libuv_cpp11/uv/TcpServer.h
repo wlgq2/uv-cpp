@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-8
+   Last modified: 2017-8-14
 
    Description:
 */
@@ -25,7 +25,7 @@
 namespace uv
 {
 
-
+typedef std::function<void (std::shared_ptr<TcpConnection> )> OnNewConnectCallback;
 
 //no thread safe.
 class TcpServer
@@ -43,18 +43,24 @@ public:
     void onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size);
     void setMessageCallback(OnMessageCallback callback);
 
+    void setNewConnectCallback(OnNewConnectCallback callback);
+
     void write(std::shared_ptr<TcpConnection> connection,const char* buf,unsigned int size);
     void write(uv_tcp_t* client,const char* buf,unsigned int size);
     void writeInLoop(std::shared_ptr<TcpConnection> connection,const char* buf,unsigned int size,AfterWriteCallback callback);
     void writeInLoop(uv_tcp_t* client,const char* buf,unsigned int size,AfterWriteCallback callback);
 
     void setTimeout(unsigned int);
+
+protected:
+    uv_loop_t* loop;
 private:
     std::shared_ptr <TcpAccepter> accetper;
     std::map<uv_tcp_t* ,std::shared_ptr<TcpConnection>>  connnections;
 
 
     OnMessageCallback onMessageCallback;
+    OnNewConnectCallback onNewConnectCallback;
     TimerWheel timerWheel;
 
 };

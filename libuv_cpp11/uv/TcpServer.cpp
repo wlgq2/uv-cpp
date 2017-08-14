@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-8
+   Last modified: 2017-8-14
 
    Description:
 */
@@ -20,8 +20,10 @@ using namespace uv;
 
 
 TcpServer::TcpServer(uv_loop_t* loop,int port ,const char* ip )
-    :accetper(new TcpAccepter(loop,ip,port)),
+    :loop(loop),
+    accetper(new TcpAccepter(loop,ip,port)),
     onMessageCallback(nullptr),
+    onNewConnectCallback(nullptr),
     timerWheel(loop)
 {
     accetper->setNewConnectinonCallback( [this] (uv_loop_t* loop,uv_tcp_t* client)
@@ -31,13 +33,15 @@ TcpServer::TcpServer(uv_loop_t* loop,int port ,const char* ip )
         ::uv_tcp_getpeername(client,(struct sockaddr *)&addr,&len);
         cout<<"new connect :"<<inet_ntoa(addr.sin_addr)<<":"<<htons(addr.sin_port)<<endl;
 
-        shared_ptr<TcpConnection> proxy(new TcpConnection(loop,client));
-        if(proxy)
+        shared_ptr<TcpConnection> connection(new TcpConnection(loop,client));
+        if(connection)
         {
-            proxy->setMessageCallback(std::bind(&TcpServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
-            proxy->setConnectCloseCallback(std::bind(&TcpServer::closeConnection,this,placeholders::_1));
-            addConnnection(client,proxy);
-            timerWheel.insertNew(proxy);
+            connection->setMessageCallback(std::bind(&TcpServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
+            connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection,this,placeholders::_1));
+            addConnnection(client,connection);
+            timerWheel.insertNew(connection);
+            if(onNewConnectCallback)
+                onNewConnectCallback(connection);
         }
         else
         {
@@ -142,5 +146,10 @@ void TcpServer::writeInLoop(uv_tcp_t* client,const char* buf,unsigned int size,A
     {
         connection->writeInLoop(buf,size,callback);
     }
+}
+
+void TcpServer::setNewConnectCallback(OnNewConnectCallback callback)
+{
+    onNewConnectCallback = callback;
 }
 
