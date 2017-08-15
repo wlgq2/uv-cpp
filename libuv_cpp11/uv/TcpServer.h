@@ -25,7 +25,7 @@
 namespace uv
 {
 
-typedef std::function<void (std::shared_ptr<TcpConnection> )> OnNewConnectCallback;
+typedef std::function<void (std::weak_ptr<TcpConnection> )> OnNewConnectCallback;
 
 //no thread safe.
 class TcpServer

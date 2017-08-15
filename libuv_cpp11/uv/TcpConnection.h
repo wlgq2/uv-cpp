@@ -20,10 +20,6 @@
 #include <atomic>
 
 
-#define        TIME_OUT_SECONDS       40
-#define        TIME_SECOND_NOW         std::chrono::time_point_cast<SecondType>(std::chrono::system_clock::now())
-#define        TIME_M_SENCOND_NOW      std::chrono::time_point_cast<MSecondType>(std::chrono::system_clock::now())
-
 namespace uv
 {
 //timeout ctrl.
@@ -85,8 +81,6 @@ private :
     bool connected;
     uv_loop_t* loop;
     uv_tcp_t* client;
-
-    std::chrono::time_point<std::chrono::system_clock,SecondType> activeTimePoint;
 
     uv_async_t asyncWriteHandle;
 
