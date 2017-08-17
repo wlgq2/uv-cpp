@@ -23,13 +23,14 @@ class Timer
 {
 public:
     Timer(uv_loop_t* loop,uint64_t timeout,uint64_t repeat,TimerCallback callback);
+    ~Timer();
     void start();
     TimerCallback getTimerCallback();
 
 
 private:
-    uv_timer_t handle;
     uv_loop_t* loop;
+    uv_timer_t* handle;
     uint64_t timeout;
     uint64_t repeat;
     TimerCallback timerCallback;
