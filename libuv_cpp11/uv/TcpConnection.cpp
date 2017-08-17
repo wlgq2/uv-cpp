@@ -163,7 +163,6 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     }
     else
     {
-        cout<<"read"<<0<<endl;
         /* Everything OK, but nothing read. */
         delete [] (buf->base);
     }

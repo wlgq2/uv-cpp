@@ -30,7 +30,6 @@ TcpClient::TcpClient(uv_loop_t* loop)
 
 TcpClient::~TcpClient()
 {
-    delete socket;
     delete connect_;
 }
 
@@ -43,7 +42,7 @@ void TcpClient::connect(const char* ip, unsigned short port)
         auto handle = (TcpClient*)(((uv_tcp_t *)(req->handle))->data);
         if (0 != status)
         {
-            cout << "连接失败" << endl;
+            cout << "connect fail." << endl;
             handle->onConnect(false);
             return;
         }
@@ -80,6 +79,7 @@ void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,s
 
 void TcpClient::updata()
 {
+    tcpConnection = nullptr;
     socket = new uv_tcp_t();
     ::uv_tcp_init(loop, socket);
     socket->data = (void*)this;

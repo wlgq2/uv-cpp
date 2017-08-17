@@ -45,7 +45,7 @@ TcpServer::TcpServer(uv_loop_t* loop,int port ,const char* ip )
         }
         else
         {
-            cout<<"无法创建主机连接 :"<<inet_ntoa(addr.sin_addr)<<":"<<htons(addr.sin_port)<<endl;
+            cout<<"can not create connection. :"<<inet_ntoa(addr.sin_addr)<<":"<<htons(addr.sin_port)<<endl;
         }
 
     });
