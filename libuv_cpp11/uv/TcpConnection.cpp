@@ -17,7 +17,7 @@ using namespace uv;
 
 struct write_arg_t
 {
-    TcpConnection* connection;
+    shared_ptr<TcpConnection> connection;
     const char* buf;
     unsigned int size;
     AfterWriteCallback callback;
@@ -110,7 +110,7 @@ void TcpConnection::writeInLoop(const char* buf,unsigned int size,AfterWriteCall
     });
 
     struct write_arg_t* writeArg= new struct write_arg_t();
-    writeArg->connection = this;
+    writeArg->connection = shared_from_this();
     writeArg->buf = buf;
     writeArg->size = size;
     writeArg->callback = callback;
