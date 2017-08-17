@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-8
+   Last modified: 2017-8-17
 
    Description:
 */
@@ -81,8 +81,6 @@ private :
     bool connected;
     uv_loop_t* loop;
     uv_tcp_t* client;
-
-    uv_async_t asyncWriteHandle;
 
     std::weak_ptr<ConnectionElement> element;
 

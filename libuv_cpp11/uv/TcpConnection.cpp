@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-8
+   Last modified: 2017-8-17
 
    Description:
 */
@@ -27,16 +27,9 @@ TcpConnection::TcpConnection(uv_loop_t* loop,uv_tcp_t* client,bool isConnected)
     :connected(isConnected),
     loop(loop),
     client(client),
-    onMessageCallback(nullptr)
+    onMessageCallback(nullptr),
+    onConnectCloseCallback(nullptr)
 {
-    ::uv_async_init(loop, &asyncWriteHandle, [](uv_async_t* handle)
-    {
-        struct write_arg_t* writeArg = static_cast<struct write_arg_t*>(handle->data);
-        auto connection = writeArg->connection;
-        connection->write(writeArg->buf,writeArg->size,writeArg->callback);
-        delete writeArg;
-    });
-
     client->data = (void*)this;
     ::uv_read_start((uv_stream_t*) client,
     [](uv_handle_t *handle, size_t suggested_size,uv_buf_t *buf)
@@ -103,14 +96,27 @@ int TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback ca
 
 void TcpConnection::writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback)
 {
+    uv_async_t* handle = new uv_async_t();
+    ::uv_async_init(loop, handle, [](uv_async_t* handle)
+    {
+        struct write_arg_t* writeArg = static_cast<struct write_arg_t*>(handle->data);
+        auto connection = writeArg->connection;
+        connection->write(writeArg->buf,writeArg->size,writeArg->callback);
+        delete writeArg;
+        ::uv_close((uv_handle_t*)handle, [](uv_handle_t* handle)
+        {
+            delete (uv_async_t*)handle;
+        });
+    });
+
     struct write_arg_t* writeArg= new struct write_arg_t();
     writeArg->connection = this;
     writeArg->buf = buf;
     writeArg->size = size;
     writeArg->callback = callback;
 
-    asyncWriteHandle.data = static_cast<void*>(writeArg);
-    ::uv_async_send(&asyncWriteHandle);
+    handle->data = static_cast<void*>(writeArg);
+    ::uv_async_send(handle);
 }
 
 
