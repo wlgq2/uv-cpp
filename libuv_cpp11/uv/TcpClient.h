@@ -36,12 +36,14 @@ public:
 
     void write(const char* buf,unsigned int size,AfterWriteCallback callback = nullptr)
     {
-        tcpConnection->write(buf,size,callback);
+        if(tcpConnection)
+            tcpConnection->write(buf,size,callback);
 
     }
     void writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback)
     {
-        tcpConnection->writeInLoop(buf,size,callback);
+        if (tcpConnection)
+            tcpConnection->writeInLoop(buf,size,callback);
     }
 
     void setConnectCallback(ConnectCallback callback)
