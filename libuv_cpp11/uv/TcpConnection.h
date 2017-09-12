@@ -33,7 +33,8 @@ class TcpConnection ;
 class TcpServer;
 class ConnectionElement;
 
-typedef void (* AfterWriteCallback)(char* buf,unsigned int size);
+
+typedef std::function<void (char* buf, unsigned int size)> AfterWriteCallback;
 typedef std::function<void (std::shared_ptr<TcpConnection>,const char* buf,ssize_t size)>  OnMessageCallback;
 typedef std::function<void (uv_tcp_t* )>  OnConnectCloseCallback;
 
