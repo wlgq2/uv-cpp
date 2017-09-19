@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-8
+   Last modified: 2017-9-19
 
    Description:
 */
@@ -31,7 +31,7 @@ public:
     void connect(const char* ip, unsigned short port);
 
     void onConnect(bool successed);
-    void onConnectClose(uv_tcp_t* socket);
+    void onConnectClose(std::string& name);
     void onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size);
 
     void write(const char* buf,unsigned int size,AfterWriteCallback callback = nullptr)

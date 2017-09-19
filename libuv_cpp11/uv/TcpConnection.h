@@ -36,7 +36,7 @@ class ConnectionElement;
 
 typedef std::function<void (char* buf, unsigned int size)> AfterWriteCallback;
 typedef std::function<void (std::shared_ptr<TcpConnection>,const char* buf,ssize_t size)>  OnMessageCallback;
-typedef std::function<void (uv_tcp_t* )>  OnConnectCloseCallback;
+typedef std::function<void (std::string& )>  OnConnectCloseCallback;
 
 
 
@@ -44,7 +44,7 @@ class TcpConnection : public std::enable_shared_from_this<TcpConnection>
 {
 
 public :
-    TcpConnection(uv_loop_t* loop,uv_tcp_t* client,bool isConnected = true);
+    TcpConnection(uv_loop_t* loop,std::string& name,uv_tcp_t* client,bool isConnected = true);
     virtual ~TcpConnection();
     void onMessage(const char* buf,ssize_t size);
     void onClose();
@@ -79,6 +79,7 @@ public :
         return connected;
     }
 private :
+    std::string name;
     bool connected;
     uv_loop_t* loop;
     uv_tcp_t* client;

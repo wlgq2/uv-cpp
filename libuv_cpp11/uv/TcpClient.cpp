@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-8
+   Last modified: 2017-9-19
 
    Description:
 */
@@ -56,7 +56,13 @@ void TcpClient::onConnect(bool successed)
 {
     if(successed)
     {
-        shared_ptr<TcpConnection> connection(new TcpConnection(loop,socket));
+        struct sockaddr_in addr;
+        int len = sizeof(struct sockaddr_in);
+        ::uv_tcp_getpeername(socket,(struct sockaddr *)&addr,&len);
+        string name(inet_ntoa(addr.sin_addr));
+        name+=":"+std::to_string(htons(addr.sin_port));
+
+        shared_ptr<TcpConnection> connection(new TcpConnection(loop,name,socket));
         tcpConnection = connection;
         tcpConnection->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
         tcpConnection->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
@@ -64,9 +70,8 @@ void TcpClient::onConnect(bool successed)
     if(connectCallback)
         connectCallback(successed);
 }
-void TcpClient::onConnectClose(uv_tcp_t* socket)
+void TcpClient::onConnectClose(string& name)
 {
-    socket = socket;
     updata();
     if(onConnectCloseCallback)
         onConnectCloseCallback();

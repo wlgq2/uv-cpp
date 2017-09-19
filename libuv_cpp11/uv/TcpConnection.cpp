@@ -23,8 +23,9 @@ struct write_arg_t
     AfterWriteCallback callback;
 };
 
-TcpConnection::TcpConnection(uv_loop_t* loop,uv_tcp_t* client,bool isConnected)
-    :connected(isConnected),
+TcpConnection::TcpConnection(uv_loop_t* loop,std::string& name,uv_tcp_t* client,bool isConnected)
+    :name(name),
+    connected(isConnected),
     loop(loop),
     client(client),
     onMessageCallback(nullptr),
@@ -60,7 +61,7 @@ void TcpConnection::onMessage(const char* buf,ssize_t size)
 void TcpConnection::onClose()
 {
     if(onConnectCloseCallback)
-        onConnectCloseCallback(client);
+        onConnectCloseCallback(name);
 }
 
 int TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback callback)

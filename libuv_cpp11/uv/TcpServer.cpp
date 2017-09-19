@@ -31,14 +31,16 @@ TcpServer::TcpServer(uv_loop_t* loop,int port ,const char* ip )
         struct sockaddr_in addr;
         int len = sizeof(struct sockaddr_in);
         ::uv_tcp_getpeername(client,(struct sockaddr *)&addr,&len);
-        cout<<"new connect :"<<inet_ntoa(addr.sin_addr)<<":"<<htons(addr.sin_port)<<endl;
+        string key(inet_ntoa(addr.sin_addr));
+        key+=":"+std::to_string(htons(addr.sin_port));
+        cout<<"new connect  "<<key<<endl;
 
-        shared_ptr<TcpConnection> connection(new TcpConnection(loop,client));
+        shared_ptr<TcpConnection> connection(new TcpConnection(loop,key,client));
         if(connection)
         {
             connection->setMessageCallback(std::bind(&TcpServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
             connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection,this,placeholders::_1));
-            addConnnection(client,connection);
+            addConnnection(key,connection);
             timerWheel.insertNew(connection);
             if(onNewConnectCallback)
                 onNewConnectCallback(connection);
@@ -72,19 +74,19 @@ void TcpServer::start()
 
 
 
-void TcpServer::addConnnection(uv_tcp_t* client,shared_ptr<TcpConnection> connection)
+void TcpServer::addConnnection(std::string& name,std::shared_ptr<TcpConnection> connection)
 {
-    connnections.insert(pair<uv_tcp_t*,shared_ptr<TcpConnection>>(client,connection));
+    connnections.insert(pair<string,shared_ptr<TcpConnection>>(name,connection));
 }
 
-void TcpServer::removeConnnection(uv_tcp_t* client)
+void TcpServer::removeConnnection(string& name)
 {
-    connnections.erase(client);
+    connnections.erase(name);
 }
 
-shared_ptr<TcpConnection> TcpServer::getConnnection(uv_tcp_t* client)
+shared_ptr<TcpConnection> TcpServer::getConnnection(string& name)
 {
-    auto rst = connnections.find(client);
+    auto rst = connnections.find(name);
     if(rst == connnections.end())
     {
         return nullptr;
@@ -92,10 +94,10 @@ shared_ptr<TcpConnection> TcpServer::getConnnection(uv_tcp_t* client)
     return rst->second;
 }
 
-void TcpServer::closeConnection(uv_tcp_t* client)
+void TcpServer::closeConnection(string& name)
 {
-    if(nullptr != getConnnection(client))
-        connnections.erase(client);
+    if(nullptr != getConnnection(name))
+        connnections.erase(name);
 }
 
 
@@ -121,9 +123,9 @@ void TcpServer::write(shared_ptr<TcpConnection> connection,const char* buf,unsig
     }
 }
 
-void TcpServer::write(uv_tcp_t* client,const char* buf,unsigned int size)
+void TcpServer::write(string& name,const char* buf,unsigned int size)
 {
-    auto connection = getConnnection(client);
+    auto connection = getConnnection(name);
     if(connection)
     {
         connection->write(buf,size,nullptr);
@@ -139,9 +141,9 @@ void TcpServer::writeInLoop(shared_ptr<TcpConnection> connection,const char* buf
 
 }
 
-void TcpServer::writeInLoop(uv_tcp_t* client,const char* buf,unsigned int size,AfterWriteCallback callback)
+void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,AfterWriteCallback callback)
 {
-    auto connection = getConnnection(client);
+    auto connection = getConnnection(name);
     if(connection)
     {
         connection->writeInLoop(buf,size,callback);
@@ -152,4 +154,3 @@ void TcpServer::setNewConnectCallback(OnNewConnectCallback callback)
 {
     onNewConnectCallback = callback;
 }
-
