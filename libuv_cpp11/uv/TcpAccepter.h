@@ -17,7 +17,7 @@
 namespace uv
 {
 
-typedef   std::function<void(uv_loop_t* ,uv_tcp_t*)> NewConnectionCallback;
+using NewConnectionCallback  =    std::function<void(uv_loop_t* ,uv_tcp_t*)> ;
 
 class TcpAccepter
 {

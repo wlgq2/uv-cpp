@@ -34,9 +34,9 @@ class TcpServer;
 class ConnectionElement;
 
 
-typedef std::function<void (char* buf, unsigned int size)> AfterWriteCallback;
-typedef std::function<void (std::shared_ptr<TcpConnection>,const char* buf,ssize_t size)>  OnMessageCallback;
-typedef std::function<void (std::string& )>  OnConnectCloseCallback;
+using AfterWriteCallback =  std::function<void (char* buf, ssize_t size)> ;
+using OnMessageCallback =  std::function<void (std::shared_ptr<TcpConnection>,const char* buf,ssize_t size)>  ;
+using OnConnectCloseCallback =  std::function<void (std::string& )>  ;
 
 
 
@@ -51,7 +51,6 @@ public :
 
     int write(const char* buf,unsigned int size,AfterWriteCallback callback);
     void writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback);
-    typedef  std::chrono::duration<int, std::ratio<1>> SecondType;
 
 
     void setElement(std::shared_ptr<ConnectionElement> conn);

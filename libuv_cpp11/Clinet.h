@@ -21,7 +21,6 @@ public:
     {
         this->port = port;
         this->ip = ip;
-        std::cout<<ip<<port<<std::endl;
         connect(ip.c_str(),port);
     }
 

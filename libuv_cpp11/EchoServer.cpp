@@ -19,7 +19,7 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
     char* data =  new  char [size]();
     memcpy(data, buf, size);
     connection->writeInLoop(data, size,
-    [](char* buf,unsigned int size)
+    [](char* buf,ssize_t size)
     {
         delete [] buf;
     });

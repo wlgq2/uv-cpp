@@ -28,15 +28,14 @@ int main(int argc,char** args)
 
 #if  TEST_ASYNC
 	Async<int>* handle = new Async<int>(loop,std::bind(
-    [](Async<int>* ptr, int* x)
+    [](Async<int>* ptr, int* data)
     {
-        std::cout << *x << std::endl;
-        delete x;
+        std::cout << *data << std::endl;
+        delete data;
         ptr->close();
         delete ptr;
     }, 
     std::placeholders::_1, std::placeholders::_2));
-
     int* data = new int;
     *data = 1024;
     handle->setData(data);

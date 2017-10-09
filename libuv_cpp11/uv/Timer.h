@@ -17,7 +17,7 @@
 namespace uv
 {
 
-typedef std::function<void()> TimerCallback;
+using TimerCallback =  std::function<void()> ;
 
 class Timer
 {

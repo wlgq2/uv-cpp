@@ -23,6 +23,8 @@ class Async  : public std::enable_shared_from_this<Async<ValueType>>
 {
 public:
     using AsyncCallback = std::function<void(Async<ValueType>*, ValueType*)>;
+
+
     Async<ValueType>(uv_loop_t* loop,AsyncCallback callback)
         :handle(new uv_async_t),
         asyncCallback(callback),
