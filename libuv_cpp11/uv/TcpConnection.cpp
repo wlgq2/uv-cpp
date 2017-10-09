@@ -115,7 +115,7 @@ void TcpConnection::writeInLoop(const char* buf,unsigned int size,AfterWriteCall
     {
         auto connection = data->connection;
         connection->write(data->buf, data->size, data->callback);
-        delete[] data;
+        delete data;
         handle->close();
         delete handle;
     }, 
