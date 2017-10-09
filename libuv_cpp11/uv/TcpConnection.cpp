@@ -18,6 +18,14 @@ using namespace uv;
 
 struct write_arg_t
 {
+    write_arg_t(shared_ptr<TcpConnection> conn=nullptr,const char* buf = nullptr, unsigned int size = 0, AfterWriteCallback callback = nullptr)
+        :connection(conn),
+        buf(buf),
+        size(size),
+        callback(nullptr)
+    {
+
+    }
     shared_ptr<TcpConnection> connection;
     const char* buf;
     unsigned int size;
@@ -102,24 +110,21 @@ int TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback ca
 
 void TcpConnection::writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback)
 {
-    Async<struct write_arg_t>* test = new Async<struct write_arg_t>(loop, std::bind([this]
-    (Async<struct write_arg_t>* handle, struct write_arg_t * data)
+    Async<struct write_arg_t>* async = new Async<struct write_arg_t>(loop, 
+    std::bind([this](Async<struct write_arg_t>* handle, struct write_arg_t * data)
     {
         auto connection = data->connection;
         connection->write(data->buf, data->size, data->callback);
-        delete data;
+        delete[] data;
         handle->close();
         delete handle;
-    }, std::placeholders::_1, std::placeholders::_2));
+    }, 
+    std::placeholders::_1, std::placeholders::_2));
 
-    struct write_arg_t* writeArg = new struct write_arg_t();
-    writeArg->connection = shared_from_this();
-    writeArg->buf = buf;
-    writeArg->size = size;
-    writeArg->callback = callback;
+    struct write_arg_t* writeArg = new struct write_arg_t(shared_from_this(), buf,size,callback);
 
-    test->setData(writeArg);
-    test->runInLoop();
+    async->setData(writeArg);
+    async->runInLoop();
 }
 
 
