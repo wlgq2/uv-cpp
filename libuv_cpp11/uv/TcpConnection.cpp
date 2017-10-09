@@ -32,7 +32,7 @@ TcpConnection::TcpConnection(uv_loop_t* loop,std::string& name,uv_tcp_t* client,
     onMessageCallback(nullptr),
     onConnectCloseCallback(nullptr)
 {
-    client->data = (void*)this;
+    client->data = static_cast<void*>(this);
     ::uv_read_start((uv_stream_t*) client,
     [](uv_handle_t *handle, size_t suggested_size,uv_buf_t *buf)
     {
@@ -135,7 +135,7 @@ std::weak_ptr<ConnectionElement> TcpConnection::Element()
 
 void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf)
 {
-    auto connection = (TcpConnection*)(client->data);
+    auto connection = static_cast<TcpConnection*>(client->data);
     if (nread > 0)
     {
         connection->onMessage(buf->base,nread);
@@ -159,7 +159,7 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
         ::uv_shutdown(sreq,(uv_stream_t*)client,
         [](uv_shutdown_t* req, int status)
         {
-            auto connection = (TcpConnection*)(req->data);
+            auto connection = static_cast<TcpConnection*>(req->data);
             connection->onClose();
             delete req;
         });

@@ -57,7 +57,7 @@ void TcpAccepter::listen()
             cout<< "New connection error"<<uv_strerror(status)<<endl;
             return;
         }
-        TcpAccepter* accept = (TcpAccepter*)(server->data);
+        TcpAccepter* accept = static_cast<TcpAccepter*>(server->data);
         uv_tcp_t* client =new uv_tcp_t();
         uv_tcp_init(accept->getLoop(), client);
 

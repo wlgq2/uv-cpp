@@ -19,7 +19,7 @@ Timer::Timer(uv_loop_t* loop,uint64_t timeout,uint64_t repeat,TimerCallback call
     repeat(repeat),
     timerCallback(callback)
 {
-    handle->data = (void*)this;
+    handle->data = static_cast<void*>(this);
     ::uv_timer_init(loop, handle);
 }
 
@@ -44,7 +44,7 @@ TimerCallback Timer::getTimerCallback()
 
 void Timer::timerProcess(uv_timer_t* handle)
 {
-    auto ptr = (Timer*)(handle->data);
+    auto ptr = static_cast<Timer*>(handle->data);
     auto callback = ptr->getTimerCallback();
     if(callback)
     {

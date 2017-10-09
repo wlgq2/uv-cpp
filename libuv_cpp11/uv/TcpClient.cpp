@@ -26,7 +26,7 @@ TcpClient::TcpClient(uv_loop_t* loop)
     tcpConnection(nullptr)
 {
     ::uv_tcp_init(loop, socket);
-    socket->data = (void*)this;
+    socket->data = static_cast<void*>(this);
 }
 
 TcpClient::~TcpClient()
@@ -40,7 +40,7 @@ void TcpClient::connect(const char* ip, unsigned short port)
     ::uv_ip4_addr(ip, port, &dest);
     ::uv_tcp_connect(connect_, socket, (struct sockaddr*)&dest, [](uv_connect_t* req, int status)
     {
-        auto handle = (TcpClient*)(((uv_tcp_t *)(req->handle))->data);
+        auto handle = static_cast<TcpClient*>(((uv_tcp_t *)(req->handle))->data);
         if (0 != status)
         {
             cout << "connect fail." << endl;
@@ -88,5 +88,5 @@ void TcpClient::updata()
     tcpConnection = nullptr;
     socket = new uv_tcp_t();
     ::uv_tcp_init(loop, socket);
-    socket->data = (void*)this;
+    socket->data = static_cast<void*>(this);
 }

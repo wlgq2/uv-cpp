@@ -31,7 +31,7 @@ public:
         data(nullptr)
     {
         ::uv_async_init(loop, handle, Async<ValueType>::asyncProcess);
-        handle->data = (void*)this;
+        handle->data = static_cast<void*>(this);
     }
 
     void setData(ValueType* value)
