@@ -2,6 +2,7 @@
 #define CLIENT_H
 
 #include <iostream>
+#include <string>
 #include "uv/TcpClient.h"
 
 
@@ -36,7 +37,7 @@ public:
         }
     }
 
-    void newMessage(const char* buf,ssize_t size)
+    void newMessage(const char* buf,unsigned int size)
     {
         write(buf,size,nullptr);
     }

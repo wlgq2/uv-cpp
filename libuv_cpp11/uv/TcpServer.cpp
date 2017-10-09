@@ -12,8 +12,10 @@
 #include <iostream>
 #include <functional>
 #include <memory>
-
-
+#include <string>
+#if  _MSC_VER
+#include <Winsock2.h>
+#endif
 
 using namespace std;
 using namespace uv;
@@ -33,6 +35,7 @@ TcpServer::TcpServer(uv_loop_t* loop,int port ,const char* ip )
         ::uv_tcp_getpeername(client,(struct sockaddr *)&addr,&len);
         string key(inet_ntoa(addr.sin_addr));
         key+=":"+std::to_string(htons(addr.sin_port));
+
         cout<<"new connect  "<<key<<endl;
 
         shared_ptr<TcpConnection> connection(new TcpConnection(loop,key,client));

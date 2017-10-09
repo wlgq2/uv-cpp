@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "uv/TcpClient.h"
+#include <string>
 
 using namespace uv;
 using namespace std;

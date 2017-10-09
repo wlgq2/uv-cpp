@@ -78,6 +78,7 @@ public :
     {
         return connected;
     }
+
 private :
     std::string name;
     bool connected;

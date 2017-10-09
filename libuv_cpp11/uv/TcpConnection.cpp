@@ -10,6 +10,7 @@
 
 #include "TcpConnection.h"
 #include "TcpServer.h"
+#include "Async.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -36,7 +37,11 @@ TcpConnection::TcpConnection(uv_loop_t* loop,std::string& name,uv_tcp_t* client,
     [](uv_handle_t *handle, size_t suggested_size,uv_buf_t *buf)
     {
         buf->base = new char [suggested_size];
+#if _MSC_VER
+        buf->len = (ULONG)suggested_size;
+#else
         buf->len = suggested_size;
+#endif
     },
     &TcpConnection::onMesageReceive);
 }
@@ -97,27 +102,24 @@ int TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback ca
 
 void TcpConnection::writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback)
 {
-    uv_async_t* handle = new uv_async_t();
-    ::uv_async_init(loop, handle, [](uv_async_t* handle)
+    Async<struct write_arg_t>* test = new Async<struct write_arg_t>(loop, std::bind([this]
+    (Async<struct write_arg_t>* handle, struct write_arg_t * data)
     {
-        struct write_arg_t* writeArg = static_cast<struct write_arg_t*>(handle->data);
-        auto connection = writeArg->connection;
-        connection->write(writeArg->buf,writeArg->size,writeArg->callback);
-        delete writeArg;
-        ::uv_close((uv_handle_t*)handle, [](uv_handle_t* handle)
-        {
-            delete (uv_async_t*)handle;
-        });
-    });
+        auto connection = data->connection;
+        connection->write(data->buf, data->size, data->callback);
+        delete data;
+        handle->close();
+        delete handle;
+    }, std::placeholders::_1, std::placeholders::_2));
 
-    struct write_arg_t* writeArg= new struct write_arg_t();
+    struct write_arg_t* writeArg = new struct write_arg_t();
     writeArg->connection = shared_from_this();
     writeArg->buf = buf;
     writeArg->size = size;
     writeArg->callback = callback;
 
-    handle->data = static_cast<void*>(writeArg);
-    ::uv_async_send(handle);
+    test->setData(writeArg);
+    test->runInLoop();
 }
 
 
@@ -143,7 +145,7 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     else if (nread < 0)
     {
         connection->setConnectState(false);
-        cout<< uv_err_name(nread)<<endl;
+        cout<< uv_err_name((int)nread)<<endl;
         delete [] (buf->base);
 
         if (nread != UV_EOF)
