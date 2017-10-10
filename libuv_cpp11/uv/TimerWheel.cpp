@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net 
     
-   Last modified: 2017-8-14
+   Last modified: 2017-10-10
     
    Description: 
 */
@@ -22,7 +22,7 @@ TimerWheel::TimerWheel(uv_loop_t* loop)
 TimerWheel::TimerWheel(uv_loop_t* loop,unsigned int timeout)
     :index(0),
     timeoutSec(timeout),
-    timer(loop,1000,1000,std::bind(&TimerWheel::wheelCallback,this))
+    timer(loop,1000,1000,std::bind(&TimerWheel::wheelCallback,this,std::placeholders::_1),nullptr)
 {
 
 }
@@ -62,8 +62,9 @@ void TimerWheel::insertNew(shared_ptr<TcpConnection> connection)
     wheel[index].insert(conn);
 }
 
-void TimerWheel::wheelCallback()
+void TimerWheel::wheelCallback(void* data)
 {
+    data = data;
     if(!timeoutSec)
         return;
     if(++index ==timeoutSec)

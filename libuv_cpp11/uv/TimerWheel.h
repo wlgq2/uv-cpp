@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net 
     
-   Last modified: 2017-8-14
+   Last modified: 2017-10-10
     
    Description: 
 */
@@ -58,11 +58,11 @@ public:
 private:
     unsigned int index;
     unsigned int timeoutSec;
-    Timer timer;
+    Timer<void*> timer;
 
     std::vector< std::set< std::shared_ptr<ConnectionElement>>> wheel;
 
-    void wheelCallback();
+    void wheelCallback(void* data);
 
 };
 

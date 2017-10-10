@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net 
     
-   Last modified: 2017-8-17
+   Last modified: 2017-10-10
     
    Description: 
 */
@@ -17,24 +17,68 @@
 namespace uv
 {
 
-using TimerCallback =  std::function<void()> ;
 
+
+template <typename ValueType>
 class Timer
 {
 public:
-    Timer(uv_loop_t* loop,uint64_t timeout,uint64_t repeat,TimerCallback callback);
-    ~Timer();
-    void start();
-    TimerCallback getTimerCallback();
+    using TimerCallback = std::function<void(ValueType)>;
 
+    Timer(uv_loop_t* loop,uint64_t timeout,uint64_t repeat,TimerCallback callback, ValueType value)
+        :loop(loop),
+        handle(new uv_timer_t),
+        timeout(timeout),
+        repeat(repeat),
+        timerCallback(callback),
+        arg(value)
+    {
+        handle->data = static_cast<void*>(this);
+        ::uv_timer_init(loop, handle);
+    }
 
+    ~Timer()
+    {
+        ::uv_close((uv_handle_t*)handle,
+            [](uv_handle_t* handle)
+        {
+            delete handle;
+        });
+    }
+
+    void start()
+    {
+        ::uv_timer_start(handle, Timer<ValueType>::timerProcess, timeout, repeat);
+    }
+
+    TimerCallback getTimerCallback()
+    {
+        return timerCallback;
+    }
+
+    ValueType getArg()
+    {
+        return arg;
+    };
 private:
     uv_loop_t* loop;
     uv_timer_t* handle;
     uint64_t timeout;
     uint64_t repeat;
     TimerCallback timerCallback;
-    static void timerProcess(uv_timer_t* handle);
+    ValueType arg;
+
+
+    static void timerProcess(uv_timer_t* handle)
+    {
+        auto ptr = static_cast<Timer<ValueType>*>(handle->data);
+        auto callback = ptr->getTimerCallback();
+        if (callback)
+        {
+            callback(ptr->getArg());
+        }
+    }
+
 };
 
 }
