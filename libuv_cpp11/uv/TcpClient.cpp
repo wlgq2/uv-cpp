@@ -16,7 +16,7 @@ using namespace uv;
 using namespace std;
 
 
-TcpClient::TcpClient(uv_loop_t* loop)
+TcpClient::TcpClient(EventLoop* loop)
     :loop(loop),
     socket(new uv_tcp_t()),
     connect_(new uv_connect_t()),
@@ -25,7 +25,7 @@ TcpClient::TcpClient(uv_loop_t* loop)
     onConnectCloseCallback(nullptr),
     tcpConnection(nullptr)
 {
-    ::uv_tcp_init(loop, socket);
+    ::uv_tcp_init(loop->hanlde(), socket);
     socket->data = static_cast<void*>(this);
 }
 
@@ -87,6 +87,6 @@ void TcpClient::updata()
 {
     tcpConnection = nullptr;
     socket = new uv_tcp_t();
-    ::uv_tcp_init(loop, socket);
+    ::uv_tcp_init(loop->hanlde(), socket);
     socket->data = static_cast<void*>(this);
 }

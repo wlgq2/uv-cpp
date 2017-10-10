@@ -4,7 +4,7 @@
 using namespace uv;
 using namespace std;
 
-EchoServer::EchoServer(uv_loop_t* loop,int port ,const char* ip)
+EchoServer::EchoServer(EventLoop* loop,int port ,const char* ip)
     :TcpServer(loop,port,ip)
 {
     setMessageCallback(std::bind(&EchoServer::newMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));

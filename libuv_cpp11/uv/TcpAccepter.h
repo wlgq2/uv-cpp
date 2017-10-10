@@ -11,30 +11,32 @@
 #ifndef TCP_ACCEPTER_H
 #define TCP_ACCEPTER_H
 
-#include <uv.h>
+
 #include <functional>
+
+#include "uv/EventLoop.h"
 
 namespace uv
 {
 
-using NewConnectionCallback  =    std::function<void(uv_loop_t* ,uv_tcp_t*)> ;
+using NewConnectionCallback  =    std::function<void(EventLoop* ,uv_tcp_t*)> ;
 
 class TcpAccepter
 {
 public:
-    TcpAccepter(uv_loop_t* loop,const char* ip,int port);
+    TcpAccepter(EventLoop* loop,const char* ip,int port);
     virtual ~TcpAccepter();
 
     void listen();
     bool isListen();
     void setNewConnectinonCallback( NewConnectionCallback callback);
 
-    uv_loop_t* getLoop();
+    EventLoop* getLoop();
     void onNewConnect(uv_tcp_t* client);
 
 private:
     bool listened;
-    uv_loop_t* loop;
+    EventLoop* loop;
     NewConnectionCallback newConnectionCallback;
 
     uv_tcp_t server;

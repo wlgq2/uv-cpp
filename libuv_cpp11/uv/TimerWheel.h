@@ -48,8 +48,8 @@ private:
 class TimerWheel
 {
 public:
-    TimerWheel(uv_loop_t* loop);
-    TimerWheel(uv_loop_t* loop,unsigned int timeout);
+    TimerWheel(EventLoop* loop);
+    TimerWheel(EventLoop* loop,unsigned int timeout);
     void setTimeout(unsigned int );
     void start();
 

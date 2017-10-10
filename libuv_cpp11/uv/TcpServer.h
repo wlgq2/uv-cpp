@@ -20,7 +20,7 @@
 #include "uv/TcpAccepter.h"
 #include "uv/TcpConnection.h"
 #include "uv/TimerWheel.h"
-
+#include "uv/EventLoop.h"
 
 namespace uv
 {
@@ -31,7 +31,7 @@ using OnNewConnectCallback =  std::function<void (std::weak_ptr<TcpConnection> )
 class TcpServer
 {
 public:
-    TcpServer(uv_loop_t* loop,int port ,const char* ip = (char*)"0.0.0.0");
+    TcpServer(EventLoop* loop,int port ,const char* ip = (char*)"0.0.0.0");
     virtual ~TcpServer();
     void start();
 
@@ -53,7 +53,7 @@ public:
     void setTimeout(unsigned int);
 
 protected:
-    uv_loop_t* loop;
+    EventLoop* loop;
 private:
     std::shared_ptr <TcpAccepter> accetper;
     std::map<std::string ,std::shared_ptr<TcpConnection>>  connnections;

@@ -15,7 +15,8 @@ using namespace uv;
 
 int main(int argc,char** args)
 {
-    uv_loop_t* loop = uv_default_loop();
+//定义事件分发器类。
+    EventLoop* loop = new EventLoop(EventLoop::DefaultLoop);
 
 //接管信号
 #if    TEST_SIGNAL
@@ -39,7 +40,7 @@ int main(int argc,char** args)
 #endif
 
 
-//loop线程中异步执行函数。
+//loop线程中异步执行函数
 #if  TEST_ASYNC
 	Async<int>* handle = new Async<int>(loop,std::bind(
     [](Async<int>* ptr, int* data)
@@ -68,5 +69,5 @@ int main(int argc,char** args)
     timer.start();
 #endif
 
-    return ::uv_run(loop, UV_RUN_DEFAULT);
+    loop->run();
 }

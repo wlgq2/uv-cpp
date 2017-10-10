@@ -8,9 +8,9 @@
    Description:
 */
 
-#include <uv.h>
 #include <memory>
 #include <functional>
+#include "uv/EventLoop.h"
 
 #ifndef ASYNC_H
 #define ASYNC_H
@@ -25,12 +25,12 @@ public:
     using AsyncCallback = std::function<void(Async<ValueType>*, ValueType*)>;
 
 
-    Async<ValueType>(uv_loop_t* loop,AsyncCallback callback)
+    Async<ValueType>(EventLoop* loop,AsyncCallback callback)
         :handle(new uv_async_t),
         asyncCallback(callback),
         data(nullptr)
     {
-        ::uv_async_init(loop, handle, Async<ValueType>::asyncProcess);
+        ::uv_async_init(loop->hanlde(), handle, Async<ValueType>::asyncProcess);
         handle->data = static_cast<void*>(this);
     }
 

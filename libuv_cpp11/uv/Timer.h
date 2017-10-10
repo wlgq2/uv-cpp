@@ -11,7 +11,7 @@
 #define TIMER_H
 
 #include <functional>
-#include <uv.h>
+#include "uv/EventLoop.h"
 
 
 namespace uv
@@ -25,16 +25,15 @@ class Timer
 public:
     using TimerCallback = std::function<void(ValueType)>;
 
-    Timer(uv_loop_t* loop,uint64_t timeout,uint64_t repeat,TimerCallback callback, ValueType value)
-        :loop(loop),
-        handle(new uv_timer_t),
+    Timer(EventLoop* loop,uint64_t timeout,uint64_t repeat,TimerCallback callback, ValueType value)
+        :handle(new uv_timer_t),
         timeout(timeout),
         repeat(repeat),
         timerCallback(callback),
         arg(value)
     {
         handle->data = static_cast<void*>(this);
-        ::uv_timer_init(loop, handle);
+        ::uv_timer_init(loop->hanlde(), handle);
     }
 
     ~Timer()
@@ -61,7 +60,6 @@ public:
         return arg;
     };
 private:
-    uv_loop_t* loop;
     uv_timer_t* handle;
     uint64_t timeout;
     uint64_t repeat;

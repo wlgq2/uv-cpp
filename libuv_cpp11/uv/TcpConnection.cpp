@@ -8,9 +8,9 @@
    Description:
 */
 
-#include "TcpConnection.h"
-#include "TcpServer.h"
-#include "Async.h"
+#include "uv/TcpConnection.h"
+#include "uv/TcpServer.h"
+#include "uv/Async.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -32,7 +32,7 @@ struct write_arg_t
     AfterWriteCallback callback;
 };
 
-TcpConnection::TcpConnection(uv_loop_t* loop,std::string& name,uv_tcp_t* client,bool isConnected)
+TcpConnection::TcpConnection(EventLoop* loop,std::string& name,uv_tcp_t* client,bool isConnected)
     :name(name),
     connected(isConnected),
     loop(loop),

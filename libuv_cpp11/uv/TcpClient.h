@@ -13,7 +13,7 @@
 
 #include  <uv.h>
 #include  <functional>
-#include  "TcpConnection.h"
+#include  "uv/TcpConnection.h"
 
 namespace uv
 {
@@ -25,7 +25,7 @@ using OnConnectClose =  std::function<void()> ;
 class TcpClient
 {
 public:
-    TcpClient(uv_loop_t* loop);
+    TcpClient(EventLoop* loop);
     ~TcpClient();
 
     void connect(const char* ip, unsigned short port);
@@ -60,7 +60,7 @@ public:
     }
 
 protected:
-    uv_loop_t* loop;
+    EventLoop* loop;
 private:
     uv_tcp_t* socket;
     uv_connect_t* connect_;

@@ -9,14 +9,14 @@
 */
 
 #include <iostream>
-#include "SignalCtrl.h"
+#include "uv/SignalCtrl.h"
 
 using namespace uv;
 using namespace std;
 
-SignalCtrl::SignalCtrl(uv_loop_t* loop)
+SignalCtrl::SignalCtrl(EventLoop* loop)
 {
-    ::uv_signal_init(loop, &signal);
+    ::uv_signal_init(loop->hanlde(), &signal);
     signal.data = static_cast<void*>(this);
 }
 

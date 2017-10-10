@@ -8,18 +8,18 @@
    Description: 
 */
 
-#include "TimerWheel.h"
+#include "uv/TimerWheel.h"
 
 using namespace uv;
 using namespace std;
 
-TimerWheel::TimerWheel(uv_loop_t* loop)
+TimerWheel::TimerWheel(EventLoop* loop)
     :TimerWheel(loop,0)
 {
 
 }
 
-TimerWheel::TimerWheel(uv_loop_t* loop,unsigned int timeout)
+TimerWheel::TimerWheel(EventLoop* loop,unsigned int timeout)
     :index(0),
     timeoutSec(timeout),
     timer(loop,1000,1000,std::bind(&TimerWheel::wheelCallback,this,std::placeholders::_1),nullptr)

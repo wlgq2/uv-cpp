@@ -21,14 +21,14 @@ using namespace std;
 using namespace uv;
 
 
-TcpServer::TcpServer(uv_loop_t* loop,int port ,const char* ip )
+TcpServer::TcpServer(EventLoop* loop,int port ,const char* ip )
     :loop(loop),
     accetper(new TcpAccepter(loop,ip,port)),
     onMessageCallback(nullptr),
     onNewConnectCallback(nullptr),
     timerWheel(loop)
 {
-    accetper->setNewConnectinonCallback( [this] (uv_loop_t* loop,uv_tcp_t* client)
+    accetper->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
     {
         struct sockaddr_in addr;
         int len = sizeof(struct sockaddr_in);

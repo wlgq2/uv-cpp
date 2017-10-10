@@ -8,21 +8,21 @@
    Description: 
 */
 
-#include "TcpAccepter.h"
+#include "uv/TcpAccepter.h"
 #include <iostream>
 
 
 using namespace std;
 using namespace uv;
 
-TcpAccepter::TcpAccepter(uv_loop_t* loop,const char* ip,int port)
+TcpAccepter::TcpAccepter(EventLoop* loop,const char* ip,int port)
     :loop(nullptr),
     newConnectionCallback(nullptr)
 {
     struct sockaddr_in addr;
     this->loop =loop;
     ::uv_ip4_addr(ip, port,&addr);
-    ::uv_tcp_init(loop, &server);
+    ::uv_tcp_init(loop->hanlde(), &server);
     ::uv_tcp_bind(&server, (const sockaddr*)&addr,0);
     server.data = (void* )this;
 }
@@ -34,7 +34,7 @@ TcpAccepter:: ~TcpAccepter()
 
 }
 
-uv_loop_t* TcpAccepter::getLoop()
+EventLoop* TcpAccepter::getLoop()
 {
     return loop;
 }
@@ -59,7 +59,7 @@ void TcpAccepter::listen()
         }
         TcpAccepter* accept = static_cast<TcpAccepter*>(server->data);
         uv_tcp_t* client =new uv_tcp_t();
-        uv_tcp_init(accept->getLoop(), client);
+        ::uv_tcp_init(accept->getLoop()->hanlde(), client);
 
         if ( 0 == ::uv_accept(server, (uv_stream_t*) client))
         {

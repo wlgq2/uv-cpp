@@ -14,11 +14,12 @@
 #include <iostream>
 #include <memory>
 
-#include <uv.h>
+
 #include <chrono>
 #include <functional>
 #include <atomic>
 
+#include <uv/EventLoop.h>
 
 namespace uv
 {
@@ -44,7 +45,7 @@ class TcpConnection : public std::enable_shared_from_this<TcpConnection>
 {
 
 public :
-    TcpConnection(uv_loop_t* loop,std::string& name,uv_tcp_t* client,bool isConnected = true);
+    TcpConnection(EventLoop* loop,std::string& name,uv_tcp_t* client,bool isConnected = true);
     virtual ~TcpConnection();
     void onMessage(const char* buf,ssize_t size);
     void onClose();
@@ -81,7 +82,7 @@ public :
 private :
     std::string name;
     bool connected;
-    uv_loop_t* loop;
+    EventLoop* loop;
     uv_tcp_t* client;
 
     std::weak_ptr<ConnectionElement> element;

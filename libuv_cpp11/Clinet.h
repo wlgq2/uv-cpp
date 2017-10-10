@@ -9,7 +9,7 @@
 class Client : public uv::TcpClient
 {
 public:
-    Client(uv_loop_t* loop)
+    Client(uv::EventLoop* loop)
         :TcpClient(loop)
     {
         setConnectCloseCallback(std::bind(&Client::onConnectClose,this));

@@ -11,9 +11,11 @@
 #ifndef SIGNAL_CTRL_H
 #define SIGNAL_CTRL_H
 
-#include <uv.h>
+
 #include <map>
 #include <functional>
+
+#include "uv/EventLoop.h"
 
 namespace uv
 {
@@ -23,7 +25,7 @@ using SignalHandle = std::function<void(int)>;
 class SignalCtrl
 {
 public:
-    SignalCtrl(uv_loop_t* loop);
+    SignalCtrl(EventLoop* loop);
 
     void setHandle(int sig, SignalHandle handle);
     bool handle(int signum);
