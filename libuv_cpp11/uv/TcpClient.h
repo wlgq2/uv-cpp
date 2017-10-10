@@ -11,7 +11,6 @@
 #ifndef   TCP_CLIENT_H
 #define   TCP_CLIENT_H
 
-#include  <uv.h>
 #include  <functional>
 #include  "uv/TcpConnection.h"
 

@@ -21,7 +21,7 @@ EventLoop::EventLoop(EventLoop::Mode mode)
     else
     {
         loop = new uv_loop_t();
-        uv_loop_init(loop);
+        ::uv_loop_init(loop);
     }
 }
 
