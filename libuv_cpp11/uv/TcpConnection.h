@@ -51,7 +51,7 @@ public :
     void onClose();
 
     int write(const char* buf,unsigned int size,AfterWriteCallback callback);
-    void writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback);
+    void writeInLoop(const char* buf,ssize_t size,AfterWriteCallback callback);
 
 
     void setElement(std::shared_ptr<ConnectionElement> conn);

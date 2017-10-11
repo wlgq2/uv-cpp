@@ -10,29 +10,29 @@ class Client : public uv::TcpClient
 {
 public:
     Client(uv::EventLoop* loop)
-        :TcpClient(loop)
+        :TcpClient(loop),
+        sockAddr(nullptr)
     {
         setConnectCloseCallback(std::bind(&Client::onConnectClose,this));
         setConnectCallback(std::bind(&Client::onConnect,this,std::placeholders::_1));
         setMessageCallback(std::bind(&Client::newMessage,this,std::placeholders::_1,std::placeholders::_2));
     }
 
-    void connectToServer(std::string& ip,int port)
+    void connectToServer(uv::SocketAddr& addr)
     {
-        this->port = port;
-        this->ip = ip;
-        connect(ip.c_str(),port);
+        sockAddr = std::make_shared<uv::SocketAddr>(addr);
+        connect(addr);
     }
 
     void onConnectClose()
     {
-        connect(ip.c_str(),port);
+        connect(*(sockAddr.get()));
     }
     void onConnect(bool successed)
     {
         if(!successed)
         {
-            connect(ip.c_str(),port);
+            connect(*(sockAddr.get()));
         }
     }
 
@@ -42,7 +42,6 @@ public:
     }
 
 private:
-    std::string ip;
-    int port;
+    std::shared_ptr<uv::SocketAddr> sockAddr;
 };
 #endif

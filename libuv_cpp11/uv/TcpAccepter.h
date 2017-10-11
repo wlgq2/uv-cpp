@@ -8,13 +8,14 @@
    Description: 
 */
 
-#ifndef TCP_ACCEPTER_H
-#define TCP_ACCEPTER_H
+#ifndef     TCP_ACCEPTER_H
+#define     TCP_ACCEPTER_H
 
 
 #include <functional>
 
 #include "uv/EventLoop.h"
+#include "uv/SocketAddr.h"
 
 namespace uv
 {
@@ -24,7 +25,7 @@ using NewConnectionCallback  =    std::function<void(EventLoop* ,uv_tcp_t*)> ;
 class TcpAccepter
 {
 public:
-    TcpAccepter(EventLoop* loop,const char* ip,int port);
+    TcpAccepter(EventLoop* loop, SocketAddr& addr);
     virtual ~TcpAccepter();
 
     void listen();

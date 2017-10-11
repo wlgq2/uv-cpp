@@ -14,14 +14,14 @@ using namespace uv;
 
 EventLoop::EventLoop(EventLoop::Mode mode)
 {
-    if (mode == EventLoop::DefaultLoop)
+    if (mode == EventLoop::NewLoop)
     {
-        loop = uv_default_loop();
+        loop = new uv_loop_t();
+        ::uv_loop_init(loop); 
     }
     else
     {
-        loop = new uv_loop_t();
-        ::uv_loop_init(loop);
+        loop = uv_default_loop();
     }
 }
 

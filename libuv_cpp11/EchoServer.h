@@ -7,7 +7,7 @@
 class EchoServer :public uv::TcpServer
 {
 public:
-    EchoServer(uv::EventLoop* loop,int port ,const char* ip);
+    EchoServer(uv::EventLoop* loop, uv::SocketAddr& addr);
 private :
     void newMessage(std::shared_ptr<uv::TcpConnection> connection,const char* buf,ssize_t size);
 };

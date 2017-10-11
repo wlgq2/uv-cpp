@@ -2,7 +2,9 @@
 #include "EchoServer.h"
 #include "uv/SignalCtrl.h"
 #include "uv/Async.h"
+#include "uv/SocketAddr.h"
 #include "Clinet.h"
+
 
 using namespace uv;
 
@@ -15,7 +17,7 @@ using namespace uv;
 
 int main(int argc,char** args)
 {
-//定义事件分发器类。
+//定义事件分发器类
     EventLoop* loop = new EventLoop(EventLoop::DefaultLoop);
 
 //接管信号
@@ -26,7 +28,8 @@ int main(int argc,char** args)
 
 //server对象
 #if  TEST_SERVER
-    EchoServer server(loop, 10003, "0.0.0.0");
+    SocketAddr addr1("0.0.0.0", 10003, SocketAddr::Ipv4);
+    EchoServer server(loop, addr1);
     server.setTimeout(40);
     server.start();
 #endif
@@ -34,9 +37,9 @@ int main(int argc,char** args)
 
 //client对象
 #if  TEST_CLIENT
+    SocketAddr addr2("127.0.0.1", 10002, SocketAddr::Ipv4);
     Client client(loop);
-    std::string ip ("192.168.1.132");
-    client.connectToServer(ip,10002);
+    client.connectToServer(addr2);
 #endif
 
 

@@ -13,6 +13,7 @@
 
 #include  <functional>
 #include  "uv/TcpConnection.h"
+#include "uv/SocketAddr.h"
 
 namespace uv
 {
@@ -27,7 +28,7 @@ public:
     TcpClient(EventLoop* loop);
     ~TcpClient();
 
-    void connect(const char* ip, unsigned short port);
+    void connect(SocketAddr& addr);
 
     void onConnect(bool successed);
     void onConnectClose(std::string& name);
@@ -63,7 +64,6 @@ protected:
 private:
     uv_tcp_t* socket;
     uv_connect_t* connect_;
-    struct sockaddr_in dest;
     ConnectCallback connectCallback;
     NewMessageCallback onMessageCallback;
     OnConnectClose onConnectCloseCallback;

@@ -21,9 +21,9 @@ using namespace std;
 using namespace uv;
 
 
-TcpServer::TcpServer(EventLoop* loop,int port ,const char* ip )
+TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
     :loop(loop),
-    accetper(new TcpAccepter(loop,ip,port)),
+    accetper(new TcpAccepter(loop, addr)),
     onMessageCallback(nullptr),
     onNewConnectCallback(nullptr),
     timerWheel(loop)

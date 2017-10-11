@@ -35,10 +35,9 @@ TcpClient::~TcpClient()
 }
 
 
-void TcpClient::connect(const char* ip, unsigned short port)
+void TcpClient::connect(SocketAddr& addr)
 {
-    ::uv_ip4_addr(ip, port, &dest);
-    ::uv_tcp_connect(connect_, socket, (struct sockaddr*)&dest, [](uv_connect_t* req, int status)
+    ::uv_tcp_connect(connect_, socket, addr.Addr(), [](uv_connect_t* req, int status)
     {
         auto handle = static_cast<TcpClient*>(((uv_tcp_t *)(req->handle))->data);
         if (0 != status)

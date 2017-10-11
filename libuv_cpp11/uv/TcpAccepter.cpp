@@ -15,15 +15,12 @@
 using namespace std;
 using namespace uv;
 
-TcpAccepter::TcpAccepter(EventLoop* loop,const char* ip,int port)
-    :loop(nullptr),
+TcpAccepter::TcpAccepter(EventLoop* loop, SocketAddr& addr)
+    :loop(loop),
     newConnectionCallback(nullptr)
 {
-    struct sockaddr_in addr;
-    this->loop =loop;
-    ::uv_ip4_addr(ip, port,&addr);
     ::uv_tcp_init(loop->hanlde(), &server);
-    ::uv_tcp_bind(&server, (const sockaddr*)&addr,0);
+    ::uv_tcp_bind(&server, addr.Addr(),0);
     server.data = (void* )this;
 }
 
