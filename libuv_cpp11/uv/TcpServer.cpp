@@ -79,7 +79,7 @@ void TcpServer::start()
 
 void TcpServer::addConnnection(std::string& name,std::shared_ptr<TcpConnection> connection)
 {
-    connnections.insert(pair<string,shared_ptr<TcpConnection>>(name,connection));
+    connnections.insert(pair<string,shared_ptr<TcpConnection>>(std::move(name),connection));
 }
 
 void TcpServer::removeConnnection(string& name)

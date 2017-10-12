@@ -32,6 +32,16 @@ struct write_arg_t
     AfterWriteCallback callback;
 };
 
+TcpConnection:: ~TcpConnection()
+{
+    //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
+    ::uv_close((uv_handle_t*)client,
+        [](uv_handle_t* handle)
+    {
+        delete handle;
+    });
+}
+
 TcpConnection::TcpConnection(EventLoop* loop,std::string& name,uv_tcp_t* client,bool isConnected)
     :name(name),
     connected(isConnected),
@@ -54,15 +64,7 @@ TcpConnection::TcpConnection(EventLoop* loop,std::string& name,uv_tcp_t* client,
     &TcpConnection::onMesageReceive);
 }
 
-TcpConnection:: ~TcpConnection()
-{
-    //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
-    ::uv_close((uv_handle_t*) client,
-    [](uv_handle_t* handle)
-    {
-        delete handle;
-    });
-}
+
 
 
 void TcpConnection::onMessage(const char* buf,ssize_t size)
