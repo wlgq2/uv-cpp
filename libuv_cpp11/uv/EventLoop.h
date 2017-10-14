@@ -12,6 +12,7 @@
 #define   EVENT_LOOP_H
 
 #include <uv.h>
+#include <thread>
 
 namespace uv
 {
@@ -29,9 +30,11 @@ public:
     ~EventLoop();
 
     int run();
+    bool isRunInLoopThread();
     uv_loop_t* hanlde();
 
 private:
+    std::shared_ptr<std::thread::id> loopThreadId;
     uv_loop_t* loop;
 };
 }

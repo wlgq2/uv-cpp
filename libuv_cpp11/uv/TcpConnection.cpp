@@ -112,6 +112,12 @@ int TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback ca
 
 void TcpConnection::writeInLoop(const char* buf,ssize_t size,AfterWriteCallback callback)
 {
+    if (loop->isRunInLoopThread())
+    {
+        write(buf, size, callback);
+		    return;
+    }
+
     Async<struct write_arg_t>* async = new Async<struct write_arg_t>(loop, 
     std::bind([this](Async<struct write_arg_t>* handle, struct write_arg_t * data)
     {
