@@ -47,7 +47,7 @@ public:
         return (ipv_ == Ipv6) ? reinterpret_cast<const sockaddr*>(&ipv6_) : reinterpret_cast<const sockaddr*>(&ipv4_);
     }
 
-    std::string AddrStr()
+    std::string toStr()
     {
         return ip_ + ":" + std::to_string(port_);
     }

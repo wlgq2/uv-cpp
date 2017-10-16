@@ -8,13 +8,15 @@
    Description:
 */
 
+#ifndef UV_ASYNC_H
+#define UV_ASYNC_H
+
 #include <memory>
 #include <functional>
 
 #include "uv/EventLoop.h"
 
-#ifndef UV_ASYNC_H
-#define UV_ASYNC_H
+
 
 namespace uv
 {

@@ -79,5 +79,5 @@ bool TcpAccepter::isListen()
 
 void TcpAccepter::setNewConnectinonCallback(NewConnectionCallback callback)
 {
-    callback = callback;
+    callback_ = callback;
 }

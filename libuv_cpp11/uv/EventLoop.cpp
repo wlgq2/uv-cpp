@@ -13,7 +13,7 @@
 using namespace uv;
 
 EventLoop::EventLoop(EventLoop::Mode mode)
-	:loopThreadId_(nullptr)
+    :loopThreadId_(nullptr)
 {
     if (mode == EventLoop::NewLoop)
     {
