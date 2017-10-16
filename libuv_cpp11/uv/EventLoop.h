@@ -8,8 +8,8 @@
    Description: 
 */
 
-#ifndef   EVENT_LOOP_H
-#define   EVENT_LOOP_H
+#ifndef   UV_EVENT_LOOP_H
+#define   UV_EVENT_LOOP_H
 
 #include <uv.h>
 #include <thread>
@@ -34,8 +34,8 @@ public:
     uv_loop_t* hanlde();
 
 private:
-    std::shared_ptr<std::thread::id> loopThreadId;
-    uv_loop_t* loop;
+    std::shared_ptr<std::thread::id> loopThreadId_;
+    uv_loop_t* loop_;
 };
 }
 #endif // !  LOOP_H

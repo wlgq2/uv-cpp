@@ -16,12 +16,12 @@ using namespace std;
 using namespace uv;
 
 TcpAccepter::TcpAccepter(EventLoop* loop, SocketAddr& addr)
-    :loop(loop),
-    newConnectionCallback(nullptr)
+    :loop_(loop),
+    callback_(nullptr)
 {
-    ::uv_tcp_init(loop->hanlde(), &server);
-    ::uv_tcp_bind(&server, addr.Addr(),0);
-    server.data = (void* )this;
+    ::uv_tcp_init(loop->hanlde(), &server_);
+    ::uv_tcp_bind(&server_, addr.Addr(),0);
+    server_.data = (void* )this;
 }
 
 
@@ -31,22 +31,22 @@ TcpAccepter:: ~TcpAccepter()
 
 }
 
-EventLoop* TcpAccepter::getLoop()
+EventLoop* TcpAccepter::Loop()
 {
-    return loop;
+    return loop_;
 }
 
 void TcpAccepter::onNewConnect(uv_tcp_t* client)
 {
-    if(nullptr !=newConnectionCallback)
+    if(nullptr !=callback_)
     {
-        newConnectionCallback(loop,client);
+        callback_(loop_,client);
     }
 }
 
 void TcpAccepter::listen()
 {
-    ::uv_listen((uv_stream_t*) &server, 128,
+    ::uv_listen((uv_stream_t*) &server_, 128,
     [](uv_stream_t *server, int status)
     {
         if (status < 0)
@@ -56,7 +56,7 @@ void TcpAccepter::listen()
         }
         TcpAccepter* accept = static_cast<TcpAccepter*>(server->data);
         uv_tcp_t* client =new uv_tcp_t();
-        ::uv_tcp_init(accept->getLoop()->hanlde(), client);
+        ::uv_tcp_init(accept->Loop()->hanlde(), client);
 
         if ( 0 == ::uv_accept(server, (uv_stream_t*) client))
         {
@@ -68,16 +68,16 @@ void TcpAccepter::listen()
             delete client;
         }
     });
-    listened = true;
+    listened_ = true;
 }
 
 
 bool TcpAccepter::isListen()
 {
-    return listened;
+    return listened_;
 }
 
 void TcpAccepter::setNewConnectinonCallback(NewConnectionCallback callback)
 {
-    newConnectionCallback = callback;
+    callback = callback;
 }

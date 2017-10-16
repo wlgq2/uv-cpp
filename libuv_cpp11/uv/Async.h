@@ -3,17 +3,19 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-9-30
+   Last modified: 2017-10-16
 
    Description:
 */
 
 #include <memory>
 #include <functional>
+
 #include "uv/EventLoop.h"
 
-#ifndef ASYNC_H
-#define ASYNC_H
+#ifndef UV_ASYNC_H
+#define UV_ASYNC_H
+
 namespace uv
 {
 
@@ -26,42 +28,42 @@ public:
 
 
     Async<ValueType>(EventLoop* loop,AsyncCallback callback)
-        :handle(new uv_async_t),
-        asyncCallback(callback),
-        data(nullptr)
+        : handle_(new uv_async_t),
+        callback_(callback),
+        valuePtr_(nullptr)
     {
-        ::uv_async_init(loop->hanlde(), handle, Async<ValueType>::asyncProcess);
-        handle->data = static_cast<void*>(this);
+        ::uv_async_init(loop->hanlde(), handle_, Async<ValueType>::process);
+        handle_->data = static_cast<void*>(this);
     }
 
     void setData(ValueType* value)
     {
-        data = value;
+        valuePtr_ = value;
     }
 
     void runInLoop()
     {
-        ::uv_async_send(handle);
+        ::uv_async_send(handle_);
     }
 
 
     void close()
     {
-        ::uv_close((uv_handle_t*)handle, [](uv_handle_t* handle)
+        ::uv_close((uv_handle_t*)handle_, [](uv_handle_t* handle)
         {
             delete (uv_async_t*)handle;
         });
     }
 private:
-    uv_async_t* handle;
-    AsyncCallback asyncCallback;
-    ValueType* data;
+    uv_async_t* handle_;
+    AsyncCallback callback_;
+    ValueType* valuePtr_;
 
-    static void asyncProcess(uv_async_t* handle)
+    static void process(uv_async_t* handle)
     {
         auto async = static_cast<Async*>(handle->data);
-		if(async->asyncCallback)
-			async->asyncCallback(async,async->data);
+		if(async->callback_)
+			async->callback_(async,async->valuePtr_);
     }
 };
 

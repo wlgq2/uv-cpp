@@ -22,13 +22,13 @@ using namespace uv;
 
 
 TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
-    :loop(loop),
-    accetper(new TcpAccepter(loop, addr)),
-    onMessageCallback(nullptr),
-    onNewConnectCallback(nullptr),
-    timerWheel(loop)
+    :loop_(loop),
+    accetper_(new TcpAccepter(loop, addr)),
+    onMessageCallback_(nullptr),
+    onNewConnectCallback_(nullptr),
+    timerWheel_(loop)
 {
-    accetper->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
+    accetper_->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
     {
         struct sockaddr_in addr;
         int len = sizeof(struct sockaddr_in);
@@ -44,9 +44,9 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
             connection->setMessageCallback(std::bind(&TcpServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
             connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection,this,placeholders::_1));
             addConnnection(key,connection);
-            timerWheel.insertNew(connection);
-            if(onNewConnectCallback)
-                onNewConnectCallback(connection);
+            timerWheel_.insertNew(connection);
+            if(onNewConnectCallback_)
+                onNewConnectCallback_(connection);
         }
         else
         {
@@ -66,31 +66,31 @@ TcpServer:: ~TcpServer()
 
 void TcpServer::setTimeout(unsigned int timeout)
 {
-    timerWheel.setTimeout(timeout);
+    timerWheel_.setTimeout(timeout);
 }
 
 void TcpServer::start()
 {
-    timerWheel.start();
-    accetper->listen();
+    timerWheel_.start();
+    accetper_->listen();
 }
 
 
 
 void TcpServer::addConnnection(std::string& name,std::shared_ptr<TcpConnection> connection)
 {
-    connnections.insert(pair<string,shared_ptr<TcpConnection>>(std::move(name),connection));
+    connnections_.insert(pair<string,shared_ptr<TcpConnection>>(std::move(name),connection));
 }
 
 void TcpServer::removeConnnection(string& name)
 {
-    connnections.erase(name);
+    connnections_.erase(name);
 }
 
 shared_ptr<TcpConnection> TcpServer::getConnnection(string& name)
 {
-    auto rst = connnections.find(name);
-    if(rst == connnections.end())
+    auto rst = connnections_.find(name);
+    if(rst == connnections_.end())
     {
         return nullptr;
     }
@@ -100,21 +100,21 @@ shared_ptr<TcpConnection> TcpServer::getConnnection(string& name)
 void TcpServer::closeConnection(string& name)
 {
     if(nullptr != getConnnection(name))
-        connnections.erase(name);
+        connnections_.erase(name);
 }
 
 
 void TcpServer::onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
 {
-    if(onMessageCallback)
-        onMessageCallback(connection,buf,size);
-    timerWheel.insert(connection);
+    if(onMessageCallback_)
+        onMessageCallback_(connection,buf,size);
+    timerWheel_.insert(connection);
 }
 
 
 void TcpServer::setMessageCallback(OnMessageCallback callback)
 {
-    onMessageCallback = callback;
+    onMessageCallback_ = callback;
 }
 
 
@@ -155,5 +155,5 @@ void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,After
 
 void TcpServer::setNewConnectCallback(OnNewConnectCallback callback)
 {
-    onNewConnectCallback = callback;
+    onNewConnectCallback_ = callback;
 }

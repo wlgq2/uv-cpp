@@ -8,8 +8,8 @@
    Description: 
 */
 
-#ifndef     TCP_ACCEPTER_H
-#define     TCP_ACCEPTER_H
+#ifndef     UV_TCP_ACCEPTER_H
+#define     UV_TCP_ACCEPTER_H
 
 
 #include <functional>
@@ -32,15 +32,15 @@ public:
     bool isListen();
     void setNewConnectinonCallback( NewConnectionCallback callback);
 
-    EventLoop* getLoop();
+    EventLoop* Loop();
     void onNewConnect(uv_tcp_t* client);
 
 private:
-    bool listened;
-    EventLoop* loop;
-    NewConnectionCallback newConnectionCallback;
+    bool listened_;
+    EventLoop* loop_;
+    NewConnectionCallback callback_;
 
-    uv_tcp_t server;
+    uv_tcp_t server_;
 
 };
 

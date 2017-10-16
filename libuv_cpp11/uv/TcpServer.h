@@ -8,8 +8,8 @@
    Description:
 */
 
-#ifndef PT_SERVER_H
-#define PT_SERVER_H
+#ifndef UV_TCP_SERVER_H
+#define UV_TCP_SERVER_H
 
 #include <iostream>
 #include <functional>
@@ -52,15 +52,15 @@ public:
     void setTimeout(unsigned int);
 
 protected:
-    EventLoop* loop;
+    EventLoop* loop_;
 private:
-    std::shared_ptr <TcpAccepter> accetper;
-    std::map<std::string ,std::shared_ptr<TcpConnection>>  connnections;
+    std::shared_ptr <TcpAccepter> accetper_;
+    std::map<std::string ,std::shared_ptr<TcpConnection>>  connnections_;
 
 
-    OnMessageCallback onMessageCallback;
-    OnNewConnectCallback onNewConnectCallback;
-    TimerWheel timerWheel;
+    OnMessageCallback onMessageCallback_;
+    OnNewConnectCallback onNewConnectCallback_;
+    TimerWheel timerWheel_;
 
 };
 

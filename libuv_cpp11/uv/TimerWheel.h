@@ -8,8 +8,8 @@
    Description: 
 */
 
-#ifndef   TIMER_WHEEL_H
-#define   TIMER_WHEEL_H
+#ifndef   UV_TIMER_WHEEL_H
+#define   UV_TIMER_WHEEL_H
 
 #include <vector>
 #include <set>
@@ -56,9 +56,9 @@ public:
     void insert(std::shared_ptr<TcpConnection> connnection);
     void insertNew(std::shared_ptr<TcpConnection> connection);
 private:
-    unsigned int index;
-    unsigned int timeoutSec;
-    Timer<void*> timer;
+    unsigned int index_;
+    unsigned int timeoutSec_;
+    Timer<void*> timer_;
 
     std::vector< std::set< std::shared_ptr<ConnectionElement>>> wheel;
 

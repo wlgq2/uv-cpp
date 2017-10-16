@@ -13,46 +13,46 @@
 using namespace uv;
 
 EventLoop::EventLoop(EventLoop::Mode mode)
-	:loopThreadId(nullptr)
+	:loopThreadId_(nullptr)
 {
     if (mode == EventLoop::NewLoop)
     {
-        loop = new uv_loop_t();
-        ::uv_loop_init(loop); 
+        loop_ = new uv_loop_t();
+        ::uv_loop_init(loop_);
     }
     else
     {
-        loop = uv_default_loop();
+        loop_ = uv_default_loop();
     }
 }
 
 EventLoop::~EventLoop()
 {
-    if (loop != uv_default_loop())
+    if (loop_ != uv_default_loop())
     {
-        delete loop;
+        delete loop_;
     }
 }
 
 uv_loop_t* EventLoop::hanlde()
 {
-    return loop;
+    return loop_;
 }
 
 int EventLoop::run()
 {
-	loopThreadId = std::make_shared<std::thread::id>();
-	*loopThreadId = std::this_thread::get_id();
-    return ::uv_run(loop, UV_RUN_DEFAULT);
+    loopThreadId_ = std::make_shared<std::thread::id>();
+    *loopThreadId_ = std::this_thread::get_id();
+    return ::uv_run(loop_, UV_RUN_DEFAULT);
 }
 
 
 bool EventLoop::isRunInLoopThread()
 {
-	if (loopThreadId)
-	{
-		return std::this_thread::get_id() == *(loopThreadId);
-	}
-	//EventLoop未运行.
-	return false;
+    if (loopThreadId_)
+    {
+        return std::this_thread::get_id() == *(loopThreadId_);
+    }
+    //EventLoop未运行.
+    return false;
 }

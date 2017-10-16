@@ -18,7 +18,7 @@ using namespace uv;
 
 struct write_arg_t
 {
-    write_arg_t(shared_ptr<TcpConnection> conn=nullptr,const char* buf = nullptr, unsigned int size = 0, AfterWriteCallback callback = nullptr)
+    write_arg_t(shared_ptr<TcpConnection> conn=nullptr,const char* buf = nullptr, ssize_t size = 0, AfterWriteCallback callback = nullptr)
         :connection(conn),
         buf(buf),
         size(size),
@@ -28,14 +28,14 @@ struct write_arg_t
     }
     shared_ptr<TcpConnection> connection;
     const char* buf;
-    unsigned int size;
+    ssize_t size;
     AfterWriteCallback callback;
 };
 
 TcpConnection:: ~TcpConnection()
 {
     //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
-    ::uv_close((uv_handle_t*)client,
+    ::uv_close((uv_handle_t*)client_,
         [](uv_handle_t* handle)
     {
         delete handle;
@@ -43,12 +43,12 @@ TcpConnection:: ~TcpConnection()
 }
 
 TcpConnection::TcpConnection(EventLoop* loop,std::string& name,uv_tcp_t* client,bool isConnected)
-    :name(name),
-    connected(isConnected),
-    loop(loop),
-    client(client),
-    onMessageCallback(nullptr),
-    onConnectCloseCallback(nullptr)
+    :name_(name),
+    connected_(isConnected),
+    loop_(loop),
+    client_(client),
+    onMessageCallback_(nullptr),
+    onConnectCloseCallback_(nullptr)
 {
     client->data = static_cast<void*>(this);
     ::uv_read_start((uv_stream_t*) client,
@@ -69,24 +69,24 @@ TcpConnection::TcpConnection(EventLoop* loop,std::string& name,uv_tcp_t* client,
 
 void TcpConnection::onMessage(const char* buf,ssize_t size)
 {
-    if(onMessageCallback)
-        onMessageCallback(shared_from_this(),buf,size);
+    if(onMessageCallback_)
+        onMessageCallback_(shared_from_this(),buf,size);
 }
 
 void TcpConnection::onClose()
 {
-    if(onConnectCloseCallback)
-        onConnectCloseCallback(name);
+    if(onConnectCloseCallback_)
+        onConnectCloseCallback_(name_);
 }
 
-int TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback callback)
+int TcpConnection::write(const char* buf,ssize_t size,AfterWriteCallback callback)
 {
     int rst;
-    if(connected)
+    if(connected_)
     {
         write_req_t* req = new write_req_t;
-        req->buf = uv_buf_init((char*)buf, size);
-        rst = ::uv_write((uv_write_t*) req, (uv_stream_t*) client, &req->buf, 1,
+        req->buf = uv_buf_init((char*)buf, static_cast<unsigned int>(size));
+        rst = ::uv_write((uv_write_t*) req, (uv_stream_t*) client_, &req->buf, 1,
         [](uv_write_t *req, int status)
         {
             if (status)
@@ -112,13 +112,13 @@ int TcpConnection::write(const char* buf,unsigned int size,AfterWriteCallback ca
 
 void TcpConnection::writeInLoop(const char* buf,ssize_t size,AfterWriteCallback callback)
 {
-    if (loop->isRunInLoopThread())
+    if (loop_->isRunInLoopThread())
     {
         write(buf, size, callback);
-		    return;
+        return;
     }
 
-    Async<struct write_arg_t>* async = new Async<struct write_arg_t>(loop, 
+    Async<struct write_arg_t>* async = new Async<struct write_arg_t>(loop_, 
     std::bind([this](Async<struct write_arg_t>* handle, struct write_arg_t * data)
     {
         auto connection = data->connection;
@@ -138,12 +138,12 @@ void TcpConnection::writeInLoop(const char* buf,ssize_t size,AfterWriteCallback 
 
 void TcpConnection::setElement(shared_ptr<ConnectionElement> conn)
 {
-    element = conn;
+    element_ = conn;
 }
 
 std::weak_ptr<ConnectionElement> TcpConnection::Element()
 {
-    return element;
+    return element_;
 }
 
 void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf)

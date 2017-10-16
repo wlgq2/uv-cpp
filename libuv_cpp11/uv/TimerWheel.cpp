@@ -20,56 +20,56 @@ TimerWheel::TimerWheel(EventLoop* loop)
 }
 
 TimerWheel::TimerWheel(EventLoop* loop,unsigned int timeout)
-    :index(0),
-    timeoutSec(timeout),
-    timer(loop,1000,1000,std::bind(&TimerWheel::wheelCallback,this,std::placeholders::_1),nullptr)
+    :index_(0),
+    timeoutSec_(timeout),
+    timer_(loop,1000,1000,std::bind(&TimerWheel::wheelCallback,this,std::placeholders::_1),nullptr)
 {
 
 }
 
 void TimerWheel::setTimeout(unsigned int timeout)
 {
-    timeoutSec = timeout;
+    timeoutSec_ = timeout;
 }
 
 void TimerWheel::start()
 {
-    if(timeoutSec)
+    if(timeoutSec_)
     {
-        wheel.resize(timeoutSec);
-        timer.start();
+        wheel.resize(timeoutSec_);
+        timer_.start();
     }
 }
 
 void TimerWheel::insert(shared_ptr<TcpConnection> connnection)
 {
-    if(!timeoutSec)
+    if(!timeoutSec_)
         return;
     shared_ptr<ConnectionElement> conn = connnection->Element().lock();
     if(conn)
     {
-        wheel[index].insert(conn);
+        wheel[index_].insert(conn);
     }
 }
 
 
 void TimerWheel::insertNew(shared_ptr<TcpConnection> connection)
 {
-    if(!timeoutSec)
+    if(!timeoutSec_)
         return;
     shared_ptr<ConnectionElement> conn(new ConnectionElement(connection));
     connection->setElement(conn);
-    wheel[index].insert(conn);
+    wheel[index_].insert(conn);
 }
 
 void TimerWheel::wheelCallback(void* data)
 {
     data = data;
-    if(!timeoutSec)
+    if(!timeoutSec_)
         return;
-    if(++index ==timeoutSec)
+    if(++index_ ==timeoutSec_)
     {
-        index=0;
+        index_=0;
     }
-    wheel[index].clear();
+    wheel[index_].clear();
 }

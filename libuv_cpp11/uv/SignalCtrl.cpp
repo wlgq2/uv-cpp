@@ -16,17 +16,17 @@ using namespace std;
 
 SignalCtrl::SignalCtrl(EventLoop* loop)
 {
-    ::uv_signal_init(loop->hanlde(), &signal);
-    signal.data = static_cast<void*>(this);
+    ::uv_signal_init(loop->hanlde(), &signal_);
+    signal_.data = static_cast<void*>(this);
 }
 
 void SignalCtrl::setHandle(int sig, SignalHandle handle)
 {
-    auto rst = hanldes.find(sig);
-    if (rst == hanldes.end())
+    auto rst = hanldes_.find(sig);
+    if (rst == hanldes_.end())
     {
-        ::uv_signal_start(&signal, &SignalCtrl::onSignal, sig);
-        hanldes.insert(pair<int, SignalHandle>(sig, handle)) ;
+        ::uv_signal_start(&signal_, &SignalCtrl::onSignal, sig);
+        hanldes_.insert(pair<int, SignalHandle>(sig, handle)) ;
     }
     else
     {
@@ -36,8 +36,8 @@ void SignalCtrl::setHandle(int sig, SignalHandle handle)
 
 bool SignalCtrl::handle(int signum)
 {
-    auto rst = hanldes.find(signum);
-    if (rst == hanldes.end())
+    auto rst = hanldes_.find(signum);
+    if (rst == hanldes_.end())
     {
         rst->second(signum);
         return true;

@@ -17,16 +17,16 @@ using namespace std;
 
 
 TcpClient::TcpClient(EventLoop* loop)
-    :loop(loop),
-    socket(new uv_tcp_t()),
+    :loop_(loop),
+    socket_(new uv_tcp_t()),
     connect_(new uv_connect_t()),
-    connectCallback(nullptr),
-    onMessageCallback(nullptr),
-    onConnectCloseCallback(nullptr),
-    tcpConnection(nullptr)
+    connectCallback_(nullptr),
+    onMessageCallback_(nullptr),
+    onConnectCloseCallback_(nullptr),
+    connection_(nullptr)
 {
-    ::uv_tcp_init(loop->hanlde(), socket);
-    socket->data = static_cast<void*>(this);
+    ::uv_tcp_init(loop->hanlde(), socket_);
+    socket_->data = static_cast<void*>(this);
 }
 
 TcpClient::~TcpClient()
@@ -37,7 +37,7 @@ TcpClient::~TcpClient()
 
 void TcpClient::connect(SocketAddr& addr)
 {
-    ::uv_tcp_connect(connect_, socket, addr.Addr(), [](uv_connect_t* req, int status)
+    ::uv_tcp_connect(connect_, socket_, addr.Addr(), [](uv_connect_t* req, int status)
     {
         auto handle = static_cast<TcpClient*>(((uv_tcp_t *)(req->handle))->data);
         if (0 != status)
@@ -58,34 +58,33 @@ void TcpClient::onConnect(bool successed)
     {
         struct sockaddr_in addr;
         int len = sizeof(struct sockaddr_in);
-        ::uv_tcp_getpeername(socket,(struct sockaddr *)&addr,&len);
+        ::uv_tcp_getpeername(socket_,(struct sockaddr *)&addr,&len);
         string name(inet_ntoa(addr.sin_addr));
         name+=":"+std::to_string(htons(addr.sin_port));
 
-        shared_ptr<TcpConnection> connection(new TcpConnection(loop,name,socket));
-        tcpConnection = connection;
-        tcpConnection->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
-        tcpConnection->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
+        connection_ = make_shared<TcpConnection>(loop_, name, socket_);
+        connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
+        connection_->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
     }
-    if(connectCallback)
-        connectCallback(successed);
+    if(connectCallback_)
+        connectCallback_(successed);
 }
 void TcpClient::onConnectClose(string& name)
 {
     updata();
-    if(onConnectCloseCallback)
-        onConnectCloseCallback();
+    if(onConnectCloseCallback_)
+        onConnectCloseCallback_();
 }
 void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
 {
-    if(onMessageCallback)
-        onMessageCallback(buf,size);
+    if(onMessageCallback_)
+        onMessageCallback_(buf,size);
 }
 
 void TcpClient::updata()
 {
-    tcpConnection = nullptr;
-    socket = new uv_tcp_t();
-    ::uv_tcp_init(loop->hanlde(), socket);
-    socket->data = static_cast<void*>(this);
+    connection_ = nullptr;
+    socket_ = new uv_tcp_t();
+    ::uv_tcp_init(loop_->hanlde(), socket_);
+    socket_->data = static_cast<void*>(this);
 }

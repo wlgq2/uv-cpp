@@ -7,8 +7,8 @@
     
    Description: 
 */
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef UV_TIMER_H
+#define UV_TIMER_H
 
 #include <functional>
 #include "uv/EventLoop.h"
@@ -26,19 +26,19 @@ public:
     using TimerCallback = std::function<void(ValueType)>;
 
     Timer(EventLoop* loop,uint64_t timeout,uint64_t repeat,TimerCallback callback, ValueType value)
-        :handle(new uv_timer_t),
-        timeout(timeout),
-        repeat(repeat),
-        timerCallback(callback),
-        arg(value)
+        :handle_(new uv_timer_t),
+        timeout_(timeout),
+        repeat_(repeat),
+        callback_(callback),
+        arg_(value)
     {
-        handle->data = static_cast<void*>(this);
-        ::uv_timer_init(loop->hanlde(), handle);
+        handle_->data = static_cast<void*>(this);
+        ::uv_timer_init(loop->hanlde(), handle_);
     }
 
     ~Timer()
     {
-        ::uv_close((uv_handle_t*)handle,
+        ::uv_close((uv_handle_t*)handle_,
             [](uv_handle_t* handle)
         {
             delete handle;
@@ -47,30 +47,30 @@ public:
 
     void start()
     {
-        ::uv_timer_start(handle, Timer<ValueType>::timerProcess, timeout, repeat);
+        ::uv_timer_start(handle_, Timer<ValueType>::process, timeout_, repeat_);
     }
 
-    TimerCallback getTimerCallback()
+    TimerCallback Callback()
     {
-        return timerCallback;
+        return callback_;
     }
 
     ValueType getArg()
     {
-        return arg;
+        return arg_;
     };
 private:
-    uv_timer_t* handle;
-    uint64_t timeout;
-    uint64_t repeat;
-    TimerCallback timerCallback;
-    ValueType arg;
+    uv_timer_t* handle_;
+    uint64_t timeout_;
+    uint64_t repeat_;
+    TimerCallback callback_;
+    ValueType arg_;
 
 
-    static void timerProcess(uv_timer_t* handle)
+    static void process(uv_timer_t* handle)
     {
         auto ptr = static_cast<Timer<ValueType>*>(handle->data);
-        auto callback = ptr->getTimerCallback();
+        auto callback = ptr->Callback();
         if (callback)
         {
             callback(ptr->getArg());

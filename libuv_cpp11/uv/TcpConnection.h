@@ -8,8 +8,8 @@
    Description:
 */
 
-#ifndef PROXY_CONNECTION_H
-#define PROXY_CONNECTION_H
+#ifndef UV_TCP_CONNECTION_H
+#define UV_TCP_CONNECTION_H
 
 #include <iostream>
 #include <memory>
@@ -50,7 +50,7 @@ public :
     void onMessage(const char* buf,ssize_t size);
     void onClose();
 
-    int write(const char* buf,unsigned int size,AfterWriteCallback callback);
+    int write(const char* buf,ssize_t size,AfterWriteCallback callback);
     void writeInLoop(const char* buf,ssize_t size,AfterWriteCallback callback);
 
 
@@ -61,34 +61,34 @@ public :
 
     void setMessageCallback(OnMessageCallback callback)
     {
-        onMessageCallback = callback;
+        onMessageCallback_ = callback;
     }
 
     void setConnectCloseCallback(OnConnectCloseCallback callback)
     {
-        onConnectCloseCallback = callback;
+        onConnectCloseCallback_ = callback;
     }
 
-    void setConnectState(bool isConnect)
+    void setConnectState(bool state)
     {
-        connected = isConnect;
+        connected_ = state;
     }
 
-    bool getConnnectState()
+    bool isConnected()
     {
-        return connected;
+        return connected_;
     }
 
 private :
-    std::string name;
-    bool connected;
-    EventLoop* loop;
-    uv_tcp_t* client;
+    std::string name_;
+    bool connected_;
+    EventLoop* loop_;
+    uv_tcp_t* client_;
 
-    std::weak_ptr<ConnectionElement> element;
+    std::weak_ptr<ConnectionElement> element_;
 
-    OnMessageCallback onMessageCallback;
-    OnConnectCloseCallback onConnectCloseCallback;
+    OnMessageCallback onMessageCallback_;
+    OnConnectCloseCallback onConnectCloseCallback_;
 
 };
 

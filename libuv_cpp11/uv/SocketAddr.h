@@ -8,10 +8,11 @@ Last modified: 2017-9-30
 Description:
 */
 
-#ifndef    SOCKET_ADDR_H
-#define    SOCKET_ADDR_H
+#ifndef    UV_SOCKET_ADDR_H
+#define    UV_SOCKET_ADDR_H
 
 #include <string>
+
 #include <uv.h>
 
 namespace uv
@@ -28,35 +29,35 @@ public:
     };
 
     SocketAddr(const char* ip, unsigned short port, IPV ipv = Ipv4)
-        :port(port),
-        ipv(ipv)
+        :port_(port),
+        ipv_(ipv)
     {
         if (ipv == Ipv6)
         {
-            ::uv_ip6_addr(ip, port, &ipv6);
+            ::uv_ip6_addr(ip, port, &ipv6_);
         }
         else
         {
-            ::uv_ip4_addr(ip, port, &ipv4);
+            ::uv_ip4_addr(ip, port, &ipv4_);
         }
     }
 
     const sockaddr* Addr()
     {
-        return (ipv == Ipv6) ? reinterpret_cast<const sockaddr*>(&ipv6) : reinterpret_cast<const sockaddr*>(&ipv4);
+        return (ipv_ == Ipv6) ? reinterpret_cast<const sockaddr*>(&ipv6_) : reinterpret_cast<const sockaddr*>(&ipv4_);
     }
 
     std::string AddrStr()
     {
-        return ip + ":" + std::to_string(port);
+        return ip_ + ":" + std::to_string(port_);
     }
 
 private:
-    std::string ip;
-    unsigned short port;
-    const IPV ipv;
-    sockaddr_in ipv4;
-    sockaddr_in6 ipv6;
+    std::string ip_;
+    unsigned short port_;
+    const IPV ipv_;
+    sockaddr_in ipv4_;
+    sockaddr_in6 ipv6_;
 };
 
 }

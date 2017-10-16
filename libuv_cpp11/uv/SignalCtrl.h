@@ -8,8 +8,8 @@
    Description: 
 */
 
-#ifndef SIGNAL_CTRL_H
-#define SIGNAL_CTRL_H
+#ifndef UV_SIGNAL_CTRL_H
+#define UV_SIGNAL_CTRL_H
 
 
 #include <map>
@@ -30,9 +30,9 @@ public:
     void setHandle(int sig, SignalHandle handle);
     bool handle(int signum);
 private:
-    uv_signal_t signal;
+    uv_signal_t signal_;
 
-    std::map<int, SignalHandle> hanldes;
+    std::map<int, SignalHandle> hanldes_;
     static void onSignal(uv_signal_t* handle, int signum);
 };
 

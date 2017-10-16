@@ -8,12 +8,13 @@
    Description:
 */
 
-#ifndef   TCP_CLIENT_H
-#define   TCP_CLIENT_H
+#ifndef   UV_TCP_CLIENT_H
+#define   UV_TCP_CLIENT_H
 
 #include  <functional>
+
 #include  "uv/TcpConnection.h"
-#include "uv/SocketAddr.h"
+#include  "uv/SocketAddr.h"
 
 namespace uv
 {
@@ -36,39 +37,39 @@ public:
 
     void write(const char* buf,unsigned int size,AfterWriteCallback callback = nullptr)
     {
-        if(tcpConnection)
-            tcpConnection->write(buf,size,callback);
+        if(connection_)
+            connection_->write(buf,size,callback);
 
     }
     void writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback)
     {
-        if (tcpConnection)
-            tcpConnection->writeInLoop(buf,size,callback);
+        if (connection_)
+            connection_->writeInLoop(buf,size,callback);
     }
 
     void setConnectCallback(ConnectCallback callback)
     {
-        connectCallback = callback;
+        connectCallback_ = callback;
     }
     void setMessageCallback(NewMessageCallback callback)
     {
-        onMessageCallback = callback;
+        onMessageCallback_ = callback;
     }
     void setConnectCloseCallback(OnConnectClose callback)
     {
-        onConnectCloseCallback = callback;
+        onConnectCloseCallback_ = callback;
     }
 
 protected:
-    EventLoop* loop;
+    EventLoop* loop_;
 private:
-    uv_tcp_t* socket;
+    uv_tcp_t* socket_;
     uv_connect_t* connect_;
-    ConnectCallback connectCallback;
-    NewMessageCallback onMessageCallback;
-    OnConnectClose onConnectCloseCallback;
+    ConnectCallback connectCallback_;
+    NewMessageCallback onMessageCallback_;
+    OnConnectClose onConnectCloseCallback_;
 
-    std::shared_ptr<TcpConnection> tcpConnection;
+    std::shared_ptr<TcpConnection> connection_;
     void updata();
 };
 
