@@ -8,11 +8,11 @@
 
 using namespace uv;
 
-#define      TEST_SIGNAL      1
+#define      TEST_SIGNAL      0
 #define      TEST_SERVER      1
-#define      TEST_CLIENT      1
-#define      TEST_ASYNC       1
-#define      TEST_TIMER       1
+#define      TEST_CLIENT      0
+#define      TEST_ASYNC       0
+#define      TEST_TIMER       0
 
 
 int main(int argc,char** args)

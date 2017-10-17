@@ -13,7 +13,7 @@
 using namespace uv;
 
 EventLoop::EventLoop(EventLoop::Mode mode)
-    :loopThreadId_(nullptr)
+    :isRun(false)
 {
     if (mode == EventLoop::NewLoop)
     {
@@ -41,17 +41,17 @@ uv_loop_t* EventLoop::hanlde()
 
 int EventLoop::run()
 {
-    loopThreadId_ = std::make_shared<std::thread::id>();
-    *loopThreadId_ = std::this_thread::get_id();
+    loopThreadId_ = std::this_thread::get_id();
+    isRun = true;
     return ::uv_run(loop_, UV_RUN_DEFAULT);
 }
 
 
 bool EventLoop::isRunInLoopThread()
 {
-    if (loopThreadId_)
+    if (isRun)
     {
-        return std::this_thread::get_id() == *(loopThreadId_);
+        return std::this_thread::get_id() == loopThreadId_;
     }
     //EventLoopŒ¥‘À––.
     return false;

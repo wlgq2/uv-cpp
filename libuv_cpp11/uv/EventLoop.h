@@ -13,6 +13,7 @@
 
 #include <uv.h>
 #include <thread>
+#include <atomic>
 
 namespace uv
 {
@@ -34,7 +35,8 @@ public:
     uv_loop_t* hanlde();
 
 private:
-    std::shared_ptr<std::thread::id> loopThreadId_;
+    std::thread::id loopThreadId_;
+    std::atomic<bool> isRun;
     uv_loop_t* loop_;
 };
 }
