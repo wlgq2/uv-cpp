@@ -19,7 +19,7 @@ TcpAccepter::TcpAccepter(EventLoop* loop, SocketAddr& addr)
     :loop_(loop),
     callback_(nullptr)
 {
-    ::uv_tcp_init(loop->hanlde(), &server_);
+    ::uv_tcp_init(loop_->hanlde(), &server_);
     ::uv_tcp_bind(&server_, addr.Addr(),0);
     server_.data = (void* )this;
 }

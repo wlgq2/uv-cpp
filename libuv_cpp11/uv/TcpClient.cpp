@@ -56,11 +56,8 @@ void TcpClient::onConnect(bool successed)
 {
     if(successed)
     {
-        struct sockaddr_in addr;
-        int len = sizeof(struct sockaddr_in);
-        ::uv_tcp_getpeername(socket_,(struct sockaddr *)&addr,&len);
-        string name(inet_ntoa(addr.sin_addr));
-        name+=":"+std::to_string(htons(addr.sin_port));
+        string name;
+        SocketAddr::AddrToStr(socket_,name);
 
         connection_ = make_shared<TcpConnection>(loop_, name, socket_);
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));

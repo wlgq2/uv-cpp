@@ -47,9 +47,18 @@ public:
         return (ipv_ == Ipv6) ? reinterpret_cast<const sockaddr*>(&ipv6_) : reinterpret_cast<const sockaddr*>(&ipv4_);
     }
 
-    std::string toStr()
+    void toStr(std::string& str)
     {
-        return ip_ + ":" + std::to_string(port_);
+        str =  ip_ + ":" + std::to_string(port_);
+    }
+
+    static  void AddrToStr(uv_tcp_t* client, std::string& addrStr)
+    {
+        struct sockaddr_in addr;
+        int len = sizeof(struct sockaddr_in);
+        ::uv_tcp_getpeername(client, (struct sockaddr *)&addr, &len);
+        std::string str(inet_ntoa(addr.sin_addr));
+        addrStr = str+":" + std::to_string(htons(addr.sin_port));
     }
 
 private:

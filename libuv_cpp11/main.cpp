@@ -1,8 +1,7 @@
 #include <iostream>
+
+
 #include "EchoServer.h"
-#include "uv/SignalCtrl.h"
-#include "uv/Async.h"
-#include "uv/SocketAddr.h"
 #include "Clinet.h"
 
 
@@ -10,32 +9,33 @@ using namespace uv;
 
 #define      TEST_SIGNAL      0
 #define      TEST_SERVER      1
-#define      TEST_CLIENT      0
+#define      TEST_CLIENT      1
 #define      TEST_ASYNC       0
 #define      TEST_TIMER       0
 
 
-int main(int argc,char** args)
+int main(int argc, char** args)
 {
-//定义事件分发器类
+    //定义事件分发器类
     EventLoop* loop = new EventLoop(EventLoop::DefaultLoop);
 
-//接管信号
+    //接管信号
 #if    TEST_SIGNAL
     SignalCtrl signalCtrl(loop);
 #endif
 
 
-//server对象
+    //server对象
 #if  TEST_SERVER
-    SocketAddr addr1("0.0.0.0", 10003, SocketAddr::Ipv4);
+    //SocketAddr addr1("0:0:0:0:0:0:0:0", 10002, SocketAddr::Ipv6);
+    SocketAddr addr1("0.0.0.0", 10002, SocketAddr::Ipv4);
     EchoServer server(loop, addr1);
     server.setTimeout(40);
     server.start();
 #endif
 
 
-//client对象
+    //client对象
 #if  TEST_CLIENT
     SocketAddr addr2("127.0.0.1", 10002, SocketAddr::Ipv4);
     Client client(loop);
@@ -43,17 +43,17 @@ int main(int argc,char** args)
 #endif
 
 
-//loop线程中异步执行函数
+    //loop线程中异步执行函数
 #if  TEST_ASYNC
-	Async<int>* handle = new Async<int>(loop,std::bind(
-    [](Async<int>* ptr, int* data)
+    Async<int>* handle = new Async<int>(loop, std::bind(
+        [](Async<int>* ptr, int* data)
     {
         std::cout << *data << std::endl;
         delete data;
         ptr->close();
         delete ptr;
-    }, 
-    std::placeholders::_1, std::placeholders::_2));
+    },
+        std::placeholders::_1, std::placeholders::_2));
     int* data = new int;
     *data = 1024;
     handle->setData(data);
@@ -61,14 +61,14 @@ int main(int argc,char** args)
 #endif
 
 
-//定时器测试
+    //定时器测试
 #if  TEST_TIMER
-    Timer<void*> timer(loop,1000,1000, std::bind(
+    Timer<void*> timer(loop, 1000, 1000, std::bind(
         [](void*)
     {
-        std::cout << "timer callback with null arg"<< std::endl;
+        std::cout << "timer callback with null arg" << std::endl;
     },
-    std::placeholders::_1), nullptr);
+        std::placeholders::_1), nullptr);
     timer.start();
 #endif
 

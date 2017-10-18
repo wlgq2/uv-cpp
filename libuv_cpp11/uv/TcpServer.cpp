@@ -30,11 +30,8 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
 {
     accetper_->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
     {
-        struct sockaddr_in addr;
-        int len = sizeof(struct sockaddr_in);
-        ::uv_tcp_getpeername(client,(struct sockaddr *)&addr,&len);
-        string key(inet_ntoa(addr.sin_addr));
-        key+=":"+std::to_string(htons(addr.sin_port));
+        string key;
+        SocketAddr::AddrToStr(client,key);
 
         cout<<"new connect  "<<key<<endl;
 
@@ -50,7 +47,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
         }
         else
         {
-            cout<<"can not create connection. :"<<inet_ntoa(addr.sin_addr)<<":"<<htons(addr.sin_port)<<endl;
+            cout<<"can not create connection. :"<< key <<endl;
         }
 
     });
