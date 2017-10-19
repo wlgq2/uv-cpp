@@ -65,6 +65,8 @@ protected:
 private:
     uv_tcp_t* socket_;
     uv_connect_t* connect_;
+    SocketAddr::IPV ipv;
+
     ConnectCallback connectCallback_;
     NewMessageCallback onMessageCallback_;
     OnConnectClose onConnectCloseCallback_;

@@ -54,6 +54,7 @@ public:
 protected:
     EventLoop* loop_;
 private:
+    SocketAddr::IPV ipv;
     std::shared_ptr <TcpAccepter> accetper_;
     std::map<std::string ,std::shared_ptr<TcpConnection>>  connnections_;
 
@@ -61,6 +62,7 @@ private:
     OnMessageCallback onMessageCallback_;
     OnNewConnectCallback onNewConnectCallback_;
     TimerWheel timerWheel_;
+    
 
 };
 

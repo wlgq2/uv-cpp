@@ -52,13 +52,23 @@ public:
         str =  ip_ + ":" + std::to_string(port_);
     }
 
-    static  void AddrToStr(uv_tcp_t* client, std::string& addrStr)
+    IPV Ipv()
     {
+        return ipv_;
+    }
+
+    static  void AddrToStr(uv_tcp_t* client, std::string& addrStr, IPV ipv = Ipv4)
+    {
+        auto inet = (Ipv6 == ipv) ? AF_INET6 : AF_INET;
         struct sockaddr_in addr;
         int len = sizeof(struct sockaddr_in);
         ::uv_tcp_getpeername(client, (struct sockaddr *)&addr, &len);
-        std::string str(inet_ntoa(addr.sin_addr));
-        addrStr = str+":" + std::to_string(htons(addr.sin_port));
+
+        char ip[64];
+        //windows环境下需要修改NTDDI_VERSION 大于0x0600，否则会提示找不到这个函数。
+        std::string str(inet_ntop(inet, (void *)&(addr.sin_addr), ip, 64));
+        addrStr = str + ":" + std::to_string(htons(addr.sin_port));
+
     }
 
 private:

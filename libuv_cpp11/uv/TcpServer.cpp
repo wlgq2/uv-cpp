@@ -13,9 +13,7 @@
 #include <functional>
 #include <memory>
 #include <string>
-#if  _MSC_VER
-#include <Winsock2.h>
-#endif
+
 
 using namespace std;
 using namespace uv;
@@ -23,6 +21,7 @@ using namespace uv;
 
 TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
     :loop_(loop),
+    ipv(addr.Ipv()),
     accetper_(new TcpAccepter(loop, addr)),
     onMessageCallback_(nullptr),
     onNewConnectCallback_(nullptr),
@@ -31,7 +30,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
     accetper_->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
     {
         string key;
-        SocketAddr::AddrToStr(client,key);
+        SocketAddr::AddrToStr(client,key, ipv);
 
         cout<<"new connect  "<<key<<endl;
 

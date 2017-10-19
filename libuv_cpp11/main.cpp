@@ -14,6 +14,8 @@ using namespace uv;
 #define      TEST_TIMER       0
 
 
+#define       TEST_IPV6        1
+
 int main(int argc, char** args)
 {
     //定义事件分发器类
@@ -26,9 +28,13 @@ int main(int argc, char** args)
 
 
     //server对象
-#if  TEST_SERVER
-    //SocketAddr addr1("0:0:0:0:0:0:0:0", 10002, SocketAddr::Ipv6);
+#if   TEST_SERVER
+#if    TEST_IPV6 
+    SocketAddr addr1("0:0:0:0:0:0:0:0", 10002, SocketAddr::Ipv6);
+#else
     SocketAddr addr1("0.0.0.0", 10002, SocketAddr::Ipv4);
+#endif
+
     EchoServer server(loop, addr1);
     server.setTimeout(40);
     server.start();
@@ -37,7 +43,11 @@ int main(int argc, char** args)
 
     //client对象
 #if  TEST_CLIENT
+#if    TEST_IPV6
+    SocketAddr addr2("0:0:0:0:0:0:0:1", 10002, SocketAddr::Ipv6);
+#else
     SocketAddr addr2("127.0.0.1", 10002, SocketAddr::Ipv4);
+#endif
     Client client(loop);
     client.connectToServer(addr2);
 #endif

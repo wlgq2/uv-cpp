@@ -20,6 +20,7 @@ TcpClient::TcpClient(EventLoop* loop)
     :loop_(loop),
     socket_(new uv_tcp_t()),
     connect_(new uv_connect_t()),
+    ipv(SocketAddr::Ipv4),
     connectCallback_(nullptr),
     onMessageCallback_(nullptr),
     onConnectCloseCallback_(nullptr),
@@ -37,6 +38,7 @@ TcpClient::~TcpClient()
 
 void TcpClient::connect(SocketAddr& addr)
 {
+    ipv = addr.Ipv();
     ::uv_tcp_connect(connect_, socket_, addr.Addr(), [](uv_connect_t* req, int status)
     {
         auto handle = static_cast<TcpClient*>(((uv_tcp_t *)(req->handle))->data);
@@ -57,7 +59,7 @@ void TcpClient::onConnect(bool successed)
     if(successed)
     {
         string name;
-        SocketAddr::AddrToStr(socket_,name);
+        SocketAddr::AddrToStr(socket_,name,ipv);
 
         connection_ = make_shared<TcpConnection>(loop_, name, socket_);
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));

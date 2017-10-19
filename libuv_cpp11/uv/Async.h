@@ -64,8 +64,8 @@ private:
     static void process(uv_async_t* handle)
     {
         auto async = static_cast<Async*>(handle->data);
-		if(async->callback_)
-			async->callback_(async,async->valuePtr_);
+        if(async->callback_)
+            async->callback_(async,async->valuePtr_);
     }
 };
 
