@@ -27,7 +27,7 @@ public:
         NewLoop 
     };
 
-    EventLoop(Mode mode = Mode::DefaultLoop);
+    EventLoop(Mode mode = Mode::NewLoop);
     ~EventLoop();
 
     int run();
