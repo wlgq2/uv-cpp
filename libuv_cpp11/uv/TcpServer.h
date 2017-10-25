@@ -54,7 +54,7 @@ public:
 protected:
     EventLoop* loop_;
 private:
-    SocketAddr::IPV ipv;
+    SocketAddr::IPV ipv_;
     std::shared_ptr <TcpAccepter> accetper_;
     std::map<std::string ,std::shared_ptr<TcpConnection>>  connnections_;
 

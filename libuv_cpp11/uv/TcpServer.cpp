@@ -21,7 +21,7 @@ using namespace uv;
 
 TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
     :loop_(loop),
-    ipv(addr.Ipv()),
+    ipv_(addr.Ipv()),
     accetper_(new TcpAccepter(loop, addr)),
     onMessageCallback_(nullptr),
     onNewConnectCallback_(nullptr),
@@ -30,7 +30,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
     accetper_->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
     {
         string key;
-        SocketAddr::AddrToStr(client,key, ipv);
+        SocketAddr::AddrToStr(client,key, ipv_);
 
         cout<<"new connect  "<<key<<endl;
 

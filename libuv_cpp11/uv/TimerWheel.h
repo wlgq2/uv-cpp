@@ -25,23 +25,23 @@ namespace uv
 class  ConnectionElement : public std::enable_shared_from_this<ConnectionElement>
 {
 public:
-    ConnectionElement(std::shared_ptr<TcpConnection> conn)
-        :connection(conn)
+    ConnectionElement(std::shared_ptr<TcpConnection> connection)
+        :connection_(connection)
     {
 
     }
 
     ~ConnectionElement()
     {
-        std::shared_ptr<TcpConnection> conn = connection.lock();
-        if(conn)
+        std::shared_ptr<TcpConnection> connection = connection_.lock();
+        if(connection)
         {
-            conn->onClose();
+            connection->onClose();
         }
     }
 
 private:
-    std::weak_ptr<TcpConnection> connection;
+    std::weak_ptr<TcpConnection> connection_;
 };
 
 
