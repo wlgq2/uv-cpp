@@ -26,6 +26,7 @@ class SignalCtrl
 {
 public:
     SignalCtrl(EventLoop* loop);
+    virtual ~SignalCtrl(){}
 
     void setHandle(int sig, SignalHandle handle);
     bool handle(int signum);

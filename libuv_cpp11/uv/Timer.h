@@ -36,7 +36,7 @@ public:
         ::uv_timer_init(loop->hanlde(), handle_);
     }
 
-    ~Timer()
+    virtual ~Timer()
     {
         ::uv_close((uv_handle_t*)handle_,
             [](uv_handle_t* handle)

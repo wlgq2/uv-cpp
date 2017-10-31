@@ -38,6 +38,11 @@ public:
         handle_->data = static_cast<void*>(this);
     }
 
+    virtual ~Async<ValueType>()
+    {
+
+    }
+
     void setData(ValueType* value)
     {
         valuePtr_ = value;

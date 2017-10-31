@@ -27,7 +27,7 @@ class TcpClient
 {
 public:
     TcpClient(EventLoop* loop);
-    ~TcpClient();
+    virtual ~TcpClient();
 
     void connect(SocketAddr& addr);
 
