@@ -51,7 +51,7 @@ void TcpAccepter::listen()
     {
         if (status < 0)
         {
-            cout<< "New connection error"<<uv_strerror(status)<<endl;
+            cout<< "New connection error"<<EventLoop::getErrorMessage(status)<<endl;
             return;
         }
         TcpAccepter* accept = static_cast<TcpAccepter*>(server->data);

@@ -34,6 +34,10 @@ public:
     bool isRunInLoopThread();
     uv_loop_t* hanlde();
 
+    static const char* getErrorMessage(int num)
+    {
+        return uv_strerror(num);
+    }
 private:
     std::thread::id loopThreadId_;
     std::atomic<bool> isRun;

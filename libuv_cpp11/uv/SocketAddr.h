@@ -60,15 +60,25 @@ public:
     static  void AddrToStr(uv_tcp_t* client, std::string& addrStr, IPV ipv = Ipv4)
     {
         auto inet = (Ipv6 == ipv) ? AF_INET6 : AF_INET;
-        struct sockaddr_in addr;
-        int len = sizeof(struct sockaddr_in);
+        struct sockaddr_storage addr;
+        int len = sizeof(struct sockaddr_storage);
         ::uv_tcp_getpeername(client, (struct sockaddr *)&addr, &len);
 
         char ip[64];
         //windows环境下需要修改NTDDI_VERSION 大于0x0600，否则会提示找不到这个函数。
-        std::string str(inet_ntop(inet, (void *)&(addr.sin_addr), ip, 64));
-        addrStr = str + ":" + std::to_string(htons(addr.sin_port));
-
+        if (Ipv6 == ipv)
+        {
+            struct sockaddr_in6* addr6 = (struct sockaddr_in6 *)&addr;
+            std::string str(inet_ntop(inet, (void *)&(addr6->sin6_addr), ip, 64));
+            addrStr = str + ":" + std::to_string(htons(addr6->sin6_port));
+        }
+        else
+        {
+            struct sockaddr_in *addr4 = (struct sockaddr_in *)&addr;
+            std::string str(inet_ntop(inet, (void *)&(addr4->sin_addr), ip, 64));
+            addrStr = str + ":" + std::to_string(htons(addr4->sin_port));
+        }
+        
     }
 
 private:
