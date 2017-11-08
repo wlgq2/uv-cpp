@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-17
+   Last modified: 2017-11-8
 
    Description:
 */
@@ -16,9 +16,16 @@ using namespace std;
 using namespace std::chrono;
 using namespace uv;
 
-struct write_arg_t
+struct WriteReq
 {
-    write_arg_t(shared_ptr<TcpConnection> conn=nullptr,const char* buf = nullptr, ssize_t size = 0, AfterWriteCallback callback = nullptr)
+	uv_write_t req;
+	uv_buf_t buf;
+	AfterWriteCallback callback;
+};
+
+struct WriteArgs
+{
+	WriteArgs(shared_ptr<TcpConnection> conn=nullptr,const char* buf = nullptr, ssize_t size = 0, AfterWriteCallback callback = nullptr)
         :connection(conn),
         buf(buf),
         size(size),
@@ -84,17 +91,21 @@ int TcpConnection::write(const char* buf,ssize_t size,AfterWriteCallback callbac
     int rst;
     if(connected_)
     {
-        write_req_t* req = new write_req_t;
+        WriteReq* req = new WriteReq;
         req->buf = uv_buf_init((char*)buf, static_cast<unsigned int>(size));
+        req->callback = callback;
         rst = ::uv_write((uv_write_t*) req, (uv_stream_t*) client_, &req->buf, 1,
         [](uv_write_t *req, int status)
         {
-            if (status)
+            WriteReq *wr = (WriteReq*)req;
+            if (nullptr != wr->callback)
             {
-                cout<< "Write error "<<uv_strerror(status)<<endl;
+            	struct WriteInfo info;
+            	info.buf = (char*)(wr->buf.base);
+            	info.size = wr->buf.len;
+            	info.status = status;
+            	wr->callback(info);
             }
-            write_req_t *wr = (write_req_t*) req;
-
             //delete [] (wr->buf.base);
             delete wr ;
         });
@@ -102,11 +113,16 @@ int TcpConnection::write(const char* buf,ssize_t size,AfterWriteCallback callbac
     else
     {
         rst = -1;
+        if (nullptr != callback)
+        {
+            struct WriteInfo info;
+            info.buf = (char*)buf;
+            info.size = size;
+            info.status = WriteInfo::Disconnected;
+            callback(info);
+        }
     }
-    if(nullptr != callback)
-    {
-        callback((char*)buf,size);
-    }
+
     return rst;
 }
 
@@ -118,8 +134,8 @@ void TcpConnection::writeInLoop(const char* buf,ssize_t size,AfterWriteCallback 
         return;
     }
 
-    Async<struct write_arg_t>* async = new Async<struct write_arg_t>(loop_, 
-    std::bind([this](Async<struct write_arg_t>* handle, struct write_arg_t * data)
+    Async<struct WriteArgs>* async = new Async<struct WriteArgs>(loop_,
+    std::bind([this](Async<struct WriteArgs>* handle, struct WriteArgs * data)
     {
         auto connection = data->connection;
         connection->write(data->buf, data->size, data->callback);
@@ -129,7 +145,7 @@ void TcpConnection::writeInLoop(const char* buf,ssize_t size,AfterWriteCallback 
     }, 
     std::placeholders::_1, std::placeholders::_2));
 
-    struct write_arg_t* writeArg = new struct write_arg_t(shared_from_this(), buf,size,callback);
+    struct WriteArgs* writeArg = new struct WriteArgs(shared_from_this(), buf,size,callback);
 
     async->setData(writeArg);
     async->runInLoop();
@@ -157,7 +173,7 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     }
     else if (nread < 0)
     {
-        connection->setConnectState(false);
+        connection->setConnectStatus(false);
         cout<< uv_err_name((int)nread)<<endl;
         delete [] (buf->base);
 

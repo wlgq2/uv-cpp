@@ -83,6 +83,7 @@ void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,s
 void TcpClient::updata()
 {
     connection_ = nullptr;
+    //this ptr release in connection object.
     socket_ = new uv_tcp_t();
     ::uv_tcp_init(loop_->hanlde(), socket_);
     socket_->data = static_cast<void*>(this);

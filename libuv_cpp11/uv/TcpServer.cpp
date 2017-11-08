@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-14
+   Last modified: 2017-11-8
 
    Description:
 */
@@ -114,20 +114,20 @@ void TcpServer::setMessageCallback(OnMessageCallback callback)
 }
 
 
-void TcpServer::write(shared_ptr<TcpConnection> connection,const char* buf,unsigned int size)
+void TcpServer::write(shared_ptr<TcpConnection> connection,const char* buf,unsigned int size, AfterWriteCallback callback)
 {
     if(connection)
     {
-        connection->write(buf,size,nullptr);
+        connection->write(buf,size, callback);
     }
 }
 
-void TcpServer::write(string& name,const char* buf,unsigned int size)
+void TcpServer::write(string& name,const char* buf,unsigned int size,AfterWriteCallback callback)
 {
     auto connection = getConnnection(name);
     if(connection)
     {
-        connection->write(buf,size,nullptr);
+        connection->write(buf,size, callback);
     }
 }
 

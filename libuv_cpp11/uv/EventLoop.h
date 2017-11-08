@@ -17,7 +17,6 @@
 
 namespace uv
 {
-
 class EventLoop
 {
 public:
@@ -34,10 +33,8 @@ public:
     bool isRunInLoopThread();
     uv_loop_t* hanlde();
 
-    static const char* getErrorMessage(int num)
-    {
-        return uv_strerror(num);
-    }
+    static const char* GetErrorMessage(int status);
+
 private:
     std::thread::id loopThreadId_;
     std::atomic<bool> isRun;

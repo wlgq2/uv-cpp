@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-14
+   Last modified: 2017-11-8
 
    Description:
 */
@@ -44,8 +44,8 @@ public:
 
     void setNewConnectCallback(OnNewConnectCallback callback);
 
-    void write(std::shared_ptr<TcpConnection> connection,const char* buf,unsigned int size);
-    void write(std::string& name,const char* buf,unsigned int size);
+    void write(std::shared_ptr<TcpConnection> connection,const char* buf,unsigned int size, AfterWriteCallback callback = nullptr);
+    void write(std::string& name,const char* buf,unsigned int size, AfterWriteCallback callback =nullptr);
     void writeInLoop(std::shared_ptr<TcpConnection> connection,const char* buf,unsigned int size,AfterWriteCallback callback);
     void writeInLoop(std::string& name,const char* buf,unsigned int size,AfterWriteCallback callback);
 

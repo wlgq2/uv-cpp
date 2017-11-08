@@ -9,6 +9,7 @@
 */
 
 #include "uv/EventLoop.h"
+#include "uv/TcpConnection.h"
 
 using namespace uv;
 
@@ -55,4 +56,14 @@ bool EventLoop::isRunInLoopThread()
     }
     //EventLoopŒ¥‘À––.
     return false;
+}
+
+const char* EventLoop::GetErrorMessage(int status)
+{
+    if (WriteInfo::Disconnected == status)
+    {
+        static char info[] = "the connection is disconnected";
+        return info;
+    }
+    return uv_strerror(status);
 }

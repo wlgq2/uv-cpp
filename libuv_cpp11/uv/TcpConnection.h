@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-8-17
+   Last modified: 2017-11-8
 
    Description:
 */
@@ -23,19 +23,22 @@
 
 namespace uv
 {
-//timeout ctrl.
 
-struct write_req_t
+struct WriteInfo
 {
-    uv_write_t req;
-    uv_buf_t buf;
-} ;
+	static const int Disconnected = -1;
+	int status;
+	char* buf;
+	unsigned long size;
+};
+
+
 class TcpConnection ;
 class TcpServer;
 class ConnectionElement;
 
 
-using AfterWriteCallback =  std::function<void (char* buf, ssize_t size)> ;
+using AfterWriteCallback =  std::function<void (WriteInfo& info)> ;
 using OnMessageCallback =  std::function<void (std::shared_ptr<TcpConnection>,const char* buf,ssize_t size)>  ;
 using OnConnectCloseCallback =  std::function<void (std::string& )>  ;
 
@@ -69,9 +72,9 @@ public :
         onConnectCloseCallback_ = callback;
     }
 
-    void setConnectState(bool state)
+    void setConnectStatus(bool status)
     {
-        connected_ = state;
+        connected_ = status;
     }
 
     bool isConnected()
