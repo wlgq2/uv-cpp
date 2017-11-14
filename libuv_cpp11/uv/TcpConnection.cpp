@@ -25,11 +25,11 @@ struct WriteReq
 
 struct WriteArgs
 {
-	WriteArgs(shared_ptr<TcpConnection> conn=nullptr,const char* buf = nullptr, ssize_t size = 0, AfterWriteCallback callback = nullptr)
+    WriteArgs(shared_ptr<TcpConnection> conn=nullptr,const char* buf = nullptr, ssize_t size = 0, AfterWriteCallback callback = nullptr)
         :connection(conn),
         buf(buf),
         size(size),
-        callback(nullptr)
+        callback(callback)
     {
 
     }
