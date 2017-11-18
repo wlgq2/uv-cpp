@@ -92,7 +92,7 @@ int TcpConnection::write(const char* buf,ssize_t size,AfterWriteCallback callbac
     if(connected_)
     {
         WriteReq* req = new WriteReq;
-        req->buf = uv_buf_init((char*)buf, static_cast<unsigned int>(size));
+        req->buf = uv_buf_init(const_cast<char*>(buf), static_cast<unsigned int>(size));
         req->callback = callback;
         rst = ::uv_write((uv_write_t*) req, (uv_stream_t*) client_, &req->buf, 1,
         [](uv_write_t *req, int status)
@@ -101,7 +101,7 @@ int TcpConnection::write(const char* buf,ssize_t size,AfterWriteCallback callbac
             if (nullptr != wr->callback)
             {
             	struct WriteInfo info;
-            	info.buf = (char*)(wr->buf.base);
+            	info.buf = const_cast<char*>(wr->buf.base);
             	info.size = wr->buf.len;
             	info.status = status;
             	wr->callback(info);
@@ -116,8 +116,8 @@ int TcpConnection::write(const char* buf,ssize_t size,AfterWriteCallback callbac
         if (nullptr != callback)
         {
             struct WriteInfo info;
-            info.buf = (char*)buf;
-            info.size = size;
+            info.buf = const_cast<char*>(buf);
+            info.size = static_cast<unsigned long>(size);
             info.status = WriteInfo::Disconnected;
             callback(info);
         }

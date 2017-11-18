@@ -64,8 +64,8 @@ public:
         int len = sizeof(struct sockaddr_storage);
         ::uv_tcp_getpeername(client, (struct sockaddr *)&addr, &len);
 
-        char ip[64];
-        //windows环境下需要修改NTDDI_VERSION 大于0x0600，否则会提示找不到这个函数。
+        char ip[64];   
+        //windows环境下需要修改NTDDI_VERSION 大于NTDDI_LONGHORN，否则会提示找不到这个函数。
         if (Ipv6 == ipv)
         {
             struct sockaddr_in6* addr6 = (struct sockaddr_in6 *)&addr;
