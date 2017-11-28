@@ -28,20 +28,25 @@ public:
         Ipv6
     };
 
-    SocketAddr(const char* ip, unsigned short port, IPV ipv = Ipv4)
+    SocketAddr(const std::string&& ip, unsigned short port, IPV ipv = Ipv4)
         :port_(port),
         ipv_(ipv)
     {
         if (ipv == Ipv6)
         {
-            ::uv_ip6_addr(ip, port, &ipv6_);
+            ::uv_ip6_addr(ip.c_str(), port, &ipv6_);
         }
         else
         {
-            ::uv_ip4_addr(ip, port, &ipv4_);
+            ::uv_ip4_addr(ip.c_str(), port, &ipv4_);
         }
     }
 
+    SocketAddr(const std::string& ip, unsigned short port, IPV ipv = Ipv4)
+        :SocketAddr(std::move(ip),port,ipv)
+    {
+
+    }
     const sockaddr* Addr()
     {
         return (ipv_ == Ipv6) ? reinterpret_cast<const sockaddr*>(&ipv6_) : reinterpret_cast<const sockaddr*>(&ipv4_);
@@ -65,7 +70,7 @@ public:
         ::uv_tcp_getpeername(client, (struct sockaddr *)&addr, &len);
 
         char ip[64];   
-        //windows环境下需要修改NTDDI_VERSION 大于NTDDI_LONGHORN，否则会提示找不到这个函数。
+        //windows环境下需要修改NTDDI_VERSION 大于NTDDI_LONGHORN，否则会提示找不到inet_ntop函数。
         if (Ipv6 == ipv)
         {
             struct sockaddr_in6* addr6 = (struct sockaddr_in6 *)&addr;

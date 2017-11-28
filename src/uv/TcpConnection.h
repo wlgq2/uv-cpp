@@ -82,6 +82,10 @@ public :
         return connected_;
     }
 
+    std::string& Name()
+    {
+        return name_;
+    }
 private :
     std::string name_;
     bool connected_;
