@@ -8,9 +8,10 @@
    Description:
 */
 
-#include <iostream>
-#include "uv/TcpClient.h"
 #include <string>
+
+#include "uv/TcpClient.h"
+#include "uv/LogInterface.h"
 
 using namespace uv;
 using namespace std;
@@ -44,7 +45,7 @@ void TcpClient::connect(SocketAddr& addr)
         auto handle = static_cast<TcpClient*>(((uv_tcp_t *)(req->handle))->data);
         if (0 != status)
         {
-            cout << "connect fail." << endl;
+            uv::Log::Instance()->error( "connect fail.");
             handle->onConnect(false);
             return;
         }

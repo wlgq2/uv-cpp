@@ -11,7 +11,7 @@
 #ifndef UV_TCP_CONNECTION_H
 #define UV_TCP_CONNECTION_H
 
-#include <iostream>
+
 #include <memory>
 
 

@@ -1,7 +1,7 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <iostream>
+
 #include <string>
 #include "uv/uv11.h"
 

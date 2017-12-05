@@ -3,7 +3,7 @@
 
 #include "EchoServer.h"
 #include "Clinet.h"
-
+#include "LogDemo.h"
 
 using namespace uv;
 
@@ -12,9 +12,9 @@ using namespace uv;
 #define      TEST_CLIENT      1
 #define      TEST_ASYNC       0
 #define      TEST_TIMER       0
+#define      TEST_LOG         1
 
-
-#define       TEST_IPV6        1
+#define       TEST_IPV6        0
 
 int main(int argc, char** args)
 {
@@ -82,5 +82,14 @@ int main(int argc, char** args)
     timer.start();
 #endif
 
+#if  TEST_LOG
+    auto log = uv::Log::Instance();
+    log->registerInterface(new LogDemo);
+
+    log->debug("debug message");
+    log->warn("warn message");
+    log->error("error message");
+    log->info("info message");
+#endif
     loop->run();
 }

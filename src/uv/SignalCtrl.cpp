@@ -8,8 +8,8 @@
    Description: 
 */
 
-#include <iostream>
 #include "uv/SignalCtrl.h"
+#include "uv/LogInterface.h"
 
 using namespace uv;
 using namespace std;
@@ -50,6 +50,6 @@ void SignalCtrl::onSignal(uv_signal_t* handle, int signum)
     auto ptr = static_cast <SignalCtrl*>(handle->data);
     if (!ptr->handle(signum))
     {
-        cout << "non defined signal handle :" << signum << endl;
+        uv::Log::Instance()->warn( std::string("non defined signal handle :")+std::to_string(signum));
     }
 }

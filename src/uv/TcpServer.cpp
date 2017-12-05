@@ -8,12 +8,13 @@
    Description:
 */
 
-#include "TcpServer.h"
-#include <iostream>
+
 #include <functional>
 #include <memory>
 #include <string>
 
+#include "uv/TcpServer.h"
+#include "uv/LogInterface.h"
 
 using namespace std;
 using namespace uv;
@@ -32,7 +33,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
         string key;
         SocketAddr::AddrToStr(client,key, ipv_);
 
-        cout<<"new connect  "<<key<<endl;
+        uv::Log::Instance()->info("new connect  "+key);
 
         shared_ptr<TcpConnection> connection(new TcpConnection(loop,key,client));
         if(connection)
@@ -46,7 +47,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
         }
         else
         {
-            cout<<"can not create connection. :"<< key <<endl;
+            uv::Log::Instance()->error("can not create connection. :"+key);
         }
 
     });

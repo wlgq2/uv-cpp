@@ -11,7 +11,6 @@
 #ifndef UV_TCP_SERVER_H
 #define UV_TCP_SERVER_H
 
-#include <iostream>
 #include <functional>
 #include <memory>
 #include <set>
