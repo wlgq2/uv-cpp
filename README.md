@@ -6,4 +6,5 @@
 * Timer及TimerWheel：定时器及时间复杂度为O(1)的心跳超时踢出机制。
 * Async：异步机制封装，由于libuv的所有api非线程安全，建议使用writeInLoop接口代替直接write（writeInLoop会检查当前调用的线程，如果在loop线程中调用则直接write，否则把write加到loop线程中执行）。
 * libuv信号封装。   
+* Log日志输出接口，可绑定至自定义Log库。 
 ** **
