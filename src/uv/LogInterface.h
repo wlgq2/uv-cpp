@@ -21,10 +21,10 @@ class LogInterface
 public:
     virtual ~LogInterface(){}
 
-    virtual void warn(std::string& data) = 0;
-    virtual void error(std::string& data) = 0;
-    virtual void info(std::string& data) = 0;
-    virtual void debug(std::string& data) = 0;
+    virtual void warn(const std::string& data) = 0;
+    virtual void error(const std::string& data) = 0;
+    virtual void info(const std::string& data) = 0;
+    virtual void debug(const std::string& data) = 0;
 };
 
 class Log
@@ -39,42 +39,42 @@ public:
     {
         handle_ = handle;
     }
-    void warn(std::string& data)
+    void warn(const std::string& data)
     {
         if (handle_)
             handle_->warn(data);
     }
-    void warn(std::string&& data)
+    void warn(const std::string&& data)
     {
         if (handle_)
             handle_->warn(data);
     }
-    void error(std::string& data)
+    void error(const std::string& data)
     {
         if (handle_)
             handle_->error(data);
     }
-    void error(std::string&& data)
+    void error(const std::string&& data)
     {
         if (handle_)
             handle_->error(data);
     }
-    void info(std::string& data)
+    void info(const std::string& data)
     {
         if (handle_)
             handle_->info(data);
     }
-    void info(std::string&& data)
+    void info(const std::string&& data)
     {
         if (handle_)
             handle_->info(data);
     }
-    void debug(std::string& data)
+    void debug(const std::string& data)
     {
         if (handle_)
             handle_->debug(data);
     }
-    void debug(std::string&& data)
+    void debug(const std::string&& data)
     {
         if (handle_)
             handle_->debug(data);
