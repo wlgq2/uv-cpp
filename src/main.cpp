@@ -55,15 +55,14 @@ int main(int argc, char** args)
 
     //loop线程中异步执行函数
 #if  TEST_ASYNC
-    Async<int>* handle = new Async<int>(loop, std::bind(
-        [](Async<int>* ptr, int* data)
+    Async<int>* handle = new Async<int>(loop,
+    [](Async<int>* ptr, int* data)
     {
         std::cout << *data << std::endl;
         delete data;
         ptr->close();
         delete ptr;
-    },
-        std::placeholders::_1, std::placeholders::_2));
+    });
     int* data = new int;
     *data = 1024;
     handle->setData(data);
@@ -73,12 +72,11 @@ int main(int argc, char** args)
 
     //定时器测试
 #if  TEST_TIMER
-    Timer<void*> timer(loop, 1000, 1000, std::bind(
-        [](void*)
+    Timer<void*> timer(loop, 1000, 1000,
+    [](void*)
     {
         std::cout << "timer callback with null arg" << std::endl;
-    },
-        std::placeholders::_1), nullptr);
+    }, nullptr);
     timer.start();
 #endif
 
