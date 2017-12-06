@@ -15,5 +15,6 @@
 #include   "SignalCtrl.h"
 #include   "TcpServer.h"
 #include   "TcpClient.h"
+#include   "LogInterface.h"
 
 #endif
