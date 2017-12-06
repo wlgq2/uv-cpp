@@ -12,6 +12,7 @@
 #define   UV_TCP_CLIENT_H
 
 #include  <functional>
+#include  <memory>
 
 #include  "uv/TcpConnection.h"
 #include  "uv/SocketAddr.h"
@@ -75,5 +76,6 @@ private:
     void updata();
 };
 
+using TcpClientPtr = std::shared_ptr<uv::TcpClient>;
 }
 #endif

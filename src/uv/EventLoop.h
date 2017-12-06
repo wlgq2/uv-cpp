@@ -40,6 +40,8 @@ private:
     std::atomic<bool> isRun;
     uv_loop_t* loop_;
 };
+
+using EventLoopPtr = std::shared_ptr<uv::EventLoop>;
 }
-#endif // !  LOOP_H
+#endif  
 

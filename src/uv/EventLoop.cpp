@@ -31,6 +31,7 @@ EventLoop::~EventLoop()
 {
     if (loop_ != uv_default_loop())
     {
+        uv_loop_close(loop_);
         delete loop_;
     }
 }
