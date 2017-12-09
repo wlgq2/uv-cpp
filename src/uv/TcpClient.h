@@ -60,7 +60,11 @@ public:
     {
         onConnectCloseCallback_ = callback;
     }
-
+   
+    EventLoop* Loop()
+    {
+        return loop_;
+    }
 protected:
     EventLoop* loop_;
 private:
