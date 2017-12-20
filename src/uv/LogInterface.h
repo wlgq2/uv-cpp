@@ -12,6 +12,7 @@ Description:
 #define     UV_LOG_INTERFACE_H
 
 #include <string>
+#include <functional>
 
 namespace uv
 {
@@ -30,6 +31,13 @@ public:
 class Log
 {
 public:
+    using OutMessageType = std::function<void(const std::string&)>;
+    enum Delel{
+        Debug = 0,
+        Info,
+        Warn,
+        Error
+    };
     static Log* Instance()
     {
         static Log single;
@@ -38,6 +46,24 @@ public:
     void registerInterface(LogInterface* handle)
     {
         handle_ = handle;
+        funcs_[Debug] = std::bind(&LogInterface::debug, handle_, std::placeholders::_1);
+        funcs_[Info] = std::bind(&LogInterface::info, handle_, std::placeholders::_1);
+        funcs_[Warn] = std::bind(&LogInterface::warn, handle_, std::placeholders::_1);
+        funcs_[Error] = std::bind(&LogInterface::error, handle_, std::placeholders::_1);
+    }
+    void out(int level,std::string& data)
+    {
+        if ((handle_) &&(level<= Error) && (level >= Debug))
+        {
+            funcs_[level](data);
+        }
+    }
+    void out(int level, std::string&& data)
+    {
+        if ((handle_) && (level <= Error))
+        {
+            funcs_[level](data);
+        }
     }
     void warn(const std::string& data)
     {
@@ -79,13 +105,23 @@ public:
         if (handle_)
             handle_->debug(data);
     }
-    
+
+    static void toHex(std::string& message,const char* data,unsigned int size)
+    {
+        for (auto i = 0; i < size; i++)
+        {
+            char buf[8];
+            std::sprintf(buf, " 0x%x ", (unsigned char)data[i]);
+            message += buf;
+        }
+    }
 private:
     Log():handle_(nullptr)
     {
     }
 
     LogInterface* handle_;
+    OutMessageType funcs_[Error + 1];
 };
 }
 #endif // !  UV_LOG_INTERFACE_H

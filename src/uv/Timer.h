@@ -11,6 +11,7 @@
 #define UV_TIMER_H
 
 #include <functional>
+#include <mutex>
 #include "uv/EventLoop.h"
 
 
@@ -26,7 +27,8 @@ public:
     using TimerCallback = std::function<void(ValueType)>;
 
     Timer(EventLoop* loop,uint64_t timeout,uint64_t repeat,TimerCallback callback, ValueType value)
-        :handle_(new uv_timer_t),
+        :started_(false),
+        handle_(new uv_timer_t),
         timeout_(timeout),
         repeat_(repeat),
         callback_(callback),
@@ -47,7 +49,12 @@ public:
 
     void start()
     {
-        ::uv_timer_start(handle_, Timer<ValueType>::process, timeout_, repeat_);
+        std::unique_lock<std::mutex> lock(mutex_);
+        if (!started_)
+        {
+            started_ = true;
+            ::uv_timer_start(handle_, Timer<ValueType>::process, timeout_, repeat_);
+        }
     }
 
     TimerCallback Callback()
@@ -60,12 +67,13 @@ public:
         return arg_;
     };
 private:
+    bool started_;
     uv_timer_t* handle_;
     uint64_t timeout_;
     uint64_t repeat_;
     TimerCallback callback_;
     ValueType arg_;
-
+    std::mutex mutex_;
 
     static void process(uv_timer_t* handle)
     {

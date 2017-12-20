@@ -60,7 +60,7 @@ public:
     {
         onConnectCloseCallback_ = callback;
     }
-   
+
     EventLoop* Loop()
     {
         return loop_;
