@@ -80,6 +80,7 @@ int main(int argc, char** args)
     timer.start();
 #endif
 
+    //log½Ó¿Ú°ó¶¨
 #if  TEST_LOG
     auto log = uv::Log::Instance();
     log->registerInterface(new LogDemo);

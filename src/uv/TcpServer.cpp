@@ -26,6 +26,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
     accetper_(new TcpAccepter(loop, addr)),
     onMessageCallback_(nullptr),
     onNewConnectCallback_(nullptr),
+    onConnectCloseCallback_(nullptr),
     timerWheel_(loop)
 {
     accetper_->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
@@ -96,8 +97,15 @@ shared_ptr<TcpConnection> TcpServer::getConnnection(string& name)
 
 void TcpServer::closeConnection(string& name)
 {
-    if(nullptr != getConnnection(name))
+    auto connection = getConnnection(name);
+    if (nullptr != connection)
+    {
+        if (onConnectCloseCallback_)
+        {
+            onConnectCloseCallback_(connection);
+        }
         connnections_.erase(name);
+    }
 }
 
 
@@ -153,4 +161,9 @@ void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,After
 void TcpServer::setNewConnectCallback(OnNewConnectCallback callback)
 {
     onNewConnectCallback_ = callback;
+}
+
+void  TcpServer::setConnectCloseCallback(OnConnectCloseCallback callback)
+{
+    onConnectCloseCallback_ = callback;
 }

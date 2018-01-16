@@ -38,9 +38,9 @@ class TcpServer;
 class ConnectionElement;
 
 
-using AfterWriteCallback =  std::function<void (WriteInfo& info)> ;
-using OnMessageCallback =  std::function<void (std::shared_ptr<TcpConnection>,const char* buf,ssize_t size)>  ;
-using OnConnectCloseCallback =  std::function<void (std::string& )>  ;
+using AfterWriteCallback =  std::function<void (WriteInfo& )> ;
+using OnMessageCallback =  std::function<void (std::shared_ptr<TcpConnection>,const char*,ssize_t)>  ;
+using OnCloseCallback =  std::function<void (std::string& )>  ;
 
 
 
@@ -67,7 +67,7 @@ public :
         onMessageCallback_ = callback;
     }
 
-    void setConnectCloseCallback(OnConnectCloseCallback callback)
+    void setConnectCloseCallback(OnCloseCallback callback)
     {
         onConnectCloseCallback_ = callback;
     }
@@ -95,7 +95,7 @@ private :
     std::weak_ptr<ConnectionElement> element_;
 
     OnMessageCallback onMessageCallback_;
-    OnConnectCloseCallback onConnectCloseCallback_;
+    OnCloseCallback onConnectCloseCallback_;
 
 };
 

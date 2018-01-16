@@ -19,10 +19,12 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
     connection->write(buf,size,nullptr);
 
 #else
+    //实质会直接调用write，并不需要memcpy。
+    //writeInLoop需要数据在回调中释放。
     char* data =  new  char [size]();
     memcpy(data, buf, size);
     connection->writeInLoop(data, size,
-    [this](WriteInfo info)
+    [this](WriteInfo& info)
     {
 		//write message error.
 		if (0 != info.status)

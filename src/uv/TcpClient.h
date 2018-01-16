@@ -21,7 +21,7 @@ namespace uv
 {
 
 using ConnectCallback =  std::function<void(bool)>  ;
-using NewMessageCallback =  std::function<void(const char* buf,ssize_t size)>  ;
+using NewMessageCallback =  std::function<void(const char*,ssize_t)>  ;
 using OnConnectClose =  std::function<void()> ;
 
 class TcpClient

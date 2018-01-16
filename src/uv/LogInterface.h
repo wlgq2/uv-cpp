@@ -108,7 +108,7 @@ public:
 
     static void toHex(std::string& message,const char* data,unsigned int size)
     {
-        for (auto i = 0; i < size; i++)
+        for (unsigned int i = 0; i < size; i++)
         {
             char buf[8];
             std::sprintf(buf, " 0x%x ", (unsigned char)data[i]);
