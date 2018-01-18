@@ -24,7 +24,7 @@ template <typename ValueType>
 class Timer
 {
 public:
-    using TimerCallback = std::function<void(ValueType)>;
+    using TimerCallback = std::function<void(Timer<ValueType>*,ValueType)>;
 
     Timer(EventLoop* loop,uint64_t timeout,uint64_t repeat,TimerCallback callback, ValueType value)
         :started_(false),
@@ -81,7 +81,7 @@ private:
         auto callback = ptr->Callback();
         if (callback)
         {
-            callback(ptr->getArg());
+            callback(ptr,ptr->getArg());
         }
     }
 

@@ -11,7 +11,7 @@ using namespace uv;
 #define      TEST_SERVER      1
 #define      TEST_CLIENT      1
 #define      TEST_ASYNC       0
-#define      TEST_TIMER       0
+#define      TEST_TIMER       1
 #define      TEST_LOG         1
 
 #define       TEST_IPV6        0
@@ -73,7 +73,7 @@ int main(int argc, char** args)
     //¶¨Ê±Æ÷²âÊÔ
 #if  TEST_TIMER
     Timer<void*> timer(loop, 1000, 1000,
-    [](void*)
+    [](Timer<void*>*,void*)
     {
         std::cout << "timer callback with null arg" << std::endl;
     }, nullptr);

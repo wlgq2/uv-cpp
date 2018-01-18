@@ -62,7 +62,7 @@ private:
 
     std::vector< std::set< std::shared_ptr<ConnectionElement>>> wheel;
 
-    void wheelCallback(void* data);
+    void wheelCallback(Timer<void*>*, void*);
 
 };
 

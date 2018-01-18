@@ -51,14 +51,14 @@ public:
         funcs_[Warn] = std::bind(&LogInterface::warn, handle_, std::placeholders::_1);
         funcs_[Error] = std::bind(&LogInterface::error, handle_, std::placeholders::_1);
     }
-    void out(int level,std::string& data)
+    void write(int level,std::string& data)
     {
         if ((handle_) &&(level<= Error) && (level >= Debug))
         {
             funcs_[level](data);
         }
     }
-    void out(int level, std::string&& data)
+    void write(int level, std::string&& data)
     {
         if ((handle_) && (level <= Error))
         {
