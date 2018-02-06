@@ -58,7 +58,6 @@ public:
         {
             uv_timer_stop(handle_);
         }
-        
         if (uv_is_closing((uv_handle_t*)handle_) == 0)
         {
             closeComplete_ = callback;

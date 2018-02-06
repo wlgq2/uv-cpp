@@ -42,7 +42,7 @@ struct WriteArgs
 
 TcpConnection:: ~TcpConnection()
 {
-
+    delete client_;
 }
 
 TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* client, bool isConnected)
@@ -92,7 +92,6 @@ void TcpConnection::close(std::function<void(std::string&)> callback)
     {
         auto connection = static_cast<TcpConnection*>(handle->data);
         connection->CloseComplete();
-        delete handle;
     });
 }
 
