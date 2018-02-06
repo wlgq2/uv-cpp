@@ -41,6 +41,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
         {
             connection->setMessageCallback(std::bind(&TcpServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
             connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection,this,placeholders::_1));
+            
             addConnnection(key,connection);
             timerWheel_.insertNew(connection);
             if(onNewConnectCallback_)
@@ -100,11 +101,19 @@ void TcpServer::closeConnection(string& name)
     auto connection = getConnnection(name);
     if (nullptr != connection)
     {
-        if (onConnectCloseCallback_)
+        connection->close([this](std::string& name)
         {
-            onConnectCloseCallback_(connection);
-        }
-        connnections_.erase(name);
+            auto connection = getConnnection(name);
+            if (nullptr != connection)
+            {
+                if (onConnectCloseCallback_)
+                {
+                    onConnectCloseCallback_(connection);
+                }
+                connnections_.erase(name);
+            }
+
+        });
     }
 }
 

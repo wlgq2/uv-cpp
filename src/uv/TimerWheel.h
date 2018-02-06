@@ -36,7 +36,7 @@ public:
         std::shared_ptr<TcpConnection> connection = connection_.lock();
         if(connection)
         {
-            connection->onClose();
+            connection->onSocketClose();
         }
     }
 

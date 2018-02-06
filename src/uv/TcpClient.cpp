@@ -66,6 +66,10 @@ void TcpClient::onConnect(bool successed)
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
         connection_->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
     }
+    else
+    {
+        updata();
+    }
     if(connectCallback_)
         connectCallback_(successed);
 }
@@ -81,9 +85,17 @@ void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,s
         onMessageCallback_(buf,size);
 }
 
+void uv::TcpClient::close(std::function<void(std::string&)> callback)
+{
+    connection_->close(callback);
+}
+
 void TcpClient::updata()
 {
-    connection_ = nullptr;
+    if (connection_)
+        connection_ = nullptr;
+    else
+        delete socket_;
     //this ptr release in connection object.
     socket_ = new uv_tcp_t();
     ::uv_tcp_init(loop_->hanlde(), socket_);

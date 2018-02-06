@@ -17,8 +17,7 @@
 
 namespace uv
 {
-
-
+using TimerCloseComplete = std::function<void()>;
 
 template <typename ValueType>
 class Timer
@@ -32,7 +31,8 @@ public:
         timeout_(timeout),
         repeat_(repeat),
         callback_(callback),
-        arg_(value)
+        arg_(value),
+        closeComplete_(nullptr)
     {
         handle_->data = static_cast<void*>(this);
         ::uv_timer_init(loop->hanlde(), handle_);
@@ -40,11 +40,7 @@ public:
 
     virtual ~Timer()
     {
-        ::uv_close((uv_handle_t*)handle_,
-            [](uv_handle_t* handle)
-        {
-            delete handle;
-        });
+
     }
 
     void start()
@@ -56,7 +52,29 @@ public:
             ::uv_timer_start(handle_, Timer<ValueType>::process, timeout_, repeat_);
         }
     }
-
+    void close(TimerCloseComplete callback)
+    {   
+        if (uv_is_active((uv_handle_t*)handle_))
+        {
+            uv_timer_stop(handle_);
+        }
+        
+        if (uv_is_closing((uv_handle_t*)handle_) == 0)
+        {
+            closeComplete_ = callback;
+            ::uv_close((uv_handle_t*)handle_,
+                [](uv_handle_t* handle)
+            {
+                auto ptr = static_cast<Timer<ValueType>*>(handle->data);
+                ptr->colseComplete();
+                delete handle;
+            });
+        }
+        else
+        {
+            callback();
+        }
+    }
     TimerCallback Callback()
     {
         return callback_;
@@ -66,6 +84,12 @@ public:
     {
         return arg_;
     };
+
+    void colseComplete()
+    {
+        if (closeComplete_)
+            closeComplete_();
+    }
 private:
     bool started_;
     uv_timer_t* handle_;
@@ -74,6 +98,7 @@ private:
     TimerCallback callback_;
     ValueType arg_;
     std::mutex mutex_;
+    TimerCloseComplete closeComplete_;
 
     static void process(uv_timer_t* handle)
     {

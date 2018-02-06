@@ -35,7 +35,7 @@ public:
     void onConnect(bool successed);
     void onConnectClose(std::string& name);
     void onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size);
-
+    void close(std::function<void(std::string&)> callback);
     void write(const char* buf,unsigned int size,AfterWriteCallback callback = nullptr)
     {
         if(connection_)

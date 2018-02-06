@@ -41,7 +41,7 @@ class ConnectionElement;
 using AfterWriteCallback =  std::function<void (WriteInfo& )> ;
 using OnMessageCallback =  std::function<void (std::shared_ptr<TcpConnection>,const char*,ssize_t)>  ;
 using OnCloseCallback =  std::function<void (std::string& )>  ;
-
+using CloseCompleteCallback =  std::function<void (std::string&)>  ;
 
 
 class TcpConnection : public std::enable_shared_from_this<TcpConnection>
@@ -51,8 +51,9 @@ public :
     TcpConnection(EventLoop* loop,std::string& name,uv_tcp_t* client,bool isConnected = true);
     virtual ~TcpConnection();
     void onMessage(const char* buf,ssize_t size);
-    void onClose();
-
+    void onSocketClose();
+    void close(std::function<void(std::string&)> callback);
+    
     int write(const char* buf,ssize_t size,AfterWriteCallback callback);
     void writeInLoop(const char* buf,ssize_t size,AfterWriteCallback callback);
 
@@ -72,6 +73,13 @@ public :
         onConnectCloseCallback_ = callback;
     }
 
+    void CloseComplete()
+    {
+        if(closeCompleteCallback_)
+        {
+            closeCompleteCallback_(name_);
+        }
+    }
     void setConnectStatus(bool status)
     {
         connected_ = status;
@@ -96,6 +104,8 @@ private :
 
     OnMessageCallback onMessageCallback_;
     OnCloseCallback onConnectCloseCallback_;
+    CloseCompleteCallback closeCompleteCallback_;
+    
 
 };
 

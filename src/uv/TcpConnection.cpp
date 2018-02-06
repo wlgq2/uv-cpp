@@ -42,12 +42,7 @@ struct WriteArgs
 
 TcpConnection:: ~TcpConnection()
 {
-    //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
-    ::uv_close((uv_handle_t*)client_,
-        [](uv_handle_t* handle)
-    {
-        delete handle;
-    });
+
 }
 
 TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* client, bool isConnected)
@@ -56,7 +51,8 @@ TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* clien
     loop_(loop),
     client_(client),
     onMessageCallback_(nullptr),
-    onConnectCloseCallback_(nullptr)
+    onConnectCloseCallback_(nullptr),
+    closeCompleteCallback_(nullptr)
 {
     client->data = static_cast<void*>(this);
     ::uv_read_start((uv_stream_t*)client,
@@ -81,10 +77,23 @@ void TcpConnection::onMessage(const char* buf, ssize_t size)
         onMessageCallback_(shared_from_this(), buf, size);
 }
 
-void TcpConnection::onClose()
+void TcpConnection::onSocketClose()
 {
     if (onConnectCloseCallback_)
         onConnectCloseCallback_(name_);
+}
+
+void TcpConnection::close(std::function<void(std::string&)> callback)
+{
+    closeCompleteCallback_ = callback;
+    //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
+    ::uv_close((uv_handle_t*)client_,
+        [](uv_handle_t* handle)
+    {
+        auto connection = static_cast<TcpConnection*>(handle->data);
+        connection->CloseComplete();
+        delete handle;
+    });
 }
 
 int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callback)
@@ -170,7 +179,6 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     {
         connection->onMessage(buf->base, nread);
         delete[](buf->base);
-        return;
     }
     else if (nread < 0)
     {
@@ -180,7 +188,7 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
 
         if (nread != UV_EOF)
         {
-            connection->onClose();
+            connection->onSocketClose();
             return;
         }
 
@@ -190,7 +198,7 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
             [](uv_shutdown_t* req, int status)
         {
             auto connection = static_cast<TcpConnection*>(req->data);
-            connection->onClose();
+            connection->onSocketClose();
             delete req;
         });
     }
