@@ -1,6 +1,5 @@
 # libuv_cpp11
-对libuv的C++风格封装，基本操作及内存管理，以及屏蔽与libuv本身api。
-<br></br>用于上线项目，做过压测。
+对libuv的C++风格封装，基本操作及内存管理，以及屏蔽与libuv本身api。<br></br>用于上线项目，做过压测。
 <br></br>
 
 * TCP相关类封装：`TcpServer`、`TcpClient`、`TcpConnection`、`TcpAccept`。及把C风格回调改为C++11风格的回调（支持非静态类成员函数及lambda）。
