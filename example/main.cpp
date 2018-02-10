@@ -9,7 +9,7 @@ using namespace uv;
 
 #define      TEST_SIGNAL      0
 #define      TEST_SERVER      1
-#define      TEST_CLIENT      1
+#define      TEST_CLIENT      0
 #define      TEST_ASYNC       0
 #define      TEST_TIMER       1
 #define      TEST_LOG         1
@@ -78,6 +78,22 @@ int main(int argc, char** args)
         std::cout << "timer callback with null arg" << std::endl;
     }, nullptr);
     timer.start();
+
+    //定时器只运行一次及释放
+    int* data = new int;
+    *data = 1024;
+    Timer<int*>* pTimer  =new Timer<int*>(loop, 1000, 0,
+        [](Timer<int*>* handle, int* data)
+    {
+        std::cout << "timer callback run onice with arg:" <<*data<< std::endl;
+        delete data;
+        handle->close([handle]()
+        {
+            std::cout << "release timer handle."<< std::endl;
+            delete handle;
+        });
+    }, data);
+    pTimer->start();
 #endif
 
     //log接口绑定
