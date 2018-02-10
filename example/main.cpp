@@ -7,11 +7,11 @@
 
 using namespace uv;
 
-#define      TEST_SIGNAL      0
+#define      TEST_SIGNAL      1
 #define      TEST_SERVER      1
-#define      TEST_CLIENT      0
-#define      TEST_ASYNC       0
-#define      TEST_TIMER       1
+#define      TEST_CLIENT      1
+#define      TEST_ASYNC       1
+#define      TEST_TIMER       0
 #define      TEST_LOG         1
 
 #define       TEST_IPV6        0
@@ -20,10 +20,14 @@ int main(int argc, char** args)
 {
     //定义事件分发器类
     EventLoop* loop = new EventLoop(EventLoop::DefaultLoop);
-
-    //接管信号
+  
 #if    TEST_SIGNAL
     SignalCtrl signalCtrl(loop);
+    //接管SIGPIPE信号。
+    signalCtrl.setHandle(13, [](int sig) 
+    {
+        //SIGPIPE
+    });
 #endif
 
 
@@ -36,6 +40,7 @@ int main(int argc, char** args)
 #endif
 
     EchoServer server(loop, addr1);
+    //心跳超时
     server.setTimeout(40);
     server.start();
 #endif
@@ -79,7 +84,7 @@ int main(int argc, char** args)
     }, nullptr);
     timer.start();
 
-    //定时器只运行一次及释放
+    //定时器只运行一次及释放,可用于tcp重连。
     int* data = new int;
     *data = 1024;
     Timer<int*>* pTimer  =new Timer<int*>(loop, 1000, 0,

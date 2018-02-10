@@ -98,7 +98,7 @@ private :
     std::string name_;
     bool connected_;
     EventLoop* loop_;
-    uv_tcp_t* client_;
+    uv_tcp_t* handle_;
 
     std::weak_ptr<ConnectionElement> element_;
 

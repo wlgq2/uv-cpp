@@ -63,9 +63,9 @@ TcpServer:: ~TcpServer()
 }
 
 
-void TcpServer::setTimeout(unsigned int timeout)
+void TcpServer::setTimeout(unsigned int seconds)
 {
-    timerWheel_.setTimeout(timeout);
+    timerWheel_.setTimeout(seconds);
 }
 
 void TcpServer::start()

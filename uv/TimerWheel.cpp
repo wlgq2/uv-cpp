@@ -27,9 +27,9 @@ TimerWheel::TimerWheel(EventLoop* loop,unsigned int timeout)
 
 }
 
-void TimerWheel::setTimeout(unsigned int timeout)
+void TimerWheel::setTimeout(unsigned int second)
 {
-    timeoutSec_ = timeout;
+    timeoutSec_ = second;
 }
 
 void TimerWheel::start()

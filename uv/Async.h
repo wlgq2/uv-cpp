@@ -56,10 +56,13 @@ public:
 
     void close()
     {
-        ::uv_close((uv_handle_t*)handle_, [](uv_handle_t* handle)
+        if (uv_is_closing((uv_handle_t*)handle_) == 0)
         {
-            delete (uv_async_t*)handle;
-        });
+            ::uv_close((uv_handle_t*)handle_, [](uv_handle_t* handle)
+            {
+                delete (uv_async_t*)handle;
+            });
+        }
     }
 private:
     uv_async_t* handle_;
