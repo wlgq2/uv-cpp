@@ -15,7 +15,7 @@
 #include <map>
 #include <functional>
 
-#include "uv/EventLoop.h"
+#include "EventLoop.h"
 
 namespace uv
 {

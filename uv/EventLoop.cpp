@@ -8,8 +8,8 @@
    Description: 
 */
 
-#include "uv/EventLoop.h"
-#include "uv/TcpConnection.h"
+#include "EventLoop.h"
+#include "TcpConnection.h"
 
 using namespace uv;
 

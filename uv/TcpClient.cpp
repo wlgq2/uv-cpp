@@ -10,8 +10,8 @@
 
 #include <string>
 
-#include "uv/TcpClient.h"
-#include "uv/LogInterface.h"
+#include "TcpClient.h"
+#include "LogInterface.h"
 
 using namespace uv;
 using namespace std;

@@ -12,7 +12,7 @@
 
 #include <functional>
 #include <mutex>
-#include "uv/EventLoop.h"
+#include "EventLoop.h"
 
 
 namespace uv

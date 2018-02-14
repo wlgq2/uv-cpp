@@ -14,8 +14,8 @@
 #include <vector>
 #include <set>
 #include <memory>
-#include "uv/Timer.h"
-#include "uv/TcpConnection.h"
+#include "Timer.h"
+#include "TcpConnection.h"
 
 namespace uv
 {

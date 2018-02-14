@@ -16,9 +16,9 @@
 #include <set>
 #include <map>
 
-#include "uv/TcpAccepter.h"
-#include "uv/TcpConnection.h"
-#include "uv/TimerWheel.h"
+#include "TcpAccepter.h"
+#include "TcpConnection.h"
+#include "TimerWheel.h"
 
 namespace uv
 {

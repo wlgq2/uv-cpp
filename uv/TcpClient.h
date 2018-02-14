@@ -14,8 +14,8 @@
 #include  <functional>
 #include  <memory>
 
-#include  "uv/TcpConnection.h"
-#include  "uv/SocketAddr.h"
+#include  "TcpConnection.h"
+#include  "SocketAddr.h"
 
 namespace uv
 {

@@ -14,8 +14,8 @@
 
 #include <functional>
 
-#include "uv/EventLoop.h"
-#include "uv/SocketAddr.h"
+#include "EventLoop.h"
+#include "SocketAddr.h"
 
 namespace uv
 {

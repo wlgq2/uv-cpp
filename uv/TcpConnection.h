@@ -19,7 +19,7 @@
 #include <functional>
 #include <atomic>
 
-#include <uv/EventLoop.h>
+#include "EventLoop.h"
 
 namespace uv
 {
