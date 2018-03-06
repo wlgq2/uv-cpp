@@ -26,13 +26,13 @@ template<typename ValueType>
 class Async  : public std::enable_shared_from_this<Async<ValueType>>
 {
 public:
-    using AsyncCallback = std::function<void(Async<ValueType>*, ValueType*)>;
+    using AsyncCallback = std::function<void(Async<ValueType>*, ValueType)>;
 
 
-    Async<ValueType>(EventLoop* loop,AsyncCallback callback)
+    Async<ValueType>(EventLoop* loop,AsyncCallback callback, ValueType value)
         : handle_(new uv_async_t),
         callback_(callback),
-        valuePtr_(nullptr)
+        value_(value)
     {
         ::uv_async_init(loop->hanlde(), handle_, Async<ValueType>::process);
         handle_->data = static_cast<void*>(this);
@@ -43,9 +43,9 @@ public:
 
     }
 
-    void setData(ValueType* value)
+    void setData(ValueType value)
     {
-        valuePtr_ = value;
+        value_ = value;
     }
 
     void runInLoop()
@@ -67,13 +67,13 @@ public:
 private:
     uv_async_t* handle_;
     AsyncCallback callback_;
-    ValueType* valuePtr_;
+    ValueType value_;
 
     static void process(uv_async_t* handle)
     {
         auto async = static_cast<Async*>(handle->data);
         if(async->callback_)
-            async->callback_(async,async->valuePtr_);
+            async->callback_(async,async->value_);
     }
 };
 

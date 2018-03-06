@@ -149,8 +149,9 @@ void TcpConnection::writeInLoop(const char* buf, ssize_t size, AfterWriteCallbac
         return;
     }
 
-    Async<struct WriteArgs>* async = new Async<struct WriteArgs>(loop_,
-    std::bind([this](Async<struct WriteArgs>* handle, struct WriteArgs * data)
+    struct WriteArgs* writeArg = new struct WriteArgs(shared_from_this(), buf, size, callback);
+    Async<struct WriteArgs*>* async = new Async<struct WriteArgs*>(loop_,
+        [this](Async<struct WriteArgs*>* handle, struct WriteArgs * data)
     {
         auto connection = data->connection;
         connection->write(data->buf, data->size, data->callback);
@@ -158,11 +159,7 @@ void TcpConnection::writeInLoop(const char* buf, ssize_t size, AfterWriteCallbac
         handle->close();
         delete handle;
     },
-    std::placeholders::_1, std::placeholders::_2));
-
-    struct WriteArgs* writeArg = new struct WriteArgs(shared_from_this(), buf, size, callback);
-
-    async->setData(writeArg);
+        writeArg);
     async->runInLoop();
 }
 

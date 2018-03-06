@@ -11,7 +11,7 @@ using namespace uv;
 #define      TEST_SERVER      1
 #define      TEST_CLIENT      1
 #define      TEST_ASYNC       1
-#define      TEST_TIMER       0
+#define      TEST_TIMER       1
 #define      TEST_LOG         1
 
 #define       TEST_IPV6        0
@@ -61,16 +61,13 @@ int main(int argc, char** args)
     //loop线程中异步执行函数
 #if  TEST_ASYNC
     Async<int>* handle = new Async<int>(loop,
-    [](Async<int>* ptr, int* data)
+    [](Async<int>* ptr, int data)
     {
-        std::cout << *data << std::endl;
-        delete data;
+        std::cout << data << std::endl;
         ptr->close();
         delete ptr;
-    });
-    int* data = new int;
-    *data = 1024;
-    handle->setData(data);
+    },
+    1024);
     handle->runInLoop();
 #endif
 
@@ -84,7 +81,7 @@ int main(int argc, char** args)
     }, nullptr);
     timer.start();
 
-    //定时器只运行一次及释放,可用于tcp重连。
+    //定时器只运行一次及释放,可用于tcp重连,单次消息超时。
     int* data = new int;
     *data = 1024;
     Timer<int*>* pTimer  =new Timer<int*>(loop, 1000, 0,
