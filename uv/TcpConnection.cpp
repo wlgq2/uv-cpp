@@ -85,6 +85,7 @@ void TcpConnection::onSocketClose()
 
 void TcpConnection::close(std::function<void(std::string&)> callback)
 {
+    closeCompleteCallback_ = callback;
     if (uv_is_active((uv_handle_t*)handle_)) 
     {
         uv_read_stop((uv_stream_t*)handle_);
