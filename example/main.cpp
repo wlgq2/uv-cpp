@@ -14,7 +14,7 @@ using namespace uv;
 #define      TEST_TIMER       1
 #define      TEST_LOG         1
 
-#define       TEST_IPV6        0
+#define       TEST_IPV6       0
 
 int main(int argc, char** args)
 {
@@ -22,12 +22,12 @@ int main(int argc, char** args)
     EventLoop* loop = new EventLoop(EventLoop::DefaultLoop);
   
 #if    TEST_SIGNAL
-    SignalCtrl signalCtrl(loop);
     //接管SIGPIPE信号。
-    signalCtrl.setHandle(13, [](int sig) 
+    Signal signal(loop,13,[](int sig)
     {
         //SIGPIPE
     });
+    
 #endif
 
 
@@ -82,19 +82,17 @@ int main(int argc, char** args)
     timer.start();
 
     //定时器只运行一次及释放,可用于tcp重连,单次消息超时。
-    int* data = new int;
-    *data = 1024;
-    Timer<int*>* pTimer  =new Timer<int*>(loop, 1000, 0,
-        [](Timer<int*>* handle, int* data)
+    Timer<int>* pTimer  =new Timer<int>(loop, 1000, 0,
+        [](Timer<int>* handle, int data)
     {
-        std::cout << "timer callback run onice with arg:" <<*data<< std::endl;
-        delete data;
+        std::cout << "timer callback run onice with arg:" <<data<< std::endl;
         handle->close([handle]()
         {
             std::cout << "release timer handle."<< std::endl;
+            //释放定时器对象。
             delete handle;
         });
-    }, data);
+    }, 1024);
     pTimer->start();
 #endif
 
