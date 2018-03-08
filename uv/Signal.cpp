@@ -68,12 +68,11 @@ void uv::Signal::closeComplete()
         closeCallback_();
 }
 
-int uv::Signal::Ignore(int sig)
+void uv::Signal::Ignore(int sig)
 {
-#ifdef    LINUX
-    return signal(sig, SIG_IGN)
+#ifdef    __linux__
+    signal(sig, SIG_IGN);
 #endif
-    return 0;
 }
 
 void Signal::onSignal(uv_signal_t* handle, int signum)

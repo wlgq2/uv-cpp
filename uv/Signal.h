@@ -33,7 +33,7 @@ public:
     bool handle(int signum);
 
     void closeComplete();
-    static int Ignore(int sig);
+    static void Ignore(int sig);
 private:
     uv_signal_t* signal_;
     SignalHandle hanlde_;
