@@ -10,6 +10,7 @@
 
 #include "EventLoop.h"
 #include "TcpConnection.h"
+#include "Async.h"
 
 using namespace uv;
 
@@ -57,6 +58,25 @@ bool EventLoop::isRunInLoopThread()
     }
     //EventLoopŒ¥‘À––.
     return false;
+}
+
+void uv::EventLoop::runInThisLoop(const std::function<void()>& func)
+{
+    if (isRunInLoopThread())
+    {
+        func();
+        return;
+    }
+    std::function<void()>* funcptr = new std::function<void()>();
+    *funcptr = func;
+    uv::Async<std::function<void()>*>* handle = new uv::Async<std::function<void()>*>(this,
+        [this](uv::Async<std::function<void()>*>* handle, std::function<void()>* funcptr)
+    {
+        (*funcptr)();
+        delete funcptr;
+        delete handle;
+    }, funcptr);
+    handle->runInLoop();
 }
 
 const char* EventLoop::GetErrorMessage(int status)

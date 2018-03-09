@@ -31,6 +31,7 @@ public:
 
     int run();
     bool isRunInLoopThread();
+    void runInThisLoop(const std::function<void()>& func);
     uv_loop_t* hanlde();
 
     static const char* GetErrorMessage(int status);
