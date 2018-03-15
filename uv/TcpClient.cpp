@@ -97,7 +97,15 @@ void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,s
 
 void uv::TcpClient::close(std::function<void(std::string&)> callback)
 {
-    connection_->close(callback);
+    if (connection_)
+    {
+        connection_->close(callback);
+    }
+    else
+    {
+        std::string str("");
+        callback(str);
+    }
 }
 
 void TcpClient::updata()

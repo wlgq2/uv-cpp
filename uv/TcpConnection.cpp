@@ -100,6 +100,10 @@ void TcpConnection::close(std::function<void(std::string&)> callback)
             connection->CloseComplete();
         });
     }
+    else
+    {
+        CloseComplete();
+    }
 }
 
 int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callback)
