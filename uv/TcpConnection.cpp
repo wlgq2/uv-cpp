@@ -135,14 +135,10 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
         rst = -1;
         if (nullptr != callback)
         {
-            struct WriteInfo info;
-            info.buf = const_cast<char*>(buf);
-            info.size = static_cast<unsigned long>(size);
-            info.status = WriteInfo::Disconnected;
+            struct WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),static_cast<unsigned long>(size) };
             callback(info);
         }
     }
-
     return rst;
 }
 
@@ -161,7 +157,6 @@ void TcpConnection::writeInLoop(const char* buf, ssize_t size, AfterWriteCallbac
         auto connection = data->connection;
         connection->write(data->buf, data->size, data->callback);
         delete data;
-        handle->close();
         delete handle;
     },
         writeArg);

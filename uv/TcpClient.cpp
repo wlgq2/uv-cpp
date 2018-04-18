@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-9-19
+   Last modified: 2018-4-18
 
    Description:
 */
@@ -82,7 +82,7 @@ void TcpClient::onConnectClose(string& name)
             //this old socket_ point will release in connection object release when re-connect.
             socket_ = new uv_tcp_t();
             updata();
-            uv::Log::Instance()->info("Close tcp client conenction complete.");
+            uv::Log::Instance()->info("Close tcp client connection complete.");
             if (onConnectCloseCallback_)
                 onConnectCloseCallback_();
         });
@@ -106,6 +106,53 @@ void uv::TcpClient::close(std::function<void(std::string&)> callback)
         std::string str("");
         callback(str);
     }
+}
+
+void uv::TcpClient::write(const char* buf, unsigned int size, AfterWriteCallback callback)
+{
+    if (connection_)
+    {
+        connection_->write(buf, size, callback);
+    }
+    else
+    {
+        WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
+        callback(info);
+    }
+
+}
+
+void uv::TcpClient::writeInLoop(const char * buf, unsigned int size, AfterWriteCallback callback)
+{
+    if (connection_)
+    {
+        connection_->writeInLoop(buf, size, callback);
+    }
+    else
+    {
+        WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
+        callback(info);
+    }
+}
+
+void uv::TcpClient::setConnectCallback(ConnectCallback callback)
+{
+    connectCallback_ = callback;
+}
+
+void uv::TcpClient::setMessageCallback(NewMessageCallback callback)
+{
+    onMessageCallback_ = callback;
+}
+
+void uv::TcpClient::setConnectCloseCallback(OnConnectClose callback)
+{
+    onConnectCloseCallback_ = callback;
+}
+
+EventLoop* uv::TcpClient::Loop()
+{
+    return loop_;
 }
 
 void TcpClient::updata()

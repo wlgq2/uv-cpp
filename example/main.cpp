@@ -64,7 +64,6 @@ int main(int argc, char** args)
     [](Async<int>* ptr, int data)
     {
         std::cout << data << std::endl;
-        ptr->close();
         delete ptr;
     },
     1024);

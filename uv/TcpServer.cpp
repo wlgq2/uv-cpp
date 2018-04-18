@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-11-8
+   Last modified: 2018-4-18
 
    Description:
 */
@@ -49,7 +49,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
         }
         else
         {
-            uv::Log::Instance()->error("can not create connection. :"+key);
+            uv::Log::Instance()->error("create connection fail. :"+key);
         }
 
     });
@@ -138,6 +138,11 @@ void TcpServer::write(shared_ptr<TcpConnection> connection,const char* buf,unsig
     {
         connection->write(buf,size, callback);
     }
+    else
+    {
+        WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
+        callback(info);
+    }
 }
 
 void TcpServer::write(string& name,const char* buf,unsigned int size,AfterWriteCallback callback)
@@ -147,6 +152,11 @@ void TcpServer::write(string& name,const char* buf,unsigned int size,AfterWriteC
     {
         connection->write(buf,size, callback);
     }
+    else
+    {
+        WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
+        callback(info);
+    }
 }
 
 void TcpServer::writeInLoop(shared_ptr<TcpConnection> connection,const char* buf,unsigned int size,AfterWriteCallback callback)
@@ -155,7 +165,11 @@ void TcpServer::writeInLoop(shared_ptr<TcpConnection> connection,const char* buf
     {
         connection->writeInLoop(buf,size,callback);
     }
-
+    else
+    {
+        WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
+        callback(info);
+    }
 }
 
 void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,AfterWriteCallback callback)
@@ -164,6 +178,11 @@ void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,After
     if(connection)
     {
         connection->writeInLoop(buf,size,callback);
+    }
+    else
+    {
+        WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
+        callback(info);
     }
 }
 

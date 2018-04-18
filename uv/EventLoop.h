@@ -30,6 +30,7 @@ public:
     ~EventLoop();
 
     int run();
+    int runNoWait();
     bool isRunInLoopThread();
     void runInThisLoop(const std::function<void()>& func);
     uv_loop_t* hanlde();

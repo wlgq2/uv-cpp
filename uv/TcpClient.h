@@ -36,35 +36,16 @@ public:
     void onConnectClose(std::string& name);
     void onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size);
     void close(std::function<void(std::string&)> callback);
-    void write(const char* buf,unsigned int size,AfterWriteCallback callback = nullptr)
-    {
-        if(connection_)
-            connection_->write(buf,size,callback);
 
-    }
-    void writeInLoop(const char* buf,unsigned int size,AfterWriteCallback callback)
-    {
-        if (connection_)
-            connection_->writeInLoop(buf,size,callback);
-    }
+    void write(const char* buf, unsigned int size, AfterWriteCallback callback = nullptr);
+    void writeInLoop(const char* buf, unsigned int size, AfterWriteCallback callback);
 
-    void setConnectCallback(ConnectCallback callback)
-    {
-        connectCallback_ = callback;
-    }
-    void setMessageCallback(NewMessageCallback callback)
-    {
-        onMessageCallback_ = callback;
-    }
-    void setConnectCloseCallback(OnConnectClose callback)
-    {
-        onConnectCloseCallback_ = callback;
-    }
 
-    EventLoop* Loop()
-    {
-        return loop_;
-    }
+    void setConnectCallback(ConnectCallback callback);
+    void setMessageCallback(NewMessageCallback callback);
+    void setConnectCloseCallback(OnConnectClose callback);
+
+    EventLoop* Loop();
 protected:
     EventLoop* loop_;
 private:

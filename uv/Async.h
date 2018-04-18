@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net
 
-   Last modified: 2017-10-16
+   Last modified: 2018-4-18
 
    Description:
 */
@@ -40,7 +40,13 @@ public:
 
     virtual ~Async<ValueType>()
     {
-
+        if (uv_is_closing((uv_handle_t*)handle_) == 0)
+        {
+            ::uv_close((uv_handle_t*)handle_, [](uv_handle_t* handle)
+            {
+                delete (uv_async_t*)handle;
+            });
+        }
     }
 
     void setData(ValueType value)
@@ -53,17 +59,6 @@ public:
         ::uv_async_send(handle_);
     }
 
-
-    void close()
-    {
-        if (uv_is_closing((uv_handle_t*)handle_) == 0)
-        {
-            ::uv_close((uv_handle_t*)handle_, [](uv_handle_t* handle)
-            {
-                delete (uv_async_t*)handle;
-            });
-        }
-    }
 private:
     uv_async_t* handle_;
     AsyncCallback callback_;

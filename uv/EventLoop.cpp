@@ -3,7 +3,7 @@
 
    Author: object_he@yeah.net 
     
-   Last modified: 2017-10-10
+   Last modified: 2018-4-18
     
    Description: 
 */
@@ -47,6 +47,13 @@ int EventLoop::run()
     loopThreadId_ = std::this_thread::get_id();
     isRun = true;
     return ::uv_run(loop_, UV_RUN_DEFAULT);
+}
+
+int uv::EventLoop::runNoWait()
+{
+    loopThreadId_ = std::this_thread::get_id();
+    isRun = true;
+    return ::uv_run(loop_, UV_RUN_NOWAIT);
 }
 
 
