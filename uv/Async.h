@@ -40,7 +40,7 @@ public:
 
     virtual ~Async<ValueType>()
     {
-        if (uv_is_closing((uv_handle_t*)handle_) == 0)
+        if (::uv_is_closing((uv_handle_t*)handle_) == 0)
         {
             ::uv_close((uv_handle_t*)handle_, [](uv_handle_t* handle)
             {

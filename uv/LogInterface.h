@@ -106,7 +106,7 @@ public:
             handle_->debug(data);
     }
 
-    static void toHex(std::string& message,const char* data,unsigned int size)
+    static void ToHex(std::string& message,const char* data,unsigned int size)
     {
         for (unsigned int i = 0; i < size; i++)
         {

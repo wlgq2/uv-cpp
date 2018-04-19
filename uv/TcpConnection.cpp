@@ -86,11 +86,11 @@ void TcpConnection::onSocketClose()
 void TcpConnection::close(std::function<void(std::string&)> callback)
 {
     closeCompleteCallback_ = callback;
-    if (uv_is_active((uv_handle_t*)handle_)) 
+    if (::uv_is_active((uv_handle_t*)handle_)) 
     {
-        uv_read_stop((uv_stream_t*)handle_);
+        ::uv_read_stop((uv_stream_t*)handle_);
     }
-    if (uv_is_closing((uv_handle_t*)handle_) == 0)
+    if (::uv_is_closing((uv_handle_t*)handle_) == 0)
     {
         //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
         ::uv_close((uv_handle_t*)handle_,

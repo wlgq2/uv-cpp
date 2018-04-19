@@ -22,12 +22,14 @@ class EventLoop
 public:
     enum Mode
     { 
-        DefaultLoop,
-        NewLoop 
+        Default,
+        New 
     };
-
-    EventLoop(Mode mode = Mode::NewLoop);
+    
+    EventLoop();
     ~EventLoop();
+
+    static EventLoop* DefalutLoop();
 
     int run();
     int runNoWait();
@@ -38,6 +40,8 @@ public:
     static const char* GetErrorMessage(int status);
 
 private:
+    EventLoop(Mode mode);
+
     std::thread::id loopThreadId_;
     std::atomic<bool> isRun;
     uv_loop_t* loop_;

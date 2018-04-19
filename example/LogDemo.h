@@ -1,11 +1,11 @@
 /*
-Copyright 2017, object_he@yeah.net  All rights reserved.
+    Copyright 2017, orcaer@yeah.net  All rights reserved.
 
-Author: orcaer@yeah.net
+    Author: orcaer@yeah.net
 
-Last modified: 2018-4-18
+    Last modified: 2018-4-18
 
-Description: https://github.com/wlgq2/libuv_cpp11
+    Description: https://github.com/wlgq2/libuv_cpp11
 */
 
 

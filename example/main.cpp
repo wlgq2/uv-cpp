@@ -30,7 +30,9 @@ using namespace uv;
 int main(int argc, char** args)
 {
     //定义事件分发器类
-    EventLoop* loop = new EventLoop(EventLoop::DefaultLoop);
+    EventLoop* loop = new EventLoop();
+    //or
+    //EventLoop* loop = EventLoop::DefalutLoop();
   
 #if    TEST_SIGNAL
     //接管SIGPIPE信号。
@@ -85,13 +87,15 @@ int main(int argc, char** args)
     //定时器测试
 #if  TEST_TIMER
     Timer<void*> timer(loop, 1000, 1000,
-    [](Timer<void*>*,void*)
+    [&client](Timer<void*>*,void*)
     {
-        std::cout << "timer callback with null arg" << std::endl;
+        //std::cout << "timer callback with null arg" << std::endl;
+        std::cout << client.Cnt()<< std::endl;
+        client.setCnt(0);
     }, nullptr);
     timer.start();
 
-    //定时器只运行一次及释放,可用于tcp重连,单次消息超时。
+    //定时器只运行一次及释放,可用于tcp重连,单次消息超时等。
     Timer<int>* pTimer  =new Timer<int>(loop, 1000, 0,
         [](Timer<int>* handle, int data)
     {

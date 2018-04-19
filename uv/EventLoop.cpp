@@ -14,10 +14,17 @@
 
 using namespace uv;
 
+EventLoop::EventLoop()
+    :isRun(false)
+{
+    loop_ = new uv_loop_t();
+    ::uv_loop_init(loop_);
+}
+
 EventLoop::EventLoop(EventLoop::Mode mode)
     :isRun(false)
 {
-    if (mode == EventLoop::NewLoop)
+    if (mode == EventLoop::New)
     {
         loop_ = new uv_loop_t();
         ::uv_loop_init(loop_);
@@ -35,6 +42,12 @@ EventLoop::~EventLoop()
         uv_loop_close(loop_);
         delete loop_;
     }
+}
+
+EventLoop* uv::EventLoop::DefalutLoop()
+{
+    static EventLoop* defaultLoop = new uv::EventLoop(uv::EventLoop::Mode::Default);
+    return defaultLoop;
 }
 
 uv_loop_t* EventLoop::hanlde()
