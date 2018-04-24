@@ -25,7 +25,7 @@ EchoServer::EchoServer(EventLoop* loop, SocketAddr& addr)
 
 void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
 {
-#if    0
+#if    1
     connection->write(buf,size,nullptr);
 
 #else

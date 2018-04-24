@@ -68,7 +68,7 @@ void TcpClient::onConnect(bool successed)
     }
     else
     {
-        updata();
+        update();
     }
     if(connectCallback_)
         connectCallback_(successed);
@@ -81,7 +81,7 @@ void TcpClient::onConnectClose(string& name)
         {
             //this old socket_ point will release in connection object release when re-connect.
             socket_ = new uv_tcp_t();
-            updata();
+            update();
             uv::Log::Instance()->info("Close tcp client connection complete.");
             if (onConnectCloseCallback_)
                 onConnectCloseCallback_();
@@ -101,7 +101,7 @@ void uv::TcpClient::close(std::function<void(std::string&)> callback)
     {
         connection_->close(callback);
     }
-    else
+    else if(callback)
     {
         std::string str("");
         callback(str);
@@ -114,7 +114,7 @@ void uv::TcpClient::write(const char* buf, unsigned int size, AfterWriteCallback
     {
         connection_->write(buf, size, callback);
     }
-    else
+    else if(callback)
     {
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
@@ -128,7 +128,7 @@ void uv::TcpClient::writeInLoop(const char * buf, unsigned int size, AfterWriteC
     {
         connection_->writeInLoop(buf, size, callback);
     }
-    else
+    else if(callback)
     {
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
@@ -155,7 +155,7 @@ EventLoop* uv::TcpClient::Loop()
     return loop_;
 }
 
-void TcpClient::updata()
+void TcpClient::update()
 {
     ::uv_tcp_init(loop_->hanlde(), socket_);
     socket_->data = static_cast<void*>(this);

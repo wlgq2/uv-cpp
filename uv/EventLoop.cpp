@@ -82,6 +82,9 @@ bool EventLoop::isRunInLoopThread()
 
 void uv::EventLoop::runInThisLoop(const std::function<void()>& func)
 {
+    if (nullptr == func)
+        return;
+
     if (isRunInLoopThread())
     {
         func();

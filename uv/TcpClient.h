@@ -58,7 +58,7 @@ private:
     OnConnectClose onConnectCloseCallback_;
 
     std::shared_ptr<TcpConnection> connection_;
-    void updata();
+    void update();
 };
 
 using TcpClientPtr = std::shared_ptr<uv::TcpClient>;

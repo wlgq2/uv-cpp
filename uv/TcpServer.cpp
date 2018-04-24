@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-4-18
+   Last modified: 2018-4-24
 
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -138,7 +138,7 @@ void TcpServer::write(shared_ptr<TcpConnection> connection,const char* buf,unsig
     {
         connection->write(buf,size, callback);
     }
-    else
+    else if (callback)
     {
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
@@ -152,7 +152,7 @@ void TcpServer::write(string& name,const char* buf,unsigned int size,AfterWriteC
     {
         connection->write(buf,size, callback);
     }
-    else
+    else if (callback)
     {
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
@@ -165,7 +165,7 @@ void TcpServer::writeInLoop(shared_ptr<TcpConnection> connection,const char* buf
     {
         connection->writeInLoop(buf,size,callback);
     }
-    else
+    else if (callback)
     {
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
@@ -179,7 +179,7 @@ void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,After
     {
         connection->writeInLoop(buf,size,callback);
     }
-    else
+    else if (callback)
     {
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
