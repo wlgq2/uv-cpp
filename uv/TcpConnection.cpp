@@ -211,3 +211,46 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     }
 
 }
+
+void uv::TcpConnection::setMessageCallback(OnMessageCallback callback)
+{
+    onMessageCallback_ = callback;
+}
+
+void uv::TcpConnection::setConnectCloseCallback(OnCloseCallback callback)
+{
+    onConnectCloseCallback_ = callback;
+}
+
+void uv::TcpConnection::CloseComplete()
+{
+    if (closeCompleteCallback_)
+    {
+        closeCompleteCallback_(name_);
+    }
+}
+
+void uv::TcpConnection::setConnectStatus(bool status)
+{
+    connected_ = status;
+}
+
+bool uv::TcpConnection::isConnected()
+{
+    return connected_;
+}
+
+std::string & uv::TcpConnection::Name()
+{
+    return name_;
+}
+
+int uv::TcpConnection::appendToBuffer(const char* data, int size)
+{
+    return buffer_.append(data, size);
+}
+
+int uv::TcpConnection::readFromBuffer(Packet& packet)
+{
+    return buffer_.read(packet);
+}

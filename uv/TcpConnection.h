@@ -63,37 +63,20 @@ public :
 
     static void  onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf);
 
-    void setMessageCallback(OnMessageCallback callback)
-    {
-        onMessageCallback_ = callback;
-    }
+    void setMessageCallback(OnMessageCallback callback);
 
-    void setConnectCloseCallback(OnCloseCallback callback)
-    {
-        onConnectCloseCallback_ = callback;
-    }
+    void setConnectCloseCallback(OnCloseCallback callback);
 
-    void CloseComplete()
-    {
-        if(closeCompleteCallback_)
-        {
-            closeCompleteCallback_(name_);
-        }
-    }
-    void setConnectStatus(bool status)
-    {
-        connected_ = status;
-    }
+    void CloseComplete();
 
-    bool isConnected()
-    {
-        return connected_;
-    }
+    void setConnectStatus(bool status);
 
-    std::string& Name()
-    {
-        return name_;
-    }
+    bool isConnected();
+    std::string& Name();
+
+    int appendToBuffer(const char* data, int size);
+    int readFromBuffer(Packet& packet);
+
 private :
     std::string name_;
     bool connected_;
