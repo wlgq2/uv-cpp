@@ -20,6 +20,7 @@
 #include <atomic>
 
 #include "EventLoop.h"
+#include "ListBuffer.h"
 
 namespace uv
 {
@@ -82,6 +83,8 @@ private :
     bool connected_;
     EventLoop* loop_;
     uv_tcp_t* handle_;
+
+    ListBuffer buffer_;
 
     std::weak_ptr<ConnectionElement> element_;
 

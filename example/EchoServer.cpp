@@ -12,7 +12,7 @@
 #include    <iostream>
 
 #include    "EchoServer.h"
-
+#include    "uv/Packet.h"
 
 using namespace uv;
 using namespace std;
@@ -25,10 +25,11 @@ EchoServer::EchoServer(EventLoop* loop, SocketAddr& addr)
 
 void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
 {
-#if    1
+   
+#if       0   //直接发送
     connection->write(buf,size,nullptr);
-
-#else
+    
+#elif     0  //调用write in loop接口
     //实质会直接调用write，并不需要memcpy。
     //writeInLoop需要数据在回调中释放。
     char* data =  new  char [size]();
@@ -43,5 +44,16 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
 		}
         delete [] info.buf;
     });
+#else //包接收及发送
+    Packet packet;
+    connection->appendToBuffer(buf, size);
+    while (0 == connection->readFromBuffer(packet))
+    {
+        char data[4] = "";
+        data[0] = packet.getData()[0];
+        data[1] = packet.getData()[1];
+        std::cout << data << ":" << packet.DataSize() << std::endl;
+        connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
+    }
 #endif
 }
