@@ -39,6 +39,7 @@ public:
 
     static int UnpackDataSize(const uint8_t* data);
     static void PackDataSize(char* data, uint16_t size);
+    static int PacketMinSize();
 
 public:
     enum DataMode

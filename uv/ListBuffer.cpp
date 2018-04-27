@@ -38,40 +38,39 @@ int uv::ListBuffer::read(Packet& packet)
     while ((!buffer_.empty()) && (Packet::HeadByte != buffer_.front()))
         buffer_.pop_front();
     auto bufSize = buffer_.size();
-    if (bufSize < 4)
+    if (bufSize <= Packet::PacketMinSize())
     {
         return -1;
     }
-    uint8_t sizebuf[2];
     buffer_.pop_front();
+    uint8_t sizebuf[2];
     sizebuf[0] = buffer_.front();
     buffer_.pop_front();
     sizebuf[1] = buffer_.front();
     buffer_.pop_front();
     uint16_t size = Packet::UnpackDataSize(sizebuf);
 
-    if (size + 4 > bufSize)
+    if (size + Packet::PacketMinSize() > bufSize)
     {
         buffer_.push_front(sizebuf[1]);
         buffer_.push_front(sizebuf[0]);
         buffer_.push_front(Packet::HeadByte);
         return -1;
     }
-    char* data = new char[size + 4];
+    char* data = new char[size + Packet::PacketMinSize()];
     data[0] = Packet::HeadByte;
     Packet::PackDataSize(&data[1],(uint16_t) size);
 
     for (int i = 0; i <= size; i++)
     {
-        data[i + 3] = buffer_.front();
+        data[i + Packet::PacketMinSize()-1] = buffer_.front();
         buffer_.pop_front();
     }
-    if(static_cast<uint8_t>(data[size+3]) != Packet::EndByte)
+    if(static_cast<uint8_t>(data[size+ Packet::PacketMinSize()-1]) != Packet::EndByte)
     {
         delete[] data;
         return -1;
     }
-    packet.update(data, size + 4);
+    packet.update(data, size + Packet::PacketMinSize());
     return 0;
-
 }

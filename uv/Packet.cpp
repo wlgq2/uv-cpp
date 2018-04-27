@@ -33,14 +33,14 @@ void uv::Packet::fill(const char* data, uint16_t size)
 {
     clear();
 
-    bufferSize_ = size + 4;
+    bufferSize_ = size + PacketMinSize();
     buffer_ = new char[bufferSize_];
 
     buffer_[0] = HeadByte;
     PackDataSize(&buffer_[1],size);
 
-    std::copy(data, data + size, buffer_ + 3);
-    buffer_[size + 3] = EndByte;
+    std::copy(data, data + size, buffer_ + sizeof(HeadByte) + sizeof(bufferSize_));
+    buffer_[size + PacketMinSize()-1] = EndByte;
 }
 
 void uv::Packet::update(char* data, uint16_t size)
@@ -63,12 +63,12 @@ void uv::Packet::clear()
 
 const char* uv::Packet::getData()
 {
-    return buffer_+3;
+    return buffer_+sizeof(HeadByte)+sizeof(bufferSize_);
 }
 
 const uint16_t uv::Packet::DataSize()
 {
-    return bufferSize_ - 4;
+    return bufferSize_ - PacketMinSize();
 }
 
 const char * uv::Packet::Buffer()
@@ -109,4 +109,9 @@ void uv::Packet::PackDataSize(char * data, uint16_t size)
         data[0] = size & 0xff;
         data[1] = size >> 8;
     }
+}
+
+int uv::Packet::PacketMinSize()
+{
+    return 4;
 }

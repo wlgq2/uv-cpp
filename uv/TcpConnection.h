@@ -11,6 +11,13 @@
 #ifndef UV_TCP_CONNECTION_H
 #define UV_TCP_CONNECTION_H
 
+#define  USE_CYCLE_BUFFER     1
+
+#if     USE_CYCLE_BUFFER
+#define     USE_LIST_BUFFER   0
+#else
+#define     USE_LIST_BUFFER   1
+#endif
 
 #include <memory>
 
@@ -21,6 +28,7 @@
 
 #include "EventLoop.h"
 #include "ListBuffer.h"
+#include "CycleBuffer.h"
 
 namespace uv
 {
@@ -84,8 +92,13 @@ private :
     EventLoop* loop_;
     uv_tcp_t* handle_;
 
-    ListBuffer buffer_;
+#if USE_CYCLE_BUFFER
+    ArrayBuffer buffer_;
+#endif
 
+#if  USE_LIST_BUFFER
+    ListBuffer buffer_;
+#endif
     std::weak_ptr<ConnectionElement> element_;
 
     OnMessageCallback onMessageCallback_;
