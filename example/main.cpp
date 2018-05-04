@@ -89,9 +89,7 @@ int main(int argc, char** args)
     Timer<void*> timer(loop, 1000, 1000,
     [&client](Timer<void*>*,void*)
     {
-        //std::cout << "timer callback with null arg" << std::endl;
-        std::cout << client.Cnt()<< std::endl;
-        client.setCnt(0);
+        std::cout << "timer callback with null arg" << std::endl;
     }, nullptr);
     timer.start();
 

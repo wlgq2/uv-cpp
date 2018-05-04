@@ -167,6 +167,7 @@ void TcpServer::writeInLoop(shared_ptr<TcpConnection> connection,const char* buf
     }
     else if (callback)
     {
+        uv::Log::Instance()->warn("try write a disconnect connection.");
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
     }
@@ -181,6 +182,7 @@ void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,After
     }
     else if (callback)
     {
+        uv::Log::Instance()->warn(std::string("try write a disconnect connection.")+name);
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
     }

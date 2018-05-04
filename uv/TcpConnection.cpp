@@ -129,6 +129,15 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
             //delete [] (wr->buf.base);
             delete wr;
         });
+        if (0 != rst)
+        {
+            uv::Log::Instance()->error(std::string("write data error:"+std::to_string(rst)));
+            if (nullptr != callback)
+            {
+                struct WriteInfo info = { rst,const_cast<char*>(buf),static_cast<unsigned long>(size) };
+                callback(info);
+            }
+        }
     }
     else
     {

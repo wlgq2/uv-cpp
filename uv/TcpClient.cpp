@@ -116,6 +116,7 @@ void uv::TcpClient::write(const char* buf, unsigned int size, AfterWriteCallback
     }
     else if(callback)
     {
+        uv::Log::Instance()->warn("try write a disconnect connection.");
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
     }
@@ -130,6 +131,7 @@ void uv::TcpClient::writeInLoop(const char * buf, unsigned int size, AfterWriteC
     }
     else if(callback)
     {
+        uv::Log::Instance()->warn("try write a disconnect connection.");
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
     }
