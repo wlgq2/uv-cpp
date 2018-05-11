@@ -46,6 +46,9 @@ public:
     void setConnectCloseCallback(OnConnectClose callback);
 
     EventLoop* Loop();
+
+    int appendToBuffer(const char* data, int size);
+    int readFromBuffer(Packet& packet);
 protected:
     EventLoop* loop_;
 private:

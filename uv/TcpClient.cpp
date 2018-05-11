@@ -79,12 +79,13 @@ void TcpClient::onConnectClose(string& name)
     {
         connection_->close([this](std::string& name)
         {
-            //this old socket_ point will release in connection object release when re-connect.
+            connection_ = nullptr;
             socket_ = new uv_tcp_t();
             update();
             uv::Log::Instance()->info("Close tcp client connection complete.");
             if (onConnectCloseCallback_)
                 onConnectCloseCallback_();
+            //release oid socket_ point.
         });
     }
 
@@ -155,6 +156,24 @@ void uv::TcpClient::setConnectCloseCallback(OnConnectClose callback)
 EventLoop* uv::TcpClient::Loop()
 {
     return loop_;
+}
+
+int uv::TcpClient::appendToBuffer(const char* data, int size)
+{
+    if(connection_)
+    {
+        return connection_->appendToBuffer(data,size);
+    }
+    return -1;
+}
+
+int uv::TcpClient::readFromBuffer(Packet& packet)
+{
+    if(connection_)
+    {
+        return connection_->readFromBuffer(packet);
+    }
+    return -1;
 }
 
 void TcpClient::update()

@@ -16,5 +16,6 @@
 #include   "TcpServer.h"
 #include   "TcpClient.h"
 #include   "LogInterface.h"
+#include    "Packet.h"
 
 #endif
