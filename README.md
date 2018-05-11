@@ -9,5 +9,12 @@
 * `Packet`与`PacketBuffer`：包与缓存，发送/接受包，用于解决TCP残包/沾包问题，由ListBuffer和CycleBuffer两种实现，可用宏配置（前者空间友好，后者时间友好）。
 * Log日志输出接口，可绑定至自定义Log库。
 ** **
+<br>简单性能测试：单线程1k字节ping-pong。</br>
+<br>环境：ubuntu14.04.5 + gcc5.4.1 + libuv1.13.1 + O2优化</br>
+
+   libuv_cpp | no use PacketBuffer|CycleBuffer|ListBuffer|
+:---------:|:--------:|:--------:|:--------:|
+次/秒     | 176817 |132553|11895|
+** **
 **！对于诸如`uv::Timer`,`uv::TcpClient`等对象的释放需要调用close接口并在回调函数中释放对象,否则可能会出错。**
 <br>一点微小的工作。</br>
