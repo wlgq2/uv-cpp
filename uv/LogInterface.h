@@ -32,7 +32,7 @@ class Log
 {
 public:
     using OutMessageType = std::function<void(const std::string&)>;
-    enum Delel{
+    enum Level{
         Debug = 0,
         Info,
         Warn,
