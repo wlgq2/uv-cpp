@@ -56,6 +56,11 @@ public:
     {
         str =  ip_ + ":" + std::to_string(port_);
     }
+    std::string toStr()
+    {
+        std::string str =  ip_ + ":" + std::to_string(port_);
+        return str;
+    }
 
     IPV Ipv()
     {

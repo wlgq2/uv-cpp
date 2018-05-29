@@ -79,13 +79,13 @@ void TcpClient::onConnectClose(string& name)
     {
         connection_->close([this](std::string& name)
         {
+            //release oid socket_ pointer.
             connection_ = nullptr;
             socket_ = new uv_tcp_t();
             update();
             uv::Log::Instance()->info("Close tcp client connection complete.");
             if (onConnectCloseCallback_)
                 onConnectCloseCallback_();
-            //release oid socket_ point.
         });
     }
 
