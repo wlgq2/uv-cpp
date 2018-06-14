@@ -48,7 +48,8 @@ int uv::ListBuffer::read(Packet& packet)
     buffer_.pop_front();
     sizebuf[1] = buffer_.front();
     buffer_.pop_front();
-    uint16_t size = Packet::UnpackDataSize(sizebuf);
+    uint16_t size;
+    Packet::UnpackNum(sizebuf, size);
 
     if (size + Packet::PacketMinSize() > bufSize)
     {
@@ -59,7 +60,7 @@ int uv::ListBuffer::read(Packet& packet)
     }
     char* data = new char[size + Packet::PacketMinSize()];
     data[0] = Packet::HeadByte;
-    Packet::PackDataSize(&data[1],(uint16_t) size);
+    Packet::PackNum(&data[1],(uint16_t) size);
 
     for (int i = 0; i <= size; i++)
     {

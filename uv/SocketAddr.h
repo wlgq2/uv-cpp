@@ -24,7 +24,7 @@ class  SocketAddr
 public:
     enum IPV
     {
-        Ipv4,
+        Ipv4 = 0,
         Ipv6
     };
 

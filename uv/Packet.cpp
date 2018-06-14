@@ -18,7 +18,8 @@ uint8_t Packet::EndByte = 0xe7;
 Packet::DataMode Packet::Mode = Packet::DataMode::LittleEndian;
 
 Packet::Packet()
-    :buffer_(nullptr),
+    :reserve_(0),
+    buffer_(nullptr),
     bufferSize_(0)
 {
 
@@ -37,16 +38,17 @@ void uv::Packet::fill(const char* data, uint16_t size)
     buffer_ = new char[bufferSize_];
 
     buffer_[0] = HeadByte;
-    PackDataSize(&buffer_[1],size);
+    PackNum(&buffer_[1],size);
+    PackNum(&buffer_[3], reserve_);
 
-    std::copy(data, data + size, buffer_ + sizeof(HeadByte) + sizeof(bufferSize_));
+    std::copy(data, data + size, buffer_ + sizeof(HeadByte) + sizeof(bufferSize_)+sizeof(reserve_));
     buffer_[size + PacketMinSize()-1] = EndByte;
 }
 
 void uv::Packet::update(char* data, uint16_t size)
 {
     clear();
-
+    UnpackNum((const uint8_t*)(&data[3]), reserve_);
     buffer_ = data;
     bufferSize_ = size;
 }
@@ -63,7 +65,7 @@ void uv::Packet::clear()
 
 const char* uv::Packet::getData()
 {
-    return buffer_+sizeof(HeadByte)+sizeof(bufferSize_);
+    return buffer_+sizeof(HeadByte)+sizeof(bufferSize_)+sizeof(reserve_);
 }
 
 const uint16_t uv::Packet::DataSize()
@@ -81,37 +83,8 @@ const uint16_t uv::Packet::BufferSize()
     return bufferSize_;
 }
 
-int uv::Packet::UnpackDataSize(const uint8_t* data)
-{
-    int size = 0;
-    if (Packet::Mode = Packet::DataMode::BigEndian)
-    {
-        size |= data[0];
-        size = (size << 8) | data[1];
-    }
-    else
-    {
-        size |= data[1];
-        size = (size << 8) | data[0];
-    }
-    return size;
-}
-
-void uv::Packet::PackDataSize(char * data, uint16_t size)
-{
-    if (Packet::Mode = Packet::DataMode::BigEndian)
-    {
-        data[0] = size >> 8;
-        data[1] = size & 0xff;
-    }
-    else
-    {
-        data[0] = size & 0xff;
-        data[1] = size >> 8;
-    }
-}
 
 int uv::Packet::PacketMinSize()
 {
-    return 4;
+    return 8;
 }

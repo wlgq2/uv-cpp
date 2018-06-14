@@ -14,10 +14,10 @@ Description: https://github.com/wlgq2/libuv_cpp11
 #include <string>
 
 //Packet:
-//---------------------------------------
-//  head  |  size   |  data   |  end   |
-// 1 byte | 2 bytes | N bytes | 1 byte |
-//---------------------------------------
+//------------------------------------------------
+//  head  |  size   | reserve | data   |  end   |
+// 1 byte | 2 bytes | 4 bytes | N bytes| 1 byte |
+//------------------------------------------------
 
 namespace uv
 {
@@ -37,8 +37,12 @@ public:
     const char* Buffer();
     const uint16_t BufferSize();
 
-    static int UnpackDataSize(const uint8_t* data);
-    static void PackDataSize(char* data, uint16_t size);
+    template<typename NumType>
+    static void UnpackNum(const uint8_t* data, NumType& num);
+
+    template<typename NumType>
+    static void PackNum(char* data, NumType size);
+
     static int PacketMinSize();
 
 public:
@@ -51,10 +55,57 @@ public:
     static uint8_t HeadByte;
     static uint8_t EndByte;
     static DataMode Mode;
+    uint32_t reserve_;
 
 private:
     char* buffer_;
     uint16_t bufferSize_;
 };
+
+template<typename NumType>
+inline void Packet::UnpackNum(const uint8_t* data, NumType& num)
+{
+    num = 0;
+    auto size = sizeof(NumType);
+    if (Packet::Mode = Packet::DataMode::BigEndian)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            num <<= 8;
+            num |= data[i];
+
+        }
+    }
+    else
+    {
+        for (int i = size-1; i >= 0; i--)
+        {
+            num <<= 8;
+            num |= data[i];
+        }
+    }
+}
+
+template<typename NumType>
+inline void Packet::PackNum(char* data, NumType num)
+{
+    auto size = sizeof(NumType);
+    if (Packet::Mode = Packet::DataMode::BigEndian)
+    {
+        for (int i = size-1; i >= 0; i--)
+        {
+            data[i] = num & 0xff;
+            num >>= 8;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < size; i++)
+        {
+            data[i] = num & 0xff;
+            num >>= 8;
+        }
+    }
+}
 }
 #endif

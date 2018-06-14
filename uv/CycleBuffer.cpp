@@ -75,7 +75,8 @@ int uv::ArrayBuffer::read(Packet& packet)
                 index = 0;
             cnt[i] = buffer_[index];
         }
-        int size = Packet::UnpackDataSize(cnt);
+        uint16_t size;
+        Packet::UnpackNum(cnt, size);
         if (size + Packet::PacketMinSize() > info.size)
         {
             return -1;

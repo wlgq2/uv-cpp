@@ -49,8 +49,12 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
     connection->appendToBuffer(buf, size);
     while (0 == connection->readFromBuffer(packet))
     {
-        std::cout << packet.getData() << ":" << packet.DataSize() << std::endl;
-        connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
+        std::cout << std::endl;
+        std::cout << "data size:" << packet.DataSize() << std::endl;
+        std::cout << "reserve data:" << packet.reserve_ << std::endl;
+        std::cout << "data:" << packet.getData() << std::endl;
+ 
+        //connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
     }
 #endif
 }
