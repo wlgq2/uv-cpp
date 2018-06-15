@@ -79,8 +79,8 @@ void TcpClient::onConnectClose(string& name)
     {
         connection_->close([this](std::string& name)
         {
-            //release oid socket_ pointer.
-            connection_ = nullptr;
+            //connection_ = nullptr;
+            //socket_ pointer will release when reconnect.
             socket_ = new uv_tcp_t();
             update();
             uv::Log::Instance()->info("Close tcp client connection complete.");
