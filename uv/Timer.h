@@ -17,13 +17,14 @@
 
 namespace uv
 {
-using TimerCloseComplete = std::function<void()>;
+
 
 template <typename ValueType>
 class Timer
 {
 public:
     using TimerCallback = std::function<void(Timer<ValueType>*,ValueType)>;
+    using TimerCloseComplete = std::function<void(Timer<ValueType>*)>;
 
     Timer(EventLoop* loop, uint64_t timeout, uint64_t repeat, TimerCallback callback, ValueType value);
     virtual ~Timer();
@@ -116,7 +117,7 @@ template<typename ValueType>
 inline void Timer<ValueType>::colseComplete()
 {
     if (closeComplete_)
-        closeComplete_();
+        closeComplete_(this);
 }
 
 template<typename ValueType>
