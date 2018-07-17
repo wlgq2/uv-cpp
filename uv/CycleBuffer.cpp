@@ -3,7 +3,7 @@ Copyright 2017, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-4-27
+Last modified: 2018-7-18
 
 Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -32,19 +32,18 @@ int uv::ArrayBuffer::append(const char* data, int size)
     SizeInfo info;
     usableSizeInfo(info);
 
-    if (info.size < size)
+    if (info.size < (uint32_t)size)
     {
         //»º´æ²»¹»
         return 0;
     }
-    if (info.part1 >= size)
+    if (info.part1 >= (uint32_t)size)
     {
         std::copy(data, data + size, buffer_ + writeIndex_);
     }
     else
     {
         std::copy(data, data + info.part1, buffer_ + writeIndex_);
-        int remain = size - info.part1;
         std::copy(data + info.part1, data + size, buffer_);
     }
     addWriteIndex(size);

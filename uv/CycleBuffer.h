@@ -3,7 +3,7 @@ Copyright 2017, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-4-27
+Last modified: 2018-7-18
 
 Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -14,14 +14,14 @@ Description: https://github.com/wlgq2/libuv_cpp11
 
 //ArrayBuffer(cycle)
 //---------------------------------------
-//  Null  |   byte   |  byte   |  Null 
+//  Null  |   byte   |  byte   |  Null
 //---------------------------------------
 //        ↑                      ↑
 //   read position           write position
 
 //              ↓can not write
 //---------------------------------------
-//  byte   |   byte   |  byte   |  byte 
+//  byte   |   byte   |  byte   |  byte
 //---------------------------------------
 //         ↑          ↑
 //   write position  read position
@@ -33,11 +33,11 @@ namespace uv
 
 struct SizeInfo
 {
-    int size;
-    int part1;
-    int part2;
+    uint32_t size;
+    uint32_t part1;
+    uint32_t part2;
 };
- 
+
 class ArrayBuffer :public PacketBuffer
 {
 public:
@@ -47,7 +47,7 @@ public:
     //写字节时必须距离读字节一个字节，否则无法区分缓存满/空。
     int append(const char* data,int size) override;
     int read(Packet& packet) override;
-    
+
     int usableSize();
     void usableSizeInfo(SizeInfo& info);
     int readSize();

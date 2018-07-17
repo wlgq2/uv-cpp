@@ -3,7 +3,7 @@ Copyright 2017, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-4-24
+Last modified: 2018-7-18
 
 Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -84,7 +84,7 @@ const uint16_t uv::Packet::BufferSize()
 }
 
 
-int uv::Packet::PacketMinSize()
+uint32_t uv::Packet::PacketMinSize()
 {
     return 8;
 }

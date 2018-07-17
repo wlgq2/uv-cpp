@@ -3,7 +3,7 @@ Copyright 2017, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-4-24
+Last modified: 2018-7-18
 
 Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -43,7 +43,7 @@ public:
     template<typename NumType>
     static void PackNum(char* data, NumType size);
 
-    static int PacketMinSize();
+    static uint32_t PacketMinSize();
 
 public:
     enum DataMode
@@ -67,7 +67,7 @@ inline void Packet::UnpackNum(const uint8_t* data, NumType& num)
 {
     num = 0;
     auto size = sizeof(NumType);
-    if (Packet::Mode = Packet::DataMode::BigEndian)
+    if (Packet::DataMode::BigEndian == Packet::Mode)
     {
         for (int i = 0; i < size; i++)
         {
@@ -90,7 +90,7 @@ template<typename NumType>
 inline void Packet::PackNum(char* data, NumType num)
 {
     auto size = sizeof(NumType);
-    if (Packet::Mode = Packet::DataMode::BigEndian)
+    if (Packet::DataMode::BigEndian == Packet::Mode)
     {
         for (int i = size-1; i >= 0; i--)
         {
