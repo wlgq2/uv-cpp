@@ -46,7 +46,7 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
     });
 #else //包接收及发送
     Packet packet;
-    connection->appendToBuffer(buf, size);
+    connection->appendToBuffer(buf, static_cast<int>(size));
     while (0 == connection->readFromBuffer(packet))
     {
         std::cout << std::endl;
