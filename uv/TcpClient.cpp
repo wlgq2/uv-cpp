@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-4-18
+   Last modified: 2018-8-12
 
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -27,8 +27,7 @@ TcpClient::TcpClient(EventLoop* loop)
     onConnectCloseCallback_(nullptr),
     connection_(nullptr)
 {
-    ::uv_tcp_init(loop->hanlde(), socket_);
-    socket_->data = static_cast<void*>(this);
+    update();
 }
 
 TcpClient::~TcpClient()
@@ -51,7 +50,6 @@ void TcpClient::connect(SocketAddr& addr)
         }
 
         handle->onConnect(true);
-
     });
 }
 
@@ -68,6 +66,9 @@ void TcpClient::onConnect(bool successed)
     }
     else
     {
+        uv_tcp_t* newSocket = new uv_tcp_t();
+        delete socket_;
+        socket_ = newSocket;
         update();
     }
     if(connectCallback_)
