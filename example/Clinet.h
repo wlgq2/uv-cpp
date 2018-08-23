@@ -40,9 +40,14 @@ public:
     }
     void onConnect(bool successed)
     {
-        if(!successed)
+        if(successed)
         {
-            connect(*(sockAddr.get()));
+            //send packet
+            char data[] = "test message";
+            uv::Packet packet;
+            packet.reserve_ = 655;
+            packet.fill(data, sizeof(data));
+            write(packet.Buffer(),packet.BufferSize());
         }
     }
 
