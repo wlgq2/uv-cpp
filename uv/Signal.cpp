@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
     
-   Last modified: 2017-10-9
+   Last modified: 2018-8-23
     
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -24,7 +24,7 @@ Signal::Signal(EventLoop* loop, int sig, SignalHandle handle)
     ::uv_signal_start(signal_, &Signal::onSignal, sig);
 }
 
-void uv::Signal::close(std::function<void()>& callback)
+void uv::Signal::close(std::function<void()> callback)
 {
     closeCallback_ = callback;
     if (uv_is_closing((uv_handle_t*)signal_) == 0)

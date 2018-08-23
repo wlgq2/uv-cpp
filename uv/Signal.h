@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
     
-   Last modified: 2017-10-9
+   Last modified: 2018-8-23
     
    Description:  https://github.com/wlgq2/libuv_cpp11
 */
@@ -26,7 +26,7 @@ class Signal
 {
 public:
     Signal(EventLoop* loop,int sig, SignalHandle handle = nullptr);
-    void close(std::function<void()>& callback);
+    void close(std::function<void()> callback);
     virtual ~Signal();
 
     void setHandle(SignalHandle handle);
