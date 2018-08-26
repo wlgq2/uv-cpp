@@ -76,8 +76,8 @@ void TcpClient::onConnect(bool successed)
             ::uv_close((uv_handle_t*)socket_,
                 [](uv_handle_t* handle)
             {
-                auto connection = static_cast<TcpClient*>(handle->data);
-                connection->afterConnectFail();
+                auto client = static_cast<TcpClient*>(handle->data);
+                client->afterConnectFail();
                 delete handle;
             });
         }
