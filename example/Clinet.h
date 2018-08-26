@@ -36,18 +36,36 @@ public:
 
     void onConnectClose()
     {
-        connect(*(sockAddr.get()));
+        uv::Timer<void*>* timer = new uv::Timer<void*>(loop_, 500, 0, [this](uv::Timer<void*>* timer,void*)
+        {
+            connect(*(sockAddr.get()));
+            timer->close([](uv::Timer<void*>* timer)
+            {
+                delete timer;
+            });
+        }, nullptr);
+        timer->start();
+
     }
     void onConnect(bool successed)
     {
-        if(successed)
+        if(!successed)
         {
+            onConnectClose();
+        }
+        else
+        {
+#if    1
+            char data[1024] = "test message";
+            write(data,(int)sizeof(data));
+#else
             //send packet
             char data[] = "test message";
             uv::Packet packet;
             packet.reserve_ = 655;
             packet.fill(data, sizeof(data));
             write(packet.Buffer(),packet.BufferSize());
+#endif
         }
     }
 

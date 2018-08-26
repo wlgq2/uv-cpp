@@ -18,7 +18,7 @@ int main(int argc, char** args)
 
 
     EchoServer server(loop, addr1);
-    //server.setTimeout(40);
+    server.setTimeout(40);
     server.start();
 
     SocketAddr addr2("127.0.0.1", 10002);

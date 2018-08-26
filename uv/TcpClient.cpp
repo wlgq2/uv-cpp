@@ -63,16 +63,25 @@ void TcpClient::onConnect(bool successed)
         connection_ = make_shared<TcpConnection>(loop_, name, socket_);
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
         connection_->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
+        runConnectCallback(successed);
     }
     else
     {
-        uv_tcp_t* newSocket = new uv_tcp_t();
-        delete socket_;
-        socket_ = newSocket;
-        update();
+        if (::uv_is_active((uv_handle_t*)socket_))
+        {
+            ::uv_read_stop((uv_stream_t*)socket_);
+        }
+        if (::uv_is_closing((uv_handle_t*)socket_) == 0)
+        {
+            ::uv_close((uv_handle_t*)socket_,
+                [](uv_handle_t* handle)
+            {
+                auto connection = static_cast<TcpClient*>(handle->data);
+                connection->afterConnectFail();
+                delete handle;
+            });
+        }
     }
-    if(connectCallback_)
-        connectCallback_(successed);
 }
 void TcpClient::onConnectClose(string& name)
 {
@@ -81,7 +90,7 @@ void TcpClient::onConnectClose(string& name)
         connection_->close([this](std::string& name)
         {
             //connection_ = nullptr;
-            //socket_ pointer will release when reconnect.
+            //old socket_ pointer will release when reconnect.
             socket_ = new uv_tcp_t();
             update();
             uv::Log::Instance()->info("Close tcp client connection complete.");
@@ -108,6 +117,13 @@ void uv::TcpClient::close(std::function<void(std::string&)> callback)
         std::string str("");
         callback(str);
     }
+}
+
+void uv::TcpClient::afterConnectFail()
+{
+    socket_ = new uv_tcp_t();
+    update();
+    runConnectCallback(false);
 }
 
 void uv::TcpClient::write(const char* buf, unsigned int size, AfterWriteCallback callback)
@@ -181,4 +197,10 @@ void TcpClient::update()
 {
     ::uv_tcp_init(loop_->hanlde(), socket_);
     socket_->data = static_cast<void*>(this);
+}
+
+void uv::TcpClient::runConnectCallback(bool isSuccess)
+{
+    if (connectCallback_)
+        connectCallback_(isSuccess);
 }

@@ -32,7 +32,16 @@ public:
     {
         if(!successed)
         {
-            connect(*(sockAddr.get()));
+            uv::Timer<void*>* timer;
+            timer = new uv::Timer<void*>(Loop(), 1000, 0, [this](uv::Timer<void*>* timer, void*)
+            {
+                connect(*(sockAddr.get()));
+                timer->close([](uv::Timer<void*>* handle)
+                {
+                    delete handle;
+                });
+            },nullptr);
+           
         }
         else
         {

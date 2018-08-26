@@ -3,7 +3,7 @@
 
     Author: orcaer@yeah.net
 
-    Last modified: 2018-4-18
+    Last modified: 2018-8-27
 
     Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -33,20 +33,20 @@ int main(int argc, char** args)
     EventLoop* loop = new EventLoop();
     //or
     //EventLoop* loop = EventLoop::DefalutLoop();
-  
+
 #if    TEST_SIGNAL
     //接管SIGPIPE信号。
     Signal signal(loop,13,[](int sig)
     {
         //SIGPIPE
     });
-    
+
 #endif
 
 
     //server对象
 #if   TEST_SERVER
-#if    TEST_IPV6 
+#if    TEST_IPV6
     SocketAddr addr1("0:0:0:0:0:0:0:0", 10002, SocketAddr::Ipv6);
 #else
     SocketAddr addr1("0.0.0.0", 10002, SocketAddr::Ipv4);
@@ -98,11 +98,11 @@ int main(int argc, char** args)
         [](Timer<int>* handle, int data)
     {
         std::cout << "timer callback run onice with arg:" <<data<< std::endl;
-        handle->close([handle]()
+        handle->close([](Timer<int>* ptr)
         {
             std::cout << "release timer handle."<< std::endl;
             //释放定时器对象。
-            delete handle;
+            delete ptr;
         });
     }, 1024);
     pTimer->start();

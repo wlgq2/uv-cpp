@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2017-9-19
+   Last modified: 2018-8-27
 
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -36,6 +36,7 @@ public:
     void onConnectClose(std::string& name);
     void onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size);
     void close(std::function<void(std::string&)> callback);
+    void afterConnectFail();
 
     void write(const char* buf, unsigned int size, AfterWriteCallback callback = nullptr);
     void writeInLoop(const char* buf, unsigned int size, AfterWriteCallback callback);
@@ -62,6 +63,7 @@ private:
 
     std::shared_ptr<TcpConnection> connection_;
     void update();
+    void runConnectCallback(bool isSuccess);
 };
 
 using TcpClientPtr = std::shared_ptr<uv::TcpClient>;

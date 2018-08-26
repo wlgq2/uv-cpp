@@ -26,7 +26,7 @@ EchoServer::EchoServer(EventLoop* loop, SocketAddr& addr)
 void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
 {
    
-#if       0   //直接发送
+#if       1   //直接发送
     connection->write(buf,size,nullptr);
     
 #elif     0  //调用write in loop接口
@@ -54,7 +54,7 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
         std::cout << "reserve data:" << packet.reserve_ << std::endl;
         std::cout << "data:" << packet.getData() << std::endl;
  
-        //connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
+        connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
     }
 #endif
 }
