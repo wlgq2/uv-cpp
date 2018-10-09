@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2017-11-8
+   Last modified: 2018-10-9
 
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -29,10 +29,9 @@ using OnConnectCloseCallback = std::function<void(std::weak_ptr<TcpConnection>)>
 class TcpServer
 {
 public:
-    TcpServer(EventLoop* loop, SocketAddr& addr);
+    TcpServer(EventLoop* loop, SocketAddr& addr,bool tcpNoDealy = true);
     virtual ~TcpServer();
     void start();
-
     void addConnnection(std::string& name,std::shared_ptr<TcpConnection> connection);
     void removeConnnection(std::string& name);
     std::shared_ptr<TcpConnection> getConnnection(std::string& name);

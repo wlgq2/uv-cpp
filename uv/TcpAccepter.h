@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
     
-   Last modified: 2017-8-8
+   Last modified: 2017-10-9
     
    Description:  https://github.com/wlgq2/libuv_cpp11
 */
@@ -25,11 +25,12 @@ using NewConnectionCallback  =    std::function<void(EventLoop* ,uv_tcp_t*)> ;
 class TcpAccepter
 {
 public:
-    TcpAccepter(EventLoop* loop, SocketAddr& addr);
+    TcpAccepter(EventLoop* loop, SocketAddr& addr,bool tcpNoDelay);
     virtual ~TcpAccepter();
 
     void listen();
     bool isListen();
+    bool isTcpNoDelay();
     void setNewConnectinonCallback( NewConnectionCallback callback);
 
     EventLoop* Loop();
@@ -37,6 +38,7 @@ public:
 
 private:
     bool listened_;
+    bool tcpNoDelay_;
     EventLoop* loop_;
     NewConnectionCallback callback_;
 

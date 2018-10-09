@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-8-12
+   Last modified: 2018-10-9
 
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -17,11 +17,12 @@ using namespace uv;
 using namespace std;
 
 
-TcpClient::TcpClient(EventLoop* loop)
+TcpClient::TcpClient(EventLoop* loop, bool tcpNoDelay)
     :loop_(loop),
     socket_(new uv_tcp_t()),
     connect_(new uv_connect_t()),
     ipv(SocketAddr::Ipv4),
+    tcpNoDelay_(tcpNoDelay),
     connectCallback_(nullptr),
     onMessageCallback_(nullptr),
     onConnectCloseCallback_(nullptr),
@@ -33,6 +34,16 @@ TcpClient::TcpClient(EventLoop* loop)
 TcpClient::~TcpClient()
 {
     delete connect_;
+}
+
+bool uv::TcpClient::isTcpNoDelay()
+{
+    return tcpNoDelay_;
+}
+
+void uv::TcpClient::setTcpNoDelay(bool isNoDelay)
+{
+    tcpNoDelay_ = isNoDelay;
 }
 
 
@@ -196,6 +207,8 @@ int uv::TcpClient::readFromBuffer(Packet& packet)
 void TcpClient::update()
 {
     ::uv_tcp_init(loop_->hanlde(), socket_);
+    if (tcpNoDelay_)
+        ::uv_tcp_nodelay(socket_,1);
     socket_->data = static_cast<void*>(this);
 }
 

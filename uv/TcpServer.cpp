@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-4-24
+   Last modified: 2018-10-9
 
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -20,10 +20,10 @@ using namespace std;
 using namespace uv;
 
 
-TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr)
+TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr, bool tcpNoDealy)
     :loop_(loop),
     ipv_(addr.Ipv()),
-    accetper_(new TcpAccepter(loop, addr)),
+    accetper_(new TcpAccepter(loop, addr, tcpNoDealy)),
     onMessageCallback_(nullptr),
     onNewConnectCallback_(nullptr),
     onConnectCloseCallback_(nullptr),

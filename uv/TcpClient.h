@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-8-27
+   Last modified: 2018-10-9
 
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -27,9 +27,11 @@ using OnConnectClose =  std::function<void()> ;
 class TcpClient
 {
 public:
-    TcpClient(EventLoop* loop);
+    TcpClient(EventLoop* loop,bool tcpNoDelay = true);
     virtual ~TcpClient();
 
+    bool isTcpNoDelay();
+    void setTcpNoDelay(bool isNoDelay);
     void connect(SocketAddr& addr);
 
     void onConnect(bool successed);
@@ -56,6 +58,7 @@ private:
     uv_tcp_t* socket_;
     uv_connect_t* connect_;
     SocketAddr::IPV ipv;
+    bool tcpNoDelay_;
 
     ConnectCallback connectCallback_;
     NewMessageCallback onMessageCallback_;

@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
     
-   Last modified: 2017-8-8
+   Last modified: 2017-10-9
     
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -14,11 +14,15 @@
 using namespace std;
 using namespace uv;
 
-TcpAccepter::TcpAccepter(EventLoop* loop, SocketAddr& addr)
-    :loop_(loop),
+TcpAccepter::TcpAccepter(EventLoop* loop, SocketAddr& addr, bool tcpNoDelay)
+    :listened_(false),
+    tcpNoDelay_(tcpNoDelay),
+    loop_(loop),
     callback_(nullptr)
 {
     ::uv_tcp_init(loop_->hanlde(), &server_);
+    if (tcpNoDelay_)
+        ::uv_tcp_nodelay(&server_, 1);
     ::uv_tcp_bind(&server_, addr.Addr(),0);
     server_.data = (void* )this;
 }
@@ -56,6 +60,8 @@ void TcpAccepter::listen()
         TcpAccepter* accept = static_cast<TcpAccepter*>(server->data);
         uv_tcp_t* client =new uv_tcp_t();
         ::uv_tcp_init(accept->Loop()->hanlde(), client);
+        if (accept->isTcpNoDelay())
+            ::uv_tcp_nodelay(client, 1);
 
         if ( 0 == ::uv_accept(server, (uv_stream_t*) client))
         {
@@ -74,6 +80,11 @@ void TcpAccepter::listen()
 bool TcpAccepter::isListen()
 {
     return listened_;
+}
+
+bool uv::TcpAccepter::isTcpNoDelay()
+{
+    return tcpNoDelay_;
 }
 
 void TcpAccepter::setNewConnectinonCallback(NewConnectionCallback callback)
