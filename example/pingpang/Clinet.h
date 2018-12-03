@@ -41,6 +41,7 @@ public:
                     delete handle;
                 });
             },nullptr);
+            timer->start();
            
         }
         else
