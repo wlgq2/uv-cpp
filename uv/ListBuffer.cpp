@@ -62,9 +62,9 @@ int uv::ListBuffer::read(Packet& packet)
     data[0] = Packet::HeadByte;
     Packet::PackNum(&data[1],(uint16_t) size);
 
-    for (int i = 0; i <= size; i++)
+    for (int i = 0; i <= size+4; i++)
     {
-        data[i + Packet::PacketMinSize()-1] = buffer_.front();
+        data[i + 3] = buffer_.front();
         buffer_.pop_front();
     }
     if(static_cast<uint8_t>(data[size+ Packet::PacketMinSize()-1]) != Packet::EndByte)
