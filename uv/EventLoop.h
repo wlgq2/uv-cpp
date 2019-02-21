@@ -17,6 +17,8 @@
 
 namespace uv
 {
+ 
+class Async;
 class EventLoop
 {
 public:
@@ -45,6 +47,7 @@ private:
     std::thread::id loopThreadId_;
     std::atomic<bool> isRun;
     uv_loop_t* loop_;
+    Async* async_;
 };
 
 using EventLoopPtr = std::shared_ptr<uv::EventLoop>;

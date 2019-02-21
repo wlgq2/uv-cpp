@@ -15,10 +15,12 @@
 using namespace uv;
 
 EventLoop::EventLoop()
-    :isRun(false)
+    :isRun(false),
+    loop_(new uv_loop_t()),
+    async_(nullptr)
 {
-    loop_ = new uv_loop_t();
     ::uv_loop_init(loop_);
+    async_ = new Async(this);
 }
 
 EventLoop::EventLoop(EventLoop::Mode mode)
@@ -39,6 +41,7 @@ EventLoop::~EventLoop()
 {
     if (loop_ != uv_default_loop())
     {
+        delete async_;
         uv_loop_close(loop_);
         delete loop_;
     }
@@ -90,16 +93,7 @@ void uv::EventLoop::runInThisLoop(const std::function<void()>& func)
         func();
         return;
     }
-    std::function<void()>* funcptr = new std::function<void()>();
-    *funcptr = func;
-    uv::Async<std::function<void()>*>* handle = new uv::Async<std::function<void()>*>(this,
-        [this](uv::Async<std::function<void()>*>* handle, std::function<void()>* funcptr)
-    {
-        (*funcptr)();
-        delete funcptr;
-        delete handle;
-    }, funcptr);
-    handle->runInLoop();
+    async_->runInThisLoop(func);
 }
 
 const char* EventLoop::GetErrorMessage(int status)

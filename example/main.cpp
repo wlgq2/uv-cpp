@@ -15,6 +15,7 @@
 #include "EchoServer.h"
 #include "Clinet.h"
 #include "LogDemo.h"
+#include <chrono>
 
 using namespace uv;
 
@@ -68,19 +69,48 @@ int main(int argc, char** args)
 #endif
     Client client(loop);
     client.connectToServer(addr2);
+
+#if  1
+
+    //跨线程发送数据
+    std::thread thread([&client]()
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        char* data = new char[4] {'t','e','s','t'};
+       
+        //线程安全;
+        client.writeInLoop(data,sizeof(data),
+            [](uv::WriteInfo& info)
+        {
+            //数据需要在发生完成回调中释放
+            //write message error.
+            if (0 != info.status)
+            {
+                //打印错误信息
+                std::cout << "Write error ：" << EventLoop::GetErrorMessage(info.status) << std::endl;
+            }
+            delete[] info.buf;
+        });
+    });
+#endif
+
 #endif
 
 
-    //loop线程中异步执行函数
+    //loop线程中异步执行函数，用于跨线程操作。
+    //相对于原生libuv async接口，修复了调用多次可能只运行一次的问题。
 #if  TEST_ASYNC
-    Async<int>* handle = new Async<int>(loop,
-    [](Async<int>* ptr, int data)
+    loop->runInThisLoop(
+        []()
     {
-        std::cout << data << std::endl;
-        delete ptr;
-    },
-    1024);
-    handle->runInLoop();
+        std::cout << "run function in loop thread one." << std::endl;
+    });
+
+    loop->runInThisLoop(
+        []()
+    {
+        std::cout << "run function in loop thread two." << std::endl;
+    });
 #endif
 
 

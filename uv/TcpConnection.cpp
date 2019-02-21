@@ -159,17 +159,11 @@ void TcpConnection::writeInLoop(const char* buf, ssize_t size, AfterWriteCallbac
         return;
     }
 
-    struct WriteArgs* writeArg = new struct WriteArgs(shared_from_this(), buf, size, callback);
-    Async<struct WriteArgs*>* async = new Async<struct WriteArgs*>(loop_,
-        [this](Async<struct WriteArgs*>* handle, struct WriteArgs * data)
+    loop_->runInThisLoop(
+        [this,buf,size, callback]()
     {
-        auto connection = data->connection;
-        connection->write(data->buf, data->size, data->callback);
-        delete data;
-        delete handle;
-    },
-        writeArg);
-    async->runInLoop();
+        write(buf, size, callback);
+    });
 }
 
 
