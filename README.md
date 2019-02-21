@@ -17,5 +17,5 @@
 次/秒     | 192857 |141487|12594|
 ** **
 <br>**！对于诸如`uv::Timer`,`uv::TcpClient`等对象的释放需要调用close接口并在回调函数中释放对象,否则可能会出错。**</br>
-<br>**！切勿在Loop线程外创建注册该Loop下的事件相关对象（`uv::TcpClient`，`uv::TcpServer`，`uv::Timer`，`uv::Async`……），建议每个Loop都绑定独立线程运行。**</br>
+<br>**！切勿在Loop线程外创建注册该Loop下的事件相关对象（`uv::TcpClient`，`uv::TcpServer`，`uv::Timer`……），建议每个Loop都绑定独立线程运行。**</br>
 <br>一点微小的工作。</br>
