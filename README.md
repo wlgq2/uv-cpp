@@ -6,7 +6,7 @@ Language Translations:
 ** **
 ## Features
 * C++11 style callbacks instead of C： You can use class member functions or lambda as callbacks.
-* `Timer`and`TimerWheel`：Heartbeat timeout judgment mechanism with time complexity of O(1)
+* `Timer`and`TimerWheel`：Heartbeat timeout judgment mechanism with time complexity of O(1).
 * `Async`：Optimized the problem of calling multiple times, perhaps only once, compared to the libuv's async. 
 * `Packet`and`PacketBuffer`：Send and receive packet data, used to resolve TCP stubs/stickers.
 * Log interface.
