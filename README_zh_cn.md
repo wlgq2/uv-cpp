@@ -1,9 +1,9 @@
 # libuv_cpp11
 <br>对libuv的C++11风格的封装跨平台封装库，用于线上项目。跑过压测，很稳定，正确使用接口情况下，未发现carsh或内存泄漏。</br>
 Language Translations:
-* [Englishi](README.md)
-* [繁體中文](README_zh_tw.md)
-* [简体中文](README_zh_cn.md)
+* [Englishi](translations/README.md)
+* [繁體中文](translations/README_zh_tw.md)
+* [简体中文](translations/README_zh_cn.md)
 ** **
 * TCP相关类封装：`TcpServer`、`TcpClient`、`TcpConnection`、`TcpAccept`。及把C风格回调改为C++11风格的回调（支持非静态类成员函数及lambda）。
 * `Timer`及`TimerWheel`：定时器及时间复杂度为O(1)的心跳超时踢出机制。
