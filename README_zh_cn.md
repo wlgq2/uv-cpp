@@ -1,5 +1,5 @@
 # libuv_cpp11
-<br>对libuv的C++11风格的封装跨平台封装库，用于线上项目。跑过压测，很稳定，正确使用接口情况下，未发现carsh或内存泄漏。</br>
+<br>对libuv的C++11风格的跨平台封装库，用于线上项目。跑过压测，很稳定，正确使用接口情况下，未发现carsh或内存泄漏。</br>
 
 ** **
 * TCP相关类封装：`TcpServer`、`TcpClient`、`TcpConnection`、`TcpAccept`。及把C风格回调改为C++11风格的回调（支持非静态类成员函数及lambda）。
