@@ -153,12 +153,6 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
 
 void TcpConnection::writeInLoop(const char* buf, ssize_t size, AfterWriteCallback callback)
 {
-    if (loop_->isRunInLoopThread())
-    {
-        write(buf, size, callback);
-        return;
-    }
-
     loop_->runInThisLoop(
         [this,buf,size, callback]()
     {
