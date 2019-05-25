@@ -1,0 +1,328 @@
+# depslib dependency file v1.0
+1535300917 source:/sources/libuv_cpp11/example/all_example/EchoServer.cpp
+	<cstring>
+	<iostream>
+	"EchoServer.h"
+	"uv/Packet.h"
+
+1533815865 /sources/libuv_cpp11/example/all_example/EchoServer.h
+	"uv/uv11.h"
+
+1533815865 /sources/libuv_cpp11//uv/uv11.h
+	"Async.h"
+	"Signal.h"
+	"TcpServer.h"
+	"TcpClient.h"
+	"LogInterface.h"
+	"Packet.h"
+
+1550754288 /sources/libuv_cpp11//uv/Async.h
+	<memory>
+	<functional>
+	<queue>
+	<mutex>
+	"EventLoop.h"
+
+1558785484 /sources/libuv_cpp11//uv/EventLoop.h
+	<uv.h>
+	<thread>
+	<atomic>
+	<functional>
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv.h
+	"uv/errno.h"
+	"uv/version.h"
+	<stddef.h>
+	<stdio.h>
+	"uv/stdint-msvc2008.h"
+	<stdint.h>
+	"uv/win.h"
+	"uv/unix.h"
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/errno.h
+	<errno.h>
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/version.h
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/stdint-msvc2008.h
+	<limits.h>
+	<wchar.h>
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/win.h
+	<winsock2.h>
+	<mswsock.h>
+	<ws2tcpip.h>
+	<windows.h>
+	<process.h>
+	<signal.h>
+	<fcntl.h>
+	<sys/stat.h>
+	"uv/stdint-msvc2008.h"
+	<stdint.h>
+	"uv/tree.h"
+	"uv/threadpool.h"
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/tree.h
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/threadpool.h
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/unix.h
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<dirent.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netinet/tcp.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<termios.h>
+	<pwd.h>
+	<semaphore.h>
+	<pthread.h>
+	<signal.h>
+	"uv/threadpool.h"
+	"uv/linux.h"
+	"uv/os390.h"
+	"uv/posix.h"
+	"uv/aix.h"
+	"uv/sunos.h"
+	"uv/darwin.h"
+	"uv/bsd.h"
+	"uv/posix.h"
+	"uv/pthread-barrier.h"
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/linux.h
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/os390.h
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/posix.h
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/aix.h
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/sunos.h
+	<sys/port.h>
+	<port.h>
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/darwin.h
+	<mach/mach.h>
+	<mach/task.h>
+	<mach/semaphore.h>
+	<TargetConditionals.h>
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/bsd.h
+
+1534582844 /sources/libuv_cpp11/libuv1.22.0/include/uv/pthread-barrier.h
+	<errno.h>
+	<pthread.h>
+	<semaphore.h>
+
+1535300917 /sources/libuv_cpp11//uv/Signal.h
+	<map>
+	<functional>
+	"EventLoop.h"
+
+1539100149 /sources/libuv_cpp11//uv/TcpServer.h
+	<functional>
+	<memory>
+	<set>
+	<map>
+	"TcpAccepter.h"
+	"TcpConnection.h"
+	"TimerWheel.h"
+
+1539100377 /sources/libuv_cpp11//uv/TcpAccepter.h
+	<functional>
+	"EventLoop.h"
+	"SocketAddr.h"
+
+1533816048 /sources/libuv_cpp11//uv/SocketAddr.h
+	<string>
+	<uv.h>
+
+1533815865 /sources/libuv_cpp11//uv/TcpConnection.h
+	<memory>
+	<chrono>
+	<functional>
+	<atomic>
+	"EventLoop.h"
+	"ListBuffer.h"
+	"CycleBuffer.h"
+
+1533815865 /sources/libuv_cpp11//uv/ListBuffer.h
+	<list>
+	"PacketBuffer.h"
+
+1533815865 /sources/libuv_cpp11//uv/PacketBuffer.h
+	"Packet.h"
+
+1533816028 /sources/libuv_cpp11//uv/Packet.h
+	<string>
+
+1533815865 /sources/libuv_cpp11//uv/CycleBuffer.h
+	"PacketBuffer.h"
+
+1533815865 /sources/libuv_cpp11//uv/TimerWheel.h
+	<vector>
+	<set>
+	<memory>
+	"Timer.h"
+	"TcpConnection.h"
+
+1533815865 /sources/libuv_cpp11//uv/Timer.h
+	<functional>
+	<mutex>
+	"EventLoop.h"
+
+1539100290 /sources/libuv_cpp11//uv/TcpClient.h
+	<functional>
+	<memory>
+	"TcpConnection.h"
+	"SocketAddr.h"
+
+1533815865 /sources/libuv_cpp11//uv/LogInterface.h
+	<string>
+	<functional>
+
+1550754262 source:/sources/libuv_cpp11/example/all_example/main.cpp
+	<iostream>
+	"EchoServer.h"
+	"Clinet.h"
+	"LogDemo.h"
+	<chrono>
+
+1535300917 /sources/libuv_cpp11/example/all_example/Clinet.h
+	<string>
+	"uv/uv11.h"
+
+1533815865 /sources/libuv_cpp11/example/all_example/LogDemo.h
+	<uv/LogInterface.h>
+	<iostream>
+
+1550751823 source:/sources/libuv_cpp11/uv/Async.cpp
+	"Async.h"
+
+1550754288 /sources/libuv_cpp11/uv/Async.h
+	<memory>
+	<functional>
+	<queue>
+	<mutex>
+	"EventLoop.h"
+
+1558785484 /sources/libuv_cpp11/uv/EventLoop.h
+	<uv.h>
+	<thread>
+	<atomic>
+	<functional>
+
+1533815865 source:/sources/libuv_cpp11/uv/CycleBuffer.cpp
+	"CycleBuffer.h"
+
+1533815865 /sources/libuv_cpp11/uv/CycleBuffer.h
+	"PacketBuffer.h"
+
+1533815865 /sources/libuv_cpp11/uv/PacketBuffer.h
+	"Packet.h"
+
+1533816028 /sources/libuv_cpp11/uv/Packet.h
+	<string>
+
+1550754317 source:/sources/libuv_cpp11/uv/EventLoop.cpp
+	"EventLoop.h"
+	"TcpConnection.h"
+	"Async.h"
+
+1533815865 /sources/libuv_cpp11/uv/TcpConnection.h
+	<memory>
+	<chrono>
+	<functional>
+	<atomic>
+	"EventLoop.h"
+	"ListBuffer.h"
+	"CycleBuffer.h"
+
+1533815865 /sources/libuv_cpp11/uv/ListBuffer.h
+	<list>
+	"PacketBuffer.h"
+
+1548513600 source:/sources/libuv_cpp11/uv/ListBuffer.cpp
+	"ListBuffer.h"
+	<iostream>
+
+1533815865 source:/sources/libuv_cpp11/uv/Packet.cpp
+	"Packet.h"
+
+1535300917 source:/sources/libuv_cpp11/uv/Signal.cpp
+	"Signal.h"
+	"LogInterface.h"
+
+1535300917 /sources/libuv_cpp11/uv/Signal.h
+	<map>
+	<functional>
+	"EventLoop.h"
+
+1533815865 /sources/libuv_cpp11/uv/LogInterface.h
+	<string>
+	<functional>
+
+1539100424 source:/sources/libuv_cpp11/uv/TcpAccepter.cpp
+	"TcpAccepter.h"
+	"LogInterface.h"
+
+1539100377 /sources/libuv_cpp11/uv/TcpAccepter.h
+	<functional>
+	"EventLoop.h"
+	"SocketAddr.h"
+
+1533816048 /sources/libuv_cpp11/uv/SocketAddr.h
+	<string>
+	<uv.h>
+
+1539100355 source:/sources/libuv_cpp11/uv/TcpClient.cpp
+	<string>
+	"TcpClient.h"
+	"LogInterface.h"
+
+1539100290 /sources/libuv_cpp11/uv/TcpClient.h
+	<functional>
+	<memory>
+	"TcpConnection.h"
+	"SocketAddr.h"
+
+1553003334 source:/sources/libuv_cpp11/uv/TcpConnection.cpp
+	"TcpConnection.h"
+	"TcpServer.h"
+	"Async.h"
+	"LogInterface.h"
+
+1539100149 /sources/libuv_cpp11/uv/TcpServer.h
+	<functional>
+	<memory>
+	<set>
+	<map>
+	"TcpAccepter.h"
+	"TcpConnection.h"
+	"TimerWheel.h"
+
+1533815865 /sources/libuv_cpp11/uv/TimerWheel.h
+	<vector>
+	<set>
+	<memory>
+	"Timer.h"
+	"TcpConnection.h"
+
+1533815865 /sources/libuv_cpp11/uv/Timer.h
+	<functional>
+	<mutex>
+	"EventLoop.h"
+
+1539100207 source:/sources/libuv_cpp11/uv/TcpServer.cpp
+	<functional>
+	<memory>
+	<string>
+	"TcpServer.h"
+	"LogInterface.h"
+
+1533815865 source:/sources/libuv_cpp11/uv/TimerWheel.cpp
+	"TimerWheel.h"
+

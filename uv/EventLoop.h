@@ -2,9 +2,9 @@
    Copyright 2017, orcaer@yeah.net  All rights reserved.
 
    Author: orcaer@yeah.net
-    
+
    Last modified: 2017-10-10
-    
+
    Description: https://github.com/wlgq2/libuv_cpp11
 */
 
@@ -14,20 +14,21 @@
 #include <uv.h>
 #include <thread>
 #include <atomic>
+#include <functional>
 
 namespace uv
 {
- 
+
 class Async;
 class EventLoop
 {
 public:
     enum Mode
-    { 
+    {
         Default,
-        New 
+        New
     };
-    
+
     EventLoop();
     ~EventLoop();
 
@@ -52,5 +53,5 @@ private:
 
 using EventLoopPtr = std::shared_ptr<uv::EventLoop>;
 }
-#endif  
+#endif
 

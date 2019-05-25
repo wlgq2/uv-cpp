@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="pingpong" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/pingpong" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/pingpong" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c++11" />
+			<Add directory="../../../" />
+			<Add directory="../../../libuv1.22.0/include" />
+		</Compiler>
+		<Linker>
+			<Add option="-pthread" />
+			<Add library="../../../libuv1.22.0/lib/gcc7.4.0/libuv.a" />
+		</Linker>
+		<Unit filename="../../../example/pingpang/Clinet.h" />
+		<Unit filename="../../../example/pingpang/EchoServer.cpp" />
+		<Unit filename="../../../example/pingpang/EchoServer.h" />
+		<Unit filename="../../../example/pingpang/ModeDefine.h" />
+		<Unit filename="../../../example/pingpang/main.cpp" />
+		<Unit filename="../../../uv/Async.cpp" />
+		<Unit filename="../../../uv/Async.h" />
+		<Unit filename="../../../uv/CycleBuffer.cpp" />
+		<Unit filename="../../../uv/CycleBuffer.h" />
+		<Unit filename="../../../uv/EventLoop.cpp" />
+		<Unit filename="../../../uv/EventLoop.h" />
+		<Unit filename="../../../uv/ListBuffer.cpp" />
+		<Unit filename="../../../uv/ListBuffer.h" />
+		<Unit filename="../../../uv/LogInterface.h" />
+		<Unit filename="../../../uv/Packet.cpp" />
+		<Unit filename="../../../uv/Packet.h" />
+		<Unit filename="../../../uv/PacketBuffer.h" />
+		<Unit filename="../../../uv/Signal.cpp" />
+		<Unit filename="../../../uv/Signal.h" />
+		<Unit filename="../../../uv/SocketAddr.h" />
+		<Unit filename="../../../uv/TcpAccepter.cpp" />
+		<Unit filename="../../../uv/TcpAccepter.h" />
+		<Unit filename="../../../uv/TcpClient.cpp" />
+		<Unit filename="../../../uv/TcpClient.h" />
+		<Unit filename="../../../uv/TcpConnection.cpp" />
+		<Unit filename="../../../uv/TcpConnection.h" />
+		<Unit filename="../../../uv/TcpServer.cpp" />
+		<Unit filename="../../../uv/TcpServer.h" />
+		<Unit filename="../../../uv/Timer.h" />
+		<Unit filename="../../../uv/TimerWheel.cpp" />
+		<Unit filename="../../../uv/TimerWheel.h" />
+		<Unit filename="../../../uv/uv11.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
