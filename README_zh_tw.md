@@ -9,7 +9,8 @@
 
 
 ** **
-* TCP相關類封裝：`TcpServer`、`TcpClient`、`TcpConnection`、`TcpAccept`。及把C風格回調改為C++11風格的回調（支持非靜態類成員函數及lambda）。
+* C++11風格回調函數：非C語言函數回調，支持非靜態類成員函數及lambda。
+* TCP相關類封裝：`TcpServer`、`TcpClient`、`TcpConnection`、`TcpAccept`。
 * `Timer`及`TimerWheel`：定時器及時間復雜度為O(1)的心跳超時踢出機制。
 * `Async`：異步機制封裝。相對於原生libuv async接口，優化了調用多次可能只運行壹次的問題。由於libuv幾乎所有api都非線程安全，建議使用writeInLoop接口代替直接write（writeInLoop會檢查當前調用的線程，如果在loop線程中調用則直接write，否則把write加到loop線程中執行）。
 * libuv信號封裝。   
