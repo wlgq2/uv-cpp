@@ -1,5 +1,12 @@
 # libuv_cpp11
+<a href="https://github.com/wlgq2/libuv_cpp11/releases"><img src="https://img.shields.io/github/release/wlgq2/libuv_cpp11.svg" alt="Github release"></a>
+[![Platform](https://img.shields.io/badge/platform-%20%20%20%20Linux,%20Windows-green.svg?style=flat)](https://github.com/wlgq2/libuv_cpp11)
+[![License](https://img.shields.io/badge/license-%20%20MIT-yellow.svg?style=flat)](LICENSE)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+
+
 <br>對libuv的C++11風格的跨平臺封裝庫，用於線上項目。跑過壓測，很穩定，正確使用接口情況下，未發現core dump或內存泄漏。</br>
+
 
 ** **
 * TCP相關類封裝：`TcpServer`、`TcpClient`、`TcpConnection`、`TcpAccept`。及把C風格回調改為C++11風格的回調（支持非靜態類成員函數及lambda）。
