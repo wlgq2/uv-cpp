@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
     
-   Last modified: 2018-4-24
+   Last modified: 2019-6-11
     
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -31,6 +31,7 @@ public:
 
     void start();
     void close(TimerCloseComplete callback);
+    void setTimerRepeat(uint64_t ms);
 
 private:
     bool started_;
@@ -102,6 +103,12 @@ inline void Timer<ValueType>::close(TimerCloseComplete callback)
     {
         colseComplete();
     }
+}
+
+template<typename ValueType>
+inline void Timer<ValueType>::setTimerRepeat(uint64_t ms)
+{
+    ::uv_timer_set_repeat(handle_, ms);
 }
 
 template<typename ValueType>
