@@ -16,10 +16,52 @@
 * `Packet`and`PacketBuffer`：Send and receive packet data, used to resolve TCP stubs/stickers.
 * Log interface.
 ** **
-Simple test：one thread 1k bytes ping-pong。
+## Simple test
+one thread 1k bytes ping-pong。
 <br>environment：Intel Core i5 6402 + ubuntu14.04.5 + gcc5.5.0 + libuv1.22.0 + O2优化</br>
 
    libuv_cpp | no use PacketBuffer|CycleBuffer|ListBuffer|
 :---------:|:--------:|:--------:|:--------:|
 Times/Sec | 192857 |141487|12594|
+
+
+## Quick start
+```C++
+#include <iostream>
+#include <uv/uv11.h>
+
+
+int main(int argc, char** args)
+{
+    //event's loop
+    uv::EventLoop* loop = uv::EventLoop::DefalutLoop();
+
+    //Tcp Server
+    uv::SocketAddr serverAddr("0.0.0.0", 10002, uv::SocketAddr::Ipv4);
+    uv::TcpServer server(loop, serverAddr);
+    server.setMessageCallback(
+        [](std::shared_ptr<uv::TcpConnection> conn, const char* data , ssize_t size)
+    {
+        std::cout << std::string(data, size) << std::endl;
+        conn->write(data, size,nullptr);
+    });
+    server.start();
+
+    //Tcp Client
+    uv::TcpClient client(loop);
+    client.setConnectCallback(
+        [&client](bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            char data[] = "hello world!";
+            client.write(data, sizeof(data));
+        }
+    });
+    client.connect(serverAddr);
+       
+    loop->run();
+}
+
+```
 
