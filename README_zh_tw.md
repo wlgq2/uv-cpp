@@ -6,8 +6,7 @@
 
 
 <br>對libuv的C++11風格的跨平臺封裝庫，用於線上項目。跑過壓測，很穩定，正確使用接口情況下，未發現core dump或內存泄漏。</br>
-
-
+## 特性
 ** **
 * C++11風格回調函數：非C語言函數回調，支持非靜態類成員函數及lambda。
 * TCP相關類封裝：`TcpServer`、`TcpClient`、`TcpConnection`、`TcpAccept`。
@@ -23,6 +22,46 @@
    libuv_cpp | no use PacketBuffer|CycleBuffer|ListBuffer|
 :---------:|:--------:|:--------:|:--------:|
 次/秒     | 192857 |141487|12594|
+
+## 第一個常式
+```C++
+#include <iostream>
+#include <uv/uv11.h>
+
+
+int main(int argc, char** args)
+{
+    //event's loop
+    uv::EventLoop* loop = uv::EventLoop::DefalutLoop();
+
+    //Tcp Server
+    uv::SocketAddr serverAddr("0.0.0.0", 10002, uv::SocketAddr::Ipv4);
+    uv::TcpServer server(loop, serverAddr);
+    server.setMessageCallback(
+        [](std::shared_ptr<uv::TcpConnection> conn, const char* data , ssize_t size)
+    {
+        std::cout << std::string(data, size) << std::endl;
+        conn->write(data, size,nullptr);
+    });
+    server.start();
+
+    //Tcp Client
+    uv::TcpClient client(loop);
+    client.setConnectCallback(
+        [&client](bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            char data[] = "hello world!";
+            client.write(data, sizeof(data));
+        }
+    });
+    client.connect(serverAddr);
+       
+    loop->run();
+}
+
+```
 ** **
 <br>**！對於諸如`uv::Timer`,`uv::TcpClient`等對象的釋放需要調用close接口並在回調函數中釋放對象,否則可能會出錯。**</br>
 <br>**！切勿在Loop線程外創建註冊該Loop下的事件相關對象（`uv::TcpClient`，`uv::TcpServer`，`uv::Timer`……），建議每個Loop都綁定獨立線程運行。**</br>
