@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
     
-   Last modified: 2018-4-18
+   Last modified: 2019-6-17
     
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -15,18 +15,16 @@
 using namespace uv;
 
 EventLoop::EventLoop()
-    :isRun(false),
-    loop_(new uv_loop_t()),
-    async_(nullptr)
+    :EventLoop(EventLoop::Mode::New)
 {
-    ::uv_loop_init(loop_);
-    async_ = new Async(this);
 }
 
 EventLoop::EventLoop(EventLoop::Mode mode)
-    :isRun(false)
+    : isRun_(false),
+    loop_(nullptr),
+    async_(nullptr)
 {
-    if (mode == EventLoop::New)
+    if (mode == EventLoop::Mode::New)
     {
         loop_ = new uv_loop_t();
         ::uv_loop_init(loop_);
@@ -35,6 +33,7 @@ EventLoop::EventLoop(EventLoop::Mode mode)
     {
         loop_ = uv_default_loop();
     }
+    async_ = new Async(this);
 }
 
 EventLoop::~EventLoop()
@@ -61,21 +60,21 @@ uv_loop_t* EventLoop::hanlde()
 int EventLoop::run()
 {
     loopThreadId_ = std::this_thread::get_id();
-    isRun = true;
+    isRun_ = true;
     return ::uv_run(loop_, UV_RUN_DEFAULT);
 }
 
 int uv::EventLoop::runNoWait()
 {
     loopThreadId_ = std::this_thread::get_id();
-    isRun = true;
+    isRun_ = true;
     return ::uv_run(loop_, UV_RUN_NOWAIT);
 }
 
 
 bool EventLoop::isRunInLoopThread()
 {
-    if (isRun)
+    if (isRun_)
     {
         return std::this_thread::get_id() == loopThreadId_;
     }

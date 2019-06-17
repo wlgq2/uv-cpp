@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2017-10-10
+   Last modified: 2019-6-17
 
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -46,7 +46,7 @@ private:
     EventLoop(Mode mode);
 
     std::thread::id loopThreadId_;
-    std::atomic<bool> isRun;
+    std::atomic<bool> isRun_;
     uv_loop_t* loop_;
     Async* async_;
 };

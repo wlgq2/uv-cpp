@@ -31,9 +31,9 @@ using namespace uv;
 int main(int argc, char** args)
 {
     //定义事件分发器类
-    EventLoop* loop = new EventLoop();
+    //EventLoop* loop = new EventLoop();
     //or
-    //EventLoop* loop = EventLoop::DefalutLoop();
+    EventLoop* loop = EventLoop::DefalutLoop();
 
 #if    TEST_SIGNAL
     //接管SIGPIPE信号。
