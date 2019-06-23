@@ -67,6 +67,7 @@ private:
     std::shared_ptr<TcpConnection> connection_;
     void update();
     void runConnectCallback(bool isSuccess);
+    void onClose(std::string& name);
 };
 
 using TcpClientPtr = std::shared_ptr<uv::TcpClient>;

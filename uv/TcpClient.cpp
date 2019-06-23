@@ -98,16 +98,7 @@ void TcpClient::onConnectClose(string& name)
 {
     if (connection_)
     {
-        connection_->close([this](std::string& name)
-        {
-            //connection_ = nullptr;
-            //old socket_ pointer will release when reconnect.
-            socket_ = new uv_tcp_t();
-            update();
-            uv::Log::Instance()->info("Close tcp client connection complete.");
-            if (onConnectCloseCallback_)
-                onConnectCloseCallback_();
-        });
+        connection_->close(std::bind(&TcpClient::onClose,this,std::placeholders::_1));
     }
 
 }
@@ -121,7 +112,13 @@ void uv::TcpClient::close(std::function<void(std::string&)> callback)
 {
     if (connection_)
     {
-        connection_->close(callback);
+        connection_->close([this, callback](std::string& name)
+        {
+            onClose(name);
+            if (callback)
+                callback(name);
+        });
+
     }
     else if(callback)
     {
@@ -216,4 +213,15 @@ void uv::TcpClient::runConnectCallback(bool isSuccess)
 {
     if (connectCallback_)
         connectCallback_(isSuccess);
+}
+
+void uv::TcpClient::onClose(std::string& name)
+{
+    //connection_ = nullptr;
+    //old socket_ pointer will release when reconnect.
+    socket_ = new uv_tcp_t();
+    update();
+    uv::Log::Instance()->info("Close tcp client connection complete.");
+    if (onConnectCloseCallback_)
+        onConnectCloseCallback_();
 }
