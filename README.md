@@ -6,7 +6,6 @@
 
 <br>Language Translations:</br>
 * [Englishi](README.md)
-* [繁體中文](README_zh_tw.md)
 * [简体中文](README_zh_cn.md)
 ** **
 ## Features
