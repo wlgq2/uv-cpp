@@ -24,6 +24,7 @@ using namespace uv;
 #define      TEST_ASYNC       1
 #define      TEST_TIMER       1
 #define      TEST_LOG         1
+#define      TEST_UDP         1
 
 #define       TEST_IPV6       0
 
@@ -152,5 +153,32 @@ int main(int argc, char** args)
     log->error("error message");
     log->fatal("fatal message");
 #endif
+
+
+#if  TEST_UDP
+    SocketAddr addr3("127.0.0.1", 10003);
+    uv::Udp udpReceive(loop, addr3);
+    udpReceive.setMessageCallback(
+        [&udpReceive](SocketAddr& from,const char* data,unsigned size)
+    {
+        std::string msg(data, size);
+        std::cout << "udp receive message from "<< from.toStr()<<" :" << msg << std::endl;
+        udpReceive.send(from, data, size);
+    });
+    udpReceive.startRead();
+
+    SocketAddr addr4("127.0.0.1", 10004);
+    uv::Udp udpSend(loop, addr4);
+    udpSend.setMessageCallback(
+        [](SocketAddr& from, const char* data, unsigned size)
+    {
+        std::string msg(data, size);
+        std::cout << "udp call message :" << msg << std::endl;;
+    });
+    udpSend.startRead();
+    char udpmsg[] = "udp test...";
+    udpSend.send(addr3, udpmsg, sizeof(udpmsg));
+#endif
+
     loop->run();
 }

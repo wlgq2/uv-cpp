@@ -82,7 +82,7 @@ bool EventLoop::isRunInLoopThread()
     return false;
 }
 
-void uv::EventLoop::runInThisLoop(const std::function<void()>& func)
+void uv::EventLoop::runInThisLoop(const DefaultCallback func)
 {
     if (nullptr == func)
         return;

@@ -145,11 +145,13 @@
     <ClCompile Include="..\..\..\uv\LogWriter.cpp" />
     <ClCompile Include="..\..\..\uv\Packet.cpp" />
     <ClCompile Include="..\..\..\uv\Signal.cpp" />
+    <ClCompile Include="..\..\..\uv\SocketAddr.cpp" />
     <ClCompile Include="..\..\..\uv\TcpAccepter.cpp" />
     <ClCompile Include="..\..\..\uv\TcpClient.cpp" />
     <ClCompile Include="..\..\..\uv\TcpConnection.cpp" />
     <ClCompile Include="..\..\..\uv\TcpServer.cpp" />
     <ClCompile Include="..\..\..\uv\TimerWheel.cpp" />
+    <ClCompile Include="..\..\..\uv\Udp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\example\pingpang\Clinet.h" />
@@ -170,6 +172,7 @@
     <ClInclude Include="..\..\..\uv\TcpServer.h" />
     <ClInclude Include="..\..\..\uv\Timer.h" />
     <ClInclude Include="..\..\..\uv\TimerWheel.h" />
+    <ClInclude Include="..\..\..\uv\Udp.h" />
     <ClInclude Include="..\..\..\uv\uv11.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

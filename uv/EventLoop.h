@@ -18,6 +18,7 @@
 
 namespace uv
 {
+using DefaultCallback = std::function<void()>;
 
 class Async;
 class EventLoop
@@ -37,7 +38,7 @@ public:
     int run();
     int runNoWait();
     bool isRunInLoopThread();
-    void runInThisLoop(const std::function<void()>& func);
+    void runInThisLoop(const DefaultCallback func);
     uv_loop_t* hanlde();
 
     static const char* GetErrorMessage(int status);

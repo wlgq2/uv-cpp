@@ -26,7 +26,7 @@ class Signal
 {
 public:
     Signal(EventLoop* loop,int sig, SignalHandle handle = nullptr);
-    void close(std::function<void()> callback);
+    void close(DefaultCallback callback);
     virtual ~Signal();
 
     void setHandle(SignalHandle handle);
@@ -37,7 +37,7 @@ public:
 private:
     uv_signal_t* signal_;
     SignalHandle hanlde_;
-    std::function<void()> closeCallback_;
+    DefaultCallback closeCallback_;
     static void onSignal(uv_signal_t* handle, int signum);
 };
 

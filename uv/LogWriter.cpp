@@ -23,7 +23,7 @@ void uv::LogWriter::registerInterface(WriteLogCallback callback)
     callback_ = callback;
 }
 
-void uv::LogWriter::ToHex(std::string & message, const char * data, unsigned int size)
+void uv::LogWriter::ToHex(std::string& message, const char* data, unsigned int size)
 {
     for (unsigned int i = 0; i < size; i++)
     {
@@ -33,7 +33,7 @@ void uv::LogWriter::ToHex(std::string & message, const char * data, unsigned int
     }
 }
 
-void uv::LogWriter::write(Level level, const std::string & data)
+void uv::LogWriter::write(Level level, const std::string& data)
 {
     if ((callback_) && (level <= Error) && (level >= Debug))
     {
@@ -41,57 +41,57 @@ void uv::LogWriter::write(Level level, const std::string & data)
     }
 }
 
-void uv::LogWriter::write(Level level, const std::string && data)
+void uv::LogWriter::write(Level level, const std::string&& data)
 {
     write(level, data);
 }
 
-void uv::LogWriter::fatal(const std::string & data)
+void uv::LogWriter::fatal(const std::string& data)
 {
     write(Level::Fatal, data);
 }
 
-void uv::LogWriter::fatal(const std::string && data)
+void uv::LogWriter::fatal(const std::string&& data)
 {
     write(Level::Fatal, data);
 }
 
-void uv::LogWriter::warn(const std::string & data)
+void uv::LogWriter::warn(const std::string& data)
 {
     write(Level::Warn, data);
 }
 
-void uv::LogWriter::warn(const std::string && data)
+void uv::LogWriter::warn(const std::string&& data)
 {
     write(Level::Warn, data);
 }
 
-void uv::LogWriter::error(const std::string & data)
+void uv::LogWriter::error(const std::string& data)
 {
     write(Level::Error, data);
 }
 
-void uv::LogWriter::error(const std::string && data)
+void uv::LogWriter::error(const std::string&& data)
 {
     write(Level::Error, data);
 }
 
-void uv::LogWriter::info(const std::string & data)
+void uv::LogWriter::info(const std::string& data)
 {
     write(Level::Info, data);
 }
 
-void uv::LogWriter::info(const std::string && data)
+void uv::LogWriter::info(const std::string&& data)
 {
     write(Level::Info, data);
 }
 
-void uv::LogWriter::debug(const std::string & data)
+void uv::LogWriter::debug(const std::string& data)
 {
     write(Level::Debug, data);
 }
 
-void uv::LogWriter::debug(const std::string && data)
+void uv::LogWriter::debug(const std::string&& data)
 {
     write(Level::Debug, data);
 }

@@ -10,6 +10,7 @@
 
 #include "Signal.h"
 #include "LogWriter.h"
+#include "EventLoop.h"
 
 using namespace uv;
 using namespace std;
@@ -24,7 +25,7 @@ Signal::Signal(EventLoop* loop, int sig, SignalHandle handle)
     ::uv_signal_start(signal_, &Signal::onSignal, sig);
 }
 
-void uv::Signal::close(std::function<void()> callback)
+void uv::Signal::close(DefaultCallback callback)
 {
     closeCallback_ = callback;
     if (uv_is_closing((uv_handle_t*)signal_) == 0)

@@ -51,6 +51,12 @@
     <ClCompile Include="..\..\..\uv\LogWriter.cpp">
       <Filter>uv</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\uv\SocketAddr.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\Udp.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\uv\Async.h">
@@ -108,6 +114,9 @@
       <Filter>example</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\uv\LogWriter.h">
+      <Filter>uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\uv\Udp.h">
       <Filter>uv</Filter>
     </ClInclude>
   </ItemGroup>

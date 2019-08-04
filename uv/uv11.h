@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2017-10-18
+   Last modified: 2019-8-5
 
    Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -17,5 +17,6 @@
 #include   "TcpClient.h"
 #include   "LogWriter.h"
 #include   "Packet.h"
+#include   "Udp.h"
 
 #endif
