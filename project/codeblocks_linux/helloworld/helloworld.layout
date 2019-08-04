@@ -2,14 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Release" />
+	<File name="../../../uv/Async.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="324" topLine="9" />
+		</Cursor>
+	</File>
 	<File name="../../../uv/uv11.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="243" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="../../../example/helloworld/main.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="35" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="../../../uv/EventLoop.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -17,9 +17,9 @@
 			<Cursor1 position="253" topLine="6" />
 		</Cursor>
 	</File>
-	<File name="../../../uv/Async.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../../../example/helloworld/main.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="324" topLine="9" />
+			<Cursor1 position="35" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

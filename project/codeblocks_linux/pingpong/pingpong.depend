@@ -1,0 +1,340 @@
+# depslib dependency file v1.0
+1561392270 source:/sources/uv-cpp/example/pingpang/EchoServer.cpp
+	<cstring>
+	<iostream>
+	"EchoServer.h"
+
+1561392270 /sources/uv-cpp/example/pingpang/EchoServer.h
+	"uv/uv11.h"
+	<atomic>
+	"ModeDefine.h"
+
+1564939670 /sources/uv-cpp//uv/uv11.h
+	"Async.h"
+	"Signal.h"
+	"TcpServer.h"
+	"TcpClient.h"
+	"LogWriter.h"
+	"Packet.h"
+	"Udp.h"
+
+1561392270 /sources/uv-cpp//uv/Async.h
+	<memory>
+	<functional>
+	<queue>
+	<mutex>
+	"EventLoop.h"
+
+1564939610 /sources/uv-cpp//uv/EventLoop.h
+	<uv.h>
+	<thread>
+	<atomic>
+	<functional>
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv.h
+	"uv/errno.h"
+	"uv/version.h"
+	<stddef.h>
+	<stdio.h>
+	"uv/stdint-msvc2008.h"
+	<stdint.h>
+	"uv/win.h"
+	"uv/unix.h"
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/errno.h
+	<errno.h>
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/version.h
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/stdint-msvc2008.h
+	<limits.h>
+	<wchar.h>
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/win.h
+	<winsock2.h>
+	<mswsock.h>
+	<ws2tcpip.h>
+	<windows.h>
+	<process.h>
+	<signal.h>
+	<fcntl.h>
+	<sys/stat.h>
+	"uv/stdint-msvc2008.h"
+	<stdint.h>
+	"uv/tree.h"
+	"uv/threadpool.h"
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/tree.h
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/threadpool.h
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/unix.h
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<dirent.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netinet/tcp.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<termios.h>
+	<pwd.h>
+	<semaphore.h>
+	<pthread.h>
+	<signal.h>
+	"uv/threadpool.h"
+	"uv/linux.h"
+	"uv/os390.h"
+	"uv/posix.h"
+	"uv/aix.h"
+	"uv/sunos.h"
+	"uv/darwin.h"
+	"uv/bsd.h"
+	"uv/posix.h"
+	"uv/pthread-barrier.h"
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/linux.h
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/os390.h
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/posix.h
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/aix.h
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/sunos.h
+	<sys/port.h>
+	<port.h>
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/darwin.h
+	<mach/mach.h>
+	<mach/task.h>
+	<mach/semaphore.h>
+	<TargetConditionals.h>
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/bsd.h
+
+1561392270 /sources/uv-cpp/libuv1.22.0/include/uv/pthread-barrier.h
+	<errno.h>
+	<pthread.h>
+	<semaphore.h>
+
+1564939647 /sources/uv-cpp//uv/Signal.h
+	<map>
+	<functional>
+	"EventLoop.h"
+
+1561392270 /sources/uv-cpp//uv/TcpServer.h
+	<functional>
+	<memory>
+	<set>
+	<map>
+	"TcpAccepter.h"
+	"TcpConnection.h"
+	"TimerWheel.h"
+
+1561392270 /sources/uv-cpp//uv/TcpAccepter.h
+	<functional>
+	"EventLoop.h"
+	"SocketAddr.h"
+
+1564939662 /sources/uv-cpp//uv/SocketAddr.h
+	<string>
+	<uv.h>
+
+1561392270 /sources/uv-cpp//uv/TcpConnection.h
+	<memory>
+	<chrono>
+	<functional>
+	<atomic>
+	"EventLoop.h"
+	"ListBuffer.h"
+	"CycleBuffer.h"
+
+1561392270 /sources/uv-cpp//uv/ListBuffer.h
+	<list>
+	"PacketBuffer.h"
+
+1561392270 /sources/uv-cpp//uv/PacketBuffer.h
+	"Packet.h"
+
+1561392270 /sources/uv-cpp//uv/Packet.h
+	<string>
+
+1561392270 /sources/uv-cpp//uv/CycleBuffer.h
+	"PacketBuffer.h"
+
+1561392270 /sources/uv-cpp//uv/TimerWheel.h
+	<vector>
+	<set>
+	<memory>
+	"Timer.h"
+	"TcpConnection.h"
+
+1561392270 /sources/uv-cpp//uv/Timer.h
+	<functional>
+	<mutex>
+	"EventLoop.h"
+
+1561392270 /sources/uv-cpp//uv/TcpClient.h
+	<functional>
+	<memory>
+	"TcpConnection.h"
+	"SocketAddr.h"
+
+1564909427 /sources/uv-cpp//uv/LogWriter.h
+	<string>
+	<functional>
+
+1564934396 /sources/uv-cpp//uv/Udp.h
+	<functional>
+	"EventLoop.h"
+	"SocketAddr.h"
+
+1561392270 /sources/uv-cpp/example/pingpang/ModeDefine.h
+
+1561392270 source:/sources/uv-cpp/example/pingpang/main.cpp
+	<iostream>
+	"EchoServer.h"
+	"Clinet.h"
+
+1561392270 /sources/uv-cpp/example/pingpang/Clinet.h
+	<string>
+	"uv/uv11.h"
+	"ModeDefine.h"
+
+1561392270 source:/sources/uv-cpp/uv/Async.cpp
+	"Async.h"
+
+1561392270 /sources/uv-cpp/uv/Async.h
+	<memory>
+	<functional>
+	<queue>
+	<mutex>
+	"EventLoop.h"
+
+1564939610 /sources/uv-cpp/uv/EventLoop.h
+	<uv.h>
+	<thread>
+	<atomic>
+	<functional>
+
+1561392270 source:/sources/uv-cpp/uv/CycleBuffer.cpp
+	"CycleBuffer.h"
+
+1561392270 /sources/uv-cpp/uv/CycleBuffer.h
+	"PacketBuffer.h"
+
+1561392270 /sources/uv-cpp/uv/PacketBuffer.h
+	"Packet.h"
+
+1561392270 /sources/uv-cpp/uv/Packet.h
+	<string>
+
+1564939600 source:/sources/uv-cpp/uv/EventLoop.cpp
+	"EventLoop.h"
+	"TcpConnection.h"
+	"Async.h"
+
+1561392270 /sources/uv-cpp/uv/TcpConnection.h
+	<memory>
+	<chrono>
+	<functional>
+	<atomic>
+	"EventLoop.h"
+	"ListBuffer.h"
+	"CycleBuffer.h"
+
+1561392270 /sources/uv-cpp/uv/ListBuffer.h
+	<list>
+	"PacketBuffer.h"
+
+1561392270 source:/sources/uv-cpp/uv/ListBuffer.cpp
+	"ListBuffer.h"
+	<iostream>
+
+1564939630 source:/sources/uv-cpp/uv/LogWriter.cpp
+	"LogWriter.h"
+
+1564909427 /sources/uv-cpp/uv/LogWriter.h
+	<string>
+	<functional>
+
+1561392270 source:/sources/uv-cpp/uv/Packet.cpp
+	"Packet.h"
+
+1564939640 source:/sources/uv-cpp/uv/Signal.cpp
+	"Signal.h"
+	"LogWriter.h"
+	"EventLoop.h"
+
+1564939647 /sources/uv-cpp/uv/Signal.h
+	<map>
+	<functional>
+	"EventLoop.h"
+
+1564909828 source:/sources/uv-cpp/uv/TcpAccepter.cpp
+	"TcpAccepter.h"
+	"LogWriter.h"
+
+1561392270 /sources/uv-cpp/uv/TcpAccepter.h
+	<functional>
+	"EventLoop.h"
+	"SocketAddr.h"
+
+1564939662 /sources/uv-cpp/uv/SocketAddr.h
+	<string>
+	<uv.h>
+
+1564909845 source:/sources/uv-cpp/uv/TcpClient.cpp
+	<string>
+	"TcpClient.h"
+	"LogWriter.h"
+
+1561392270 /sources/uv-cpp/uv/TcpClient.h
+	<functional>
+	<memory>
+	"TcpConnection.h"
+	"SocketAddr.h"
+
+1564909857 source:/sources/uv-cpp/uv/TcpConnection.cpp
+	"TcpConnection.h"
+	"TcpServer.h"
+	"Async.h"
+	"LogWriter.h"
+
+1561392270 /sources/uv-cpp/uv/TcpServer.h
+	<functional>
+	<memory>
+	<set>
+	<map>
+	"TcpAccepter.h"
+	"TcpConnection.h"
+	"TimerWheel.h"
+
+1561392270 /sources/uv-cpp/uv/TimerWheel.h
+	<vector>
+	<set>
+	<memory>
+	"Timer.h"
+	"TcpConnection.h"
+
+1561392270 /sources/uv-cpp/uv/Timer.h
+	<functional>
+	<mutex>
+	"EventLoop.h"
+
+1564909872 source:/sources/uv-cpp/uv/TcpServer.cpp
+	<functional>
+	<memory>
+	<string>
+	"TcpServer.h"
+	"LogWriter.h"
+
+1561392270 source:/sources/uv-cpp/uv/TimerWheel.cpp
+	"TimerWheel.h"
+
+1564939105 source:/sources/uv-cpp/uv/SocketAddr.cpp
+	"SocketAddr.h"
+	<iostream>
+
