@@ -11,7 +11,7 @@ Description: https://github.com/wlgq2/libuv_cpp11
 #include "TcpConnection.h"
 #include "TcpServer.h"
 #include "Async.h"
-#include "LogInterface.h"
+#include "LogWriter.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -131,7 +131,7 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
         });
         if (0 != rst)
         {
-            uv::Log::Instance()->error(std::string("write data error:"+std::to_string(rst)));
+            uv::LogWriter::Instance()->error(std::string("write data error:"+std::to_string(rst)));
             if (nullptr != callback)
             {
                 struct WriteInfo info = { rst,const_cast<char*>(buf),static_cast<unsigned long>(size) };
@@ -182,7 +182,7 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     else if (nread < 0)
     {
         connection->setConnectStatus(false);
-        uv::Log::Instance()->error( uv_err_name((int)nread));
+        uv::LogWriter::Instance()->error( uv_err_name((int)nread));
         delete[](buf->base);
 
         if (nread != UV_EOF)

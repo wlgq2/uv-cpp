@@ -47,6 +47,9 @@
     <ClCompile Include="..\..\..\example\helloworld\main.cpp">
       <Filter>example</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\uv\LogWriter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\uv\Async.h">
@@ -59,9 +62,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\uv\ListBuffer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\LogInterface.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\uv\Packet.h">
@@ -95,6 +95,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\uv\uv11.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\uv\LogWriter.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

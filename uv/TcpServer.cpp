@@ -14,7 +14,7 @@
 #include <string>
 
 #include "TcpServer.h"
-#include "LogInterface.h"
+#include "LogWriter.h"
 
 using namespace std;
 using namespace uv;
@@ -34,7 +34,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr, bool tcpNoDealy)
         string key;
         SocketAddr::AddrToStr(client,key, ipv_);
 
-        uv::Log::Instance()->info("new connect  "+key);
+        uv::LogWriter::Instance()->info("new connect  "+key);
 
         shared_ptr<TcpConnection> connection(new TcpConnection(loop,key,client));
         if(connection)
@@ -49,7 +49,7 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr, bool tcpNoDealy)
         }
         else
         {
-            uv::Log::Instance()->error("create connection fail. :"+key);
+            uv::LogWriter::Instance()->error("create connection fail. :"+key);
         }
 
     });
@@ -167,7 +167,7 @@ void TcpServer::writeInLoop(shared_ptr<TcpConnection> connection,const char* buf
     }
     else if (callback)
     {
-        uv::Log::Instance()->warn("try write a disconnect connection.");
+        uv::LogWriter::Instance()->warn("try write a disconnect connection.");
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
     }
@@ -182,7 +182,7 @@ void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,After
     }
     else if (callback)
     {
-        uv::Log::Instance()->warn(std::string("try write a disconnect connection.")+name);
+        uv::LogWriter::Instance()->warn(std::string("try write a disconnect connection.")+name);
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
     }

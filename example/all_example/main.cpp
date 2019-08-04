@@ -3,7 +3,7 @@
 
     Author: orcaer@yeah.net
 
-    Last modified: 2018-8-27
+    Last modified: 2019-8-4
 
     Description: https://github.com/wlgq2/libuv_cpp11
 */
@@ -14,7 +14,6 @@
 
 #include "EchoServer.h"
 #include "Clinet.h"
-#include "LogDemo.h"
 #include <chrono>
 
 using namespace uv;
@@ -140,13 +139,18 @@ int main(int argc, char** args)
 
     //log½Ó¿Ú°ó¶¨
 #if  TEST_LOG
-    auto log = uv::Log::Instance();
-    log->registerInterface(new LogDemo);
+    auto log = uv::LogWriter::Instance();
+    log->registerInterface(
+        [](int level, const std::string& info)
+    {
+        std::cout << "log level " << level << " :" << info << std::endl;
+    });
 
     log->debug("debug message");
+    log->info("info message");
     log->warn("warn message");
     log->error("error message");
-    log->info("info message");
+    log->fatal("fatal message");
 #endif
     loop->run();
 }

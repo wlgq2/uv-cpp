@@ -9,7 +9,7 @@
 */
 
 #include "TcpAccepter.h"
-#include "LogInterface.h"
+#include "LogWriter.h"
 
 using namespace std;
 using namespace uv;
@@ -54,7 +54,7 @@ void TcpAccepter::listen()
     {
         if (status < 0)
         {
-            uv::Log::Instance()->error (std::string("New connection error :")+ EventLoop::GetErrorMessage(status));
+            uv::LogWriter::Instance()->error (std::string("New connection error :")+ EventLoop::GetErrorMessage(status));
             return;
         }
         TcpAccepter* accept = static_cast<TcpAccepter*>(server->data);

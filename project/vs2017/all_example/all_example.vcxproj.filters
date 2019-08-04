@@ -48,6 +48,9 @@
     <ClCompile Include="..\..\..\example\all_example\main.cpp">
       <Filter>example</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\uv\LogWriter.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\uv\Async.h">
@@ -60,9 +63,6 @@
       <Filter>uv</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\uv\ListBuffer.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\LogInterface.h">
       <Filter>uv</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\uv\Packet.h">
@@ -104,8 +104,8 @@
     <ClInclude Include="..\..\..\example\all_example\EchoServer.h">
       <Filter>example</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\example\all_example\LogDemo.h">
-      <Filter>example</Filter>
+    <ClInclude Include="..\..\..\uv\LogWriter.h">
+      <Filter>uv</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

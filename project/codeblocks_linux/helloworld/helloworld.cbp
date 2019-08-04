@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="all_example" />
+		<Option title="helloworld" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/all_example" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/helloworld" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/all_example" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/helloworld" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -31,17 +31,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
-			<Add directory="../../../libuv1.22.0/include" />
 			<Add directory="../../../" />
+			<Add directory="../../../libuv1.22.0/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-pthread" />
 			<Add library="../../../libuv1.22.0/lib/gcc7.4.0/libuv.a" />
 		</Linker>
-		<Unit filename="../../../example/all_example/Clinet.h" />
-		<Unit filename="../../../example/all_example/EchoServer.cpp" />
-		<Unit filename="../../../example/all_example/EchoServer.h" />
-		<Unit filename="../../../example/all_example/main.cpp" />
+		<Unit filename="../../../example/helloworld/main.cpp" />
 		<Unit filename="../../../uv/Async.cpp" />
 		<Unit filename="../../../uv/Async.h" />
 		<Unit filename="../../../uv/CycleBuffer.cpp" />

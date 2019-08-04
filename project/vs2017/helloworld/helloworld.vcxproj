@@ -140,6 +140,7 @@
     <ClCompile Include="..\..\..\uv\CycleBuffer.cpp" />
     <ClCompile Include="..\..\..\uv\EventLoop.cpp" />
     <ClCompile Include="..\..\..\uv\ListBuffer.cpp" />
+    <ClCompile Include="..\..\..\uv\LogWriter.cpp" />
     <ClCompile Include="..\..\..\uv\Packet.cpp" />
     <ClCompile Include="..\..\..\uv\Signal.cpp" />
     <ClCompile Include="..\..\..\uv\TcpAccepter.cpp" />
@@ -153,7 +154,7 @@
     <ClInclude Include="..\..\..\uv\CycleBuffer.h" />
     <ClInclude Include="..\..\..\uv\EventLoop.h" />
     <ClInclude Include="..\..\..\uv\ListBuffer.h" />
-    <ClInclude Include="..\..\..\uv\LogInterface.h" />
+    <ClInclude Include="..\..\..\uv\LogWriter.h" />
     <ClInclude Include="..\..\..\uv\Packet.h" />
     <ClInclude Include="..\..\..\uv\PacketBuffer.h" />
     <ClInclude Include="..\..\..\uv\Signal.h" />
