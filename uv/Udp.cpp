@@ -109,13 +109,13 @@ void uv::Udp::onMesageReceive(uv_udp_t* handle, ssize_t nread, const uv_buf_t* b
     if (nread < 0) 
     {
         std::string info("udp read error :");
-        info += EventLoop::GetErrorMessage(nread);
+        info += EventLoop::GetErrorMessage((int)nread);
         uv::LogWriter::Instance()->error(info);
     }
     else if(nread >0)
     {
         Udp* obj = static_cast<Udp*>(handle->data);
-        obj->onMessage(addr, buf->base, nread);
+        obj->onMessage(addr, buf->base, (unsigned)nread);
     }
     else;
 

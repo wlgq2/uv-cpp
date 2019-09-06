@@ -39,10 +39,10 @@ EventLoop::EventLoop(EventLoop::Mode mode)
 EventLoop::~EventLoop()
 {
     if (loop_ != uv_default_loop())
-    {
-        delete async_;
+    {   
         uv_loop_close(loop_);
         delete loop_;
+        delete async_;
     }
 }
 

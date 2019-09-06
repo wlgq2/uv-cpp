@@ -38,7 +38,7 @@
 			<Add option="-pthread" />
 			<Add library="../../../libuv1.22.0/lib/gcc7.4.0/libuv.a" />
 		</Linker>
-		<Unit filename="../../../example/helloworld/main.cpp" />
+		<Unit filename="../../../examples/helloworld/main.cpp" />
 		<Unit filename="../../../uv/Async.cpp" />
 		<Unit filename="../../../uv/Async.h" />
 		<Unit filename="../../../uv/CycleBuffer.cpp" />

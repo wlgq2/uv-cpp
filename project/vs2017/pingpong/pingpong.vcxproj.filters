@@ -42,12 +42,6 @@
     <ClCompile Include="..\..\..\uv\TimerWheel.cpp">
       <Filter>uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\example\pingpang\EchoServer.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\example\pingpang\main.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\uv\LogWriter.cpp">
       <Filter>uv</Filter>
     </ClCompile>
@@ -56,6 +50,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\uv\Udp.cpp">
       <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\pingpang\EchoServer.cpp">
+      <Filter>example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\pingpang\main.cpp">
+      <Filter>example</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,20 +104,20 @@
     <ClInclude Include="..\..\..\uv\uv11.h">
       <Filter>uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\example\pingpang\Clinet.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\example\pingpang\EchoServer.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\example\pingpang\ModeDefine.h">
-      <Filter>example</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\uv\LogWriter.h">
       <Filter>uv</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\uv\Udp.h">
       <Filter>uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\pingpang\Clinet.h">
+      <Filter>example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\pingpang\EchoServer.h">
+      <Filter>example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\pingpang\ModeDefine.h">
+      <Filter>example</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

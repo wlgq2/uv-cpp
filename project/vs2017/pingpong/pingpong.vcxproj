@@ -136,8 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\example\pingpang\EchoServer.cpp" />
-    <ClCompile Include="..\..\..\example\pingpang\main.cpp" />
+    <ClCompile Include="..\..\..\examples\pingpang\EchoServer.cpp" />
+    <ClCompile Include="..\..\..\examples\pingpang\main.cpp" />
     <ClCompile Include="..\..\..\uv\Async.cpp" />
     <ClCompile Include="..\..\..\uv\CycleBuffer.cpp" />
     <ClCompile Include="..\..\..\uv\EventLoop.cpp" />
@@ -154,9 +154,9 @@
     <ClCompile Include="..\..\..\uv\Udp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\example\pingpang\Clinet.h" />
-    <ClInclude Include="..\..\..\example\pingpang\EchoServer.h" />
-    <ClInclude Include="..\..\..\example\pingpang\ModeDefine.h" />
+    <ClInclude Include="..\..\..\examples\pingpang\Clinet.h" />
+    <ClInclude Include="..\..\..\examples\pingpang\EchoServer.h" />
+    <ClInclude Include="..\..\..\examples\pingpang\ModeDefine.h" />
     <ClInclude Include="..\..\..\uv\Async.h" />
     <ClInclude Include="..\..\..\uv\CycleBuffer.h" />
     <ClInclude Include="..\..\..\uv\EventLoop.h" />

@@ -42,12 +42,6 @@
     <ClCompile Include="..\..\..\uv\TimerWheel.cpp">
       <Filter>uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\example\all_example\EchoServer.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\example\all_example\main.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\uv\LogWriter.cpp">
       <Filter>uv</Filter>
     </ClCompile>
@@ -56,6 +50,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\uv\SocketAddr.cpp">
       <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\all_example\EchoServer.cpp">
+      <Filter>example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\all_example\main.cpp">
+      <Filter>example</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,17 +104,17 @@
     <ClInclude Include="..\..\..\uv\uv11.h">
       <Filter>uv</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\example\all_example\Clinet.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\example\all_example\EchoServer.h">
-      <Filter>example</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\uv\LogWriter.h">
       <Filter>uv</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\uv\Udp.h">
       <Filter>uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\all_example\Clinet.h">
+      <Filter>example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\all_example\EchoServer.h">
+      <Filter>example</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,0 +1,24 @@
+# CMakeLists.txt
+# Copyright (C) orcaer@yeah.net. All rights reserved.
+# Last modified: 2019-9-3
+
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+PROJECT(uv_example)
+
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/
+		    ${PROJECT_SOURCE_DIR}/libuv1.22.0/include)
+
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/uv  SOURCES)
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/examples/all_example  SOURCES)
+
+LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/libuv1.22.0/lib/gcc7.4.0)
+
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11   -O2")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11  -O2")
+
+
+MESSAGE("building...")
+
+ADD_EXECUTABLE(${PROJECT_NAME}  ${SOURCES})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} "libuv.a" -pthread)

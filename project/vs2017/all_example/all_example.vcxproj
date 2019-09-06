@@ -136,8 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\example\all_example\EchoServer.cpp" />
-    <ClCompile Include="..\..\..\example\all_example\main.cpp" />
+    <ClCompile Include="..\..\..\examples\all_example\EchoServer.cpp" />
+    <ClCompile Include="..\..\..\examples\all_example\main.cpp" />
     <ClCompile Include="..\..\..\uv\Async.cpp" />
     <ClCompile Include="..\..\..\uv\CycleBuffer.cpp" />
     <ClCompile Include="..\..\..\uv\EventLoop.cpp" />
@@ -154,8 +154,8 @@
     <ClCompile Include="..\..\..\uv\Udp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\example\all_example\Clinet.h" />
-    <ClInclude Include="..\..\..\example\all_example\EchoServer.h" />
+    <ClInclude Include="..\..\..\examples\all_example\Clinet.h" />
+    <ClInclude Include="..\..\..\examples\all_example\EchoServer.h" />
     <ClInclude Include="..\..\..\uv\Async.h" />
     <ClInclude Include="..\..\..\uv\CycleBuffer.h" />
     <ClInclude Include="..\..\..\uv\EventLoop.h" />

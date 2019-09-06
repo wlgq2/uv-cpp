@@ -135,7 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\example\helloworld\main.cpp" />
+    <ClCompile Include="..\..\..\examples\helloworld\main.cpp" />
     <ClCompile Include="..\..\..\uv\Async.cpp" />
     <ClCompile Include="..\..\..\uv\CycleBuffer.cpp" />
     <ClCompile Include="..\..\..\uv\EventLoop.cpp" />
