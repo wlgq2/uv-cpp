@@ -5,7 +5,7 @@
 
     Last modified: 2018-4-18
 
-    Description: https://github.com/wlgq2/libuv_cpp11
+    Description: https://github.com/wlgq2/uv-cpp
 */
 
 #include    <cstring>

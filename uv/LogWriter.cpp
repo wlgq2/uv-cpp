@@ -5,7 +5,7 @@ Author: orcaer@yeah.net
 
 Last modified: 2019-8-4
 
-Description: https://github.com/wlgq2/libuv_cpp11
+Description: https://github.com/wlgq2/uv-cpp
 */
 
 #include "LogWriter.h"

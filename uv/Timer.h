@@ -5,7 +5,7 @@
     
    Last modified: 2019-6-11
     
-   Description: https://github.com/wlgq2/libuv_cpp11
+   Description: https://github.com/wlgq2/uv-cpp
 */
 #ifndef UV_TIMER_H
 #define UV_TIMER_H

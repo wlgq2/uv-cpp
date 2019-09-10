@@ -5,7 +5,7 @@
 
    Last modified: 2019-2-21
 
-   Description: https://github.com/wlgq2/libuv_cpp11
+   Description: https://github.com/wlgq2/uv-cpp
 */
 
 #ifndef UV_ASYNC_H
