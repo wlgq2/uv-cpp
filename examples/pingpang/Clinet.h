@@ -13,8 +13,7 @@ public:
         :TcpClient(loop),
         sockAddr(nullptr)
     {
-        setConnectCloseCallback(std::bind(&Client::onConnectClose,this));
-        setConnectCallback(std::bind(&Client::onConnect,this,std::placeholders::_1));
+        setConnectStatusCallback(std::bind(&Client::onConnect,this,std::placeholders::_1));
         setMessageCallback(std::bind(&Client::newMessage,this,std::placeholders::_1,std::placeholders::_2));
     }
 
@@ -24,25 +23,25 @@ public:
         connect(addr);
     }
 
-    void onConnectClose()
+    void reConnect()
     {
-        connect(*(sockAddr.get()));
-    }
-    void onConnect(bool successed)
-    {
-        if(!successed)
+        uv::Timer<void*>* timer;
+        timer = new uv::Timer<void*>(Loop(), 1000, 0, [this](uv::Timer<void*>* timer, void*)
         {
-            uv::Timer<void*>* timer;
-            timer = new uv::Timer<void*>(Loop(), 1000, 0, [this](uv::Timer<void*>* timer, void*)
+            connect(*(sockAddr.get()));
+            timer->close([](uv::Timer<void*>* handle)
             {
-                connect(*(sockAddr.get()));
-                timer->close([](uv::Timer<void*>* handle)
-                {
-                    delete handle;
-                });
-            },nullptr);
-            timer->start();
-           
+                delete handle;
+            });
+        }, nullptr);
+        timer->start();
+    }
+
+    void onConnect(TcpClient::ConnectStatus status)
+    {
+        if(status != TcpClient::ConnectStatus::OnConnectSuccess)
+        {
+            reConnect();
         }
         else
         {

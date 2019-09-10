@@ -25,7 +25,6 @@ TcpClient::TcpClient(EventLoop* loop, bool tcpNoDelay)
     tcpNoDelay_(tcpNoDelay),
     connectCallback_(nullptr),
     onMessageCallback_(nullptr),
-    onConnectCloseCallback_(nullptr),
     connection_(nullptr)
 {
     update();
@@ -74,7 +73,7 @@ void TcpClient::onConnect(bool successed)
         connection_ = make_shared<TcpConnection>(loop_, name, socket_);
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
         connection_->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
-        runConnectCallback(successed);
+        runConnectCallback(TcpClient::OnConnectSuccess);
     }
     else
     {
@@ -130,8 +129,8 @@ void uv::TcpClient::close(std::function<void(std::string&)> callback)
 void uv::TcpClient::afterConnectFail()
 {
     socket_ = new uv_tcp_t();
-    update();
-    runConnectCallback(false);
+    update();  
+    runConnectCallback(TcpClient::OnConnnectFail);
 }
 
 void uv::TcpClient::write(const char* buf, unsigned int size, AfterWriteCallback callback)
@@ -163,7 +162,7 @@ void uv::TcpClient::writeInLoop(const char * buf, unsigned int size, AfterWriteC
     }
 }
 
-void uv::TcpClient::setConnectCallback(ConnectCallback callback)
+void uv::TcpClient::setConnectStatusCallback(ConnectStatusCallback callback)
 {
     connectCallback_ = callback;
 }
@@ -173,10 +172,6 @@ void uv::TcpClient::setMessageCallback(NewMessageCallback callback)
     onMessageCallback_ = callback;
 }
 
-void uv::TcpClient::setConnectCloseCallback(OnConnectClose callback)
-{
-    onConnectCloseCallback_ = callback;
-}
 
 EventLoop* uv::TcpClient::Loop()
 {
@@ -209,10 +204,10 @@ void TcpClient::update()
     socket_->data = static_cast<void*>(this);
 }
 
-void uv::TcpClient::runConnectCallback(bool isSuccess)
+void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus satus)
 {
     if (connectCallback_)
-        connectCallback_(isSuccess);
+        connectCallback_(satus);
 }
 
 void uv::TcpClient::onClose(std::string& name)
@@ -222,6 +217,5 @@ void uv::TcpClient::onClose(std::string& name)
     socket_ = new uv_tcp_t();
     update();
     uv::LogWriter::Instance()->info("Close tcp client connection complete.");
-    if (onConnectCloseCallback_)
-        onConnectCloseCallback_();
+    runConnectCallback(TcpClient::OnConnnectClose);
 }

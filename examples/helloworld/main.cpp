@@ -20,13 +20,17 @@ int main(int argc, char** args)
 
     //Tcp Client
     uv::TcpClient client(loop);
-    client.setConnectCallback(
-        [&client](bool isSuccess)
+    client.setConnectStatusCallback(
+        [&client](uv::TcpClient::ConnectStatus status)
     {
-        if (isSuccess)
+        if (status == uv::TcpClient::ConnectStatus::OnConnectSuccess)
         {
             char data[] = "hello world!";
             client.write(data, sizeof(data));
+        }
+        else
+        {
+            std::cout << "Error : connect to server fail" << std::endl;
         }
     });
     client.connect(serverAddr);

@@ -19,13 +19,19 @@
 
 namespace uv
 {
-
-using ConnectCallback =  std::function<void(bool)>  ;
 using NewMessageCallback =  std::function<void(const char*,ssize_t)>  ;
-using OnConnectClose =  std::function<void()> ;
 
 class TcpClient
 {
+public:
+    enum ConnectStatus
+    {
+        OnConnectSuccess,
+        OnConnnectFail,
+        OnConnnectClose
+    };
+    using ConnectStatusCallback = std::function<void(ConnectStatus)>;
+
 public:
     TcpClient(EventLoop* loop,bool tcpNoDelay = true);
     virtual ~TcpClient();
@@ -44,9 +50,8 @@ public:
     void writeInLoop(const char* buf, unsigned int size, AfterWriteCallback callback);
 
 
-    void setConnectCallback(ConnectCallback callback);
+    void setConnectStatusCallback(ConnectStatusCallback callback);
     void setMessageCallback(NewMessageCallback callback);
-    void setConnectCloseCallback(OnConnectClose callback);
 
     EventLoop* Loop();
 
@@ -60,13 +65,12 @@ private:
     SocketAddr::IPV ipv;
     bool tcpNoDelay_;
 
-    ConnectCallback connectCallback_;
+    ConnectStatusCallback connectCallback_;
     NewMessageCallback onMessageCallback_;
-    OnConnectClose onConnectCloseCallback_;
 
     std::shared_ptr<TcpConnection> connection_;
     void update();
-    void runConnectCallback(bool isSuccess);
+    void runConnectCallback(TcpClient::ConnectStatus successed);
     void onClose(std::string& name);
 };
 
