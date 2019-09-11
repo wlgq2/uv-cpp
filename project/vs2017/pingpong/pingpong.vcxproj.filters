@@ -60,6 +60,9 @@
     <ClCompile Include="..\..\..\uv\Timer.cpp">
       <Filter>uv</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\uv\Idle.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\uv\Async.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\examples\pingpang\ModeDefine.h">
       <Filter>example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\uv\Idle.h">
+      <Filter>uv</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

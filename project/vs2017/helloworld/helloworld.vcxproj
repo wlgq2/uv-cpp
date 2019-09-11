@@ -139,6 +139,7 @@
     <ClCompile Include="..\..\..\uv\Async.cpp" />
     <ClCompile Include="..\..\..\uv\CycleBuffer.cpp" />
     <ClCompile Include="..\..\..\uv\EventLoop.cpp" />
+    <ClCompile Include="..\..\..\uv\Idle.cpp" />
     <ClCompile Include="..\..\..\uv\ListBuffer.cpp" />
     <ClCompile Include="..\..\..\uv\LogWriter.cpp" />
     <ClCompile Include="..\..\..\uv\Packet.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="..\..\..\uv\Async.h" />
     <ClInclude Include="..\..\..\uv\CycleBuffer.h" />
     <ClInclude Include="..\..\..\uv\EventLoop.h" />
+    <ClInclude Include="..\..\..\uv\Idle.h" />
     <ClInclude Include="..\..\..\uv\ListBuffer.h" />
     <ClInclude Include="..\..\..\uv\LogWriter.h" />
     <ClInclude Include="..\..\..\uv\Packet.h" />

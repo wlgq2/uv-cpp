@@ -49,6 +49,8 @@
 		<Unit filename="../../../uv/CycleBuffer.h" />
 		<Unit filename="../../../uv/EventLoop.cpp" />
 		<Unit filename="../../../uv/EventLoop.h" />
+		<Unit filename="../../../uv/Idle.cpp" />
+		<Unit filename="../../../uv/Idle.h" />
 		<Unit filename="../../../uv/ListBuffer.cpp" />
 		<Unit filename="../../../uv/ListBuffer.h" />
 		<Unit filename="../../../uv/LogWriter.cpp" />

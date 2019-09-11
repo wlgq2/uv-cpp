@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-8-5
+   Last modified: 2019-9-11
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -18,5 +18,6 @@
 #include   "LogWriter.h"
 #include   "Packet.h"
 #include   "Udp.h"
+#include   "Idle.h"
 
 #endif
