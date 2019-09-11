@@ -57,6 +57,9 @@
     <ClCompile Include="..\..\..\examples\pingpang\main.cpp">
       <Filter>example</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\uv\Timer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\uv\Async.h">

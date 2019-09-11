@@ -25,15 +25,14 @@ public:
 
     void reConnect()
     {
-        uv::Timer<void*>* timer;
-        timer = new uv::Timer<void*>(Loop(), 1000, 0, [this](uv::Timer<void*>* timer, void*)
+        uv::Timer* timer = new uv::Timer(Loop(), 1000, 0, [this](uv::Timer* timer)
         {
             connect(*(sockAddr.get()));
-            timer->close([](uv::Timer<void*>* handle)
+            timer->close([](uv::Timer* handle)
             {
                 delete handle;
             });
-        }, nullptr);
+        });
         timer->start();
     }
 

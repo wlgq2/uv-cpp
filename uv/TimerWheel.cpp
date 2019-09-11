@@ -22,7 +22,7 @@ TimerWheel::TimerWheel(EventLoop* loop)
 TimerWheel::TimerWheel(EventLoop* loop,unsigned int timeout)
     :index_(0),
     timeoutSec_(timeout),
-    timer_(loop,1000,1000,std::bind(&TimerWheel::wheelCallback,this,std::placeholders::_1, std::placeholders::_2),nullptr)
+    timer_(loop,1000,1000,std::bind(&TimerWheel::wheelCallback,this))
 {
 
 }
@@ -62,7 +62,7 @@ void TimerWheel::insertNew(shared_ptr<TcpConnection> connection)
     wheel[index_].insert(conn);
 }
 
-void TimerWheel::wheelCallback(Timer<void*>*,void*)
+void TimerWheel::wheelCallback()
 {
     if(!timeoutSec_)
         return;

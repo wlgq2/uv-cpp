@@ -58,11 +58,11 @@ public:
 private:
     unsigned int index_;
     unsigned int timeoutSec_;
-    Timer<void*> timer_;
+    Timer timer_;
 
     std::vector< std::set< std::shared_ptr<ConnectionElement>>> wheel;
 
-    void wheelCallback(Timer<void*>*, void*);
+    void wheelCallback();
 
 };
 

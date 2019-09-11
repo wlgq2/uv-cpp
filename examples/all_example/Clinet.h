@@ -35,22 +35,22 @@ public:
 
     void reConnect()
     {
-        uv::Timer<void*>* timer = new uv::Timer<void*>(loop_, 500, 0, [this](uv::Timer<void*>* timer,void*)
+        uv::Timer* timer = new uv::Timer(loop_, 500, 0, [this](uv::Timer* ptr)
         {
             connect(*(sockAddr.get()));
-            timer->close([](uv::Timer<void*>* timer)
+            ptr->close([](uv::Timer* ptr)
             {
-                delete timer;
+                delete ptr;
             });
-        }, nullptr);
+        });
         timer->start();
 
     }
-
-    void onConnect(TcpClient::ConnectStatus status)
+    void onConnect(ConnectStatus status)
     {
-        if(status != TcpClient::ConnectStatus::OnConnectSuccess)
+        if(status != ConnectStatus::OnConnectSuccess)
         {
+            //ÖØÁ¬
             reConnect();
         }
         else

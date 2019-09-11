@@ -31,9 +31,9 @@ using namespace uv;
 int main(int argc, char** args)
 {
     //定义事件分发器类
-    //EventLoop* loop = new EventLoop();
+    EventLoop* loop = new EventLoop();
     //or
-    EventLoop* loop = EventLoop::DefalutLoop();
+    //EventLoop* loop = EventLoop::DefalutLoop();
 
 #if    TEST_SIGNAL
     //接管SIGPIPE信号。
@@ -116,25 +116,25 @@ int main(int argc, char** args)
 
     //定时器测试
 #if  TEST_TIMER
-    Timer<void*> timer(loop, 1000, 1000,
-    [&client](Timer<void*>*,void*)
+    Timer timer(loop, 1000, 1000,
+        [&client](Timer*)
     {
-        std::cout << "timer callback with null arg" << std::endl;
-    }, nullptr);
+        std::cout << "timer callback test..." << std::endl;
+    });
     timer.start();
 
     //定时器只运行一次及释放,可用于tcp重连,单次消息超时等。
-    Timer<int>* pTimer  =new Timer<int>(loop, 1000, 0,
-        [](Timer<int>* handle, int data)
+    Timer* pTimer  =new Timer(loop, 1000, 0,
+        [](Timer* handle)
     {
-        std::cout << "timer callback run onice with arg:" <<data<< std::endl;
-        handle->close([](Timer<int>* ptr)
+        std::cout << "timer callback run onice."<< std::endl;
+        handle->close([](Timer* ptr)
         {
-            std::cout << "release timer handle."<< std::endl;
+            std::cout << "release timer ptr."<< std::endl;
             //释放定时器对象。
             delete ptr;
         });
-    }, 1024);
+    });
     pTimer->start();
 #endif
 
@@ -181,4 +181,5 @@ int main(int argc, char** args)
 #endif
 
     loop->run();
+    delete loop;
 }

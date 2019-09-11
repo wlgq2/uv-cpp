@@ -41,7 +41,7 @@ public:
     static void UnpackNum(const uint8_t* data, NumType& num);
 
     template<typename NumType>
-    static void PackNum(char* data, NumType size);
+    static void PackNum(char* data, NumType num);
 
     static uint32_t PacketMinSize();
 

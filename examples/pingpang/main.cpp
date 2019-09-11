@@ -27,12 +27,12 @@ int main(int argc, char** args)
     client.connectToServer(addr2);
 
 
-    Timer<EchoServer*> timer(loop, 1000, 1000,
-    [](Timer<EchoServer*>*,EchoServer* server)
+    Timer timer(loop, 1000, 1000,
+        [&server](Timer*)
     {
-        std::cout << "cnt:"<<server->Cnt()<< std::endl;
-        server->clearCnt();
-    },&server );
+        std::cout << "cnt:"<<server.Cnt()<< std::endl;
+        server.clearCnt();
+    });
 
     timer.start();
 

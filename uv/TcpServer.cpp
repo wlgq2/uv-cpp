@@ -188,12 +188,12 @@ void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,After
     }
 }
 
-void TcpServer::setNewConnectCallback(OnNewConnectCallback callback)
+void TcpServer::setNewConnectCallback(OnConnectionStatusCallback callback)
 {
     onNewConnectCallback_ = callback;
 }
 
-void  TcpServer::setConnectCloseCallback(OnConnectCloseCallback callback)
+void  TcpServer::setConnectCloseCallback(OnConnectionStatusCallback callback)
 {
     onConnectCloseCallback_ = callback;
 }
