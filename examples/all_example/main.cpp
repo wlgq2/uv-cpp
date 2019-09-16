@@ -146,7 +146,7 @@ int main(int argc, char** args)
     {
         std::cout << "log level " << level << " :" << info << std::endl;
     });
-
+    log->setLevel(uv::LogWriter::Debug);
     log->debug("debug message");
     log->info("info message");
     log->warn("warn message");

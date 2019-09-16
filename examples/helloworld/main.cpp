@@ -6,6 +6,7 @@ int main(int argc, char** args)
 {
     //event's loop
     //uv::EventLoop* loop = new uv::EventLoop();
+	//or
     uv::EventLoop* loop = uv::EventLoop::DefalutLoop();
     //Tcp Server
     uv::SocketAddr serverAddr("0.0.0.0", 10002, uv::SocketAddr::Ipv4);

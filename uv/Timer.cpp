@@ -63,6 +63,7 @@ void Timer::close(TimerCloseComplete callback)
 
 void Timer::setTimerRepeat(uint64_t ms)
 {
+    repeat_ = ms;
     ::uv_timer_set_repeat(handle_, ms);
 }
 

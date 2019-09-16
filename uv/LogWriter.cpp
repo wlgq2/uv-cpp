@@ -35,7 +35,7 @@ void uv::LogWriter::ToHex(std::string& message, const char* data, unsigned int s
 
 void uv::LogWriter::write(Level level, const std::string& data)
 {
-    if ((callback_) && (level <= Error) && (level >= Debug))
+    if ((callback_) && (level <= Error) && (level >= level_))
     {
         callback_(level, data);
     }
