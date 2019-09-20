@@ -32,20 +32,20 @@ public:
     TcpServer(EventLoop* loop, SocketAddr& addr,bool tcpNoDealy = true);
     virtual ~TcpServer();
     void start();
-    void addConnnection(std::string& name,std::shared_ptr<TcpConnection> connection);
+    void addConnnection(std::string& name,TcpConnectionPtr connection);
     void removeConnnection(std::string& name);
-    std::shared_ptr<TcpConnection> getConnnection(std::string& name);
+    TcpConnectionPtr getConnnection(std::string& name);
     void closeConnection(std::string& name);
 
-    void onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size);
+    void onMessage(TcpConnectionPtr connection,const char* buf,ssize_t size);
     void setMessageCallback(OnMessageCallback callback);
 
     void setNewConnectCallback(OnConnectionStatusCallback callback);
     void setConnectCloseCallback(OnConnectionStatusCallback callback);
 
-    void write(std::shared_ptr<TcpConnection> connection,const char* buf,unsigned int size, AfterWriteCallback callback = nullptr);
+    void write(TcpConnectionPtr connection,const char* buf,unsigned int size, AfterWriteCallback callback = nullptr);
     void write(std::string& name,const char* buf,unsigned int size, AfterWriteCallback callback =nullptr);
-    void writeInLoop(std::shared_ptr<TcpConnection> connection,const char* buf,unsigned int size,AfterWriteCallback callback);
+    void writeInLoop(TcpConnectionPtr connection,const char* buf,unsigned int size,AfterWriteCallback callback);
     void writeInLoop(std::string& name,const char* buf,unsigned int size,AfterWriteCallback callback);
 
     void setTimeout(unsigned int);
@@ -55,7 +55,7 @@ protected:
 private:
     SocketAddr::IPV ipv_;
     std::shared_ptr <TcpAccepter> accetper_;
-    std::map<std::string ,std::shared_ptr<TcpConnection>>  connnections_;
+    std::map<std::string ,TcpConnectionPtr>  connnections_;
 
 
     OnMessageCallback onMessageCallback_;

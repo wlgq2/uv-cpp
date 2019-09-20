@@ -46,9 +46,9 @@ class TcpConnection ;
 class TcpServer;
 class ConnectionElement;
 
-
+using TcpConnectionPtr = std::shared_ptr<TcpConnection>;
 using AfterWriteCallback =  std::function<void (WriteInfo& )> ;
-using OnMessageCallback =  std::function<void (std::shared_ptr<TcpConnection>,const char*,ssize_t)>  ;
+using OnMessageCallback =  std::function<void (TcpConnectionPtr,const char*,ssize_t)>  ;
 using OnCloseCallback =  std::function<void (std::string& )>  ;
 using CloseCompleteCallback =  std::function<void (std::string&)>  ;
 

@@ -42,7 +42,7 @@ public:
 
     void onConnect(bool successed);
     void onConnectClose(std::string& name);
-    void onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size);
+    void onMessage(TcpConnectionPtr connection,const char* buf,ssize_t size);
     void close(std::function<void(std::string&)> callback);
     void afterConnectFail();
 
@@ -68,7 +68,7 @@ private:
     ConnectStatusCallback connectCallback_;
     NewMessageCallback onMessageCallback_;
 
-    std::shared_ptr<TcpConnection> connection_;
+    TcpConnectionPtr connection_;
     void update();
     void runConnectCallback(TcpClient::ConnectStatus successed);
     void onClose(std::string& name);

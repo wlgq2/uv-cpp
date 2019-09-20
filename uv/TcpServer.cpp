@@ -76,7 +76,7 @@ void TcpServer::start()
 
 
 
-void TcpServer::addConnnection(std::string& name,std::shared_ptr<TcpConnection> connection)
+void TcpServer::addConnnection(std::string& name,TcpConnectionPtr connection)
 {
     connnections_.insert(pair<string,shared_ptr<TcpConnection>>(std::move(name),connection));
 }
@@ -118,7 +118,7 @@ void TcpServer::closeConnection(string& name)
 }
 
 
-void TcpServer::onMessage(std::shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
+void TcpServer::onMessage(TcpConnectionPtr connection,const char* buf,ssize_t size)
 {
     if(onMessageCallback_)
         onMessageCallback_(connection,buf,size);

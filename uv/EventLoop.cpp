@@ -48,8 +48,8 @@ EventLoop::~EventLoop()
 
 EventLoop* uv::EventLoop::DefalutLoop()
 {
-    static EventLoop* defaultLoop = new uv::EventLoop(uv::EventLoop::Mode::Default);
-    return defaultLoop;
+    static EventLoop defaultLoop(EventLoop::Mode::Default);
+    return &defaultLoop;
 }
 
 uv_loop_t* EventLoop::hanlde()

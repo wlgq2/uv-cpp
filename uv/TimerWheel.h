@@ -25,7 +25,7 @@ namespace uv
 class  ConnectionElement : public std::enable_shared_from_this<ConnectionElement>
 {
 public:
-    ConnectionElement(std::shared_ptr<TcpConnection> connection)
+    ConnectionElement(TcpConnectionPtr connection)
         :connection_(connection)
     {
 
@@ -33,7 +33,7 @@ public:
 
     ~ConnectionElement()
     {
-        std::shared_ptr<TcpConnection> connection = connection_.lock();
+        TcpConnectionPtr connection = connection_.lock();
         if(connection)
         {
             connection->onSocketClose();
@@ -53,8 +53,8 @@ public:
     void setTimeout(unsigned int );
     void start();
 
-    void insert(std::shared_ptr<TcpConnection> connnection);
-    void insertNew(std::shared_ptr<TcpConnection> connection);
+    void insert(TcpConnectionPtr connnection);
+    void insertNew(TcpConnectionPtr connection);
 private:
     unsigned int index_;
     unsigned int timeoutSec_;

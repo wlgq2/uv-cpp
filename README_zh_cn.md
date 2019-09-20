@@ -40,7 +40,7 @@ int main(int argc, char** args)
     uv::SocketAddr serverAddr("0.0.0.0", 10002, uv::SocketAddr::Ipv4);
     uv::TcpServer server(loop, serverAddr);
     server.setMessageCallback(
-        [](std::shared_ptr<uv::TcpConnection> conn, const char* data , ssize_t size)
+        [](uv::TcpConnectionPtr conn, const char* data , ssize_t size)
     {
         std::cout << std::string(data, size) << std::endl;
         std::string str("hex :");

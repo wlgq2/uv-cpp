@@ -14,7 +14,7 @@ public:
     void clearCnt();
 private :
     std::atomic<uint64_t> cnt;
-    void newMessage(std::shared_ptr<uv::TcpConnection> connection,const char* buf,ssize_t size);
+    void newMessage(uv::TcpConnectionPtr connection,const char* buf,ssize_t size);
 };
 
 #endif // ECHOSERVER_H
