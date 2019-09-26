@@ -16,7 +16,7 @@ int main(int argc, char** args)
     {
         std::cout << std::string(data, size) << std::endl;
         std::string str("hex :");
-        uv::LogWriter::ToHex(str, data, size);
+        uv::LogWriter::ToHex(str, data, (unsigned int)size);
         std::cout << str << std::endl;
         conn->write(data, size,nullptr);
     });
