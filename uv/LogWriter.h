@@ -11,8 +11,11 @@ Description: https://github.com/wlgq2/uv-cpp
 #ifndef     UV_LOG_INTERFACE_H
 #define     UV_LOG_INTERFACE_H
 
-#include <string>
-#include <functional>
+#include  <string>
+#include  <functional>
+#include  <vector>
+
+#define   USED_STD_OUT     1
 
 namespace uv
 {
@@ -27,7 +30,8 @@ public:
         Info,
         Warn,
         Error,
-        Fatal
+        Fatal,
+        LevelSize
     };
     static LogWriter* Instance();
     static void ToHex(std::string& message, const char* data, unsigned int size);
@@ -51,12 +55,15 @@ public:
 
     void setLevel(int level);
     int getLevel();
+    const std::string& getLevelName(int level);
 
 private:
     LogWriter();
 
     WriteLogCallback callback_;
     int level_;
+    std::vector<std::string> levelStr_;
+    std::string nullLevel_;
 };
 }
 #endif // !  UV_LOG_INTERFACE_H

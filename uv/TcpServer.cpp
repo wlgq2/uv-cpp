@@ -32,11 +32,11 @@ TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr, bool tcpNoDealy)
     accetper_->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
     {
         string key;
-        SocketAddr::AddrToStr(client,key, ipv_);
+        SocketAddr::AddrToStr(client, key, ipv_);
 
         uv::LogWriter::Instance()->info("new connect  "+key);
 
-        shared_ptr<TcpConnection> connection(new TcpConnection(loop,key,client));
+        shared_ptr<TcpConnection> connection(new TcpConnection(loop, key, client));
         if(connection)
         {
             connection->setMessageCallback(std::bind(&TcpServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
@@ -134,7 +134,7 @@ void TcpServer::setMessageCallback(OnMessageCallback callback)
 
 void TcpServer::write(shared_ptr<TcpConnection> connection,const char* buf,unsigned int size, AfterWriteCallback callback)
 {
-    if(connection)
+    if(nullptr != connection)
     {
         connection->write(buf,size, callback);
     }
@@ -148,20 +148,12 @@ void TcpServer::write(shared_ptr<TcpConnection> connection,const char* buf,unsig
 void TcpServer::write(string& name,const char* buf,unsigned int size,AfterWriteCallback callback)
 {
     auto connection = getConnnection(name);
-    if(connection)
-    {
-        connection->write(buf,size, callback);
-    }
-    else if (callback)
-    {
-        WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
-        callback(info);
-    }
+    write(connection, buf, size, callback);
 }
 
 void TcpServer::writeInLoop(shared_ptr<TcpConnection> connection,const char* buf,unsigned int size,AfterWriteCallback callback)
 {
-    if(connection)
+    if(nullptr != connection)
     {
         connection->writeInLoop(buf,size,callback);
     }
@@ -176,16 +168,7 @@ void TcpServer::writeInLoop(shared_ptr<TcpConnection> connection,const char* buf
 void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,AfterWriteCallback callback)
 {
     auto connection = getConnnection(name);
-    if(connection)
-    {
-        connection->writeInLoop(buf,size,callback);
-    }
-    else if (callback)
-    {
-        uv::LogWriter::Instance()->warn(std::string("try write a disconnect connection.")+name);
-        WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
-        callback(info);
-    }
+    writeInLoop(connection, buf, size, callback);
 }
 
 void TcpServer::setNewConnectCallback(OnConnectionStatusCallback callback)

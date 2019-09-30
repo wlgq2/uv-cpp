@@ -69,9 +69,9 @@ public:
         }
     }
 
-    void newMessage(const char* buf,unsigned int size)
+    void newMessage(const char* buf,ssize_t size)
     {
-        write(buf,size,nullptr);
+        write(buf, (unsigned)size, nullptr);
     }
 
 private:

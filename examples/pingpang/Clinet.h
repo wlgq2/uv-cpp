@@ -55,13 +55,13 @@ public:
         }
     }
 
-    void newMessage(const char* buf,unsigned int size)
+    void newMessage(const char* buf,ssize_t size)
     {
 #if     USED_NO_PACKET
-        write(data,1024);
+        write(data, (unsigned int)size);
 #else
         uv::Packet packet;
-        appendToBuffer(buf, size);
+        appendToBuffer(buf, (int)size);
         while (0 == readFromBuffer(packet))
         {
             write(packet.Buffer(), packet.BufferSize(), nullptr);

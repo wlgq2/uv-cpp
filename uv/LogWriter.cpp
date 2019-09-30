@@ -10,6 +10,9 @@ Description: https://github.com/wlgq2/uv-cpp
 
 #include "LogWriter.h"
 
+#include <iostream>
+
+
 using namespace uv;
 
 LogWriter* LogWriter::Instance()
@@ -29,15 +32,24 @@ void uv::LogWriter::ToHex(std::string& message, const char* data, unsigned int s
     {
         char buf[8];
         std::sprintf(buf, " 0x%x ", (unsigned char)data[i]);
-        message += buf;
+        message.append(buf);
     }
 }
 
 void uv::LogWriter::write(Level level, const std::string& data)
 {
-    if ((callback_) && (level <= Error) && (level >= level_))
+    if ((level <= Error) && (level >= level_) && (level >= Debug))
     {
-        callback_(level, data);
+        if (callback_)
+        {
+            callback_(level, data);
+        }
+        else
+        {
+#if    USED_STD_OUT
+            std::cout << getLevelName(level) << " :" << data << std::endl;
+#endif
+        }
     }
 }
 
@@ -106,8 +118,25 @@ int uv::LogWriter::getLevel()
     return level_;
 }
 
+const std::string& uv::LogWriter::getLevelName(int level)
+{
+    if (level >= 0 && level <= levelStr_.size())
+    {
+        return levelStr_[level];
+    }
+    return nullLevel_;
+}
+
 LogWriter::LogWriter()
     :callback_(nullptr),
     level_(0)
 {
+    levelStr_.resize(Level::LevelSize);
+    levelStr_[Level::Debug] = "Debug";
+    levelStr_[Level::Info] = "Info";
+    levelStr_[Level::Warn] = "Warn";
+    levelStr_[Level::Error] = "Error";
+    levelStr_[Level::Fatal] = "Fatal";
+
+    nullLevel_ = "NullLevel";
 }

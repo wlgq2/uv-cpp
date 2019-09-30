@@ -117,7 +117,7 @@ int main(int argc, char** args)
     //¶¨Ê±Æ÷²âÊÔ
 #if  TEST_TIMER
     Timer timer(loop, 1000, 1000,
-        [&client](Timer*)
+        [](Timer*)
     {
         std::cout << "timer callback test..." << std::endl;
     });
