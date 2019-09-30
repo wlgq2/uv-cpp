@@ -144,7 +144,7 @@ int main(int argc, char** args)
     log->registerInterface(
         [](int level, const std::string& info)
     {
-        std::cout << "log level " << level << " :" << info << std::endl;
+        std::cout <<uv::LogWriter::Instance()->getLevelName( level) << " :" << info << std::endl;
     });
     log->setLevel(uv::LogWriter::Debug);
     log->debug("debug message");
