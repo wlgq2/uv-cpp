@@ -1,9 +1,9 @@
-/*
-Copyright 2017, orcaer@yeah.net  All rights reserved.
+﻿/*
+Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2019-8-4
+Last modified: 2019-10-9
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -35,6 +35,7 @@ public:
     };
     static LogWriter* Instance();
     static void ToHex(std::string& message, const char* data, unsigned int size);
+    static void ToHex(std::string& message, std::string& data);
 
 public:
     void registerInterface(WriteLogCallback callback);

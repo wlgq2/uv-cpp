@@ -1,5 +1,5 @@
-/*
-   Copyright 2017, orcaer@yeah.net  All rights reserved.
+ï»¿/*
+   Copyright Â© 2017-2019, orcaer@yeah.net  All rights reserved.
 
    Author: orcaer@yeah.net
     
@@ -78,7 +78,7 @@ bool EventLoop::isRunInLoopThread()
     {
         return std::this_thread::get_id() == loopThreadId_;
     }
-    //EventLoopÎ´ÔËĞĞ.
+    //EventLoopæœªè¿è¡Œ.
     return false;
 }
 

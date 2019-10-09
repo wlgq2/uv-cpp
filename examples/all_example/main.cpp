@@ -1,5 +1,5 @@
-/*
-    Copyright 2017, orcaer@yeah.net  All rights reserved.
+ï»¿/*
+    Copyright Â© 2017-2019, orcaer@yeah.net  All rights reserved.
 
     Author: orcaer@yeah.net
 
@@ -30,13 +30,13 @@ using namespace uv;
 
 int main(int argc, char** args)
 {
-    //¶¨ÒåÊÂ¼ş·Ö·¢Æ÷Àà
+    //å®šä¹‰äº‹ä»¶åˆ†å‘å™¨ç±»
     EventLoop* loop = new EventLoop();
     //or
     //EventLoop* loop = EventLoop::DefalutLoop();
 
 #if    TEST_SIGNAL
-    //½Ó¹ÜSIGPIPEĞÅºÅ¡£
+    //æ¥ç®¡SIGPIPEä¿¡å·ã€‚
     Signal signal(loop,13,[](int sig)
     {
         //SIGPIPE
@@ -45,7 +45,7 @@ int main(int argc, char** args)
 #endif
 
 
-    //server¶ÔÏó
+    //serverå¯¹è±¡
 #if   TEST_SERVER
 #if    TEST_IPV6
     SocketAddr addr1("0:0:0:0:0:0:0:0", 10002, SocketAddr::Ipv6);
@@ -54,13 +54,13 @@ int main(int argc, char** args)
 #endif
 
     EchoServer server(loop, addr1);
-    //ĞÄÌø³¬Ê±
+    //å¿ƒè·³è¶…æ—¶
     server.setTimeout(40);
     server.start();
 #endif
 
 
-    //client¶ÔÏó
+    //clientå¯¹è±¡
 #if  TEST_CLIENT
 #if    TEST_IPV6
     SocketAddr addr2("0:0:0:0:0:0:0:1", 10002, SocketAddr::Ipv6);
@@ -72,22 +72,22 @@ int main(int argc, char** args)
 
 #if  1
 
-    //¿çÏß³Ì·¢ËÍÊı¾İ
+    //è·¨çº¿ç¨‹å‘é€æ•°æ®
     std::thread thread([&client]()
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         char* data = new char[4] {'t','e','s','t'};
        
-        //Ïß³Ì°²È«;
+        //çº¿ç¨‹å®‰å…¨;
         client.writeInLoop(data,sizeof(data),
             [](uv::WriteInfo& info)
         {
-            //Êı¾İĞèÒªÔÚ·¢ÉúÍê³É»Øµ÷ÖĞÊÍ·Å
+            //æ•°æ®éœ€è¦åœ¨å‘ç”Ÿå®Œæˆå›è°ƒä¸­é‡Šæ”¾
             //write message error.
             if (0 != info.status)
             {
-                //´òÓ¡´íÎóĞÅÏ¢
-                std::cout << "Write error £º" << EventLoop::GetErrorMessage(info.status) << std::endl;
+                //æ‰“å°é”™è¯¯ä¿¡æ¯
+                std::cout << "Write error ï¼š" << EventLoop::GetErrorMessage(info.status) << std::endl;
             }
             delete[] info.buf;
         });
@@ -97,8 +97,8 @@ int main(int argc, char** args)
 #endif
 
 
-    //loopÏß³ÌÖĞÒì²½Ö´ĞĞº¯Êı£¬ÓÃÓÚ¿çÏß³Ì²Ù×÷¡£
-    //Ïà¶ÔÓÚÔ­Éúlibuv async½Ó¿Ú£¬ĞŞ¸´ÁËµ÷ÓÃ¶à´Î¿ÉÄÜÖ»ÔËĞĞÒ»´ÎµÄÎÊÌâ¡£
+    //loopçº¿ç¨‹ä¸­å¼‚æ­¥æ‰§è¡Œå‡½æ•°ï¼Œç”¨äºè·¨çº¿ç¨‹æ“ä½œã€‚
+    //ç›¸å¯¹äºåŸç”Ÿlibuv asyncæ¥å£ï¼Œä¿®å¤äº†è°ƒç”¨å¤šæ¬¡å¯èƒ½åªè¿è¡Œä¸€æ¬¡çš„é—®é¢˜ã€‚
 #if  TEST_ASYNC
     loop->runInThisLoop(
         []()
@@ -114,7 +114,7 @@ int main(int argc, char** args)
 #endif
 
 
-    //¶¨Ê±Æ÷²âÊÔ
+    //å®šæ—¶å™¨æµ‹è¯•
 #if  TEST_TIMER
     Timer timer(loop, 1000, 1000,
         [](Timer*)
@@ -123,7 +123,7 @@ int main(int argc, char** args)
     });
     timer.start();
 
-    //¶¨Ê±Æ÷Ö»ÔËĞĞÒ»´Î¼°ÊÍ·Å,¿ÉÓÃÓÚtcpÖØÁ¬,µ¥´ÎÏûÏ¢³¬Ê±µÈ¡£
+    //å®šæ—¶å™¨åªè¿è¡Œä¸€æ¬¡åŠé‡Šæ”¾,å¯ç”¨äºtcpé‡è¿,å•æ¬¡æ¶ˆæ¯è¶…æ—¶ç­‰ã€‚
     Timer* pTimer  =new Timer(loop, 1000, 0,
         [](Timer* handle)
     {
@@ -131,14 +131,14 @@ int main(int argc, char** args)
         handle->close([](Timer* ptr)
         {
             std::cout << "release timer ptr."<< std::endl;
-            //ÊÍ·Å¶¨Ê±Æ÷¶ÔÏó¡£
+            //é‡Šæ”¾å®šæ—¶å™¨å¯¹è±¡ã€‚
             delete ptr;
         });
     });
     pTimer->start();
 #endif
 
-    //log½Ó¿Ú°ó¶¨
+    //logæ¥å£ç»‘å®š
 #if  TEST_LOG
     auto log = uv::LogWriter::Instance();
     log->registerInterface(

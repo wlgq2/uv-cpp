@@ -1,5 +1,5 @@
-/*
-Copyright 2017, orcaer@yeah.net  All rights reserved.
+ï»¿/*
+Copyright Â© 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
@@ -85,7 +85,7 @@ uint16_t uv::SocketAddr::GetIpAndPort(const sockaddr_storage* addr, std::string&
     {
         char ip[64];
         struct sockaddr_in6* addr6 = (struct sockaddr_in6 *)addr;
-        //µÍ°æ±¾windows¿ÉÄÜÕÒ²»µ½inet_ntopº¯Êı¡£
+        //ä½ç‰ˆæœ¬windowså¯èƒ½æ‰¾ä¸åˆ°inet_ntopå‡½æ•°ã€‚
 #if    _MSC_VER
         DWORD size = sizeof(ip);
         WSAAddressToString((LPSOCKADDR)addr6, sizeof(sockaddr_in6), NULL, ip, &size);

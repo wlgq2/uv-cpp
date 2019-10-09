@@ -1,5 +1,5 @@
-/*
-    Copyright 2017, orcaer@yeah.net  All rights reserved.
+ï»¿/*
+    Copyright Â© 2017-2019, orcaer@yeah.net  All rights reserved.
 
     Author: orcaer@yeah.net
 
@@ -50,7 +50,7 @@ public:
     {
         if(status != ConnectStatus::OnConnectSuccess)
         {
-            //ÖØÁ¬
+            //Ð¾Ð¿â”´Ð³
             reConnect();
         }
         else

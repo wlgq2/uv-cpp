@@ -1,5 +1,5 @@
-/*
-Copyright 2017, orcaer@yeah.net  All rights reserved.
+ï»¿/*
+Copyright Â© 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
@@ -34,7 +34,7 @@ int uv::ArrayBuffer::append(const char* data, int size)
 
     if (info.size < (uint32_t)size)
     {
-        //»º´æ²»¹»
+        //ç¼“å­˜ä¸å¤Ÿ
         return 0;
     }
     if (info.part1 >= (uint32_t)size)
@@ -85,7 +85,7 @@ int uv::ArrayBuffer::read(Packet& packet)
             int end = readIndex_ + size + Packet::PacketMinSize() - 1;
             if (buffer_[end] != Packet::EndByte)
             {
-                //´ÓÏÂÒ»×Ö½ÚÖØĞÂÑ°ÕÒ°üÍ·¡£
+                //ä»ä¸‹ä¸€å­—èŠ‚é‡æ–°å¯»æ‰¾åŒ…å¤´ã€‚
                 addReadIndex(1);
                 continue;
             }
@@ -100,7 +100,7 @@ int uv::ArrayBuffer::read(Packet& packet)
             int end = size+ Packet::PacketMinSize()-info.part1-1;
             if (buffer_[end] != Packet::EndByte)
             {
-                //´ÓÏÂÒ»×Ö½ÚÖØĞÂÑ°ÕÒ°üÍ·¡£
+                //ä»ä¸‹ä¸€å­—èŠ‚é‡æ–°å¯»æ‰¾åŒ…å¤´ã€‚
                 addReadIndex(1);
                 continue;
             }

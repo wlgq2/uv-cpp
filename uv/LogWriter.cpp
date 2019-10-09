@@ -1,9 +1,9 @@
-/*
-Copyright 2017, orcaer@yeah.net  All rights reserved.
+﻿/*
+Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2019-8-4
+Last modified: 2019-10-9
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -34,6 +34,11 @@ void uv::LogWriter::ToHex(std::string& message, const char* data, unsigned int s
         std::sprintf(buf, " 0x%x ", (unsigned char)data[i]);
         message.append(buf);
     }
+}
+
+void uv::LogWriter::ToHex(std::string& message, std::string& data)
+{
+    ToHex(message, data.c_str(), (unsigned)(data.size()));
 }
 
 void uv::LogWriter::write(Level level, const std::string& data)
@@ -120,7 +125,7 @@ int uv::LogWriter::getLevel()
 
 const std::string& uv::LogWriter::getLevelName(int level)
 {
-    if (level >= 0 && level <= levelStr_.size())
+    if (level >= 0 && level <=static_cast<int>(levelStr_.size()))
     {
         return levelStr_[level];
     }

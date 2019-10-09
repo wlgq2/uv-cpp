@@ -1,5 +1,5 @@
-/*
-Copyright 2017, orcaer@yeah.net  All rights reserved.
+ï»¿/*
+Copyright Â© 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
@@ -92,7 +92,7 @@ void TcpConnection::close(std::function<void(std::string&)> callback)
     }
     if (::uv_is_closing((uv_handle_t*)handle_) == 0)
     {
-        //libuv ÔÚloopÂÖÑ¯ÖĞ»á¼ì²â¹Ø±Õ¾ä±ú£¬delete»áµ¼ÖÂ³ÌĞòÒì³£ÍË³ö¡£
+        //libuv åœ¨loopè½®è¯¢ä¸­ä¼šæ£€æµ‹å…³é—­å¥æŸ„ï¼Œdeleteä¼šå¯¼è‡´ç¨‹åºå¼‚å¸¸é€€å‡ºã€‚
         ::uv_close((uv_handle_t*)handle_,
             [](uv_handle_t* handle)
         {

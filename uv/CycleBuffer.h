@@ -1,5 +1,5 @@
-/*
-Copyright 2017, orcaer@yeah.net  All rights reserved.
+ï»¿/*
+Copyright Â© 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
@@ -16,14 +16,14 @@ Description: https://github.com/wlgq2/uv-cpp
 //---------------------------------------
 //  Null  |   byte   |  byte   |  Null
 //---------------------------------------
-//        ¡ü                      ¡ü
+//        â†‘                      â†‘
 //   read position           write position
 
-//              ¡ıcan not write
+//              â†“can not write
 //---------------------------------------
 //  byte   |   byte   |  byte   |  byte
 //---------------------------------------
-//         ¡ü          ¡ü
+//         â†‘          â†‘
 //   write position  read position
 
 //not thread safe.
@@ -44,7 +44,7 @@ public:
     ArrayBuffer();
     ~ArrayBuffer();
 
-    //Ğ´×Ö½ÚÊ±±ØĞë¾àÀë¶Á×Ö½ÚÒ»¸ö×Ö½Ú£¬·ñÔòÎŞ·¨Çø·Ö»º´æÂú/¿Õ¡£
+    //å†™å­—èŠ‚æ—¶å¿…é¡»è·ç¦»è¯»å­—èŠ‚ä¸€ä¸ªå­—èŠ‚ï¼Œå¦åˆ™æ— æ³•åŒºåˆ†ç¼“å­˜æ»¡/ç©ºã€‚
     int append(const char* data,int size) override;
     int read(Packet& packet) override;
 

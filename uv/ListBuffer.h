@@ -1,5 +1,5 @@
-/*
-Copyright 2017, orcaer@yeah.net  All rights reserved.
+ï»¿/*
+Copyright Â© 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
@@ -21,7 +21,7 @@ Description: https://github.com/wlgq2/uv-cpp
 //---------------------------------------
 //  Null  |  Packet   |  Packet   |  Null 
 //---------------------------------------
-//        ¡ü                      ¡ü
+//        â†‘                      â†‘
 //   read position           write position
 
 //not thread safe.

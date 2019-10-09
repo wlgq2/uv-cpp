@@ -1,5 +1,5 @@
-/*
-    Copyright 2017, orcaer@yeah.net  All rights reserved.
+ï»¿/*
+    Copyright Â© 2017-2019, orcaer@yeah.net  All rights reserved.
 
     Author: orcaer@yeah.net
 
@@ -26,12 +26,12 @@ EchoServer::EchoServer(EventLoop* loop, SocketAddr& addr)
 void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf,ssize_t size)
 {
    
-#if       1   //Ö±½Ó·¢ËÍ
+#if       1   //ç›´æŽ¥å‘é€
     connection->write(buf,size,nullptr);
     
-#elif     0  //µ÷ÓÃwrite in loop½Ó¿Ú
-    //ÊµÖÊ»áÖ±½Óµ÷ÓÃwrite£¬²¢²»ÐèÒªmemcpy¡£
-    //writeInLoopÐèÒªÊý¾ÝÔÚ»Øµ÷ÖÐÊÍ·Å¡£
+#elif     0  //è°ƒç”¨write in loopæŽ¥å£
+    //å®žè´¨ä¼šç›´æŽ¥è°ƒç”¨writeï¼Œå¹¶ä¸éœ€è¦memcpyã€‚
+    //writeInLoopéœ€è¦æ•°æ®åœ¨å›žè°ƒä¸­é‡Šæ”¾ã€‚
     char* data =  new  char [size]();
     memcpy(data, buf, size);
     connection->writeInLoop(data, size,
@@ -40,11 +40,11 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
 		//write message error.
 		if (0 != info.status)
 		{
-			cout << "Write error £º" << EventLoop::GetErrorMessage(info.status) << endl;
+			cout << "Write error ï¼š" << EventLoop::GetErrorMessage(info.status) << endl;
 		}
         delete [] info.buf;
     });
-#else //°ü½ÓÊÕ¼°·¢ËÍ
+#else //åŒ…æŽ¥æ”¶åŠå‘é€
     Packet packet;
     connection->appendToBuffer(buf, static_cast<int>(size));
     while (0 == connection->readFromBuffer(packet))
