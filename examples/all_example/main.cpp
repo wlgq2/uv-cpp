@@ -3,7 +3,7 @@
 
     Author: orcaer@yeah.net
 
-    Last modified: 2019-8-4
+    Last modified: 2019-10-20
 
     Description: https://github.com/wlgq2/uv-cpp
 */
@@ -18,12 +18,12 @@
 
 using namespace uv;
 
-#define      TEST_SIGNAL      1
-#define      TEST_SERVER      1
-#define      TEST_CLIENT      1
-#define      TEST_ASYNC       1
-#define      TEST_TIMER       1
-#define      TEST_LOG         1
+#define      TEST_SIGNAL      0
+#define      TEST_SERVER      0
+#define      TEST_CLIENT      0
+#define      TEST_ASYNC       0
+#define      TEST_TIMER       0
+#define      TEST_LOG         0
 #define      TEST_UDP         1
 
 #define       TEST_IPV6       0
@@ -53,10 +53,10 @@ int main(int argc, char** args)
     SocketAddr addr1("0.0.0.0", 10002, SocketAddr::Ipv4);
 #endif
 
-    EchoServer server(loop, addr1);
+    EchoServer server(loop);
     //心跳超时
     server.setTimeout(40);
-    server.start();
+    server.bindAndListen(addr1);
 #endif
 
 
@@ -157,7 +157,7 @@ int main(int argc, char** args)
 
 #if  TEST_UDP
     SocketAddr addr3("127.0.0.1", 10003);
-    uv::Udp udpReceive(loop, addr3);
+    uv::Udp udpReceive(loop);
     udpReceive.setMessageCallback(
         [&udpReceive](SocketAddr& from,const char* data,unsigned size)
     {
@@ -165,17 +165,17 @@ int main(int argc, char** args)
         std::cout << "udp receive message from "<< from.toStr()<<" :" << msg << std::endl;
         udpReceive.send(from, data, size);
     });
-    udpReceive.startRead();
+    udpReceive.bindAndRead(addr3);
 
     SocketAddr addr4("127.0.0.1", 10004);
-    uv::Udp udpSend(loop, addr4);
+    uv::Udp udpSend(loop );
     udpSend.setMessageCallback(
         [](SocketAddr& from, const char* data, unsigned size)
     {
         std::string msg(data, size);
         std::cout << "udp call message :" << msg << std::endl;;
     });
-    udpSend.startRead();
+    udpSend.bindAndRead(addr4);
     char udpmsg[] = "udp test...";
     udpSend.send(addr3, udpmsg, sizeof(udpmsg));
 #endif

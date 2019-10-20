@@ -17,7 +17,7 @@ Description: https://github.com/wlgq2/uv-cpp
 class EchoServer :public uv::TcpServer
 {
 public:
-    EchoServer(uv::EventLoop* loop, uv::SocketAddr& addr);
+    EchoServer(uv::EventLoop* loop);
 private :
     void newMessage(uv::TcpConnectionPtr connection,const char* buf,ssize_t size);
 };

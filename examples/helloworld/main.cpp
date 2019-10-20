@@ -8,9 +8,10 @@ int main(int argc, char** args)
     //uv::EventLoop* loop = new uv::EventLoop();
 	//or
     uv::EventLoop* loop = uv::EventLoop::DefalutLoop();
+    
+    uv::SocketAddr serverAddr("127.0.0.1", 10000, uv::SocketAddr::Ipv4);
     //Tcp Server
-    uv::SocketAddr serverAddr("0.0.0.0", 10002, uv::SocketAddr::Ipv4);
-    uv::TcpServer server(loop, serverAddr);
+    uv::TcpServer server(loop);
     server.setMessageCallback(
         [](uv::TcpConnectionPtr conn, const char* data , ssize_t size)
     {
@@ -20,7 +21,8 @@ int main(int argc, char** args)
         std::cout << str << std::endl;
         conn->write(data, size,nullptr);
     });
-    server.start();
+    server.bindAndListen(serverAddr);
+
 
     //Tcp Client
     uv::TcpClient client(loop);

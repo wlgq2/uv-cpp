@@ -7,8 +7,8 @@
 using namespace uv;
 using namespace std;
 
-EchoServer::EchoServer(EventLoop* loop, SocketAddr& addr)
-    :TcpServer(loop, addr)
+EchoServer::EchoServer(EventLoop* loop)
+    :TcpServer(loop)
 {
     cnt = 0;
     setMessageCallback(std::bind(&EchoServer::newMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));

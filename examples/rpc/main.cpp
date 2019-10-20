@@ -22,8 +22,8 @@ void runRpcServer(uv::SocketAddr& addr)
     thread back([&addr]()
     {
         uv::EventLoop loop;
-        RpcServer server(&loop, addr);
-        server.start();
+        RpcServer server(&loop);
+        server.bindAndListen(addr);
         loop.run();
     });
     back.detach();
@@ -46,5 +46,5 @@ int main(int argc, char** args)
 
     Resp resp;
     rpc.sum(req, resp);
-    std::cout << "sum :"<<resp.param << std::endl;
+    std::cout << "1~100 sum :"<<resp.param << std::endl;
 }

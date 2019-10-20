@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-10-9
+   Last modified: 2019-10-19
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -20,58 +20,64 @@ using namespace std;
 using namespace uv;
 
 
-TcpServer::TcpServer(EventLoop* loop, SocketAddr& addr, bool tcpNoDealy)
+TcpServer::TcpServer(EventLoop* loop, bool tcpNoDelay)
     :loop_(loop),
-    ipv_(addr.Ipv()),
-    accetper_(new TcpAccepter(loop, addr, tcpNoDealy)),
+    tcpNoDelay_(tcpNoDelay),
+    accetper_(nullptr),
     onMessageCallback_(nullptr),
     onNewConnectCallback_(nullptr),
     onConnectCloseCallback_(nullptr),
     timerWheel_(loop)
 {
-    accetper_->setNewConnectinonCallback( [this] (EventLoop* loop,uv_tcp_t* client)
-    {
-        string key;
-        SocketAddr::AddrToStr(client, key, ipv_);
 
-        uv::LogWriter::Instance()->info("new connect  "+key);
-
-        shared_ptr<TcpConnection> connection(new TcpConnection(loop, key, client));
-        if(connection)
-        {
-            connection->setMessageCallback(std::bind(&TcpServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
-            connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection,this,placeholders::_1));
-            
-            addConnnection(key,connection);
-            timerWheel_.insertNew(connection);
-            if(onNewConnectCallback_)
-                onNewConnectCallback_(connection);
-        }
-        else
-        {
-            uv::LogWriter::Instance()->error("create connection fail. :"+key);
-        }
-
-    });
 }
-
-
 
 TcpServer:: ~TcpServer()
 {
 
 }
 
-
 void TcpServer::setTimeout(unsigned int seconds)
 {
     timerWheel_.setTimeout(seconds);
 }
 
-void TcpServer::start()
+void uv::TcpServer::onAccept(EventLoop * loop, uv_tcp_t * client)
 {
+    string key;
+    SocketAddr::AddrToStr(client, key, ipv_);
+
+    uv::LogWriter::Instance()->info("new connect  " + key);
+
+    shared_ptr<TcpConnection> connection(new TcpConnection(loop, key, client));
+    if (connection)
+    {
+        connection->setMessageCallback(std::bind(&TcpServer::onMessage, this, placeholders::_1, placeholders::_2, placeholders::_3));
+        connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection, this, placeholders::_1));
+
+        addConnnection(key, connection);
+        timerWheel_.insertNew(connection);
+        if (onNewConnectCallback_)
+            onNewConnectCallback_(connection);
+    }
+    else
+    {
+        uv::LogWriter::Instance()->error("create connection fail. :" + key);
+    }
+}
+
+int TcpServer::bindAndListen(SocketAddr& addr)
+{
+    ipv_ = addr.Ipv();
+    accetper_ = std::make_shared<TcpAccepter>(loop_, tcpNoDelay_);
+    auto rst = accetper_->bind(addr);
+    if (0 != rst)
+    {
+        return rst;
+    }
+    accetper_->setNewConnectinonCallback(std::bind(&TcpServer::onAccept, this, std::placeholders::_1, std::placeholders::_2));
     timerWheel_.start();
-    accetper_->listen();
+    return accetper_->listen();
 }
 
 

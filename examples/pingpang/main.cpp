@@ -17,9 +17,9 @@ int main(int argc, char** args)
     SocketAddr addr1("0.0.0.0", 10002, SocketAddr::Ipv4);
 
 
-    EchoServer server(loop, addr1);
+    EchoServer server(loop);
     server.setTimeout(40);
-    server.start();
+    server.bindAndListen(addr1);
 
     SocketAddr addr2("127.0.0.1", 10002);
 

@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-9-20
+   Last modified: 2019-10-20
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -13,8 +13,8 @@
 using namespace uv;
 using namespace std;
 
-RpcServer::RpcServer(EventLoop* loop, SocketAddr& addr)
-	:TcpServer(loop,addr)
+RpcServer::RpcServer(EventLoop* loop)
+	:TcpServer(loop)
 {
     setMessageCallback(std::bind(&RpcServer::onMessage,this,placeholders::_1,placeholders::_2,placeholders::_3));
 }

@@ -8,7 +8,7 @@
 class EchoServer :public uv::TcpServer
 {
 public:
-    EchoServer(uv::EventLoop* loop, uv::SocketAddr& addr);
+    EchoServer(uv::EventLoop* loop);
 
     uint64_t Cnt();
     void clearCnt();

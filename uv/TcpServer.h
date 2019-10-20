@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-10-9
+   Last modified: 2019-10-19
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -29,9 +29,9 @@ using OnConnectionStatusCallback =  std::function<void (std::weak_ptr<TcpConnect
 class TcpServer
 {
 public:
-    TcpServer(EventLoop* loop, SocketAddr& addr,bool tcpNoDealy = true);
+    TcpServer(EventLoop* loop, bool tcpNoDelay = true);
     virtual ~TcpServer();
-    void start();
+    int bindAndListen(SocketAddr& addr);
     void addConnnection(std::string& name,TcpConnectionPtr connection);
     void removeConnnection(std::string& name);
     TcpConnectionPtr getConnnection(std::string& name);
@@ -49,10 +49,12 @@ public:
     void writeInLoop(std::string& name,const char* buf,unsigned int size,AfterWriteCallback callback);
 
     void setTimeout(unsigned int);
-
+private:
+    void onAccept(EventLoop* loop, uv_tcp_t* client);
 protected:
     EventLoop* loop_;
 private:
+    bool tcpNoDelay_;
     SocketAddr::IPV ipv_;
     std::shared_ptr <TcpAccepter> accetper_;
     std::map<std::string ,TcpConnectionPtr>  connnections_;

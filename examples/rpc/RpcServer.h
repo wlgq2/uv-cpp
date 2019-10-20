@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-9-20
+   Last modified: 2019-10-20
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -18,7 +18,7 @@
 class RpcServer  : public uv::TcpServer
 {
 public:
-	RpcServer(uv::EventLoop* loop, uv::SocketAddr& addr);
+	RpcServer(uv::EventLoop* loop);
 	~RpcServer();
 
     template<typename Protocol>

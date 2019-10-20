@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-8-4
+   Last modified: 2019-10-20
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -25,10 +25,10 @@ class Udp
 public:
     using OnUdpMessageCallback = std::function<void(SocketAddr&, const char*, unsigned)>;
 
-    Udp(EventLoop* loop,SocketAddr& addr);
+    Udp(EventLoop* loop);
     virtual ~Udp();
 
-    void startRead();
+    int bindAndRead(SocketAddr& addr);
 
     int send(SocketAddr& to, const char* buf, unsigned size);
 
@@ -43,8 +43,8 @@ public:
     static void onMesageReceive(uv_udp_t* handle, ssize_t nread, const uv_buf_t* buf, const struct sockaddr* addr, unsigned flags);
     
 private:
+    SocketAddr::IPV ipv_;
     uv_udp_t* handle_;
-    SocketAddr addr_;
     DefaultCallback onClose_;
 
     OnUdpMessageCallback onMessageCallback_;

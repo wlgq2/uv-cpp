@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
     
-   Last modified: 2017-10-9
+   Last modified: 2019-10-19
     
    Description:  https://github.com/wlgq2/uv-cpp
 */
@@ -25,10 +25,12 @@ using NewConnectionCallback  =    std::function<void(EventLoop* ,uv_tcp_t*)> ;
 class TcpAccepter
 {
 public:
-    TcpAccepter(EventLoop* loop, SocketAddr& addr,bool tcpNoDelay);
+    TcpAccepter(EventLoop* loop, bool tcpNoDelay);
+    
     virtual ~TcpAccepter();
 
-    void listen();
+    int bind(SocketAddr& addr);
+    int listen();
     bool isListen();
     bool isTcpNoDelay();
     void setNewConnectinonCallback( NewConnectionCallback callback);

@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
     
-   Last modified: 2017-10-9
+   Last modified: 2019-10-19
     
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -14,7 +14,7 @@
 using namespace std;
 using namespace uv;
 
-TcpAccepter::TcpAccepter(EventLoop* loop, SocketAddr& addr, bool tcpNoDelay)
+TcpAccepter::TcpAccepter(EventLoop* loop, bool tcpNoDelay)
     :listened_(false),
     tcpNoDelay_(tcpNoDelay),
     loop_(loop),
@@ -23,7 +23,6 @@ TcpAccepter::TcpAccepter(EventLoop* loop, SocketAddr& addr, bool tcpNoDelay)
     ::uv_tcp_init(loop_->hanlde(), &server_);
     if (tcpNoDelay_)
         ::uv_tcp_nodelay(&server_, 1);
-    ::uv_tcp_bind(&server_, addr.Addr(),0);
     server_.data = (void* )this;
 }
 
@@ -31,7 +30,7 @@ TcpAccepter::TcpAccepter(EventLoop* loop, SocketAddr& addr, bool tcpNoDelay)
 
 TcpAccepter:: ~TcpAccepter()
 {
-
+    
 }
 
 EventLoop* TcpAccepter::Loop()
@@ -47,9 +46,14 @@ void TcpAccepter::onNewConnect(uv_tcp_t* client)
     }
 }
 
-void TcpAccepter::listen()
+int uv::TcpAccepter::bind(SocketAddr& addr)
 {
-    ::uv_listen((uv_stream_t*) &server_, 128,
+    return ::uv_tcp_bind(&server_, addr.Addr(), 0);
+}
+
+int TcpAccepter::listen()
+{
+    auto rst = ::uv_listen((uv_stream_t*) &server_, 128,
     [](uv_stream_t *server, int status)
     {
         if (status < 0)
@@ -73,7 +77,11 @@ void TcpAccepter::listen()
             delete client;
         }
     });
-    listened_ = true;
+    if (rst == 0)
+    {
+        listened_ = true;
+    }
+    return rst;
 }
 
 

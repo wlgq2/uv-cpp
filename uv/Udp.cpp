@@ -3,7 +3,7 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2019-8-4
+Last modified: 2019-10-20
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -12,15 +12,12 @@ Description: https://github.com/wlgq2/uv-cpp
 
 using namespace uv;
 
-uv::Udp::Udp(EventLoop* loop, SocketAddr& addr)
+uv::Udp::Udp(EventLoop* loop)
     :handle_(new uv_udp_t()),
-    addr_(addr),
     onMessageCallback_(nullptr)
 {
     ::uv_udp_init(loop->hanlde(),handle_);
     handle_->data = this;
-
-    uv_udp_bind(handle_, addr_.Addr(), 0);
 }
 
 uv::Udp::~Udp()
@@ -28,9 +25,15 @@ uv::Udp::~Udp()
     delete handle_;
 }
 
-void uv::Udp::startRead()
+int uv::Udp::bindAndRead(SocketAddr& addr)
 {
-    ::uv_udp_recv_start(handle_,
+    ipv_ = addr.Ipv();
+    auto rst = uv_udp_bind(handle_, addr.Addr(), 0);
+    if (0 != rst)
+    {
+        return rst;
+    }
+    return ::uv_udp_recv_start(handle_,
         [](uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
     {
         buf->base = new char[suggested_size];
@@ -94,7 +97,7 @@ void uv::Udp::onMessage(const sockaddr* from, const char* data, unsigned size)
 {
     if (nullptr != onMessageCallback_)
     {
-        SocketAddr addr(from, addr_.Ipv());
+        SocketAddr addr(from, ipv_);
         onMessageCallback_(addr, data, size);
     }
 }
