@@ -3,7 +3,7 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2017-11-8
+Last modified: 2019-10-24
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -249,5 +249,5 @@ int uv::TcpConnection::appendToBuffer(const char* data, int size)
 
 int uv::TcpConnection::readFromBuffer(Packet& packet)
 {
-    return buffer_.read(packet);
+    return buffer_.readPacket(packet);
 }

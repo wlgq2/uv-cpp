@@ -3,7 +3,7 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-4-24
+Last modified: 2019-10-24
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -36,7 +36,7 @@ public:
     ~ListBuffer();
  
     int append(const char* data, int size) override;
-    int read(Packet& packet) override;
+    int readPacket(Packet& packet) override;
 
 private:
     std::list<uint8_t> buffer_;

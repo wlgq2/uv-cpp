@@ -3,7 +3,7 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-7-18
+Last modified: 2019-10-24
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -51,7 +51,7 @@ int uv::ArrayBuffer::append(const char* data, int size)
 
 }
 
-int uv::ArrayBuffer::read(Packet& packet)
+int uv::ArrayBuffer::readPacket(Packet& packet)
 {
     while (true)
     {

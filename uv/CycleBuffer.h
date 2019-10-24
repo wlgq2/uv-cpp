@@ -3,7 +3,7 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-7-18
+Last modified: 2018-10-24
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -46,7 +46,7 @@ public:
 
     //写字节时必须距离读字节一个字节，否则无法区分缓存满/空。
     int append(const char* data,int size) override;
-    int read(Packet& packet) override;
+    int readPacket(Packet& packet) override;
 
     int usableSize();
     void usableSizeInfo(SizeInfo& info);

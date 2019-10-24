@@ -3,13 +3,15 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-9-11
+   Last modified: 2019-10-24
 
    Description: https://github.com/wlgq2/uv-cpp
 */
 
 #ifndef UV_UV11_H
 #define UV_UV11_H
+
+#define    UV_CPP_VERSION     "1.2.0"
 
 #include   "Async.h"
 #include   "Signal.h"

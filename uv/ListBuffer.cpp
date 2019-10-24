@@ -3,7 +3,7 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-4-15
+Last modified: 2018-10-24
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -33,7 +33,7 @@ int ListBuffer::append(const char* data, int size)
 }
 
 
-int uv::ListBuffer::read(Packet& packet)
+int uv::ListBuffer::readPacket(Packet& packet)
 {
     while ((!buffer_.empty()) && (Packet::HeadByte != buffer_.front()))
         buffer_.pop_front();

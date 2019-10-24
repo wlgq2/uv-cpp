@@ -3,7 +3,7 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2018-7-18
+Last modified: 2019-10-24
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -73,7 +73,7 @@ const uint16_t uv::Packet::DataSize()
     return bufferSize_ - PacketMinSize();
 }
 
-const char * uv::Packet::Buffer()
+const char* uv::Packet::Buffer()
 {
     return buffer_;
 }
