@@ -18,19 +18,23 @@ Description: https://github.com/wlgq2/uv-cpp
 
 namespace uv
 {
-
-using ReadBufFunc = std::function<int(std::string&)>;
+class PacketBuffer;
+using ReadBufFunc = std::function<int(PacketBuffer*,std::string&)>;
 class PacketBuffer
 {
 
 public:
     virtual int append(const char* data, int size) = 0;
     virtual int readPacketDefault(Packet& packet) = 0;
+    virtual int readBufferN(std::string& data, uint32_t N) = 0;
+    virtual int clearBufferN(uint32_t N) = 0;
+    virtual int clear() = 0;
+    virtual int readSize() = 0;
 
-    int read(std::string& data)
+    int readCustomized(std::string& data)
     {
         if (readbufCallback_)
-            return readbufCallback_(data);
+            return readbufCallback_(this, data);
         uv::LogWriter::Instance()->error("not defined packet parse func.");
         return -1;
     }

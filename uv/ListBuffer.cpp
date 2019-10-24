@@ -75,3 +75,30 @@ int uv::ListBuffer::readPacketDefault(Packet& packet)
     packet.update(data, size + Packet::PacketMinSize());
     return 0;
 }
+
+int uv::ListBuffer::readBufferN(std::string& data, uint32_t N)
+{
+    if (N > (uint32_t)buffer_.size())
+        return -1;
+    for (uint32_t i = 0; i < N; i++)
+    {
+        data.push_back(buffer_.front());
+    }
+    return N;
+}
+
+int uv::ListBuffer::readSize()
+{
+    return buffer_.size();
+}
+
+int uv::ListBuffer::clearBufferN(uint32_t N)
+{
+    for (auto i = 1; i < N; i++)
+    {
+        if (buffer_.empty())
+            break;
+        buffer_.pop_front();
+    }
+    return 0;
+}

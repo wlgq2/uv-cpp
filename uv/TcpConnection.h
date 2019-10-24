@@ -83,11 +83,7 @@ public :
     bool isConnected();
     std::string& Name();
 
-    int appendToBuffer(const char* data, int size);
-    int readFromBuffer(Packet& packet);
-    int readFromBuffer(std::string& data);
-    void setBufferParse(ReadBufFunc func);
-
+    PacketBuffer* getPacketBuffer();
 private :
     std::string name_;
     bool connected_;

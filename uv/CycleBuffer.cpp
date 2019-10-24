@@ -115,6 +115,46 @@ int uv::ArrayBuffer::readPacketDefault(Packet& packet)
     }
 }
 
+int uv::ArrayBuffer::readBufferN(std::string& data, uint32_t N)
+{
+    SizeInfo info;
+    readSizeInfo(info);
+    if (N > (uint32_t)readSize())
+    {
+        return -1;
+    }
+    int start = (int)data.size();
+    data.resize(start + N);
+    //string被resize空间，所以操作指针安全
+    char* out = const_cast<char*>(data.c_str());
+    out += start;
+    if (N <= info.part1)
+    {
+        std::copy(buffer_ + readIndex_, buffer_ + readIndex_ + N, out);
+    }
+    else
+    {
+        std::copy(buffer_ + readIndex_, buffer_ + BufferSize, out);
+        int remain = N - info.part1;
+        std::copy(buffer_, buffer_ + remain, out + info.part1);
+    }
+    
+    return N;
+}
+
+int uv::ArrayBuffer::clearBufferN(uint32_t N)
+{
+    addReadIndex(N);
+    return 0;
+}
+
+int uv::ArrayBuffer::clear()
+{
+    writeIndex_ = 0;
+    readIndex_ = 0;
+    return 0;
+}
+
 int uv::ArrayBuffer::usableSize()
 {
     int usable;
@@ -147,16 +187,9 @@ void uv::ArrayBuffer::usableSizeInfo(SizeInfo& info)
 
 int uv::ArrayBuffer::readSize()
 {
-    int read;
-    if (writeIndex_ >= readIndex_)
-    {
-        read = writeIndex_ - readIndex_;
-    }
-    else
-    {
-        read = BufferSize - readIndex_ + writeIndex_;
-    }
-    return read;
+    SizeInfo info;
+    readSizeInfo(info);
+    return info.size;
 }
 
 void uv::ArrayBuffer::readSizeInfo(SizeInfo& info)

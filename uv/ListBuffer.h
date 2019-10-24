@@ -37,7 +37,9 @@ public:
  
     int append(const char* data, int size) override;
     int readPacketDefault(Packet& packet) override;
-
+    int readBufferN(std::string& data, uint32_t N) override;
+    int readSize() override;
+    int clearBufferN(uint32_t N) override;
 private:
     std::list<uint8_t> buffer_;
 

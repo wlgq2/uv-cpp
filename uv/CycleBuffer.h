@@ -47,12 +47,16 @@ public:
     //写字节时必须距离读字节一个字节，否则无法区分缓存满/空。
     int append(const char* data,int size) override;
     int readPacketDefault(Packet& packet) override;
+    int readBufferN(std::string& data, uint32_t N) override;
+    int clearBufferN(uint32_t N);
+    int clear() override;
+    int readSize()  override;
 
     int usableSize();
     void usableSizeInfo(SizeInfo& info);
-    int readSize();
     void readSizeInfo(SizeInfo& info);
 
+    
 public:
     static const uint32_t BufferSize;
 

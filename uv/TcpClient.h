@@ -56,8 +56,7 @@ public:
 
     EventLoop* Loop();
 
-    int appendToBuffer(const char* data, int size);
-    int readFromBuffer(Packet& packet);
+    PacketBuffer* getCurrentBuf();
 protected:
     EventLoop* loop_;
 private:
