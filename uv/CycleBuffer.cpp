@@ -138,12 +138,16 @@ int uv::ArrayBuffer::readBufferN(std::string& data, uint32_t N)
         int remain = N - info.part1;
         std::copy(buffer_, buffer_ + remain, out + info.part1);
     }
-    
-    return N;
+
+    return 0;
 }
 
 int uv::ArrayBuffer::clearBufferN(uint32_t N)
 {
+    if(N>(uint32_t)readSize())
+    {
+        N =readSize();
+    }
     addReadIndex(N);
     return 0;
 }

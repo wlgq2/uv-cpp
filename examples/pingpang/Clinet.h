@@ -61,10 +61,14 @@ public:
         write(data, (unsigned int)size);
 #else
         uv::Packet packet;
-        appendToBuffer(buf, (int)size);
-        while (0 == readFromBuffer(packet))
+        auto packetbuf = getCurrentBuf();
+        if(packetbuf != nullptr)
         {
-            write(packet.Buffer(), packet.BufferSize(), nullptr);
+            packetbuf->append(buf, (int)size);
+            while (0 == packetbuf->readPacketDefault(packet))
+            {
+                write(packet.Buffer(), packet.BufferSize(), nullptr);
+            }
         }
 #endif
     }

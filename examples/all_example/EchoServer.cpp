@@ -46,14 +46,15 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
     });
 #else //包接收及发送
     Packet packet;
-    connection->appendToBuffer(buf, static_cast<int>(size));
-    while (0 == connection->readFromBuffer(packet))
+    auto packetbuf = connection->getPacketBuffer();
+    packetbuf->append(buf, static_cast<int>(size));
+    while (0 == packetbuf->readPacketDefault(packet))
     {
         std::cout << std::endl;
         std::cout << "data size:" << packet.DataSize() << std::endl;
         std::cout << "reserve data:" << packet.reserve_ << std::endl;
         std::cout << "data:" << packet.getData() << std::endl;
- 
+
         connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
     }
 #endif

@@ -22,8 +22,9 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
     connection->write(buf,size,nullptr);
 #else
     uv::Packet packet;
-    connection->appendToBuffer(buf, size);
-    while (0 == connection->readFromBuffer(packet))
+    auto packetbuf = connection->getPacketBuffer();
+    packetbuf->append(buf, size);
+    while (0 == packetbuf->readPacketDefault(packet))
     {
         cnt++;
         connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
