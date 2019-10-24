@@ -80,9 +80,11 @@ int uv::ListBuffer::readBufferN(std::string& data, uint32_t N)
 {
     if (N > (uint32_t)buffer_.size())
         return -1;
+    auto it = buffer_.begin();
     for (uint32_t i = 0; i < N; i++)
     {
-        data.push_back(buffer_.front());
+        data.push_back(*it);
+        it++;
     }
     return 0;
 }
