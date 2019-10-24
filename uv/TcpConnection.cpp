@@ -249,5 +249,15 @@ int uv::TcpConnection::appendToBuffer(const char* data, int size)
 
 int uv::TcpConnection::readFromBuffer(Packet& packet)
 {
-    return buffer_.readPacket(packet);
+    return buffer_.readPacketDefault(packet);
+}
+
+int uv::TcpConnection::readFromBuffer(std::string& data)
+{
+    return buffer_.read(data);
+}
+
+void uv::TcpConnection::setBufferParse(ReadBufFunc func)
+{
+    buffer_.setReadFunc(func);
 }

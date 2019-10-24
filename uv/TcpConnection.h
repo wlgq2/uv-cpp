@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2017-11-8
+   Last modified: 2019-10-24
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -85,6 +85,8 @@ public :
 
     int appendToBuffer(const char* data, int size);
     int readFromBuffer(Packet& packet);
+    int readFromBuffer(std::string& data);
+    void setBufferParse(ReadBufFunc func);
 
 private :
     std::string name_;

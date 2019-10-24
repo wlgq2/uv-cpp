@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-10-9
+   Last modified: 2019-10-24
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -25,7 +25,8 @@ TcpClient::TcpClient(EventLoop* loop, bool tcpNoDelay)
     tcpNoDelay_(tcpNoDelay),
     connectCallback_(nullptr),
     onMessageCallback_(nullptr),
-    connection_(nullptr)
+    connection_(nullptr),
+    bufReadFunc_(nullptr)
 {
     update();
 }
@@ -71,6 +72,7 @@ void TcpClient::onConnect(bool successed)
         SocketAddr::AddrToStr(socket_,name,ipv);
 
         connection_ = make_shared<TcpConnection>(loop_, name, socket_);
+        connection_->setBufferParse(bufReadFunc_);
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
         connection_->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
         runConnectCallback(TcpClient::OnConnectSuccess);
@@ -170,6 +172,10 @@ void uv::TcpClient::setConnectStatusCallback(ConnectStatusCallback callback)
 void uv::TcpClient::setMessageCallback(NewMessageCallback callback)
 {
     onMessageCallback_ = callback;
+}
+
+void uv::TcpClient::setBufferParse(ReadBufFunc func)
+{
 }
 
 

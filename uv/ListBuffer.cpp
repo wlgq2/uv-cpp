@@ -33,7 +33,7 @@ int ListBuffer::append(const char* data, int size)
 }
 
 
-int uv::ListBuffer::readPacket(Packet& packet)
+int uv::ListBuffer::readPacketDefault(Packet& packet)
 {
     while ((!buffer_.empty()) && (Packet::HeadByte != buffer_.front()))
         buffer_.pop_front();

@@ -46,7 +46,7 @@ public:
 
     //写字节时必须距离读字节一个字节，否则无法区分缓存满/空。
     int append(const char* data,int size) override;
-    int readPacket(Packet& packet) override;
+    int readPacketDefault(Packet& packet) override;
 
     int usableSize();
     void usableSizeInfo(SizeInfo& info);

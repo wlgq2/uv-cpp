@@ -14,6 +14,7 @@ Description: https://github.com/wlgq2/uv-cpp
 #include   <functional>
 #include   <string>
 #include   "Packet.h"
+#include   "LogWriter.h"
 
 namespace uv
 {
@@ -24,12 +25,14 @@ class PacketBuffer
 
 public:
     virtual int append(const char* data, int size) = 0;
-    virtual int readPacket(Packet& packet) = 0;
+    virtual int readPacketDefault(Packet& packet) = 0;
 
     int read(std::string& data)
     {
         if (readbufCallback_)
             return readbufCallback_(data);
+        uv::LogWriter::Instance()->error("not defined packet parse func.");
+        return -1;
     }
     void setReadFunc(ReadBufFunc callback)
     {

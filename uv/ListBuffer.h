@@ -36,7 +36,7 @@ public:
     ~ListBuffer();
  
     int append(const char* data, int size) override;
-    int readPacket(Packet& packet) override;
+    int readPacketDefault(Packet& packet) override;
 
 private:
     std::list<uint8_t> buffer_;

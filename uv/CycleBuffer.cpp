@@ -51,7 +51,7 @@ int uv::ArrayBuffer::append(const char* data, int size)
 
 }
 
-int uv::ArrayBuffer::readPacket(Packet& packet)
+int uv::ArrayBuffer::readPacketDefault(Packet& packet)
 {
     while (true)
     {

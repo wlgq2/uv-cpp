@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-10-19
+   Last modified: 2019-10-24
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -42,6 +42,7 @@ public:
 
     void setNewConnectCallback(OnConnectionStatusCallback callback);
     void setConnectCloseCallback(OnConnectionStatusCallback callback);
+    void setBufferParse(ReadBufFunc func);
 
     void write(TcpConnectionPtr connection,const char* buf,unsigned int size, AfterWriteCallback callback = nullptr);
     void write(std::string& name,const char* buf,unsigned int size, AfterWriteCallback callback =nullptr);
@@ -63,6 +64,7 @@ private:
     OnMessageCallback onMessageCallback_;
     OnConnectionStatusCallback onNewConnectCallback_;
     OnConnectionStatusCallback onConnectCloseCallback_;
+    ReadBufFunc bufReadFunc_;
     TimerWheel timerWheel_;
     
 

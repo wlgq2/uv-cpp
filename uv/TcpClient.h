@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2018-10-9
+   Last modified: 2019-10-24
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -52,6 +52,7 @@ public:
 
     void setConnectStatusCallback(ConnectStatusCallback callback);
     void setMessageCallback(NewMessageCallback callback);
+    void setBufferParse(ReadBufFunc func);
 
     EventLoop* Loop();
 
@@ -69,6 +70,7 @@ private:
     NewMessageCallback onMessageCallback_;
 
     TcpConnectionPtr connection_;
+    ReadBufFunc bufReadFunc_;
     void update();
     void runConnectCallback(TcpClient::ConnectStatus successed);
     void onClose(std::string& name);
