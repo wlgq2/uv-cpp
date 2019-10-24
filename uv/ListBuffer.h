@@ -40,6 +40,8 @@ public:
     int readBufferN(std::string& data, uint32_t N) override;
     int readSize() override;
     int clearBufferN(uint32_t N) override;
+    int clear() override;
+
 private:
     std::list<uint8_t> buffer_;
 

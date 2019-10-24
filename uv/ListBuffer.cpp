@@ -91,16 +91,22 @@ int uv::ListBuffer::readBufferN(std::string& data, uint32_t N)
 
 int uv::ListBuffer::readSize()
 {
-    return buffer_.size();
+    return (int)buffer_.size();
 }
 
 int uv::ListBuffer::clearBufferN(uint32_t N)
 {
-    for (uint32_t i = 1; i < N; i++)
+    for (uint32_t i = 0; i < N; i++)
     {
         if (buffer_.empty())
             break;
         buffer_.pop_front();
     }
+    return 0;
+}
+
+int uv::ListBuffer::clear()
+{
+    buffer_.clear();
     return 0;
 }
