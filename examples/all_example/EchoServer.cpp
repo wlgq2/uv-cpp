@@ -57,10 +57,13 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
         {
             packetbuf->append(buf, static_cast<int>(size));
             //循环读取buffer
-            while (0 == packetbuf->readPacketDefault(packet))
+            std::string data("");
+            while (0 == packetbuf->readPacket(data))
             {
+                packet.swap(data);
+                data.clear();
                 std::cout << "reserve data "<< packet.DataSize()<<":" << packet.getData() << std::endl;
-                connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
+                connection->write(packet.Buffer().c_str(), packet.PacketSize(), nullptr);
             }
         }
     }

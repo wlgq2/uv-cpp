@@ -33,49 +33,6 @@ int ListBuffer::append(const char* data, uint64_t size)
 }
 
 
-int uv::ListBuffer::readPacketDefault(Packet& packet)
-{
-    while ((!buffer_.empty()) && (Packet::HeadByte != buffer_.front()))
-        buffer_.pop_front();
-    auto bufSize = buffer_.size();
-    if (bufSize <= Packet::PacketMinSize())
-    {
-        return -1;
-    }
-    buffer_.pop_front();
-    uint8_t sizebuf[2];
-    sizebuf[0] = buffer_.front();
-    buffer_.pop_front();
-    sizebuf[1] = buffer_.front();
-    buffer_.pop_front();
-    uint16_t size;
-    Packet::UnpackNum(sizebuf, size);
-
-    if (size + Packet::PacketMinSize() > bufSize)
-    {
-        buffer_.push_front(sizebuf[1]);
-        buffer_.push_front(sizebuf[0]);
-        buffer_.push_front(Packet::HeadByte);
-        return -1;
-    }
-    char* data = new char[size + Packet::PacketMinSize()];
-    data[0] = Packet::HeadByte;
-    Packet::PackNum(&data[1],(uint16_t) size);
-
-    for (int i = 0; i <= size+4; i++)
-    {
-        data[i + 3] = buffer_.front();
-        buffer_.pop_front();
-    }
-    if(static_cast<uint8_t>(data[size+ Packet::PacketMinSize()-1]) != Packet::EndByte)
-    {
-        delete[] data;
-        return -1;
-    }
-    packet.update(data, size + Packet::PacketMinSize());
-    return 0;
-}
-
 int uv::ListBuffer::readBufferN(std::string& data, uint64_t N)
 {
     if (N > (uint64_t)buffer_.size())

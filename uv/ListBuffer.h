@@ -36,7 +36,6 @@ public:
     ~ListBuffer();
  
     int append(const char* data, uint64_t size) override;
-    int readPacketDefault(Packet& packet) override;
     int readBufferN(std::string& data, uint64_t N) override;
     uint64_t readSize() override;
     int clearBufferN(uint64_t N) override;

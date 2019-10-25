@@ -27,7 +27,6 @@ TcpServer::TcpServer(EventLoop* loop, bool tcpNoDelay)
     onMessageCallback_(nullptr),
     onNewConnectCallback_(nullptr),
     onConnectCloseCallback_(nullptr),
-    bufReadFunc_(nullptr),
     timerWheel_(loop)
 {
 
@@ -55,11 +54,6 @@ void uv::TcpServer::onAccept(EventLoop * loop, uv_tcp_t * client)
     {
         connection->setMessageCallback(std::bind(&TcpServer::onMessage, this, placeholders::_1, placeholders::_2, placeholders::_3));
         connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection, this, placeholders::_1));
-        auto packbuf = connection->getPacketBuffer();
-        if (nullptr != packbuf)
-        {
-            packbuf->setReadFunc(bufReadFunc_);
-        }
         addConnnection(key, connection);
         timerWheel_.insertNew(connection);
         if (onNewConnectCallback_)
@@ -190,9 +184,4 @@ void TcpServer::setNewConnectCallback(OnConnectionStatusCallback callback)
 void  TcpServer::setConnectCloseCallback(OnConnectionStatusCallback callback)
 {
     onConnectCloseCallback_ = callback;
-}
-
-void uv::TcpServer::setBufferParse(ReadBufFunc func)
-{
-    bufReadFunc_ = func;
 }

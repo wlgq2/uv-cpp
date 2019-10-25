@@ -12,6 +12,7 @@
 
 #include "TcpClient.h"
 #include "LogWriter.h"
+#include "Packet.h"
 
 using namespace uv;
 using namespace std;
@@ -25,8 +26,7 @@ TcpClient::TcpClient(EventLoop* loop, bool tcpNoDelay)
     tcpNoDelay_(tcpNoDelay),
     connectCallback_(nullptr),
     onMessageCallback_(nullptr),
-    connection_(nullptr),
-    bufReadFunc_(nullptr)
+    connection_(nullptr)
 {
     update();
 }
@@ -72,11 +72,6 @@ void TcpClient::onConnect(bool successed)
         SocketAddr::AddrToStr(socket_,name,ipv);
 
         connection_ = make_shared<TcpConnection>(loop_, name, socket_);
-        auto packbuf = connection_->getPacketBuffer();
-        if (nullptr != packbuf)
-        {
-            packbuf->setReadFunc(bufReadFunc_);
-        }
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
         connection_->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
         runConnectCallback(TcpClient::OnConnectSuccess);
@@ -177,12 +172,6 @@ void uv::TcpClient::setMessageCallback(NewMessageCallback callback)
 {
     onMessageCallback_ = callback;
 }
-
-void uv::TcpClient::setBufferParse(ReadBufFunc func)
-{
-    bufReadFunc_ = func;
-}
-
 
 EventLoop* uv::TcpClient::Loop()
 {

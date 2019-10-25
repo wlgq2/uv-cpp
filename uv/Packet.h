@@ -12,11 +12,11 @@ Description: https://github.com/wlgq2/uv-cpp
 #define  UV_PACKET_H
 
 #include <string>
-
+#include "PacketBuffer.h"
 //Packet:
 //------------------------------------------------
-//  head  |  size   | reserve | data   |  end   |
-// 1 byte | 2 bytes | 4 bytes | N bytes| 1 byte |
+//  head  |  size   | data   |  end   |
+// 1 byte | 2 bytes | N bytes| 1 byte |
 //------------------------------------------------
 
 namespace uv
@@ -28,15 +28,16 @@ public:
     Packet();
     ~Packet();
 
-    void fill(const char* data, uint16_t size);
-    void update(char* data, uint16_t size);
-    void clear();
+    static int readFromBuffer(PacketBuffer*, std::string&);
+
+    void pack(const char* data, uint16_t size);
 
     const char* getData();
     const uint16_t DataSize();
-    const char* Buffer();
-    const uint16_t BufferSize();
+    const std::string& Buffer();
+    const uint32_t PacketSize();
 
+    void swap(std::string& str);
     template<typename NumType>
     static void UnpackNum(const uint8_t* data, NumType& num);
 
@@ -55,11 +56,10 @@ public:
     static uint8_t HeadByte;
     static uint8_t EndByte;
     static DataMode Mode;
-    uint32_t reserve_;
 
 private:
-    char* buffer_;
-    uint16_t bufferSize_;
+    std::string buffer_;
+    uint16_t dataSize_;
 };
 
 template<typename NumType>

@@ -49,75 +49,11 @@ int uv::ArrayBuffer::append(const char* data, uint64_t size)
 
 }
 
-int uv::ArrayBuffer::readPacketDefault(Packet& packet)
-{
-    while (true)
-    {
-        while ((readIndex_ != writeIndex_) &&( buffer_[readIndex_] != Packet::HeadByte))
-        {
-            addReadIndex(1);
-        }
-        SizeInfo info;
-        readSizeInfo(info);
-        if (info.size <= Packet::PacketMinSize())
-        {
-            return -1;
-        }
-
-        uint8_t cnt[2];
-        uint64_t index = readIndex_;
-        for (int i = 0; i < 2; i++)
-        {
-            if (++index == GlobalConfig::CycleBufferSize)
-                index = 0;
-            cnt[i] = buffer_[index];
-        }
-        uint16_t size;
-        Packet::UnpackNum(cnt, size);
-        if (size + Packet::PacketMinSize() > info.size)
-        {
-            return -1;
-        }
-        if (info.part1 >= size + Packet::PacketMinSize())
-        {
-            uint64_t end = readIndex_ + size + Packet::PacketMinSize() - 1;
-            if (buffer_[end] != Packet::EndByte)
-            {
-                //从下一字节重新寻找包头。
-                addReadIndex(1);
-                continue;
-            }
-            char* data = new char[size + Packet::PacketMinSize()];
-            std::copy(buffer_+readIndex_, buffer_ + readIndex_ + size + Packet::PacketMinSize(), data);
-            packet.update(data, (uint16_t)(size + Packet::PacketMinSize()));
-            addReadIndex(size + Packet::PacketMinSize());
-            return 0;
-        }
-        else
-        {
-            uint64_t end = size+ Packet::PacketMinSize()-info.part1-1;
-            if (buffer_[end] != Packet::EndByte)
-            {
-                //从下一字节重新寻找包头。
-                addReadIndex(1);
-                continue;
-            }
-            char* data = new char[size + Packet::PacketMinSize()];
-            std::copy(buffer_ + readIndex_, buffer_ + GlobalConfig::CycleBufferSize, data);
-            uint64_t remain = size + Packet::PacketMinSize() - info.part1;
-            std::copy(buffer_, buffer_ + remain, data+info.part1);
-            packet.update(data, (uint16_t)(size + Packet::PacketMinSize()));
-            addReadIndex(size + Packet::PacketMinSize());
-            return 0;
-        }
-    }
-}
-
 int uv::ArrayBuffer::readBufferN(std::string& data, uint64_t N)
 {
     SizeInfo info;
     readSizeInfo(info);
-    if (N > (uint64_t)readSize())
+    if (N > readSize())
     {
         return -1;
     }

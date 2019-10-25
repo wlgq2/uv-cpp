@@ -44,9 +44,8 @@ public:
         else
         {
             uv::Packet packet;
-            packet.reserve_ = 0;
-            packet.fill(data, sizeof(data));
-            write(packet.Buffer(), packet.BufferSize());
+            packet.pack(data, sizeof(data));
+            write(packet.Buffer().c_str(), packet.PacketSize());
         }
     }
     void onConnect(TcpClient::ConnectStatus status)
@@ -70,14 +69,15 @@ public:
         }
         else  //使用buffer
         {
-            uv::Packet packet;
             auto packetbuf = getCurrentBuf();
             if (nullptr != packetbuf)
             {
                 packetbuf->append(buf, static_cast<int>(size));
-                while (0 == packetbuf->readPacketDefault(packet))
+                std::string packet;
+                while (0 == packetbuf->readPacket(packet))
                 {
-                    write(packet.Buffer(), packet.BufferSize(), nullptr);
+                    write(packet.c_str(), (unsigned)packet.size(), nullptr);
+                    packet.clear();
                 }
             }
         }

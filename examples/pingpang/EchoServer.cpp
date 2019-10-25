@@ -24,15 +24,16 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection, const char* bu
     }
     else  //使用buffer
     {
-        Packet packet;
         auto packetbuf = connection->getPacketBuffer();
         if (nullptr != packetbuf)
         {
             packetbuf->append(buf, static_cast<int>(size));
             //循环读取buffer
-            while (0 == packetbuf->readPacketDefault(packet))
-            {         
-                connection->write(packet.Buffer(), packet.BufferSize(), nullptr);
+            std::string out;
+            while (0 == packetbuf->readPacket(out))
+            {   
+                connection->write(out.c_str(), out.size(), nullptr);
+                out.clear();
             }
         }
     }

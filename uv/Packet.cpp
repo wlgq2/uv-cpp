@@ -18,73 +18,98 @@ uint8_t Packet::EndByte = 0xe7;
 Packet::DataMode Packet::Mode = Packet::DataMode::LittleEndian;
 
 Packet::Packet()
-    :reserve_(0),
-    buffer_(nullptr),
-    bufferSize_(0)
+    :buffer_(""),
+    dataSize_(0)
 {
 
 }
 
 uv::Packet::~Packet()
 {
-    clear();
+
 }
 
-void uv::Packet::fill(const char* data, uint16_t size)
+int uv::Packet::readFromBuffer(PacketBuffer* packetbuf, std::string& out)
 {
-    clear();
+    while (true)
+    {
+        out.clear();
+        auto size = packetbuf->readSize();
+        //数据小于包头大小
+        if (size < PacketMinSize())
+        {
+            return -1;
+        }
+        //找包头
+        uint16_t dataSize;
+        packetbuf->readBufferN(out, sizeof(dataSize)+1);
+        if ((uint8_t)out[0] != HeadByte) //包头不正确，从下一个字节开始继续找
+        {
+            out.clear();
+            packetbuf->clearBufferN(1);
+            continue;
+        }
+        UnpackNum((uint8_t*)out.c_str() + 1, dataSize);
+        uint16_t msgsize = dataSize + PacketMinSize();
+        //包不完整
+        if (size < msgsize)
+        {
+            out.clear();
+            return -1;
+        }
+        packetbuf->clearBufferN(sizeof(dataSize)+1);
+        packetbuf->readBufferN(out, dataSize +1);
+        //检查包尾
+        if ((uint8_t)out.back() == EndByte)
+        {
+            packetbuf->clearBufferN(dataSize +1);
+            break;
+        }
+    }
+    return 0;
+}
 
-    bufferSize_ = size + PacketMinSize();
-    buffer_ = new char[bufferSize_];
+void uv::Packet::pack(const char* data, uint16_t size)
+{
+    dataSize_ = size;
+    buffer_.resize(size+ PacketMinSize());
 
     buffer_[0] = HeadByte;
     PackNum(&buffer_[1],size);
-    PackNum(&buffer_[3], reserve_);
 
-    std::copy(data, data + size, buffer_ + sizeof(HeadByte) + sizeof(bufferSize_)+sizeof(reserve_));
-    buffer_[size + PacketMinSize()-1] = EndByte;
+    std::copy(data, data + size, &buffer_[sizeof(HeadByte) + sizeof(dataSize_)]);
+    buffer_.back() = EndByte;
 }
 
-void uv::Packet::update(char* data, uint16_t size)
-{
-    clear();
-    UnpackNum((const uint8_t*)(&data[3]), reserve_);
-    buffer_ = data;
-    bufferSize_ = size;
-}
-
-
-void uv::Packet::clear()
-{
-    if (0 !=bufferSize_)
-    {
-        delete[] buffer_;
-        bufferSize_ = 0;
-    }
-}
 
 const char* uv::Packet::getData()
 {
-    return buffer_+sizeof(HeadByte)+sizeof(bufferSize_)+sizeof(reserve_);
+    return buffer_.c_str()+sizeof(HeadByte)+sizeof(dataSize_);
 }
 
 const uint16_t uv::Packet::DataSize()
 {
-    return bufferSize_ - PacketMinSize();
+    return dataSize_;
 }
 
-const char* uv::Packet::Buffer()
+const std::string& uv::Packet::Buffer()
 {
     return buffer_;
 }
 
-const uint16_t uv::Packet::BufferSize()
+const uint32_t uv::Packet::PacketSize()
 {
-    return bufferSize_;
+    return (uint32_t)buffer_.size();
+}
+
+void uv::Packet::swap(std::string& str)
+{
+    buffer_.swap(str);
+    dataSize_ = (uint16_t)(buffer_.size() - PacketMinSize());
 }
 
 
 uint32_t uv::Packet::PacketMinSize()
 {
-    return 8;
+    return 4;
 }

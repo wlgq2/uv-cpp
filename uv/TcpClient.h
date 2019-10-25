@@ -52,7 +52,6 @@ public:
 
     void setConnectStatusCallback(ConnectStatusCallback callback);
     void setMessageCallback(NewMessageCallback callback);
-    void setBufferParse(ReadBufFunc func);
 
     EventLoop* Loop();
 
@@ -69,7 +68,6 @@ private:
     NewMessageCallback onMessageCallback_;
 
     TcpConnectionPtr connection_;
-    ReadBufFunc bufReadFunc_;
     void update();
     void runConnectCallback(TcpClient::ConnectStatus successed);
     void onClose(std::string& name);

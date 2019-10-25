@@ -63,9 +63,8 @@ public:
             else
             {
                 uv::Packet packet;
-                packet.reserve_ = 655;
-                packet.fill(data, sizeof(data));
-                write(packet.Buffer(), packet.BufferSize());
+                packet.pack(data, sizeof(data));
+                write(packet.Buffer().c_str(), packet.PacketSize());
             }
         }
     }

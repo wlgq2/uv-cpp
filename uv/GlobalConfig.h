@@ -15,6 +15,9 @@
 
 namespace uv
 {
+class PacketBuffer;
+using ReadBufferFunc = std::function<int(PacketBuffer*, std::string&)>;
+
 class GlobalConfig
 {
 public:
@@ -26,6 +29,7 @@ public:
     };
     static BufferMode BufferModeStatus;
     static uint64_t   CycleBufferSize;
+    static ReadBufferFunc ReadBufCallback;
 };
 }
 #endif
