@@ -4,7 +4,6 @@
 
 #include <string>
 #include "uv/uv11.h"
-#include "ModeDefine.h"
 
 class Client : public uv::TcpClient
 {
@@ -35,46 +34,56 @@ public:
         });
         timer->start();
     }
-
+    void sendTestMessage()
+    {
+        char data[1024] = "test message";
+        if (uv::GlobalConfig::BufferModeStatus == uv::GlobalConfig::NoBuffer)
+        {
+            write(data, (int)sizeof(data));
+        }
+        else
+        {
+            uv::Packet packet;
+            packet.reserve_ = 0;
+            packet.fill(data, sizeof(data));
+            write(packet.Buffer(), packet.BufferSize());
+        }
+    }
     void onConnect(TcpClient::ConnectStatus status)
     {
-        if(status != TcpClient::ConnectStatus::OnConnectSuccess)
+        if (status != TcpClient::ConnectStatus::OnConnectSuccess)
         {
             reConnect();
         }
         else
         {
-#if     USED_NO_PACKET
-            write(data,1024);
-#else
-            uv::Packet packet;
-            packet.fill(data,1024);
-
-            write(packet.Buffer(), packet.BufferSize(), nullptr);
-#endif
+            sendTestMessage();
         }
     }
 
+
     void newMessage(const char* buf,ssize_t size)
     {
-#if     USED_NO_PACKET
-        write(data, (unsigned int)size);
-#else
-        uv::Packet packet;
-        auto packetbuf = getCurrentBuf();
-        if(packetbuf != nullptr)
+        if (uv::GlobalConfig::BufferModeStatus == uv::GlobalConfig::NoBuffer)
         {
-            packetbuf->append(buf, (int)size);
-            while (0 == packetbuf->readPacketDefault(packet))
+            write(buf, (unsigned int)size);
+        }
+        else  //使用buffer
+        {
+            uv::Packet packet;
+            auto packetbuf = getCurrentBuf();
+            if (nullptr != packetbuf)
             {
-                write(packet.Buffer(), packet.BufferSize(), nullptr);
+                packetbuf->append(buf, static_cast<int>(size));
+                while (0 == packetbuf->readPacketDefault(packet))
+                {
+                    write(packet.Buffer(), packet.BufferSize(), nullptr);
+                }
             }
         }
-#endif
     }
 
 private:
     std::shared_ptr<uv::SocketAddr> sockAddr;
-    char data[10000];
 };
 #endif

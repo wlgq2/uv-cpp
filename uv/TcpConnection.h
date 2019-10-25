@@ -11,14 +11,6 @@
 #ifndef UV_TCP_CONNECTION_H
 #define UV_TCP_CONNECTION_H
 
-#define  USE_CYCLE_BUFFER     1
-
-#if     USE_CYCLE_BUFFER
-#define     USE_LIST_BUFFER   0
-#else
-#define     USE_LIST_BUFFER   1
-#endif
-
 #include <memory>
 
 
@@ -62,7 +54,7 @@ public :
     void onMessage(const char* buf,ssize_t size);
     void onSocketClose();
     void close(std::function<void(std::string&)> callback);
-    
+
     int write(const char* buf,ssize_t size,AfterWriteCallback callback);
     void writeInLoop(const char* buf,ssize_t size,AfterWriteCallback callback);
 
@@ -83,26 +75,20 @@ public :
     bool isConnected();
     std::string& Name();
 
-    PacketBuffer* getPacketBuffer();
+    PacketBufferPtr getPacketBuffer();
+
 private :
     std::string name_;
     bool connected_;
     EventLoop* loop_;
     uv_tcp_t* handle_;
-
-#if USE_CYCLE_BUFFER
-    ArrayBuffer buffer_;
-#endif
-
-#if  USE_LIST_BUFFER
-    ListBuffer buffer_;
-#endif
+    PacketBufferPtr buffer_;
     std::weak_ptr<ConnectionElement> element_;
 
     OnMessageCallback onMessageCallback_;
     OnCloseCallback onConnectCloseCallback_;
     CloseCompleteCallback closeCompleteCallback_;
-    
+
 
 };
 

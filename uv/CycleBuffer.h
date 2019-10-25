@@ -33,9 +33,9 @@ namespace uv
 
 struct SizeInfo
 {
-    uint32_t size;
-    uint32_t part1;
-    uint32_t part2;
+    uint64_t size;
+    uint64_t part1;
+    uint64_t part2;
 };
 
 class ArrayBuffer :public PacketBuffer
@@ -45,29 +45,25 @@ public:
     ~ArrayBuffer();
 
     //写字节时必须距离读字节一个字节，否则无法区分缓存满/空。
-    int append(const char* data,int size) override;
+    int append(const char* data, uint64_t size) override;
     int readPacketDefault(Packet& packet) override;
-    int readBufferN(std::string& data, uint32_t N) override;
-    int clearBufferN(uint32_t N);
+    int readBufferN(std::string& data, uint64_t N) override;
+    int clearBufferN(uint64_t N);
     int clear() override;
-    int readSize()  override;
+    uint64_t readSize()  override;
 
-    int usableSize();
+    uint64_t usableSize();
     void usableSizeInfo(SizeInfo& info);
     void readSizeInfo(SizeInfo& info);
 
-    
-public:
-    static const uint32_t BufferSize;
-
 private:
-    int addWriteIndex(uint32_t size);
-    int addReadIndex(uint32_t size);
+    int addWriteIndex(uint64_t size);
+    int addReadIndex(uint64_t size);
 
 private:
     uint8_t* buffer_;
-    uint32_t writeIndex_;
-    uint32_t readIndex_;
+    uint64_t writeIndex_;
+    uint64_t readIndex_;
 
 };
 

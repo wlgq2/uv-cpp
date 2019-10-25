@@ -14,11 +14,12 @@ int main(int argc, char** args)
     //定义事件分发器类
     EventLoop* loop = EventLoop::DefalutLoop();
 
+    uv::GlobalConfig::BufferModeStatus = uv::GlobalConfig::CycleBuffer;
     SocketAddr addr1("0.0.0.0", 10002, SocketAddr::Ipv4);
 
 
     EchoServer server(loop);
-    server.setTimeout(40);
+    server.setTimeout(60);
     server.bindAndListen(addr1);
 
     SocketAddr addr2("127.0.0.1", 10002);

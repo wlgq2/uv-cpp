@@ -18,12 +18,12 @@
 
 using namespace uv;
 
-#define      TEST_SIGNAL      0
-#define      TEST_SERVER      0
-#define      TEST_CLIENT      0
-#define      TEST_ASYNC       0
-#define      TEST_TIMER       0
-#define      TEST_LOG         0
+#define      TEST_SIGNAL      1
+#define      TEST_SERVER      1
+#define      TEST_CLIENT      1
+#define      TEST_ASYNC       1
+#define      TEST_TIMER       1
+#define      TEST_LOG         1
 #define      TEST_UDP         1
 
 #define       TEST_IPV6       0
@@ -35,6 +35,8 @@ int main(int argc, char** args)
     //or
     //EventLoop* loop = EventLoop::DefalutLoop();
 
+    //默认不使用buffer
+    uv::GlobalConfig::BufferModeStatus = uv::GlobalConfig::NoBuffer;
 #if    TEST_SIGNAL
     //接管SIGPIPE信号。
     Signal signal(loop,13,[](int sig)

@@ -56,7 +56,7 @@ public:
 
     EventLoop* Loop();
 
-    PacketBuffer* getCurrentBuf();
+    PacketBufferPtr getCurrentBuf();
 protected:
     EventLoop* loop_;
 private:

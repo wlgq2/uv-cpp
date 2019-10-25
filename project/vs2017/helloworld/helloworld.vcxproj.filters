@@ -62,6 +62,9 @@
     <ClCompile Include="..\..\..\uv\Idle.cpp">
       <Filter>uv</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\uv\GlobalConfig.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\uv\Async.h">
@@ -116,6 +119,9 @@
       <Filter>uv</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\uv\Idle.h">
+      <Filter>uv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\uv\GlobalConfig.h">
       <Filter>uv</Filter>
     </ClInclude>
   </ItemGroup>

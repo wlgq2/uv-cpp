@@ -13,6 +13,8 @@ Description: https://github.com/wlgq2/uv-cpp
 
 #include   <functional>
 #include   <string>
+#include   <memory>
+
 #include   "Packet.h"
 #include   "LogWriter.h"
 
@@ -24,12 +26,14 @@ class PacketBuffer
 {
 
 public:
-    virtual int append(const char* data, int size) = 0;
+    virtual ~PacketBuffer(){}
+
+    virtual int append(const char* data, uint64_t size) = 0;
     virtual int readPacketDefault(Packet& packet) = 0;
-    virtual int readBufferN(std::string& data, uint32_t N) = 0;
-    virtual int clearBufferN(uint32_t N) = 0;
+    virtual int readBufferN(std::string& data, uint64_t N) = 0;
+    virtual int clearBufferN(uint64_t N) = 0;
     virtual int clear() = 0;
-    virtual int readSize() = 0;
+    virtual uint64_t readSize() = 0;
 
     int readCustomized(std::string& data)
     {
@@ -46,6 +50,7 @@ private:
     ReadBufFunc readbufCallback_;
 };
 
+using PacketBufferPtr = std::shared_ptr<PacketBuffer>;
 }
 
 #endif // ! UV_PACKET_BUFFER_H

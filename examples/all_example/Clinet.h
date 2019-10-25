@@ -50,28 +50,29 @@ public:
     {
         if(status != ConnectStatus::OnConnectSuccess)
         {
-            //оп┴г
+            //重连
             reConnect();
         }
         else
         {
-#if    1
-            char data[1024] = "test message";
-            write(data,(int)sizeof(data));
-#else
-            //send packet
             char data[] = "test message";
-            uv::Packet packet;
-            packet.reserve_ = 655;
-            packet.fill(data, sizeof(data));
-            write(packet.Buffer(),packet.BufferSize());
-#endif
+            if (uv::GlobalConfig::BufferModeStatus == uv::GlobalConfig::NoBuffer)
+            {
+                write(data, (int)sizeof(data));
+            }
+            else
+            {
+                uv::Packet packet;
+                packet.reserve_ = 655;
+                packet.fill(data, sizeof(data));
+                write(packet.Buffer(), packet.BufferSize());
+            }
         }
     }
 
     void newMessage(const char* buf,ssize_t size)
     {
-        write(buf, (unsigned)size, nullptr);
+        //write(buf, (unsigned)size, nullptr);
     }
 
 private:

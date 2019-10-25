@@ -72,7 +72,11 @@ void TcpClient::onConnect(bool successed)
         SocketAddr::AddrToStr(socket_,name,ipv);
 
         connection_ = make_shared<TcpConnection>(loop_, name, socket_);
-        connection_->getPacketBuffer()->setReadFunc(bufReadFunc_);
+        auto packbuf = connection_->getPacketBuffer();
+        if (nullptr != packbuf)
+        {
+            packbuf->setReadFunc(bufReadFunc_);
+        }
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
         connection_->setConnectCloseCallback(std::bind(&TcpClient::onConnectClose,this,std::placeholders::_1));
         runConnectCallback(TcpClient::OnConnectSuccess);
@@ -185,7 +189,7 @@ EventLoop* uv::TcpClient::Loop()
     return loop_;
 }
 
-PacketBuffer * uv::TcpClient::getCurrentBuf()
+PacketBufferPtr uv::TcpClient::getCurrentBuf()
 {
     if (connection_)
         return connection_->getPacketBuffer();

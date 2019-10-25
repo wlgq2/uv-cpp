@@ -52,6 +52,8 @@
 		<Unit filename="../../../uv/CycleBuffer.h" />
 		<Unit filename="../../../uv/EventLoop.cpp" />
 		<Unit filename="../../../uv/EventLoop.h" />
+		<Unit filename="../../../uv/GlobalConfig.cpp" />
+		<Unit filename="../../../uv/GlobalConfig.h" />
 		<Unit filename="../../../uv/Idle.cpp" />
 		<Unit filename="../../../uv/Idle.h" />
 		<Unit filename="../../../uv/ListBuffer.cpp" />

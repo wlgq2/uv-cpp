@@ -35,11 +35,11 @@ public:
     ListBuffer();
     ~ListBuffer();
  
-    int append(const char* data, int size) override;
+    int append(const char* data, uint64_t size) override;
     int readPacketDefault(Packet& packet) override;
-    int readBufferN(std::string& data, uint32_t N) override;
-    int readSize() override;
-    int clearBufferN(uint32_t N) override;
+    int readBufferN(std::string& data, uint64_t N) override;
+    uint64_t readSize() override;
+    int clearBufferN(uint64_t N) override;
     int clear() override;
 
 private:

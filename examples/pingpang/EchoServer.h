@@ -3,7 +3,6 @@
 
 #include "uv/uv11.h"
 #include <atomic>
-#include "ModeDefine.h"
 
 class EchoServer :public uv::TcpServer
 {

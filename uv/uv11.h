@@ -21,5 +21,6 @@
 #include   "Packet.h"
 #include   "Udp.h"
 #include   "Idle.h"
+#include   "GlobalConfig.h"
 
 #endif

@@ -152,6 +152,7 @@
     <ClCompile Include="..\..\..\uv\Timer.cpp" />
     <ClCompile Include="..\..\..\uv\TimerWheel.cpp" />
     <ClCompile Include="..\..\..\uv\Udp.cpp" />
+    <ClCompile Include="..\..\..\uv\GlobalConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\uv\Async.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="..\..\..\uv\TimerWheel.h" />
     <ClInclude Include="..\..\..\uv\Udp.h" />
     <ClInclude Include="..\..\..\uv\uv11.h" />
+    <ClInclude Include="..\..\..\uv\GlobalConfig.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

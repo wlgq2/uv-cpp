@@ -55,7 +55,11 @@ void uv::TcpServer::onAccept(EventLoop * loop, uv_tcp_t * client)
     {
         connection->setMessageCallback(std::bind(&TcpServer::onMessage, this, placeholders::_1, placeholders::_2, placeholders::_3));
         connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection, this, placeholders::_1));
-        connection->getPacketBuffer()->setReadFunc(bufReadFunc_);
+        auto packbuf = connection->getPacketBuffer();
+        if (nullptr != packbuf)
+        {
+            packbuf->setReadFunc(bufReadFunc_);
+        }
         addConnnection(key, connection);
         timerWheel_.insertNew(connection);
         if (onNewConnectCallback_)

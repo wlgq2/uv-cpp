@@ -12,6 +12,7 @@ Description: https://github.com/wlgq2/uv-cpp
 #include "TcpServer.h"
 #include "Async.h"
 #include "LogWriter.h"
+#include "GlobalConfig.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -50,6 +51,7 @@ TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* clien
     connected_(isConnected),
     loop_(loop),
     handle_(client),
+    buffer_(nullptr),
     onMessageCallback_(nullptr),
     onConnectCloseCallback_(nullptr),
     closeCompleteCallback_(nullptr)
@@ -66,6 +68,14 @@ TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* clien
 #endif
     },
         &TcpConnection::onMesageReceive);
+    if (GlobalConfig::BufferModeStatus == GlobalConfig::ListBuffer)
+    {
+        buffer_ = std::make_shared<ListBuffer>();
+    }
+    else if(GlobalConfig::BufferModeStatus == GlobalConfig::CycleBuffer)
+    {
+        buffer_ = std::make_shared<ArrayBuffer>();
+    }
 }
 
 
@@ -86,7 +96,7 @@ void TcpConnection::onSocketClose()
 void TcpConnection::close(std::function<void(std::string&)> callback)
 {
     closeCompleteCallback_ = callback;
-    if (::uv_is_active((uv_handle_t*)handle_)) 
+    if (::uv_is_active((uv_handle_t*)handle_))
     {
         ::uv_read_stop((uv_stream_t*)handle_);
     }
@@ -242,7 +252,7 @@ std::string & uv::TcpConnection::Name()
     return name_;
 }
 
-PacketBuffer* uv::TcpConnection::getPacketBuffer()
+PacketBufferPtr uv::TcpConnection::getPacketBuffer()
 {
-    return &buffer_;
+    return buffer_;
 }
