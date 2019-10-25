@@ -11,7 +11,7 @@
 #ifndef UV_UV11_H
 #define UV_UV11_H
 
-#define    UV_CPP_VERSION     "1.2.0"
+#define    UV_CPP_VERSION     "1.2.1"
 
 #include   "Async.h"
 #include   "Signal.h"
