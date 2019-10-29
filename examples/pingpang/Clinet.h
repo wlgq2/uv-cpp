@@ -73,11 +73,10 @@ public:
             if (nullptr != packetbuf)
             {
                 packetbuf->append(buf, static_cast<int>(size));
-                std::string packet;
+                uv::Packet packet;
                 while (0 == packetbuf->readPacket(packet))
                 {
-                    write(packet.c_str(), (unsigned)packet.size(), nullptr);
-                    packet.clear();
+                    write(packet.Buffer().c_str(), (unsigned)packet.PacketSize(), nullptr);
                 }
             }
         }

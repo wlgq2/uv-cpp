@@ -29,11 +29,10 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection, const char* bu
         {
             packetbuf->append(buf, static_cast<int>(size));
             //循环读取buffer
-            std::string out;
-            while (0 == packetbuf->readPacket(out))
+            Packet packet;
+            while (0 == packetbuf->readPacket(packet))
             {   
-                connection->write(out.c_str(), out.size(), nullptr);
-                out.clear();
+                connection->write(packet.Buffer().c_str(), packet.PacketSize(), nullptr);
             }
         }
     }

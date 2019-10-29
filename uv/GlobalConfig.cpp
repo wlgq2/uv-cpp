@@ -22,4 +22,6 @@ GlobalConfig::BufferMode GlobalConfig::BufferModeStatus = GlobalConfig::BufferMo
 uint64_t   GlobalConfig::CycleBufferSize = 1024 << 5;
 
 //默认包解析函数
-ReadBufferFunc GlobalConfig::ReadBufCallback = std::bind(&Packet::readFromBuffer, placeholders::_1, placeholders::_2);
+ReadBufferStringFunc GlobalConfig::ReadBufferString = nullptr;
+ReadBufferPacketFunc GlobalConfig::ReadBufferPacket = std::bind(&Packet::readFromBuffer, placeholders::_1, placeholders::_2);;
+ReadBufferVoidFunc GlobalConfig::ReadBufferVoid = nullptr;

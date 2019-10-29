@@ -20,7 +20,7 @@ Description: https://github.com/wlgq2/uv-cpp
 
 namespace uv
 {
-
+class Packet;
 class PacketBuffer
 {
 
@@ -33,10 +33,26 @@ public:
     virtual int clear() = 0;
     virtual uint64_t readSize() = 0;
 
-    int readPacket(std::string& data)
+    int readString(std::string& out)
     {
-        if (nullptr != GlobalConfig::ReadBufCallback)
-            return GlobalConfig::ReadBufCallback(this, data);
+        if (nullptr != GlobalConfig::ReadBufferString)
+            return GlobalConfig::ReadBufferString(this, out);
+        uv::LogWriter::Instance()->error("not defined packet parse func.");
+        return -1;
+    }
+
+    int readPacket(Packet& out)
+    {
+        if (nullptr != GlobalConfig::ReadBufferPacket)
+            return GlobalConfig::ReadBufferPacket(this, out);
+        uv::LogWriter::Instance()->error("not defined packet parse func.");
+        return -1;
+    }
+
+    int readGeneric(void* out)
+    {
+        if (nullptr != GlobalConfig::ReadBufferVoid)
+            return GlobalConfig::ReadBufferVoid(this, out);
         uv::LogWriter::Instance()->error("not defined packet parse func.");
         return -1;
     }

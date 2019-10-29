@@ -28,7 +28,7 @@ public:
     Packet();
     ~Packet();
 
-    static int readFromBuffer(PacketBuffer*, std::string&);
+    static int readFromBuffer(PacketBuffer*, Packet&);
 
     void pack(const char* data, uint16_t size);
 

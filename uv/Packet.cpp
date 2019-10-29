@@ -29,11 +29,11 @@ uv::Packet::~Packet()
 
 }
 
-int uv::Packet::readFromBuffer(PacketBuffer* packetbuf, std::string& out)
+int uv::Packet::readFromBuffer(PacketBuffer* packetbuf, Packet& out)
 {
+    std::string data("");
     while (true)
     {
-        out.clear();
         auto size = packetbuf->readSize();
         //数据小于包头大小
         if (size < PacketMinSize())
@@ -42,30 +42,30 @@ int uv::Packet::readFromBuffer(PacketBuffer* packetbuf, std::string& out)
         }
         //找包头
         uint16_t dataSize;
-        packetbuf->readBufferN(out, sizeof(dataSize)+1);
-        if ((uint8_t)out[0] != HeadByte) //包头不正确，从下一个字节开始继续找
+        packetbuf->readBufferN(data, sizeof(dataSize)+1);
+        if ((uint8_t)data[0] != HeadByte) //包头不正确，从下一个字节开始继续找
         {
-            out.clear();
+            data.clear();
             packetbuf->clearBufferN(1);
             continue;
         }
-        UnpackNum((uint8_t*)out.c_str() + 1, dataSize);
+        UnpackNum((uint8_t*)data.c_str() + 1, dataSize);
         uint16_t msgsize = dataSize + PacketMinSize();
         //包不完整
         if (size < msgsize)
         {
-            out.clear();
             return -1;
         }
         packetbuf->clearBufferN(sizeof(dataSize)+1);
-        packetbuf->readBufferN(out, dataSize +1);
+        packetbuf->readBufferN(data, dataSize +1);
         //检查包尾
-        if ((uint8_t)out.back() == EndByte)
+        if ((uint8_t)data.back() == EndByte)
         {
             packetbuf->clearBufferN(dataSize +1);
             break;
         }
     }
+    out.swap(data);
     return 0;
 }
 
