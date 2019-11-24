@@ -60,7 +60,8 @@ TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* clien
     ::uv_read_start((uv_stream_t*)client,
         [](uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
     {
-        buf->base = new char[suggested_size];
+        auto conn = static_cast<TcpConnection*>(handle->data);
+        buf->base = conn->resizeData(suggested_size);
 #if _MSC_VER
         buf->len = (ULONG)suggested_size;
 #else
@@ -187,13 +188,11 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     if (nread > 0)
     {
         connection->onMessage(buf->base, nread);
-        delete[](buf->base);
     }
     else if (nread < 0)
     {
         connection->setConnectStatus(false);
         uv::LogWriter::Instance()->error( uv_err_name((int)nread));
-        delete[](buf->base);
 
         if (nread != UV_EOF)
         {
@@ -214,7 +213,6 @@ void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const u
     else
     {
         /* Everything OK, but nothing read. */
-        delete[](buf->base);
     }
 
 }
@@ -250,6 +248,12 @@ bool uv::TcpConnection::isConnected()
 std::string & uv::TcpConnection::Name()
 {
     return name_;
+}
+
+char* uv::TcpConnection::resizeData(size_t size)
+{
+    data_.resize(size);
+    return const_cast<char*>(data_.c_str());
 }
 
 PacketBufferPtr uv::TcpConnection::getPacketBuffer()

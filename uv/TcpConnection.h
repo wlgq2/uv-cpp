@@ -17,6 +17,7 @@
 #include <chrono>
 #include <functional>
 #include <atomic>
+#include <string>
 
 #include "EventLoop.h"
 #include "ListBuffer.h"
@@ -75,6 +76,8 @@ public :
     bool isConnected();
     std::string& Name();
 
+    char* resizeData(size_t size);
+
     PacketBufferPtr getPacketBuffer();
 
 private :
@@ -82,6 +85,7 @@ private :
     bool connected_;
     EventLoop* loop_;
     uv_tcp_t* handle_;
+    std::string data_;
     PacketBufferPtr buffer_;
     std::weak_ptr<ConnectionElement> element_;
 

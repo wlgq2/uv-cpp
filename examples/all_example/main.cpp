@@ -35,8 +35,6 @@ int main(int argc, char** args)
     //or
     //EventLoop* loop = EventLoop::DefalutLoop();
 
-    //默认不使用buffer
-    uv::GlobalConfig::BufferModeStatus = uv::GlobalConfig::NoBuffer;
 #if    TEST_SIGNAL
     //接管SIGPIPE信号。
     Signal signal(loop,13,[](int sig)
