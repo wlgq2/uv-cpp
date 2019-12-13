@@ -20,7 +20,7 @@ TcpAccepter::TcpAccepter(EventLoop* loop, bool tcpNoDelay)
     loop_(loop),
     callback_(nullptr)
 {
-    ::uv_tcp_init(loop_->hanlde(), &server_);
+    ::uv_tcp_init(loop_->handle(), &server_);
     if (tcpNoDelay_)
         ::uv_tcp_nodelay(&server_, 1);
     server_.data = (void* )this;
@@ -63,7 +63,7 @@ int TcpAccepter::listen()
         }
         TcpAccepter* accept = static_cast<TcpAccepter*>(server->data);
         uv_tcp_t* client =new uv_tcp_t();
-        ::uv_tcp_init(accept->Loop()->hanlde(), client);
+        ::uv_tcp_init(accept->Loop()->handle(), client);
         if (accept->isTcpNoDelay())
             ::uv_tcp_nodelay(client, 1);
 

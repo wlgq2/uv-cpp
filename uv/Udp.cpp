@@ -16,7 +16,7 @@ uv::Udp::Udp(EventLoop* loop)
     :handle_(new uv_udp_t()),
     onMessageCallback_(nullptr)
 {
-    ::uv_udp_init(loop->hanlde(),handle_);
+    ::uv_udp_init(loop->handle(),handle_);
     handle_->data = this;
 }
 

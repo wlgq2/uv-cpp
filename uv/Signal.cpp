@@ -17,10 +17,10 @@ using namespace std;
 
 Signal::Signal(EventLoop* loop, int sig, SignalHandle handle)
     :signal_(new uv_signal_t),
-    hanlde_(handle),
+    handle_(handle),
     closeCallback_(nullptr)
 {
-    ::uv_signal_init(loop->hanlde(), signal_);
+    ::uv_signal_init(loop->handle(), signal_);
     signal_->data = static_cast<void*>(this);
     ::uv_signal_start(signal_, &Signal::onSignal, sig);
 }
@@ -50,14 +50,14 @@ Signal::~Signal()
 
 void Signal::setHandle(SignalHandle handle)
 {
-    hanlde_ = handle;
+    handle_ = handle;
 }
 
 bool Signal::handle(int signum)
 {
-    if (hanlde_)
+    if (handle_)
     {
-        hanlde_(signum);
+        handle_(signum);
         return true;
     }
     return false;

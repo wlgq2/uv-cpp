@@ -188,7 +188,7 @@ PacketBufferPtr uv::TcpClient::getCurrentBuf()
 
 void TcpClient::update()
 {
-    ::uv_tcp_init(loop_->hanlde(), socket_);
+    ::uv_tcp_init(loop_->handle(), socket_);
     if (tcpNoDelay_)
         ::uv_tcp_nodelay(socket_,1);
     socket_->data = static_cast<void*>(this);

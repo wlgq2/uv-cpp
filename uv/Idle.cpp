@@ -16,7 +16,7 @@ Idle::Idle(EventLoop* loop)
     :idle_(new uv_idle_t())
 {
     idle_->data = this;
-    uv_idle_init(loop->hanlde(), idle_);
+    uv_idle_init(loop->handle(), idle_);
     uv_idle_start(idle_, idleCallback);
 }
 

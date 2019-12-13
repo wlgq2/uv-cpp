@@ -36,7 +36,7 @@ public:
     static void Ignore(int sig);
 private:
     uv_signal_t* signal_;
-    SignalHandle hanlde_;
+    SignalHandle handle_;
     DefaultCallback closeCallback_;
     static void onSignal(uv_signal_t* handle, int signum);
 };

@@ -14,7 +14,7 @@ using namespace uv;
 Async::Async(EventLoop * loop)
     : handle_(new uv_async_t)
 {
-    ::uv_async_init(loop->hanlde(), handle_, Async::Callback);
+    ::uv_async_init(loop->handle(), handle_, Async::Callback);
     handle_->data = static_cast<void*>(this);
 }
 

@@ -12,7 +12,7 @@ using namespace uv;
 int main(int argc, char** args)
 {
     //定义事件分发器类
-    EventLoop* loop = EventLoop::DefalutLoop();
+    EventLoop* loop = EventLoop::DefaultLoop();
 
     uv::GlobalConfig::BufferModeStatus = uv::GlobalConfig::CycleBuffer;
     SocketAddr addr1("0.0.0.0", 10002, SocketAddr::Ipv4);

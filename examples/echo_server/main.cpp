@@ -17,7 +17,7 @@ using namespace uv;
 
 int main(int argc, char** args)
 {
-    EventLoop* loop = EventLoop::DefalutLoop();
+    EventLoop* loop = EventLoop::DefaultLoop();
 
     SocketAddr addr("0.0.0.0", 10005, SocketAddr::Ipv4);
 

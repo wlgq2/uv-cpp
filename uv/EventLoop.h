@@ -33,13 +33,13 @@ public:
     EventLoop();
     ~EventLoop();
 
-    static EventLoop* DefalutLoop();
+    static EventLoop* DefaultLoop();
 
     int run();
     int runNoWait();
     bool isRunInLoopThread();
     void runInThisLoop(const DefaultCallback func);
-    uv_loop_t* hanlde();
+    uv_loop_t* handle();
 
     static const char* GetErrorMessage(int status);
 

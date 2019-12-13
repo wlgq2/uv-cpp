@@ -40,7 +40,7 @@ private:
 
 private:
     void onTimeOut();
-    void colseComplete();
+    void closeComplete();
 
     static void process(uv_timer_t* handle);
 

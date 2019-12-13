@@ -21,7 +21,7 @@ Timer::Timer(EventLoop * loop, uint64_t timeout, uint64_t repeat, TimerCallback 
     closeComplete_(nullptr)
 {
     handle_->data = static_cast<void*>(this);
-    ::uv_timer_init(loop->hanlde(), handle_);
+    ::uv_timer_init(loop->handle(), handle_);
 }
 
 Timer::~Timer()
@@ -50,13 +50,13 @@ void Timer::close(TimerCloseComplete callback)
             [](uv_handle_t* handle)
         {
             auto ptr = static_cast<Timer*>(handle->data);
-            ptr->colseComplete();
+            ptr->closeComplete();
             delete handle;
         });
     }
     else
     {
-        colseComplete();
+        closeComplete();
     }
 }
 
@@ -76,7 +76,7 @@ void Timer::onTimeOut()
     }
 }
 
-void Timer::colseComplete()
+void Timer::closeComplete()
 {
     if (closeComplete_)
         closeComplete_(this);

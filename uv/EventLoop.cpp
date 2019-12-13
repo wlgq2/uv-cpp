@@ -46,13 +46,13 @@ EventLoop::~EventLoop()
     }
 }
 
-EventLoop* uv::EventLoop::DefalutLoop()
+EventLoop* uv::EventLoop::DefaultLoop()
 {
     static EventLoop defaultLoop(EventLoop::Mode::Default);
     return &defaultLoop;
 }
 
-uv_loop_t* EventLoop::hanlde()
+uv_loop_t* EventLoop::handle()
 {
     return loop_;
 }
