@@ -3,7 +3,7 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2019-10-24
+Last modified: 2019-12-31
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -43,10 +43,9 @@ struct WriteArgs
 
 TcpConnection:: ~TcpConnection()
 {
-    delete handle_;
 }
 
-TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* client, bool isConnected)
+TcpConnection::TcpConnection(EventLoop* loop, std::string& name, UVTcpPtr client, bool isConnected)
     :name_(name),
     connected_(isConnected),
     loop_(loop),
@@ -57,7 +56,7 @@ TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* clien
     closeCompleteCallback_(nullptr)
 {
     handle_->data = static_cast<void*>(this);
-    ::uv_read_start((uv_stream_t*)client,
+    ::uv_read_start((uv_stream_t*)handle_.get(),
         [](uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
     {
         auto conn = static_cast<TcpConnection*>(handle->data);
@@ -79,9 +78,6 @@ TcpConnection::TcpConnection(EventLoop* loop, std::string& name, uv_tcp_t* clien
     }
 }
 
-
-
-
 void TcpConnection::onMessage(const char* buf, ssize_t size)
 {
     if (onMessageCallback_)
@@ -97,14 +93,15 @@ void TcpConnection::onSocketClose()
 void TcpConnection::close(std::function<void(std::string&)> callback)
 {
     closeCompleteCallback_ = callback;
-    if (::uv_is_active((uv_handle_t*)handle_))
+    uv_tcp_t* ptr = handle_.get();
+    if (::uv_is_active((uv_handle_t*)ptr))
     {
-        ::uv_read_stop((uv_stream_t*)handle_);
+        ::uv_read_stop((uv_stream_t*)ptr);
     }
-    if (::uv_is_closing((uv_handle_t*)handle_) == 0)
+    if (::uv_is_closing((uv_handle_t*)ptr) == 0)
     {
         //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
-        ::uv_close((uv_handle_t*)handle_,
+        ::uv_close((uv_handle_t*)ptr,
             [](uv_handle_t* handle)
         {
             auto connection = static_cast<TcpConnection*>(handle->data);
@@ -125,7 +122,8 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
         WriteReq* req = new WriteReq;
         req->buf = uv_buf_init(const_cast<char*>(buf), static_cast<unsigned int>(size));
         req->callback = callback;
-        rst = ::uv_write((uv_write_t*)req, (uv_stream_t*)handle_, &req->buf, 1,
+        auto ptr = handle_.get();
+        rst = ::uv_write((uv_write_t*)req, (uv_stream_t*)ptr, &req->buf, 1,
             [](uv_write_t *req, int status)
         {
             WriteReq *wr = (WriteReq*)req;
@@ -137,7 +135,6 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
                 info.status = status;
                 wr->callback(info);
             }
-            //delete [] (wr->buf.base);
             delete wr;
         });
         if (0 != rst)

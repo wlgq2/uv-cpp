@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-10-24
+   Last modified: 2019-12-31
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -59,7 +59,7 @@ public:
 protected:
     EventLoop* loop_;
 private:
-    uv_tcp_t* socket_;
+    UVTcpPtr socket_;
     uv_connect_t* connect_;
     SocketAddr::IPV ipv;
     bool tcpNoDelay_;

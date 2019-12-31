@@ -3,7 +3,7 @@ Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
 Author: orcaer@yeah.net
 
-Last modified: 2019-8-5
+Last modified: 2019-12-31
 
 Description: https://github.com/wlgq2/uv-cpp
 */
@@ -12,11 +12,12 @@ Description: https://github.com/wlgq2/uv-cpp
 #define    UV_SOCKET_ADDR_H
 
 #include <string>
-
+#include <memory>
 #include <uv.h>
 
 namespace uv
-{ 
+{
+using UVTcpPtr = std::shared_ptr<uv_tcp_t>;
 
 class  SocketAddr
 {

@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-10-24
+   Last modified: 2019-12-31
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -42,13 +42,12 @@ void TcpServer::setTimeout(unsigned int seconds)
     timerWheel_.setTimeout(seconds);
 }
 
-void uv::TcpServer::onAccept(EventLoop * loop, uv_tcp_t * client)
+void uv::TcpServer::onAccept(EventLoop * loop, UVTcpPtr client)
 {
     string key;
-    SocketAddr::AddrToStr(client, key, ipv_);
+    SocketAddr::AddrToStr(client.get(), key, ipv_);
 
     uv::LogWriter::Instance()->info("new connect  " + key);
-
     shared_ptr<TcpConnection> connection(new TcpConnection(loop, key, client));
     if (connection)
     {

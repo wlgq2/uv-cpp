@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-10-24
+   Last modified: 2019-12-31
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -50,7 +50,7 @@ public:
 
     void setTimeout(unsigned int);
 private:
-    void onAccept(EventLoop* loop, uv_tcp_t* client);
+    void onAccept(EventLoop* loop, UVTcpPtr client);
 protected:
     EventLoop* loop_;
 private:
@@ -64,8 +64,6 @@ private:
     OnConnectionStatusCallback onNewConnectCallback_;
     OnConnectionStatusCallback onConnectCloseCallback_;
     TimerWheel timerWheel_;
-    
-
 };
 
 

@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-10-24
+   Last modified: 2019-12-31
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -20,7 +20,6 @@ using namespace std;
 
 TcpClient::TcpClient(EventLoop* loop, bool tcpNoDelay)
     :loop_(loop),
-    socket_(new uv_tcp_t()),
     connect_(new uv_connect_t()),
     ipv(SocketAddr::Ipv4),
     tcpNoDelay_(tcpNoDelay),
@@ -50,7 +49,7 @@ void uv::TcpClient::setTcpNoDelay(bool isNoDelay)
 void TcpClient::connect(SocketAddr& addr)
 {
     ipv = addr.Ipv();
-    ::uv_tcp_connect(connect_, socket_, addr.Addr(), [](uv_connect_t* req, int status)
+    ::uv_tcp_connect(connect_, socket_.get(), addr.Addr(), [](uv_connect_t* req, int status)
     {
         auto handle = static_cast<TcpClient*>(((uv_tcp_t *)(req->handle))->data);
         if (0 != status)
@@ -69,7 +68,7 @@ void TcpClient::onConnect(bool successed)
     if(successed)
     {
         string name;
-        SocketAddr::AddrToStr(socket_,name,ipv);
+        SocketAddr::AddrToStr(socket_.get(),name,ipv);
 
         connection_ = make_shared<TcpConnection>(loop_, name, socket_);
         connection_->setMessageCallback(std::bind(&TcpClient::onMessage,this,std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
@@ -78,18 +77,17 @@ void TcpClient::onConnect(bool successed)
     }
     else
     {
-        if (::uv_is_active((uv_handle_t*)socket_))
+        if (::uv_is_active((uv_handle_t*)socket_.get()))
         {
-            ::uv_read_stop((uv_stream_t*)socket_);
+            ::uv_read_stop((uv_stream_t*)socket_.get());
         }
-        if (::uv_is_closing((uv_handle_t*)socket_) == 0)
+        if (::uv_is_closing((uv_handle_t*)socket_.get()) == 0)
         {
-            ::uv_close((uv_handle_t*)socket_,
+            ::uv_close((uv_handle_t*)socket_.get(),
                 [](uv_handle_t* handle)
             {
                 auto client = static_cast<TcpClient*>(handle->data);
                 client->afterConnectFail();
-                delete handle;
             });
         }
     }
@@ -129,8 +127,7 @@ void uv::TcpClient::close(std::function<void(std::string&)> callback)
 
 void uv::TcpClient::afterConnectFail()
 {
-    socket_ = new uv_tcp_t();
-    update();  
+    update();
     runConnectCallback(TcpClient::OnConnnectFail);
 }
 
@@ -188,9 +185,10 @@ PacketBufferPtr uv::TcpClient::getCurrentBuf()
 
 void TcpClient::update()
 {
-    ::uv_tcp_init(loop_->handle(), socket_);
+    socket_ = make_shared<uv_tcp_t>();
+    ::uv_tcp_init(loop_->handle(), socket_.get());
     if (tcpNoDelay_)
-        ::uv_tcp_nodelay(socket_,1);
+        ::uv_tcp_nodelay(socket_.get(), 1 );
     socket_->data = static_cast<void*>(this);
 }
 
@@ -203,8 +201,6 @@ void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus satus)
 void uv::TcpClient::onClose(std::string& name)
 {
     //connection_ = nullptr;
-    //old socket_ pointer will release when reconnect.
-    socket_ = new uv_tcp_t();
     update();
     uv::LogWriter::Instance()->info("Close tcp client connection complete.");
     runConnectCallback(TcpClient::OnConnnectClose);

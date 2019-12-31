@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2019-10-24
+   Last modified: 2019-12-31
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -22,6 +22,7 @@
 #include "EventLoop.h"
 #include "ListBuffer.h"
 #include "CycleBuffer.h"
+#include "SocketAddr.h"
 
 namespace uv
 {
@@ -48,9 +49,8 @@ using CloseCompleteCallback =  std::function<void (std::string&)>  ;
 
 class TcpConnection : public std::enable_shared_from_this<TcpConnection>
 {
-
 public :
-    TcpConnection(EventLoop* loop,std::string& name,uv_tcp_t* client,bool isConnected = true);
+    TcpConnection(EventLoop* loop,std::string& name,UVTcpPtr client,bool isConnected = true);
     virtual ~TcpConnection();
     void onMessage(const char* buf,ssize_t size);
     void onSocketClose();
@@ -84,7 +84,7 @@ private :
     std::string name_;
     bool connected_;
     EventLoop* loop_;
-    uv_tcp_t* handle_;
+    UVTcpPtr handle_;
     std::string data_;
     PacketBufferPtr buffer_;
     std::weak_ptr<ConnectionElement> element_;
@@ -92,8 +92,6 @@ private :
     OnMessageCallback onMessageCallback_;
     OnCloseCallback onConnectCloseCallback_;
     CloseCompleteCallback closeCompleteCallback_;
-
-
 };
 
 }

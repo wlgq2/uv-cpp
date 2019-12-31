@@ -2,9 +2,9 @@
    Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
 
    Author: orcaer@yeah.net
-    
-   Last modified: 2019-10-19
-    
+
+   Last modified: 2019-12-31
+
    Description: https://github.com/wlgq2/uv-cpp
 */
 
@@ -30,7 +30,7 @@ TcpAccepter::TcpAccepter(EventLoop* loop, bool tcpNoDelay)
 
 TcpAccepter:: ~TcpAccepter()
 {
-    
+
 }
 
 EventLoop* TcpAccepter::Loop()
@@ -38,7 +38,7 @@ EventLoop* TcpAccepter::Loop()
     return loop_;
 }
 
-void TcpAccepter::onNewConnect(uv_tcp_t* client)
+void TcpAccepter::onNewConnect(UVTcpPtr client)
 {
     if(nullptr !=callback_)
     {
@@ -62,19 +62,18 @@ int TcpAccepter::listen()
             return;
         }
         TcpAccepter* accept = static_cast<TcpAccepter*>(server->data);
-        uv_tcp_t* client =new uv_tcp_t();
-        ::uv_tcp_init(accept->Loop()->handle(), client);
+        UVTcpPtr client = make_shared<uv_tcp_t>();
+        ::uv_tcp_init(accept->Loop()->handle(), client.get());
         if (accept->isTcpNoDelay())
-            ::uv_tcp_nodelay(client, 1);
+            ::uv_tcp_nodelay(client.get(), 1);
 
-        if ( 0 == ::uv_accept(server, (uv_stream_t*) client))
+        if ( 0 == ::uv_accept(server, (uv_stream_t*) client.get()))
         {
             accept->onNewConnect(client);
         }
         else
         {
-            ::uv_close((uv_handle_t*) client, NULL);
-            delete client;
+            ::uv_close((uv_handle_t*) client.get(), NULL);
         }
     });
     if (rst == 0)
