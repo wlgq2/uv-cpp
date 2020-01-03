@@ -12,6 +12,8 @@
 #include <iostream>
 #include <thread>
 #include <memory>
+#include <mutex>
+#include <condition_variable>
 
 #include "Client.h"
 
@@ -20,27 +22,44 @@ using namespace uv;
 
 using ClientPtr = std::shared_ptr<Client>;
 
-void runClients(int count,SocketAddr& server,std::vector<ClientPtr>& clients)
+struct Clients
+{
+    std::vector<ClientPtr> clients ;
+    std::mutex mutex ;
+    std::condition_variable  condition ;
+    bool inited;
+};
+
+void runClients(int count,SocketAddr& server,Clients& clients)
 {
 	EventLoop loop;
-	for (int i=0;i<count;i++)
 	{
-		auto client = std::make_shared<Client>(&loop);
-		client->connectToServer(server);
-		clients.push_back(client);
+        std::lock_guard<std::mutex> lock(clients.mutex);
+        for (int i=0;i<count;i++)
+        {
+            auto client = std::make_shared<Client>(&loop);
+            client->connectToServer(server);
+            clients.clients.push_back(client);
+        }
+        clients.inited = true ;
 	}
+    clients.condition.notify_one();
 	loop.run();
 }
 
 
-void runClientsCrossThread(std::vector<ClientPtr>& clients)
+void runClientsCrossThread(Clients& clients)
 {
+    {
+        std::unique_lock<std::mutex> lock(clients.mutex);
+        clients.condition.wait(lock, [&clients] { return clients.inited; });
+    }
 	EventLoop loop;
 	char data[] = "test";
 	uv::Timer timer(&loop,1000,1000,
 	[&clients,data](uv::Timer*)
 	{
-		for(auto ptr : clients)
+		for(auto ptr : clients.clients)
 		{
 			ptr->writeInLoop(data,sizeof(data),nullptr);
 		}
@@ -52,11 +71,12 @@ void runClientsCrossThread(std::vector<ClientPtr>& clients)
 int main(int argc, char** args)
 {
     SocketAddr addr("127.0.0.1",10005);
-    std::vector<ClientPtr> clients;
+    struct Clients clients;
+    clients.inited = false;
     //开1000客户端
-    std::thread t1(std::bind(&runClients,1000,addr,clients));
+    std::thread t1(std::bind(&runClients,1000,addr,std::ref(clients)));
     //跨线程发送消息
-    std::thread t2(std::bind(&runClientsCrossThread,clients));
+    std::thread t2(std::bind(&runClientsCrossThread,std::ref(clients)));
     t1.join();
     t2.join();
 }
