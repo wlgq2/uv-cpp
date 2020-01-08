@@ -11,6 +11,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\examples\helloworld\main.cpp">
+      <Filter>example</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\uv\Async.cpp">
       <Filter>uv</Filter>
     </ClCompile>
@@ -20,13 +23,25 @@
     <ClCompile Include="..\..\..\uv\EventLoop.cpp">
       <Filter>uv</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\uv\GlobalConfig.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\Idle.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\uv\ListBuffer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\LogWriter.cpp">
       <Filter>uv</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\uv\Packet.cpp">
       <Filter>uv</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\uv\Signal.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\SocketAddr.cpp">
       <Filter>uv</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\uv\TcpAccepter.cpp">
@@ -41,88 +56,14 @@
     <ClCompile Include="..\..\..\uv\TcpServer.cpp">
       <Filter>uv</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\uv\Timer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\uv\TimerWheel.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\LogWriter.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\SocketAddr.cpp">
       <Filter>uv</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\uv\Udp.cpp">
       <Filter>uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\examples\helloworld\main.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\Timer.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\Idle.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\GlobalConfig.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\uv\Async.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\CycleBuffer.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\EventLoop.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\ListBuffer.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\Packet.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\PacketBuffer.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\Signal.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\SocketAddr.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\TcpAccepter.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\TcpClient.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\TcpConnection.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\TcpServer.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\Timer.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\TimerWheel.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\uv11.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\LogWriter.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\Udp.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\Idle.h">
-      <Filter>uv</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\uv\GlobalConfig.h">
-      <Filter>uv</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

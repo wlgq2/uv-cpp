@@ -13,8 +13,8 @@
 #include <memory>
 #include <string>
 
-#include "TcpServer.h"
-#include "LogWriter.h"
+#include "include/TcpServer.h"
+#include "include/LogWriter.h"
 
 using namespace std;
 using namespace uv;

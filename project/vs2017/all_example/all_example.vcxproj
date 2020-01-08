@@ -159,25 +159,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\examples\all_example\Clinet.h" />
     <ClInclude Include="..\..\..\examples\all_example\EchoServer.h" />
-    <ClInclude Include="..\..\..\uv\Async.h" />
-    <ClInclude Include="..\..\..\uv\CycleBuffer.h" />
-    <ClInclude Include="..\..\..\uv\EventLoop.h" />
-    <ClInclude Include="..\..\..\uv\GlobalConfig.h" />
-    <ClInclude Include="..\..\..\uv\Idle.h" />
-    <ClInclude Include="..\..\..\uv\ListBuffer.h" />
-    <ClInclude Include="..\..\..\uv\LogWriter.h" />
-    <ClInclude Include="..\..\..\uv\Packet.h" />
-    <ClInclude Include="..\..\..\uv\PacketBuffer.h" />
-    <ClInclude Include="..\..\..\uv\Signal.h" />
-    <ClInclude Include="..\..\..\uv\SocketAddr.h" />
-    <ClInclude Include="..\..\..\uv\TcpAccepter.h" />
-    <ClInclude Include="..\..\..\uv\TcpClient.h" />
-    <ClInclude Include="..\..\..\uv\TcpConnection.h" />
-    <ClInclude Include="..\..\..\uv\TcpServer.h" />
-    <ClInclude Include="..\..\..\uv\Timer.h" />
-    <ClInclude Include="..\..\..\uv\TimerWheel.h" />
-    <ClInclude Include="..\..\..\uv\Udp.h" />
-    <ClInclude Include="..\..\..\uv\uv11.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

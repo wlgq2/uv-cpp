@@ -10,8 +10,8 @@
 
 #include <functional>
 
-#include "GlobalConfig.h"
-#include "Packet.h"
+#include "include/GlobalConfig.h"
+#include "include/Packet.h"
 
 using namespace uv;
 using namespace std;

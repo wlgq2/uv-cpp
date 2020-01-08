@@ -12,7 +12,7 @@
 #ifndef RPC_CLIENT_H
 #define RPC_CLIENT_H
 
-#include <uv/uv11.h>
+#include <uv/include/uv11.h>
 #include "protocol.h"
 
 using OnRespCallback = std::function<void(Resp&)>;

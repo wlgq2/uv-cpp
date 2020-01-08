@@ -12,7 +12,7 @@
 #define RPC_SERVER_H
 
 
-#include <uv/uv11.h>
+#include <uv/include/uv11.h>
 #include "protocol.h"
 
 class RpcServer  : public uv::TcpServer

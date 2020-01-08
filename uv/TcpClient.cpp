@@ -10,9 +10,9 @@
 
 #include <string>
 
-#include "TcpClient.h"
-#include "LogWriter.h"
-#include "Packet.h"
+#include "include/TcpClient.h"
+#include "include/LogWriter.h"
+#include "include/Packet.h"
 
 using namespace uv;
 using namespace std;

@@ -7,8 +7,8 @@ Last modified: 2019-10-24
 
 Description: https://github.com/wlgq2/uv-cpp
 */
-#include "CycleBuffer.h"
-#include "GlobalConfig.h"
+#include "include/CycleBuffer.h"
+#include "include/GlobalConfig.h"
 
 using namespace uv;
 

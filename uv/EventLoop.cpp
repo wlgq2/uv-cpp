@@ -8,9 +8,9 @@
    Description: https://github.com/wlgq2/uv-cpp
 */
 
-#include "EventLoop.h"
-#include "TcpConnection.h"
-#include "Async.h"
+#include "include/EventLoop.h"
+#include "include/TcpConnection.h"
+#include "include/Async.h"
 
 using namespace uv;
 

@@ -3,7 +3,7 @@
 
 
 #include <string>
-#include "uv/uv11.h"
+#include "uv/include/uv11.h"
 
 class Client : public uv::TcpClient
 {
