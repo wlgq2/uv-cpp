@@ -32,11 +32,11 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 			<Add directory="../../../" />
-			<Add directory="../../../libuv1.22.0/include" />
+			<Add directory="../../../libuv1.30.0/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-pthread" />
-			<Add library="../../../libuv1.22.0/lib/gcc7.4.0/libuv.a" />
+			<Add library="../../../libuv1.30.0/lib/gcc8.3.0/libuv.a" />
 		</Linker>
 		<Unit filename="../../../examples/echo_server/EchoServer.cpp" />
 		<Unit filename="../../../examples/echo_server/EchoServer.h" />
