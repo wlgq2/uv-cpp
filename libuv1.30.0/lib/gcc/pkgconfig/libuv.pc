@@ -1,0 +1,12 @@
+prefix=/mnt/hgfs/share/uvlib
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libuv
+Version: 1.34.0
+Description: multi-platform support library with a focus on asynchronous I/O.
+URL: http://libuv.org/
+
+Libs: -L${libdir} -luv -lrt -lpthread -lnsl -ldl 
+Cflags: -I${includedir}

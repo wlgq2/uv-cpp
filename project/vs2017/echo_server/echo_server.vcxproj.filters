@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="example">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="uv">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\uv\Async.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\CycleBuffer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\EventLoop.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\GlobalConfig.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\Idle.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\ListBuffer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\LogWriter.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\Packet.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\Signal.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\SocketAddr.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\TcpAccepter.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\TcpClient.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\TcpConnection.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\TcpServer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\Timer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\TimerWheel.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\Udp.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\echo_server\EchoServer.cpp">
+      <Filter>example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\echo_server\main.cpp">
+      <Filter>example</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\examples\echo_server\EchoServer.h">
+      <Filter>example</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
