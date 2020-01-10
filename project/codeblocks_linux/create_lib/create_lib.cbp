@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="create_lib" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/uv_cpp" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/uv_cpp" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c++11" />
+			<Add directory="../../../" />
+			<Add directory="../../../libuv1.30.0/include" />
+		</Compiler>
+		<Linker>
+			<Add option="-pthread" />
+			<Add library="../../../libuv1.30.0/lib/gcc8.3.0/libuv.a" />
+		</Linker>
+		<Unit filename="../../../uv/Async.cpp" />
+		<Unit filename="../../../uv/CycleBuffer.cpp" />
+		<Unit filename="../../../uv/EventLoop.cpp" />
+		<Unit filename="../../../uv/GlobalConfig.cpp" />
+		<Unit filename="../../../uv/Idle.cpp" />
+		<Unit filename="../../../uv/ListBuffer.cpp" />
+		<Unit filename="../../../uv/LogWriter.cpp" />
+		<Unit filename="../../../uv/Packet.cpp" />
+		<Unit filename="../../../uv/Signal.cpp" />
+		<Unit filename="../../../uv/SocketAddr.cpp" />
+		<Unit filename="../../../uv/TcpAccepter.cpp" />
+		<Unit filename="../../../uv/TcpClient.cpp" />
+		<Unit filename="../../../uv/TcpConnection.cpp" />
+		<Unit filename="../../../uv/TcpServer.cpp" />
+		<Unit filename="../../../uv/Timer.cpp" />
+		<Unit filename="../../../uv/TimerWheel.cpp" />
+		<Unit filename="../../../uv/Udp.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
