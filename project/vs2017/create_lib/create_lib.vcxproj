@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{D7782A2D-0176-4E67-832E-02D106CAD71D}</ProjectGuid>
+    <RootNamespace>createlib</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>uv_cpp</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>uv_cpp</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>../../../libuv1.30.0/include;../../../;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>../../../libuv1.30.0/lib/win_sdk10.0.10240/Release;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libuv.lib;ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>../../../libuv1.30.0/include;../../../;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINSOCK_DEPRECATED_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>../../../libuv1.30.0/lib/win_sdk10.0.10240/Release;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libuv.lib;ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\uv\Async.cpp" />
+    <ClCompile Include="..\..\..\uv\CycleBuffer.cpp" />
+    <ClCompile Include="..\..\..\uv\EventLoop.cpp" />
+    <ClCompile Include="..\..\..\uv\GlobalConfig.cpp" />
+    <ClCompile Include="..\..\..\uv\Idle.cpp" />
+    <ClCompile Include="..\..\..\uv\ListBuffer.cpp" />
+    <ClCompile Include="..\..\..\uv\LogWriter.cpp" />
+    <ClCompile Include="..\..\..\uv\Packet.cpp" />
+    <ClCompile Include="..\..\..\uv\Signal.cpp" />
+    <ClCompile Include="..\..\..\uv\SocketAddr.cpp" />
+    <ClCompile Include="..\..\..\uv\TcpAccepter.cpp" />
+    <ClCompile Include="..\..\..\uv\TcpClient.cpp" />
+    <ClCompile Include="..\..\..\uv\TcpConnection.cpp" />
+    <ClCompile Include="..\..\..\uv\TcpServer.cpp" />
+    <ClCompile Include="..\..\..\uv\Timer.cpp" />
+    <ClCompile Include="..\..\..\uv\TimerWheel.cpp" />
+    <ClCompile Include="..\..\..\uv\Udp.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
