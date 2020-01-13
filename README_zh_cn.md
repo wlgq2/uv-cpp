@@ -18,6 +18,11 @@
 * `Packet`与`PacketBuffer`：包与缓存，发送/接受包，用于从TCP字节流解析协议包。由ListBuffer和CycleBuffer两种实现(前者空间友好，后者时间友好)。提供默认Packet消息协议，也可实现自定义任意消息协议(参考[uvnsq][1]实现NSQ消息协议)。
 * Log日志输出接口，可绑定至自定义Log库。
 ** **
+## 编译
+* VS2017 (windows)
+* Codeblocks (linux)
+* CMake (linux)
+** **
 ## 简单性能测试
 单线程1k字节ping-pong。
 <br>环境：Intel Core i5 6402 + ubuntu14.04.5 + gcc5.5.0 + libuv1.22.0 + O2优化</br>
