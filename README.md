@@ -6,7 +6,7 @@
 
 <br>Language Translations:</br>
 * [Englishi](README.md)
-* [简体中文](README_zh_cn.md)
+* [简体中文](README_cn.md)
 ** **
 ## Dependencies
  * [libuv][2]
