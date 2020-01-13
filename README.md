@@ -18,6 +18,11 @@
 * `Packet`and`PacketBuffer`：Send and receive packet of Tcp data stream.
 * Log interface.
 ** **
+## Build Instructions
+* VS2017 (windows)
+* Codeblocks (linux)
+* CMake (linux)
+** **
 ## Simple test
 one thread 1k bytes ping-pong。
 <br>environment：Intel Core i5 6402 + ubuntu14.04.5 + gcc5.5.0 + libuv1.22.0 + O2优化</br>
