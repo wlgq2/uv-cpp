@@ -8,6 +8,8 @@
 * [Englishi](README.md)
 * [简体中文](README_zh_cn.md)
 ** **
+## Dependencies
+ * [libuv][2]
 ## Features
 * C++11 functional/bind style callback instead of C-style function pointer.
 * `TCP` and `UDP` wrapper.
@@ -78,3 +80,4 @@ int main(int argc, char** args)
 ```
 
 [1]: http://docs.libuv.org/en/v1.x/async.html
+[2]: https://github.com/libuv/libuv
