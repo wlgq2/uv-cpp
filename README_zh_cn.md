@@ -6,6 +6,8 @@
 
 
 <br>对libuv的C++11风格的跨平台封装库，用于线上项目。跑过压测，很稳定，正确使用接口情况下，未发现core dump或内存泄漏。</br>
+## 依赖项
+ * [libuv][3]
 ## 特性
 ** **
 * C++11风格回调函数：非C语言函数回调，支持非静态类成员函数及lambda。
@@ -82,3 +84,4 @@ int main(int argc, char** args)
 
 [1]: https://github.com/wlgq2/uvnsq
 [2]: http://docs.libuv.org/en/v1.x/async.html
+[3]: https://github.com/libuv/libuv
