@@ -47,7 +47,7 @@ public:
     //写字节时必须距离读字节一个字节，否则无法区分缓存满/空。
     int append(const char* data, uint64_t size) override;
     int readBufferN(std::string& data, uint64_t N) override;
-    int clearBufferN(uint64_t N);
+    int clearBufferN(uint64_t N) override;
     int clear() override;
     uint64_t readSize()  override;
 
