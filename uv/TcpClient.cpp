@@ -27,6 +27,7 @@ TcpClient::TcpClient(EventLoop* loop, bool tcpNoDelay)
     onMessageCallback_(nullptr),
     connection_(nullptr)
 {
+    connect_->data = static_cast<void*>(this);
     update();
 }
 
@@ -51,7 +52,7 @@ void TcpClient::connect(SocketAddr& addr)
     ipv = addr.Ipv();
     ::uv_tcp_connect(connect_, socket_.get(), addr.Addr(), [](uv_connect_t* req, int status)
     {
-        auto handle = static_cast<TcpClient*>(((uv_tcp_t *)(req->handle))->data);
+        auto handle = static_cast<TcpClient*>((req->data));
         if (0 != status)
         {
             uv::LogWriter::Instance()->error( "connect fail.");
@@ -83,6 +84,7 @@ void TcpClient::onConnect(bool successed)
         }
         if (::uv_is_closing((uv_handle_t*)socket_.get()) == 0)
         {
+            socket_->data = static_cast<void*>(this);
             ::uv_close((uv_handle_t*)socket_.get(),
                 [](uv_handle_t* handle)
             {
@@ -189,7 +191,6 @@ void TcpClient::update()
     ::uv_tcp_init(loop_->handle(), socket_.get());
     if (tcpNoDelay_)
         ::uv_tcp_nodelay(socket_.get(), 1 );
-    socket_->data = static_cast<void*>(this);
 }
 
 void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus satus)
@@ -200,8 +201,8 @@ void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus satus)
 
 void uv::TcpClient::onClose(std::string& name)
 {
-    //connection_ = nullptr;
     update();
+    //connection_ = nullptr;
     uv::LogWriter::Instance()->info("Close tcp client connection complete.");
     runConnectCallback(TcpClient::OnConnnectClose);
 }
