@@ -28,7 +28,6 @@ TcpClient::TcpClient(EventLoop* loop, bool tcpNoDelay)
     connection_(nullptr)
 {
     connect_->data = static_cast<void*>(this);
-    update();
 }
 
 TcpClient::~TcpClient()
@@ -49,7 +48,8 @@ void uv::TcpClient::setTcpNoDelay(bool isNoDelay)
 
 void TcpClient::connect(SocketAddr& addr)
 {
-    ipv = addr.Ipv();
+    update();
+    ipv = addr.Ipv();    
     ::uv_tcp_connect(connect_, socket_.get(), addr.Addr(), [](uv_connect_t* req, int status)
     {
         auto handle = static_cast<TcpClient*>((req->data));
@@ -129,7 +129,6 @@ void uv::TcpClient::close(std::function<void(std::string&)> callback)
 
 void uv::TcpClient::afterConnectFail()
 {
-    update();
     runConnectCallback(TcpClient::OnConnnectFail);
 }
 
@@ -201,7 +200,6 @@ void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus satus)
 
 void uv::TcpClient::onClose(std::string& name)
 {
-    update();
     //connection_ = nullptr;
     uv::LogWriter::Instance()->info("Close tcp client connection complete.");
     runConnectCallback(TcpClient::OnConnnectClose);
