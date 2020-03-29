@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{58896849-C2B4-4F9B-BD69-25C9C0337E45}</ProjectGuid>
-    <RootNamespace>libuvcpp11</RootNamespace>
+    <RootNamespace>pingpong</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
     <ProjectName>pingpong</ProjectName>
   </PropertyGroup>

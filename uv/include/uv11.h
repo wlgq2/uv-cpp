@@ -11,7 +11,7 @@
 #ifndef UV_UV11_H
 #define UV_UV11_H
 
-#define    UV_CPP_VERSION     "1.3.6"
+#define    UV_CPP_VERSION     "1.3.7"
 
 #include   "Async.h"
 #include   "Signal.h"
@@ -22,5 +22,6 @@
 #include   "Udp.h"
 #include   "Idle.h"
 #include   "GlobalConfig.h"
+#include   "DnsGet.h"
 
 #endif

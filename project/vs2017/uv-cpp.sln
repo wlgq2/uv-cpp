@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "echo_server", "echo_server\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "create_lib", "create_lib\create_lib.vcxproj", "{D7782A2D-0176-4E67-832E-02D106CAD71D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DNS", "DNS\DNS.vcxproj", "{C5886B31-B5AC-4A2D-AD53-2CB464C65C4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,10 @@ Global
 		{D7782A2D-0176-4E67-832E-02D106CAD71D}.Debug|x64.Build.0 = Debug|x64
 		{D7782A2D-0176-4E67-832E-02D106CAD71D}.Release|x64.ActiveCfg = Release|x64
 		{D7782A2D-0176-4E67-832E-02D106CAD71D}.Release|x64.Build.0 = Release|x64
+		{C5886B31-B5AC-4A2D-AD53-2CB464C65C4A}.Debug|x64.ActiveCfg = Debug|x64
+		{C5886B31-B5AC-4A2D-AD53-2CB464C65C4A}.Debug|x64.Build.0 = Debug|x64
+		{C5886B31-B5AC-4A2D-AD53-2CB464C65C4A}.Release|x64.ActiveCfg = Release|x64
+		{C5886B31-B5AC-4A2D-AD53-2CB464C65C4A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
