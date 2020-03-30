@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="uv">
-      <UniqueIdentifier>{87b5cad2-d343-401c-ab2a-ed1dc659164f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="example">
-      <UniqueIdentifier>{561f4a1d-7f13-4490-9634-a8b5b7f4c902}</UniqueIdentifier>
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="uv">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="uv\http">
-      <UniqueIdentifier>{4ad0eb09-2983-4539-8b74-63f7f37606f0}</UniqueIdentifier>
+      <UniqueIdentifier>{1c4444e8-ffc7-4247-b643-4132bd3af550}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -16,6 +18,9 @@
       <Filter>uv</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\uv\CycleBuffer.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\DnsGet.cpp">
       <Filter>uv</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\uv\EventLoop.cpp">
@@ -63,13 +68,16 @@
     <ClCompile Include="..\..\..\uv\Udp.cpp">
       <Filter>uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\examples\dns\main.cpp">
+    <ClCompile Include="..\..\..\uv\http\Request.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\http_client\main.cpp">
       <Filter>example</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\uv\DnsGet.cpp">
-      <Filter>uv</Filter>
+    <ClCompile Include="..\..\..\uv\http\HttpClient.cpp">
+      <Filter>uv\http</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\uv\http\Request.cpp">
+    <ClCompile Include="..\..\..\uv\http\Response.cpp">
       <Filter>uv\http</Filter>
     </ClCompile>
   </ItemGroup>
