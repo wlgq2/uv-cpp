@@ -78,10 +78,10 @@ void HttpClient::onConnectStatus(TcpClient::ConnectStatus status)
     }
 }
 
-void uv::http::HttpClient::onMessage(const char* data, ssize_t size)
+void HttpClient::onMessage(const char* data, ssize_t size)
 {
-    int bufsize = buffer_.size();
-    int datasize = buffer_.size() + size;
+    unsigned bufsize = (unsigned)buffer_.size();
+    unsigned datasize = (unsigned)buffer_.size() + (unsigned)size;
     buffer_.resize(datasize);
     char* out = (char*)buffer_.c_str() + bufsize;
     std::copy(data, data + size, out);

@@ -12,7 +12,7 @@
 #define UV_HTTP_RESPONSE_H
 
 #include <map>
-#include "HttpVersion.h"
+#include "HttpCommon.h"
 
 namespace uv
 {
@@ -42,6 +42,9 @@ public:
     HttpVersion getVersion();
     StatusCode getStatusCode();
     void appendHead(std::string& key, std::string& value);
+    void appendHead(std::string&& key, std::string&& value);
+    std::string getHead(std::string& key);
+    void swapBody(std::string& body);
     std::string& getBody();
 
     int pack(std::string& data);

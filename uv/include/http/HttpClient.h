@@ -45,6 +45,7 @@ private:
     OnRespCallback callback_;
     Request req_;
     std::string buffer_;
+
 private:
     void onResp(int rst, Response* resp);
     void onConnectStatus(TcpClient::ConnectStatus status);

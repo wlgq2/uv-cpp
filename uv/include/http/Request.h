@@ -12,7 +12,7 @@
 #define UV_HTTP_REQUEST_H
 
 #include <map>
-#include "HttpVersion.h"
+#include "HttpCommon.h"
 
 namespace uv
 {
@@ -29,6 +29,10 @@ public:
         Head, 
         Put, 
         Delete,
+        Connect,
+        Options,
+        Trace,
+        Patch,
         Invalid,
     };
 public:
@@ -37,6 +41,8 @@ public:
 
     std::string& getBody();
     void appendParam(std::string& key, std::string& value);
+    void appendParam(std::string&& key, std::string&& value);
+    std::string getParam(std::string& key);
 
     void setVersion(HttpVersion version);
     void setMethon(Methon methon);
@@ -47,6 +53,8 @@ public:
 
     int pack(std::string& data);
     int unpack(std::string& data);
+
+    static std::string MethonToStr(Methon methon);
 private:
     Methon methon_; 
     std::string path_;

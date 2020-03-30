@@ -49,6 +49,26 @@ void Response::appendHead(std::string& key, std::string& value)
     heads_[key] = value;
 }
 
+void Response::appendHead(std::string&& key, std::string&& value)
+{
+    heads_[key] = value;
+}
+
+std::string Response::getHead(std::string& key)
+{
+    auto it = heads_.find(key);
+    if (it == heads_.end())
+    {
+        return "";
+    }
+    return it->second;
+}
+
+void Response::swapBody(std::string& body)
+{
+    body_.swap(body);
+}
+
 std::string& Response::getBody()
 {
     return body_;

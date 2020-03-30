@@ -8,8 +8,10 @@
    Description: https://github.com/wlgq2/uv-cpp
 */
 
-#ifndef UV_HTTP_VERSION_H
-#define UV_HTTP_VERSION_H
+#ifndef UV_HTTP_COMMON_H
+#define UV_HTTP_COMMON_H
+
+#include <string>
 
 namespace uv
 {
@@ -23,6 +25,9 @@ enum HttpVersion
     Http1_1,
 };
 
+const char Crlf[2] = {'\r','\n'};
+
+extern std::string HttpVersionToStr(HttpVersion version);
 }
 }
 #endif
