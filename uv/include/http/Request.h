@@ -61,8 +61,10 @@ private:
     Methon methon_; 
     std::string path_;
     HttpVersion version_;
-    std::map<std::string, std::string> params_;
+    std::map<std::string, std::string> heads_;
     std::string body_;
+
+
 };
 
 }

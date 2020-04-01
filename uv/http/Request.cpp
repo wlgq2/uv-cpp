@@ -41,18 +41,18 @@ std::string& Request::getBody()
 
 void Request::appendParam(std::string& key, std::string& value)
 {
-    params_[key] = value;
+    heads_[key] = value;
 }
 
 void Request::appendParam(std::string&& key, std::string&& value)
 {
-    params_[key] = value;
+    heads_[key] = value;
 }
 
 std::string Request::getParam(std::string& key)
 {
-    auto it = params_.find(key);
-    if (it == params_.end())
+    auto it = heads_.find(key);
+    if (it == heads_.end())
     {
         return "";
     }
@@ -103,7 +103,7 @@ int Request::pack(std::string& data)
     data += " ";
     data += HttpVersionToStr(version_);
     data += Crlf;
-    for (auto it = params_.begin();it != params_.end();it++)
+    for (auto it = heads_.begin();it != heads_.end();it++)
     {
         data += it->first;
         data += ": ";
@@ -117,6 +117,13 @@ int Request::pack(std::string& data)
 
 int Request::unpack(std::string& data)
 {
+    auto bodyPos = data.find("\r\t\r\t");
+    if (bodyPos == data.npos)
+    {
+        //解析失败，未找到消息正文
+        return -1;
+    }
+
     return 0;
 }
 

@@ -43,10 +43,11 @@ public:
     StatusCode getStatusCode();
     void appendHead(std::string& key, std::string& value);
     void appendHead(std::string&& key, std::string&& value);
+    int appendHead(std::string& str);
     std::string getHead(std::string& key);
-    void swapBody(std::string& body);
-    void swapBody(std::string&& body);
-    std::string& getBody();
+    void swapContent(std::string& body);
+    void swapContent(std::string&& body);
+    std::string& getContent();
 
     int pack(std::string& data);
     int unpack(std::string& data);
@@ -56,7 +57,9 @@ private:
     HttpVersion version_;
     StatusCode statusCode_;
     std::map<std::string, std::string> heads_;
-    std::string body_;
+    std::string content_;
+
+    int parseStatus(std::string& str);
 };
 
 }

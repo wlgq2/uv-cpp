@@ -11,7 +11,7 @@ void onHttpResp(int error, uv::http::Response* resp)
     }
     if (error != uv::http::HttpClient::ParseFail)
     {
-        //连接服务失败
+        //解析response出错
         uv::LogWriter::Instance()->error("parse http response fail.");
         return;
     }
