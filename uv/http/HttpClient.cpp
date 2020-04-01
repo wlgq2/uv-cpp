@@ -17,7 +17,7 @@ HttpClient::HttpClient(EventLoop* loop)
     :client_(new TcpClient(loop)),
     callback_(nullptr)
 {
-    buffer_.resize(2048);
+    buffer_.resize(20480);
 }
 
 HttpClient::~HttpClient()
@@ -81,7 +81,7 @@ void HttpClient::onConnectStatus(TcpClient::ConnectStatus status)
 void HttpClient::onMessage(const char* data, ssize_t size)
 {
     unsigned bufsize = (unsigned)buffer_.size();
-    unsigned datasize = (unsigned)buffer_.size() + (unsigned)size;
+    unsigned datasize = bufsize + (unsigned)size;
     buffer_.resize(datasize);
     char* out = (char*)buffer_.c_str() + bufsize;
     std::copy(data, data + size, out);

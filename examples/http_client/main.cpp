@@ -1,21 +1,26 @@
 ﻿#include <iostream>
+#include <fstream>
 #include <uv/include/uv11.h>
 
 void onHttpResp(int error, uv::http::Response* resp)
 {
-    if (error != uv::http::HttpClient::ConnectFail)
+    if (error == uv::http::HttpClient::ConnectFail)
     {
         //连接服务失败
         uv::LogWriter::Instance()->error("connect server fail.");
         return;
     }
-    if (error != uv::http::HttpClient::ParseFail)
+    if (error == uv::http::HttpClient::ParseFail)
     {
         //解析response出错
         uv::LogWriter::Instance()->error("parse http response fail.");
         return;
     }
-
+    std::ofstream outfile;
+    outfile.open("test.html", std::ios_base::out);
+    outfile << resp->getContent();
+    outfile.close();
+    std::cout << "get test.htmt success" << std::endl;
 }
 
 
