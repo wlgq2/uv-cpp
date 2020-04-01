@@ -39,6 +39,8 @@ public:
     Request();
     Request(HttpVersion version, Methon methon);
 
+    void swapBody(std::string& str);
+    void swapBody(std::string&& str);
     std::string& getBody();
     void appendParam(std::string& key, std::string& value);
     void appendParam(std::string&& key, std::string&& value);

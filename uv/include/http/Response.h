@@ -45,11 +45,12 @@ public:
     void appendHead(std::string&& key, std::string&& value);
     std::string getHead(std::string& key);
     void swapBody(std::string& body);
+    void swapBody(std::string&& body);
     std::string& getBody();
 
     int pack(std::string& data);
     int unpack(std::string& data);
-
+    int unpackAndCompleted(std::string& data);
 
 private:
     HttpVersion version_;

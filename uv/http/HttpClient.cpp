@@ -85,4 +85,10 @@ void HttpClient::onMessage(const char* data, ssize_t size)
     buffer_.resize(datasize);
     char* out = (char*)buffer_.c_str() + bufsize;
     std::copy(data, data + size, out);
+
+    Response resp;
+    if (0 == resp.unpackAndCompleted(buffer_))
+    {
+        onResp(Success, &resp);
+    }
 }

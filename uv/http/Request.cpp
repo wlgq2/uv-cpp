@@ -24,6 +24,16 @@ Request::Request(HttpVersion version, Methon methon)
 {
 }
 
+void Request::swapBody(std::string& str)
+{
+    body_.swap(str);
+}
+
+void Request::swapBody(std::string&& str)
+{
+    swapBody(str);
+}
+
 std::string& Request::getBody()
 {
     return body_;

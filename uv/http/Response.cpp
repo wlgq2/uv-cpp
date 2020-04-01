@@ -69,6 +69,11 @@ void Response::swapBody(std::string& body)
     body_.swap(body);
 }
 
+void Response::swapBody(std::string&& body)
+{
+    body.swap(body);
+}
+
 std::string& Response::getBody()
 {
     return body_;
@@ -81,5 +86,16 @@ int Response::pack(std::string& data)
 
 int Response::unpack(std::string& data)
 {
+    
     return 0;
+}
+
+int Response::unpackAndCompleted(std::string& data)
+{
+    int rst = unpack(data);
+    if (rst == 0)
+    {
+        
+    }
+    return -1;
 }
