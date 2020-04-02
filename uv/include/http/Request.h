@@ -42,12 +42,13 @@ public:
     void swapBody(std::string& str);
     void swapBody(std::string&& str);
     std::string& getBody();
-    void appendParam(std::string& key, std::string& value);
-    void appendParam(std::string&& key, std::string&& value);
-    std::string getParam(std::string& key);
+    void appendHead(std::string& key, std::string& value);
+    void appendHead(std::string&& key, std::string&& value);
+    std::string getHead(std::string& key);
 
     void setVersion(HttpVersion version);
     void setMethon(Methon methon);
+    void setPath(std::string&& path);
     void setPath(std::string& path);
     std::string& getPath();
     HttpVersion getVersion();

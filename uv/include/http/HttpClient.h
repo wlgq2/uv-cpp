@@ -50,6 +50,7 @@ private:
     void onResp(int rst, Response* resp);
     void onConnectStatus(TcpClient::ConnectStatus status);
     void onMessage(const char* data, ssize_t size);
+    bool isConnected;
 };
 
 }

@@ -15,18 +15,26 @@ using namespace uv::http;
 
 HttpClient::HttpClient(EventLoop* loop)
     :client_(new TcpClient(loop)),
-    callback_(nullptr)
+    callback_(nullptr),
+    isConnected(false)
 {
     buffer_.resize(20480);
 }
 
 HttpClient::~HttpClient()
 {
-    auto client = client_;
-    client->close([client](std::string& name)
+    if (isConnected)
     {
-        delete client;
-    });
+        auto client = client_;
+        client->close([client](std::string& name)
+        {
+            delete client;
+        });
+    }
+    else
+    {
+        delete client_;
+    }
 }
 
 
@@ -56,16 +64,19 @@ void HttpClient::onConnectStatus(TcpClient::ConnectStatus status)
 {
     if (status == uv::TcpClient::ConnectStatus::OnConnectSuccess)
     {
+        isConnected = true;
         std::string str;
         req_.pack(str);
         client_->write(str.c_str(), (unsigned int)str.size());
     }
     else if (status == uv::TcpClient::ConnectStatus::OnConnnectFail)
     {
+        isConnected = false;
         onResp(ConnectFail, nullptr);
     }
     else
     {
+        isConnected = false;
         Response resp;
         if (0 == resp.unpack(buffer_))
         {
@@ -90,5 +101,6 @@ void HttpClient::onMessage(const char* data, ssize_t size)
     if (0 == resp.unpackAndCompleted(buffer_))
     {
         onResp(Success, &resp);
+        client_->close(nullptr);
     }
 }

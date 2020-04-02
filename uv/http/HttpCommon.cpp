@@ -68,7 +68,8 @@ int uv::http::SplitHttpOfCRLF(std::string& str, std::vector<std::string>& out, i
 
 int uv::http::SplitStrOfSpace(std::string& str, std::vector<std::string>& out, int defaultSize)
 {
-    for (size_t pos = 0; pos != str.size();)
+    size_t pos = -1;
+    for (auto i = 0;i < 2;i++)
     {
         auto last = pos;
         pos = str.find(" ", pos + 1);
@@ -76,15 +77,16 @@ int uv::http::SplitStrOfSpace(std::string& str, std::vector<std::string>& out, i
         {
             continue;
         }
-        if (last != 0)
-        {
-            last += 1;
-        }
         if (pos == str.npos)
         {
-            pos = str.size();
+            return -1;
         }
-        out.push_back(std::string(str, last, pos - last));
+        out.push_back(std::string(str, last + 1, pos - last));
     }
+    if (pos == str.size()-1)
+    {
+        return -1;
+    }
+    out.push_back(std::string(str, pos + 1, str.size()));
     return 0;
 }

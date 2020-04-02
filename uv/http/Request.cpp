@@ -39,17 +39,17 @@ std::string& Request::getBody()
     return body_;
 }
 
-void Request::appendParam(std::string& key, std::string& value)
+void Request::appendHead(std::string& key, std::string& value)
 {
     heads_[key] = value;
 }
 
-void Request::appendParam(std::string&& key, std::string&& value)
+void Request::appendHead(std::string&& key, std::string&& value)
 {
     heads_[key] = value;
 }
 
-std::string Request::getParam(std::string& key)
+std::string Request::getHead(std::string& key)
 {
     auto it = heads_.find(key);
     if (it == heads_.end())
@@ -67,6 +67,11 @@ void Request::setVersion(HttpVersion version)
 void Request::setMethon(Methon methon)
 {
     methon_ = methon;
+}
+
+void Request::setPath(std::string&& path)
+{
+    setPath(path);
 }
 
 void Request::setPath(std::string& path)

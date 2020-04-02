@@ -20,7 +20,7 @@ void onHttpResp(int error, uv::http::Response* resp)
     outfile.open("test.html", std::ios_base::out);
     outfile << resp->getContent();
     outfile.close();
-    std::cout << "get test.htmt success" << std::endl;
+    std::cout << "write test.htmt success" << std::endl;
 }
 
 
@@ -38,9 +38,10 @@ void onGetIp(uv::EventLoop* loop ,int status, std::string& ip)
     client->setOnResp(std::bind(&onHttpResp, std::placeholders::_1,std::placeholders::_2));
 
     uv::http::Request req;
-    req.appendParam("Host", "www.baidu.com");
-    req.appendParam("Accept - Language", "en");
-
+    //req.setPath("/wlgq2");
+    req.appendHead("Host", "www.baidu.com");
+    req.appendHead("Accept - Language", "en");
+    req.appendHead("User - Agent", "Mozilla / 5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko / 20100101 Firefox / 73.0");
     std::string data;
     req.pack(data);
 
