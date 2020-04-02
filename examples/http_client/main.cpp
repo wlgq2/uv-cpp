@@ -38,14 +38,14 @@ void onGetIp(uv::EventLoop* loop ,int status, std::string& ip)
     client->setOnResp(std::bind(&onHttpResp, std::placeholders::_1,std::placeholders::_2));
 
     uv::http::Request req;
-    //req.setPath("/wlgq2");
+    req.setPath("/s");
+    //url参数
+    req.appendUrlParam("ie", "utf-8");
+    req.appendUrlParam("wd", "uv-cpp");
+    //消息头列表
     req.appendHead("Host", "www.baidu.com");
     req.appendHead("Accept - Language", "en");
     req.appendHead("User - Agent", "Mozilla / 5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko / 20100101 Firefox / 73.0");
-    std::string data;
-    req.pack(data);
-
-    std::cout << data << std::endl;
 
     //请求http服务
     client->Req(addr,req);

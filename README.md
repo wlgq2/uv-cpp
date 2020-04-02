@@ -13,6 +13,7 @@
 ## Features
 * C++11 functional/bind style callback instead of C-style function pointer.
 * `TCP` and `UDP` wrapper.
+* `DNS`and`Http`：DNS query and http support.
 * `Timer`and`TimerWheel`：Heartbeat timeout judgment with time complexity of O(1).
 * `Async`：libuv async wrapper，but optimized the [problem][1] of calling multiple times  but callback  will only be called once. 
 * `Packet`and`PacketBuffer`：Send and receive packet of Tcp data stream.

@@ -59,6 +59,36 @@ std::string Request::getHead(std::string& key)
     return it->second;
 }
 
+std::string Request::getHead(std::string&& key)
+{
+    return getHead(key);
+}
+
+void Request::appendUrlParam(std::string& key, std::string& value)
+{
+    urlParms_[key] = value;
+}
+
+void Request::appendUrlParam(std::string&& key, std::string&& value)
+{
+    urlParms_[key] = value;
+}
+
+std::string Request::getUrlParam(std::string& key)
+{
+    auto it = urlParms_.find(key);
+    if (it != urlParms_.end())
+    {
+        return it->second;
+    }
+    return "";
+}
+
+std::string Request::getUrlParam(std::string&& key)
+{
+    return getUrlParam(key);
+}
+
 void Request::setVersion(HttpVersion version)
 {
     version_ = version;
@@ -100,11 +130,7 @@ int Request::pack(std::string& data)
     data.clear();
     data += MethonToStr(methon_);
     data += " ";
-    if (path_.empty() || path_[0] == '/')
-    {
-        data += "/";
-    }
-    data += path_;
+    packPathParam(data);
     data += " ";
     data += HttpVersionToStr(version_);
     data += Crlf;
@@ -157,4 +183,26 @@ std::string Request::MethonToStr(Methon methon)
     default:
         return "";
     }
+}
+
+void uv::http::Request::packPathParam(std::string& path)
+{
+    if (path_.empty() || path_[0] != '/')
+    {
+        path += "/";
+    }
+    path += path_;
+    if (urlParms_.size() > 0)
+    {
+        path += "?";
+        for (auto& ele : urlParms_)
+        {
+            path += ele.first;
+            path += "=";
+            path += ele.second;
+            path += "&";
+        }
+        path.pop_back();
+    }
+
 }

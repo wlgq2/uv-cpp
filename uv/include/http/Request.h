@@ -45,6 +45,11 @@ public:
     void appendHead(std::string& key, std::string& value);
     void appendHead(std::string&& key, std::string&& value);
     std::string getHead(std::string& key);
+    std::string getHead(std::string&& key);
+    void appendUrlParam(std::string& key, std::string& value);
+    void appendUrlParam(std::string&& key, std::string&& value);
+    std::string getUrlParam(std::string& key);
+    std::string getUrlParam(std::string&& key);
 
     void setVersion(HttpVersion version);
     void setMethon(Methon methon);
@@ -61,11 +66,12 @@ public:
 private:
     Methon methon_; 
     std::string path_;
+    std::map <std::string, std::string> urlParms_;
     HttpVersion version_;
     std::map<std::string, std::string> heads_;
     std::string body_;
 
-
+    void packPathParam(std::string& path);
 };
 
 }
