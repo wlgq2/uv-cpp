@@ -32,6 +32,7 @@ extern std::string HttpVersionToStr(HttpVersion version);
 extern HttpVersion GetHttpVersion(std::string& str);
 extern int SplitHttpOfCRLF(std::string& str, std::vector<std::string>& out, int defaultSize = 64);
 extern int SplitStrOfSpace(std::string& str, std::vector<std::string>& out, int defaultSize = 4);
+extern uint64_t GetCommomStringLength(std::string& str1, std::string& str2);
 }
 }
 #endif
