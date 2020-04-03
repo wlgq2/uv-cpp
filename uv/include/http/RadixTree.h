@@ -25,13 +25,15 @@ public:
     void setNode(std::string& key, Type value);
     void setNode(std::string&& key, Type value);
 
-    //Type getNode(std::string& key);
     RadixTreeNodePtr<Type> begin();
+    bool getNode(std::string& key, Type& value);
+    bool getNode(std::string&& key, Type& value);
 
 private:
     RadixTreeNodePtr<Type> root_;
 
     void setNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value);
+    bool getNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value);
 };
 
 template<typename Type>
@@ -70,6 +72,18 @@ template<typename Type>
 inline RadixTreeNodePtr<Type> RadixTree<Type>::begin()
 {
     return root_;
+}
+
+template<typename Type>
+inline bool RadixTree<Type>::getNode(std::string& key, Type& value)
+{
+    return getNode(root_, key, value);
+}
+
+template<typename Type>
+inline bool RadixTree<Type>::getNode(std::string&& key, Type& value)
+{
+    return getNode(key, value);
 }
 
 
@@ -141,5 +155,56 @@ inline void RadixTree<Type>::setNode(RadixTreeNodePtr<Type>& node, std::string& 
         }
     }
 }   
+
+template<typename Type>
+inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value)
+{
+    auto commonLength = GetCommomStringLength(node->key, key);
+    //相同长度为0，遍历next节点。
+    if (commonLength == 0)
+    {
+        //next节点为空，则未找到该Key
+        if (nullptr == node->next)
+        {
+            return false ;
+        }
+        //否则遍历next节点
+        return getNode(node->next, key, value);
+    }
+    //相同长度小于节点key长度，则未找到该key
+    else if (commonLength < node->key.size())
+    {
+        return false;
+    }
+    //相同长度等于节点key长度，则遍历child节点
+    else
+    {
+        //key和node->key相等，则直接返回value。
+        if (commonLength == key.size())
+        {
+            if (!node->isEmpty)
+            {
+                value = node->value;
+                return true;
+            }
+            //空节点
+            return false;
+        }
+        else //否则，则拆分key，遍历子节点
+        {
+            //子节点为空，未找到该key
+            if (nullptr == node->child)
+            {
+                return false;
+            }
+            else //否则遍历子节点
+            {
+                std::string key1(key, commonLength, key.size() - commonLength);
+                return getNode(node->child, key1, value);
+            }
+        }
+    }
+}
+
 }
 }
