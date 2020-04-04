@@ -1,4 +1,6 @@
 ﻿#include <iostream>
+#include <random>
+#include <map>
 #include <uv/include/http/RadixTree.h>
 
 
@@ -6,6 +8,76 @@ using namespace uv;
 using namespace http;
 using namespace std;
 
+template<typename Type>
+struct KV
+{
+    std::string key;
+    Type  value;
+};
+
+
+//随机插入若干节点，并测试
+template<typename Type>
+bool TestRand(RadixTree<Type>& tree,uint64_t cnt)
+{
+    //生成Key值不相同若干个kv。
+    std::vector<struct KV<Type>> kvs;
+    for (uint64_t i = 0;i < cnt;i++)
+    {
+        struct KV<Type> kv = { std::to_string(i),i };
+        kvs.push_back(kv);
+    }
+   
+    //随机顺序取出元素插入radix tree.
+    std::map<std::string, Type> kvMap;
+    std::default_random_engine random;
+    std::uniform_int_distribution<int> dis(0, cnt);
+    while (!kvs.empty())
+    {
+        int index = dis(random) % kvs.size();
+        auto kv = kvs[index];
+        tree.setNode(kv.key, kv.value);
+        kvs[index] = kvs.back();
+        kvs.pop_back();
+        //std::cout << "{ " << kv.key << "," << kv.value << "}"<<std::endl;
+        kvMap[kv.key] = kv.value;
+    }
+    
+    //遍历对比kvmap与radix tree值
+    for (auto& kv : kvMap)
+    {
+        Type value;
+        std::string key = kv.first;
+        if (!tree.getNode(key, value))
+        {
+            //未找到该key
+            std::cout << "not find key " << kv.first << std::endl;
+            return false;
+        }
+        if (value != kv.second)
+        {
+            //value值不正确
+            std::cout << "error key " << kv.first << " value " << kv.second << " but " << value << std::endl;
+            return false;
+        }
+        
+    }
+    return true;
+
+}
+int main(int argc, char** args)
+{
+    std::cout << "wait ..." << std::endl;
+    int cnt = 1000000;
+    RadixTree<int> tree;
+    //生成cnt个kv并随机顺序插入检测。
+    if (TestRand(tree, cnt))
+    {
+        std::cout << "test success:" << cnt << std::endl;
+    }
+}
+
+//遍历节点
 template<typename Type>
 void findAll(RadixTreeNodePtr<Type> node, std::string& key)
 {
@@ -16,7 +88,7 @@ void findAll(RadixTreeNodePtr<Type> node, std::string& key)
     auto nodeKey = key + node->key;
     if (!node->isEmpty)
     {
-        cout << nodeKey<<":"<<node->value << std::endl;
+        cout << nodeKey << ":" << node->value << std::endl;
     }
     else
     {
@@ -24,53 +96,4 @@ void findAll(RadixTreeNodePtr<Type> node, std::string& key)
     }
     findAll(node->child, nodeKey);
     findAll(node->next, key);
-}
-struct KV
-{
-    std::string key;
-    int  value;
-};
-int main(int argc, char** args)
-{
-    struct KV kvs[] =
-    {
-        {"abcdef12345", 1},
-        {"12345", 2},
-        {"abcdef", 3},
-        {"abcde123", 4},
-        //{"abcde", 5},
-        {"abc", 6},
-        {"abcde", 7},
-        {"abcdexxxx", 8},
-        {"abcdeyyy", 9},
-    };
-    RadixTree<int> tree;
-    auto size = sizeof(kvs) / sizeof(struct KV);
-    for (int i = 0;i < size;i++)
-    {
-        tree.setNode(kvs[i].key, kvs[i].value);
-    }
-
-    std::string start = "";
-    findAll(tree.begin(), start);
-    std::cout << std::endl;
-    for (int i = 0;i < size; i++)
-    {
-        int value;
-        if (tree.getNode(kvs[i].key, value))
-        {
-            if (value != kvs[i].value)
-            {
-                std::cout << "error value key :" << kvs[i].key << " value :"<<value << std::endl;
-            }
-            else
-            {
-                std::cout << kvs[i].key << " :" << value << std::endl;
-            }
-        }
-        else
-        {
-            std::cout << "can not find key :" << kvs[i].key << std::endl;
-        }
-    }
 }

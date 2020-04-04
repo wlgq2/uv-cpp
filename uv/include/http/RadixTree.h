@@ -91,7 +91,7 @@ template<typename Type>
 inline void RadixTree<Type>::setNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value)
 {
     auto commonLength = GetCommomStringLength(node->key, key);
-    //相同长度为0，遍历next节点。
+    //相同长度为0，递归next节点。
     if (commonLength == 0)
     {
         //next节点为空，则插入新节点
@@ -102,7 +102,7 @@ inline void RadixTree<Type>::setNode(RadixTreeNodePtr<Type>& node, std::string& 
             node->next = newNode;
             return;
         }
-        //否则遍历next节点
+        //否则递归next节点
         setNode(node->next, key, value);
     }
     //相同长度小于节点key长度，则拆分节点
@@ -129,7 +129,7 @@ inline void RadixTree<Type>::setNode(RadixTreeNodePtr<Type>& node, std::string& 
             childNode->next = newNode;
         }
     }
-    //相同长度等于节点key长度，则遍历child节点
+    //相同长度等于节点key长度，则递归child节点
     else
     {
         //key和node->key相等，则直接赋值；
@@ -138,17 +138,17 @@ inline void RadixTree<Type>::setNode(RadixTreeNodePtr<Type>& node, std::string& 
             node->isEmpty = false;
             node->value = value;
         }
-        else //否则，则拆分key，遍历子节点
+        else //否则，则拆分key，递归子节点
         {
             std::string key1(key, commonLength, key.size()-commonLength);
             //子节点为空，直接插入
             if (nullptr == node->child)
             {
                 auto childNode = std::make_shared<RadixTreeNode<Type>>();
-                *childNode = { false,key1,nullptr,nullptr,node->value };
+                *childNode = { false,key1,nullptr,nullptr,value };
                 node->child = childNode;
             }
-            else //否则遍历子节点
+            else //否则递归子节点
             {
                 setNode(node->child, key1, value);
             }
@@ -160,7 +160,7 @@ template<typename Type>
 inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value)
 {
     auto commonLength = GetCommomStringLength(node->key, key);
-    //相同长度为0，遍历next节点。
+    //相同长度为0，递归next节点。
     if (commonLength == 0)
     {
         //next节点为空，则未找到该Key
@@ -168,7 +168,7 @@ inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, std::string& 
         {
             return false ;
         }
-        //否则遍历next节点
+        //否则递归next节点
         return getNode(node->next, key, value);
     }
     //相同长度小于节点key长度，则未找到该key
@@ -176,7 +176,7 @@ inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, std::string& 
     {
         return false;
     }
-    //相同长度等于节点key长度，则遍历child节点
+    //相同长度等于节点key长度，则递归child节点
     else
     {
         //key和node->key相等，则直接返回value。
@@ -190,14 +190,14 @@ inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, std::string& 
             //空节点
             return false;
         }
-        else //否则，则拆分key，遍历子节点
+        else //否则，则拆分key，递归子节点
         {
             //子节点为空，未找到该key
             if (nullptr == node->child)
             {
                 return false;
             }
-            else //否则遍历子节点
+            else //否则递归子节点
             {
                 std::string key1(key, commonLength, key.size() - commonLength);
                 return getNode(node->child, key1, value);
