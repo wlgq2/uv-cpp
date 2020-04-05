@@ -7,6 +7,8 @@
 
    Description: https://github.com/wlgq2/uv-cpp
 */
+#ifndef UV_HTTP_RADIX_TREE
+#define UV_HTTP_RADIX_TREE
 
 #include "RadixTreeNode.h"
 #include "HttpCommon.h"
@@ -29,6 +31,8 @@ public:
     bool getNode(std::string& key, Type& value);
     bool getNode(std::string&& key, Type& value);
 
+    static char WildCard;
+    static char ParamCard;
 private:
     RadixTreeNodePtr<Type> root_;
 
@@ -53,7 +57,7 @@ inline void RadixTree<Type>::setNode(std::string& key, Type value)
 {
     if (nullptr == root_)
     {
-        root_ = make_shared<RadixTreeNode<Type>>();
+        root_ = std::make_shared<RadixTreeNode<Type>>();
         *root_ = { false,key,nullptr,nullptr,value };
     }
     else
@@ -86,6 +90,11 @@ inline bool RadixTree<Type>::getNode(std::string&& key, Type& value)
     return getNode(key, value);
 }
 
+template<typename Type>
+char uv::http::RadixTree<Type>::WildCard = '*';
+
+template<typename Type>
+char uv::http::RadixTree<Type>::ParamCard = ':';
 
 template<typename Type>
 inline void RadixTree<Type>::setNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value)
@@ -160,6 +169,20 @@ template<typename Type>
 inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value)
 {
     auto commonLength = GetCommomStringLength(node->key, key);
+    //通配符判定
+    if (commonLength == node->key.size() - 1)
+    {
+        if (node->key.back() == WildCard)
+        {
+            value = node->value;
+            return true;
+        }
+        if((node->key.back() == ParamCard)&&(key.size() == commonLength))
+        {
+            value = node->value;
+            return true;
+        }
+    }
     //相同长度为0，递归next节点。
     if (commonLength == 0)
     {
@@ -208,3 +231,5 @@ inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, std::string& 
 
 }
 }
+
+#endif

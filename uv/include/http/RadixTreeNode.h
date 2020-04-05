@@ -7,6 +7,10 @@
 
    Description: https://github.com/wlgq2/uv-cpp
 */
+
+#ifndef UV_HTTP_RADIX_TREE_NODE
+#define UV_HTTP_RADIX_TREE_NODE
+
 #include <string>
 #include <List>
 #include <memory>
@@ -29,3 +33,5 @@ using RadixTreeNodePtr = std::shared_ptr<RadixTreeNode<Type>>;
 
 }
 }
+
+#endif

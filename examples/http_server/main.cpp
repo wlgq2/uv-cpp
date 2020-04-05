@@ -4,5 +4,12 @@
 
 int main(int argc, char** args)
 {
-    //RadixTree
+    uv::http::RadixTree<int> tree;
+    tree.WildCard = '*';
+    tree.setNode("test*", 123);
+    tree.setNode("abc:", 233);
+    tree.setNode("123", 98);
+    int value;
+    tree.getNode("123", value);
+    tree.getNode("abc:", value);
 }
