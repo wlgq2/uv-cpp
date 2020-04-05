@@ -26,6 +26,20 @@ enum HttpVersion
     Http1_1,
 };
 
+enum Methon
+{
+    Get = 0,
+    Post,
+    Head,
+    Put,
+    Delete,
+    Connect,
+    Options,
+    Trace,
+    Patch,
+    Invalid,
+};
+
 const char Crlf[2] = {'\r','\n'};
 
 extern std::string HttpVersionToStr(HttpVersion version);

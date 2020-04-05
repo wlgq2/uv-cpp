@@ -12,7 +12,7 @@
 ** **
 * C++11风格回调函数：非C语言函数回调，支持非静态类成员函数及lambda。
 * TCP及UDP相关类封装：`TcpServer`、`TcpClient`、`TcpConnection`、`TcpAccept`、`Udp`。
-* `DNS`和`Http`：DNS查询及HTTP协议支持。
+* `DNS`和`Http`：DNS查询及HTTP协议支持，基于Radix Tree支持通配符等HTTP SEVER路由机制。
 * `Timer`及`TimerWheel`：定时器及时间复杂度为O(1)的心跳超时踢出机制。
 * `Async`：异步机制封装。相对于原生libuv async接口，优化了调用多次可能只运行一次的[问题(特性)][2]。由于libuv几乎所有api都非线程安全，建议使用writeInLoop接口代替直接write（writeInLoop会检查当前调用的线程，如果在loop线程中调用则直接write，否则把write加到loop线程中执行）。
 * libuv信号封装。   

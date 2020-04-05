@@ -14,7 +14,7 @@ using namespace uv;
 using namespace uv::http;
 
 Request::Request()
-    :Request(HttpVersion::Http1_1,Request::Methon::Get)
+    :Request(HttpVersion::Http1_1,Methon::Get)
 {
 }
 
@@ -119,7 +119,7 @@ HttpVersion Request::getVersion()
     return version_;
 }
 
-Request::Methon Request::getMethon()
+Methon Request::getMethon()
 {
     return methon_;
 }

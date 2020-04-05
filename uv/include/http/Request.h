@@ -22,20 +22,6 @@ namespace http
 class Request 
 {
 public:
-    enum Methon
-    {
-        Get, 
-        Post, 
-        Head, 
-        Put, 
-        Delete,
-        Connect,
-        Options,
-        Trace,
-        Patch,
-        Invalid,
-    };
-public:
     Request();
     Request(HttpVersion version, Methon methon);
 

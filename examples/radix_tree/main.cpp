@@ -36,7 +36,7 @@ bool TestRand(RadixTree<Type>& tree,uint64_t cnt)
     {
         int index = dis(random) % kvs.size();
         auto kv = kvs[index];
-        tree.setNode(kv.key, kv.value);
+        tree.set(kv.key, kv.value);
         kvs[index] = kvs.back();
         kvs.pop_back();
         //std::cout << "{ " << kv.key << "," << kv.value << "}"<<std::endl;
@@ -48,7 +48,7 @@ bool TestRand(RadixTree<Type>& tree,uint64_t cnt)
     {
         Type value;
         std::string key = kv.first;
-        if (!tree.getNode(key, value))
+        if (!tree.get(key, value))
         {
             //未找到该key
             std::cout << "not find key " << kv.first << std::endl;

@@ -24,12 +24,12 @@ class RadixTree
 public:
     RadixTree();
     virtual ~RadixTree();
-    void setNode(std::string& key, Type value);
-    void setNode(std::string&& key, Type value);
+    void set(std::string& key, Type value);
+    void set(std::string&& key, Type value);
 
     RadixTreeNodePtr<Type> begin();
-    bool getNode(std::string& key, Type& value);
-    bool getNode(std::string&& key, Type& value);
+    bool get(std::string& key, Type& value);
+    bool get(std::string&& key, Type& value);
 
     static char WildCard;
     static char ParamCard;
@@ -53,7 +53,7 @@ inline RadixTree<Type>::~RadixTree()
 
 
 template<typename Type>
-inline void RadixTree<Type>::setNode(std::string& key, Type value)
+inline void RadixTree<Type>::set(std::string& key, Type value)
 {
     if (nullptr == root_)
     {
@@ -67,9 +67,9 @@ inline void RadixTree<Type>::setNode(std::string& key, Type value)
 }
 
 template<typename Type>
-inline void RadixTree<Type>::setNode(std::string&& key, Type value)
+inline void RadixTree<Type>::set(std::string&& key, Type value)
 {
-    setNode(key, value);
+    set(key, value);
 }
 
 template<typename Type>
@@ -79,15 +79,15 @@ inline RadixTreeNodePtr<Type> RadixTree<Type>::begin()
 }
 
 template<typename Type>
-inline bool RadixTree<Type>::getNode(std::string& key, Type& value)
+inline bool RadixTree<Type>::get(std::string& key, Type& value)
 {
     return getNode(root_, key, value);
 }
 
 template<typename Type>
-inline bool RadixTree<Type>::getNode(std::string&& key, Type& value)
+inline bool RadixTree<Type>::get(std::string&& key, Type& value)
 {
-    return getNode(key, value);
+    return get(key, value);
 }
 
 template<typename Type>
