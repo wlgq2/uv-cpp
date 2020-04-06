@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2020-4-5
+   Last modified: 2020-4-6
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -74,9 +74,13 @@ void uv::http::HttpServer::onMesage(TcpConnectionPtr conn, const char* data, ssi
         return;
     }
     packetbuf->append(data, size);
+    std::string out;
+    packetbuf->readBufferN(out, packetbuf->readSize());
     Request req;
-    if (0 == req.pack(packetbuf.get()))
-    {
+    if (0 == req.unpack(out))
+
+        packetbuf->clear();
+        //int index = 
         //搜寻回调函数
     }
 }

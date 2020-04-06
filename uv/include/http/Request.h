@@ -14,6 +14,7 @@
 #include <map>
 #include "HttpCommon.h"
 #include "../include/GlobalConfig.h"
+
 namespace uv
 {
 namespace http
@@ -25,9 +26,9 @@ public:
     Request();
     Request(HttpVersion version, Methon methon);
 
-    void swapBody(std::string& str);
-    void swapBody(std::string&& str);
-    std::string& getBody();
+    void swapContent(std::string& str);
+    void swapContent(std::string&& str);
+    std::string& getContent();
     void appendHead(std::string& key, std::string& value);
     void appendHead(std::string&& key, std::string&& value);
     std::string getHead(std::string& key);
@@ -46,19 +47,21 @@ public:
     Methon getMethon();
 
     int pack(std::string& data);
-    int pack(uv::PacketBuffer* pack);
     int unpack(std::string& data);
 
     static std::string MethonToStr(Methon methon);
+    static Methon StrToMethon(std::string& str);
 private:
     Methon methon_; 
     std::string path_;
     std::map <std::string, std::string> urlParms_;
     HttpVersion version_;
     std::map<std::string, std::string> heads_;
-    std::string body_;
+    std::string content_;
 
     void packPathParam(std::string& path);
+    int unpackUrl(std::string& str);
+    int unpackPath(std::string& str);
 };
 
 }

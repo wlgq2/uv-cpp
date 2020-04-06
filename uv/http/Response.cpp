@@ -55,19 +55,6 @@ void Response::appendHead(std::string&& key, std::string&& value)
     heads_[key] = value;
 }
 
-int uv::http::Response::appendHead(std::string& str)
-{
-    auto pos = str.find(": ");
-    if (pos == str.npos)
-    {
-        return -1;
-    }
-    std::string key = std::string(str, 0, pos);
-    std::string value = std::string(str, pos + 2);
-    appendHead(key, value);
-    return 0;
-}
-
 std::string Response::getHead(std::string& key)
 {
     auto it = heads_.find(key);
@@ -105,24 +92,24 @@ int Response::unpack(std::string& data)
     if (pos == -1)
     {
         //解析失败
-        return -1;
+        return ParseResult::Fail;
     }
     //解析状态行
     if (parseStatus(headList[0]) != 0)
     {
-        return -1;
+        return ParseResult::Error;
     }
     //解析消息头
     for (auto i = 1; i < headList.size(); i++)
     {
-        if (appendHead(headList[i]) != 0)
+        if (AppendHead(headList[i],heads_) != 0)
         {
-            return -1;
+            return ParseResult::Error;
         }
     }
     //body数据
     content_ = std::string(data, pos + 4);
-    return 0;
+    return ParseResult::Success;
 }
 
 int Response::unpackAndCompleted(std::string& data)

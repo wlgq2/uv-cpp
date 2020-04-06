@@ -24,19 +24,19 @@ Request::Request(HttpVersion version, Methon methon)
 {
 }
 
-void Request::swapBody(std::string& str)
+void Request::swapContent(std::string& str)
 {
-    body_.swap(str);
+    content_.swap(str);
 }
 
-void Request::swapBody(std::string&& str)
+void Request::swapContent(std::string&& str)
 {
-    swapBody(str);
+    swapContent(str);
 }
 
-std::string& Request::getBody()
+std::string& Request::getContent()
 {
-    return body_;
+    return content_;
 }
 
 void Request::appendHead(std::string& key, std::string& value)
@@ -142,24 +142,35 @@ int Request::pack(std::string& data)
         data += Crlf;
     }
     data += Crlf;
-    data += body_;
+    data += content_;
     return 0;
 }
 
-int uv::http::Request::pack(uv::PacketBuffer* pack)
-{
-    return 0;
-}
 
 int Request::unpack(std::string& data)
 {
-    auto bodyPos = data.find("\r\t\r\t");
-    if (bodyPos == data.npos)
+    std::vector<std::string> headList;
+    auto pos = SplitHttpOfCRLF(data, headList);
+    if (pos == -1)
     {
-        //解析失败，未找到消息正文
-        return -1;
+        //解析失败
+        return ParseResult::Fail;
     }
-
+    //解析状态行
+    if (unpackUrl(headList[0]) != 0)
+    {
+        return ParseResult::Error;
+    }
+    //解析消息头
+    for (auto i = 1; i < headList.size(); i++)
+    {
+        if (AppendHead(headList[i],heads_) != 0)
+        {
+            return ParseResult::Error;
+        }
+    }
+    //conent数据
+    content_ = std::string(data, pos + 4);
     return 0;
 }
 
@@ -190,6 +201,47 @@ std::string Request::MethonToStr(Methon methon)
     }
 }
 
+Methon uv::http::Request::StrToMethon(std::string& str)
+{
+    if (str == "GET")
+    {
+        return Methon::Get;
+    }
+    if (str == "POST")
+    {
+        return Methon::Post;
+    }
+    if (str == "HEAD")
+    {
+        return Methon::Head;
+    }
+    if (str == "PUT")
+    {
+        return Methon::Put;
+    }
+    if (str == "DELETE")
+    {
+        return Methon::Delete;
+    }
+    if (str == "CONNECT")
+    {
+        return Methon::Connect;
+    }
+    if (str == "OPTIONS")
+    {
+        return Methon::Options;
+    }
+    if (str == "TRACE")
+    {
+        return Methon::Trace;
+    }
+    if (str == "PATCH")
+    {
+        return Methon::Patch;
+    }
+    return Methon::Invalid;
+}
+
 void uv::http::Request::packPathParam(std::string& path)
 {
     if (path_.empty() || path_[0] != '/')
@@ -210,4 +262,34 @@ void uv::http::Request::packPathParam(std::string& path)
         path.pop_back();
     }
 
+}
+
+int uv::http::Request::unpackUrl(std::string& str)
+{
+    std::vector<std::string> out;
+    auto pos = SplitStrOfSpace(str, out);
+    if (out.size() != 3)
+    {
+        //解析失败
+        return -1;
+    }
+    methon_ = StrToMethon(out[0]);
+    if (methon_ == Methon::Invalid)
+    {
+        return -1;
+    }
+    if (0 != unpackPath(out[1]))
+    {
+        return -1;
+    }
+    version_ = GetHttpVersion(out[2]);
+    
+    return 0;
+}
+
+int uv::http::Request::unpackPath(std::string& str)
+{
+    auto pos = str.find("?");
+
+    return 0;
 }

@@ -13,11 +13,18 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 namespace uv
 {
 namespace http
 {
+enum ParseResult
+{
+    Success = 0, //解析成功
+    Fail,//解析失败
+    Error,//解析出错
+};
 
 enum HttpVersion
 {
@@ -47,6 +54,7 @@ extern HttpVersion GetHttpVersion(std::string& str);
 extern int SplitHttpOfCRLF(std::string& str, std::vector<std::string>& out, int defaultSize = 64);
 extern int SplitStrOfSpace(std::string& str, std::vector<std::string>& out, int defaultSize = 4);
 extern uint64_t GetCommomStringLength(std::string& str1, std::string& str2);
+extern int AppendHead(std::string& str,std::map<std::string,std::string>& heads);
 }
 }
 #endif

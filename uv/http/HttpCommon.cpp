@@ -26,7 +26,7 @@ std::string uv::http::HttpVersionToStr(HttpVersion version)
     }
 }
 
-HttpVersion uv::http::GetHttpVersion(std::string & str)
+HttpVersion uv::http::GetHttpVersion(std::string& str)
 {
     if (str == "HTTP/1.0")
     {
@@ -102,4 +102,17 @@ uint64_t uv::http::GetCommomStringLength(std::string & str1, std::string & str2)
         }
     }
     return i;
+}
+
+int uv::http::AppendHead(std::string& str, std::map<std::string, std::string>& heads)
+{
+    auto pos = str.find(": ");
+    if (pos == str.npos)
+    {
+        return -1;
+    }
+    std::string key = std::string(str, 0, pos);
+    std::string value = std::string(str, pos + 2);
+    heads[key] = value;
+    return 0;
 }

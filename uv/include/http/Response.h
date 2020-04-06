@@ -43,7 +43,7 @@ public:
     StatusCode getStatusCode();
     void appendHead(std::string& key, std::string& value);
     void appendHead(std::string&& key, std::string&& value);
-    int appendHead(std::string& str);
+    
     std::string getHead(std::string& key);
     void swapContent(std::string& body);
     void swapContent(std::string&& body);
