@@ -20,6 +20,11 @@ using namespace std;
 using namespace uv;
 
 
+void uv::TcpServer::SetBufferMode(uv::GlobalConfig::BufferMode mode)
+{
+    uv::GlobalConfig::BufferModeStatus = mode;
+}
+
 TcpServer::TcpServer(EventLoop* loop, bool tcpNoDelay)
     :loop_(loop),
     tcpNoDelay_(tcpNoDelay),

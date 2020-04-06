@@ -29,6 +29,8 @@ using OnConnectionStatusCallback =  std::function<void (std::weak_ptr<TcpConnect
 class TcpServer
 {
 public:
+    static void SetBufferMode(uv::GlobalConfig::BufferMode mode);
+public:
     TcpServer(EventLoop* loop, bool tcpNoDelay = true);
     virtual ~TcpServer();
     int bindAndListen(SocketAddr& addr);

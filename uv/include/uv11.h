@@ -24,5 +24,6 @@
 #include   "GlobalConfig.h"
 #include   "DnsGet.h"
 #include   "http/HttpClient.h"
+#include   "http/HttpServer.h"
 
 #endif

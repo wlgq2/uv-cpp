@@ -12,6 +12,7 @@
 #define UV_GLOBAL_CONFIG_H
 
 #include <string>
+#include <functional>
 
 namespace uv
 {

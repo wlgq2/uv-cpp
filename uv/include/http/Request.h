@@ -13,7 +13,7 @@
 
 #include <map>
 #include "HttpCommon.h"
-
+#include "../include/GlobalConfig.h"
 namespace uv
 {
 namespace http
@@ -46,6 +46,7 @@ public:
     Methon getMethon();
 
     int pack(std::string& data);
+    int pack(uv::PacketBuffer* pack);
     int unpack(std::string& data);
 
     static std::string MethonToStr(Methon methon);

@@ -146,6 +146,11 @@ int Request::pack(std::string& data)
     return 0;
 }
 
+int uv::http::Request::pack(uv::PacketBuffer* pack)
+{
+    return 0;
+}
+
 int Request::unpack(std::string& data)
 {
     auto bodyPos = data.find("\r\t\r\t");

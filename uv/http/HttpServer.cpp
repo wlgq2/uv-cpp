@@ -67,4 +67,16 @@ void uv::http::HttpServer::Patch(std::string path, OnHttpReqCallback callback)
 
 void uv::http::HttpServer::onMesage(TcpConnectionPtr conn, const char* data, ssize_t size)
 {
+    auto packetbuf = conn->getPacketBuffer();
+    if (nullptr == packetbuf)
+    {
+        uv::LogWriter::Instance()->error("http server need use data buffer.");
+        return;
+    }
+    packetbuf->append(data, size);
+    Request req;
+    if (0 == req.pack(packetbuf.get()))
+    {
+        //搜寻回调函数
+    }
 }
