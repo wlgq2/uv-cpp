@@ -77,10 +77,17 @@ void uv::http::HttpServer::onMesage(TcpConnectionPtr conn, const char* data, ssi
     std::string out;
     packetbuf->readBufferN(out, packetbuf->readSize());
     Request req;
-    if (0 == req.unpack(out))
-
+    auto rst = req.unpack(out);
+    if (ParseResult::Error == rst)
+    {
+        //parse error,clear buffer.
+        packetbuf->clear();
+    }
+    else if (ParseResult::Success == rst)
+    {
         packetbuf->clear();
         //int index = 
         //搜寻回调函数
     }
+    else ; //parse fail.
 }

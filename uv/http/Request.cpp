@@ -289,7 +289,35 @@ int uv::http::Request::unpackUrl(std::string& str)
 
 int uv::http::Request::unpackPath(std::string& str)
 {
+    urlParms_.clear();
     auto pos = str.find("?");
-
+    std::string temp(str, 0, pos);
+    path_.swap(temp);
+    for (auto i = pos ;i < str.size();)
+    {
+        auto p = str.find("=", i);
+        if (p == str.npos)
+        {
+            break;
+        }
+        if (p - i < 1)
+        {
+            break;
+        }
+        std::string key(str, i + 1, p - i - 1);
+        i = p;
+        p = str.find("&", i);
+        if (p == str.npos)
+        {
+            p = str.size();
+        }
+        if (p - i < 1)
+        {
+            break;
+        }
+        std::string value(str, i + 1, p - i - 1);
+        urlParms_[key] = value;
+        i = p;
+    }
     return 0;
 }
