@@ -95,7 +95,7 @@ void TcpServer::removeConnnection(string& name)
     connnections_.erase(name);
 }
 
-shared_ptr<TcpConnection> TcpServer::getConnnection(string& name)
+shared_ptr<TcpConnection> TcpServer::getConnnection(const string& name)
 {
     auto rst = connnections_.find(name);
     if(rst == connnections_.end())
@@ -105,7 +105,7 @@ shared_ptr<TcpConnection> TcpServer::getConnnection(string& name)
     return rst->second;
 }
 
-void TcpServer::closeConnection(string& name)
+void TcpServer::closeConnection(const string& name)
 {
     auto connection = getConnnection(name);
     if (nullptr != connection)

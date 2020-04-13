@@ -30,9 +30,10 @@ void Response::setVersion(HttpVersion version)
     version_ = version;
 }
 
-void Response::setStatusCode(StatusCode code)
+void Response::setStatus(StatusCode code, std::string info)
 {
     statusCode_ = code;
+    statusInfo_ = info;
 }
 
 HttpVersion Response::getVersion()
@@ -43,6 +44,11 @@ HttpVersion Response::getVersion()
 Response::StatusCode Response::getStatusCode()
 {
     return statusCode_;
+}
+
+std::string& Response::getStatusInfo()
+{
+    return statusInfo_;
 }
 
 void Response::appendHead(std::string& key, std::string& value)
@@ -82,6 +88,23 @@ std::string& Response::getContent()
 
 int Response::pack(std::string& data)
 {
+    data.resize(100 * heads_.size() + content_.size());
+    data.clear();
+    data += HttpVersionToStr(version_);
+    data += " ";
+    data += std::to_string(statusCode_);
+    data += " ";
+    data += content_;
+    data += Crlf;
+    for (auto it = heads_.begin();it != heads_.end();it++)
+    {
+        data += it->first;
+        data += ": ";
+        data += it->second;
+        data += Crlf;
+    }
+    data += Crlf;
+    data += content_;
     return 0;
 }
 
@@ -152,6 +175,7 @@ int Response::parseStatus(std::string& str)
     try
     {
         statusCode_ = (StatusCode)std::stoi(out[1]);
+        statusInfo_ = out[2];
     }
     catch (...)
     {

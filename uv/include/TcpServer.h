@@ -36,8 +36,8 @@ public:
     int bindAndListen(SocketAddr& addr);
     void addConnnection(std::string& name,TcpConnectionPtr connection);
     void removeConnnection(std::string& name);
-    TcpConnectionPtr getConnnection(std::string& name);
-    void closeConnection(std::string& name);
+    TcpConnectionPtr getConnnection(const std::string& name);
+    void closeConnection(const std::string& name);
 
     void onMessage(TcpConnectionPtr connection,const char* buf,ssize_t size);
     void setMessageCallback(OnMessageCallback callback);

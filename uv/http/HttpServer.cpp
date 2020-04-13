@@ -86,8 +86,24 @@ void uv::http::HttpServer::onMesage(TcpConnectionPtr conn, const char* data, ssi
     else if (ParseResult::Success == rst)
     {
         packetbuf->clear();
-        //int index = 
         //搜寻回调函数
+        OnHttpReqCallback callback(nullptr);
+        if (route_[req.getMethon()].get(req.getPath(), callback))
+        {
+            if (nullptr != callback)
+            {
+                Response resp;
+                callback(req, &resp);
+                std::string respData;
+                resp.pack(respData);
+                std::string connName = conn->Name();
+                conn->write(respData.c_str(), respData.size(), [this, connName](WriteInfo&)
+                {
+                    closeConnection(connName);
+                });
+
+            }
+        }
     }
     else ; //parse fail.
 }

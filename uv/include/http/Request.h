@@ -13,7 +13,7 @@
 
 #include <map>
 #include "HttpCommon.h"
-#include "../include/GlobalConfig.h"
+#include "../GlobalConfig.h"
 
 namespace uv
 {

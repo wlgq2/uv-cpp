@@ -38,9 +38,11 @@ public:
     Response(HttpVersion version, StatusCode code);
 
     void setVersion(HttpVersion version);
-    void setStatusCode(StatusCode code);
+    void setStatus(StatusCode code,std::string info);
     HttpVersion getVersion();
     StatusCode getStatusCode();
+    std::string& getStatusInfo();
+
     void appendHead(std::string& key, std::string& value);
     void appendHead(std::string&& key, std::string&& value);
     
@@ -56,6 +58,7 @@ public:
 private:
     HttpVersion version_;
     StatusCode statusCode_;
+    std::string statusInfo_;
     std::map<std::string, std::string> heads_;
     std::string content_;
 
