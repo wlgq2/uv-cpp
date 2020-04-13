@@ -85,8 +85,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\uv\Async.cpp" />
     <ClCompile Include="..\..\..\uv\CycleBuffer.cpp" />
+    <ClCompile Include="..\..\..\uv\DnsGet.cpp" />
     <ClCompile Include="..\..\..\uv\EventLoop.cpp" />
     <ClCompile Include="..\..\..\uv\GlobalConfig.cpp" />
+    <ClCompile Include="..\..\..\uv\http\HttpClient.cpp" />
+    <ClCompile Include="..\..\..\uv\http\HttpCommon.cpp" />
+    <ClCompile Include="..\..\..\uv\http\HttpServer.cpp" />
+    <ClCompile Include="..\..\..\uv\http\Request.cpp" />
+    <ClCompile Include="..\..\..\uv\http\Response.cpp" />
     <ClCompile Include="..\..\..\uv\Idle.cpp" />
     <ClCompile Include="..\..\..\uv\ListBuffer.cpp" />
     <ClCompile Include="..\..\..\uv\LogWriter.cpp" />

@@ -7,6 +7,9 @@
     <Filter Include="example">
       <UniqueIdentifier>{c9891f23-6fd4-4eb0-aee8-d894dbd4f71b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="uv\http">
+      <UniqueIdentifier>{6e63ee24-a422-4772-9d42-6941950fff88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\pingpang\EchoServer.cpp">
@@ -65,6 +68,24 @@
     </ClCompile>
     <ClCompile Include="..\..\..\uv\Udp.cpp">
       <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\DnsGet.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpClient.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpCommon.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpServer.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\Request.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\Response.cpp">
+      <Filter>uv\http</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,9 @@
     <Filter Include="example">
       <UniqueIdentifier>{c9891f23-6fd4-4eb0-aee8-d894dbd4f71b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="uv\http">
+      <UniqueIdentifier>{fc6ac74a-eef5-437a-97c4-9554d1f75791}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\rpc\main.cpp">
@@ -71,6 +74,24 @@
     </ClCompile>
     <ClCompile Include="..\..\..\uv\Udp.cpp">
       <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\DnsGet.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpClient.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpCommon.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpServer.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\Request.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\Response.cpp">
+      <Filter>uv\http</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

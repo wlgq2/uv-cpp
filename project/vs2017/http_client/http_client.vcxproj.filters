@@ -83,5 +83,8 @@
     <ClCompile Include="..\..\..\uv\http\HttpCommon.cpp">
       <Filter>uv\http</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpServer.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

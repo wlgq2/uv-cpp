@@ -9,6 +9,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="uv\http">
+      <UniqueIdentifier>{241b8aba-5e01-49ee-a627-1f8458d259c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\helloworld\main.cpp">
@@ -63,6 +66,24 @@
       <Filter>uv</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\uv\Udp.cpp">
+      <Filter>uv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpClient.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpCommon.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\HttpServer.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\Request.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\http\Response.cpp">
+      <Filter>uv\http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\uv\DnsGet.cpp">
       <Filter>uv</Filter>
     </ClCompile>
   </ItemGroup>
