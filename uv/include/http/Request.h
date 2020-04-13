@@ -42,6 +42,7 @@ public:
     void setMethon(Methon methon);
     void setPath(std::string&& path);
     void setPath(std::string& path);
+    std::string& getValue();
     std::string& getPath();
     HttpVersion getVersion();
     Methon getMethon();
@@ -54,6 +55,7 @@ public:
 private:
     Methon methon_; 
     std::string path_;
+    std::string value_;
     std::map <std::string, std::string> urlParms_;
     HttpVersion version_;
     std::map<std::string, std::string> heads_;

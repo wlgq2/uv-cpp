@@ -32,7 +32,6 @@ public:
     bool get(std::string&& key, Type& value);
 
     static char WildCard;
-    static char ParamCard;
 private:
     RadixTreeNodePtr<Type> root_;
 
@@ -92,9 +91,6 @@ inline bool RadixTree<Type>::get(std::string&& key, Type& value)
 
 template<typename Type>
 char uv::http::RadixTree<Type>::WildCard = '*';
-
-template<typename Type>
-char uv::http::RadixTree<Type>::ParamCard = ':';
 
 template<typename Type>
 inline void RadixTree<Type>::setNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value)
@@ -173,11 +169,6 @@ inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, std::string& 
     if (commonLength == node->key.size() - 1)
     {
         if (node->key.back() == WildCard)
-        {
-            value = node->value;
-            return true;
-        }
-        if((node->key.back() == ParamCard)&&(key.size() == commonLength))
         {
             value = node->value;
             return true;

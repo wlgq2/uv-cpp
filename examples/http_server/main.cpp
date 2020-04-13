@@ -1,4 +1,14 @@
-﻿#include <iostream>
+﻿/*
+   Copyright © 2017-2020, orcaer@yeah.net  All rights reserved.
+
+   Author: orcaer@yeah.net
+
+   Last modified: 2020-4-13
+
+   Description: https://github.com/wlgq2/uv-cpp
+*/
+
+#include <iostream>
 #include <uv/include/uv11.h>
 
 void func1(uv::http::Request& req, uv::http::Response* resp)
@@ -23,8 +33,8 @@ void func3(uv::http::Request& req, uv::http::Response* resp)
     resp->setVersion(uv::http::HttpVersion::Http1_1);
     resp->setStatus(uv::http::Response::StatusCode::OK, "OK");
     resp->appendHead("Server", "uv-cpp");
-    std::string str("value is");
-    //str += req.
+    std::string str("value is ");
+    str += req.getValue();
     resp->swapContent(str);
 }
 void func4(uv::http::Request& req, uv::http::Response* resp)
@@ -68,7 +78,7 @@ int main(int argc, char** args)
     server.Get("/test",std::bind(&func1,std::placeholders::_1,std::placeholders::_2));
     //example:  127.0.0.1:10010/some123abc
     server.Get("/some*",std::bind(&func2, std::placeholders::_1, std::placeholders::_2));
-    //example:  127.0.0.1:10010/value1:1234
+    //example:  127.0.0.1:10010/value:1234
     server.Get("/value:",std::bind(&func3, std::placeholders::_1, std::placeholders::_2));
     //example:  127.0.0.1:10010/sum?param1=100&param2=23
     server.Get("/sum",std::bind(&func4, std::placeholders::_1, std::placeholders::_2));

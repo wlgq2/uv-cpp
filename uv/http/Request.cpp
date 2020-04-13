@@ -109,6 +109,11 @@ void Request::setPath(std::string& path)
     path_ = path;
 }
 
+std::string& Request::getValue()
+{
+    return value_;
+}
+
 std::string& Request::getPath()
 {
     return path_;
@@ -290,7 +295,16 @@ int uv::http::Request::unpackUrl(std::string& str)
 int uv::http::Request::unpackPath(std::string& str)
 {
     urlParms_.clear();
-    auto pos = str.find("?");
+    auto pos = str.find(":");
+    if (pos != str.npos)
+    {
+        std::string temp(str, 0, pos + 1);
+        path_.swap(temp);
+        std::string value(str, pos + 1, str.size() - pos - 1);
+        value_.swap(value);
+        return 0;
+    }
+    pos = str.find("?");
     std::string temp(str, 0, pos);
     path_.swap(temp);
     for (auto i = pos ;i < str.size();)
