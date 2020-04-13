@@ -44,7 +44,8 @@ void DNSGet::OnCallback(int status, addrinfo* res)
             return;
         }
         ip.resize(32);
-        if (res->ai_protocol == IPPROTO_IPV4 || res->ai_protocol == IPPROTO_IP)
+        //if (res->ai_protocol == IPPROTO_IPV4 || res->ai_protocol == IPPROTO_IP)
+        if (res->ai_protocol == 4 || res->ai_protocol == IPPROTO_IP)
         {
             uv_ip4_name((struct sockaddr_in*) res->ai_addr, (char*)ip.c_str(), ip.size());
 
@@ -67,4 +68,3 @@ void DNSGet::onDNSGet(uv_getaddrinfo_t* addrInfo, int status, addrinfo* res)
     }
 }
 
-    

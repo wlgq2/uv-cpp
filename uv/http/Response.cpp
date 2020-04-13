@@ -123,7 +123,7 @@ int Response::unpack(std::string& data)
         return ParseResult::Error;
     }
     //解析消息头
-    for (auto i = 1; i < headList.size(); i++)
+    for (uint64_t i = 1; i < headList.size(); i++)
     {
         if (AppendHead(headList[i],heads_) != 0)
         {
@@ -149,7 +149,7 @@ int Response::unpackAndCompleted(std::string& data)
         {
             try
             {
-                int size = std::stoi(it->second);
+                uint64_t size = std::stoi(it->second);
                 return size != content_.size();
             }
             catch (...)
@@ -164,7 +164,7 @@ int Response::unpackAndCompleted(std::string& data)
 int Response::parseStatus(std::string& str)
 {
     std::vector<std::string> out;
-    auto pos = SplitStrOfSpace(str, out);
+    SplitStrOfSpace(str, out);
     if (out.size() != 3)
     {
         //解析失败

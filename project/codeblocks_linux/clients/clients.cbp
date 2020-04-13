@@ -43,6 +43,7 @@
 		<Unit filename="../../../examples/clients/main.cpp" />
 		<Unit filename="../../../uv/Async.cpp" />
 		<Unit filename="../../../uv/CycleBuffer.cpp" />
+		<Unit filename="../../../uv/DnsGet.cpp" />
 		<Unit filename="../../../uv/EventLoop.cpp" />
 		<Unit filename="../../../uv/GlobalConfig.cpp" />
 		<Unit filename="../../../uv/Idle.cpp" />
@@ -58,6 +59,11 @@
 		<Unit filename="../../../uv/Timer.cpp" />
 		<Unit filename="../../../uv/TimerWheel.cpp" />
 		<Unit filename="../../../uv/Udp.cpp" />
+		<Unit filename="../../../uv/http/HttpClient.cpp" />
+		<Unit filename="../../../uv/http/HttpCommon.cpp" />
+		<Unit filename="../../../uv/http/HttpServer.cpp" />
+		<Unit filename="../../../uv/http/Request.cpp" />
+		<Unit filename="../../../uv/http/Response.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -12,7 +12,6 @@
 #define UV_HTTP_RADIX_TREE_NODE
 
 #include <string>
-#include <List>
 #include <memory>
 
 namespace uv

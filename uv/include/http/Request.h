@@ -20,7 +20,7 @@ namespace uv
 namespace http
 {
 
-class Request 
+class Request
 {
 public:
     Request();
@@ -53,11 +53,11 @@ public:
     static std::string MethonToStr(Methon methon);
     static Methon StrToMethon(std::string& str);
 private:
-    Methon methon_; 
+    HttpVersion version_;
+    Methon methon_;
     std::string path_;
     std::string value_;
     std::map <std::string, std::string> urlParms_;
-    HttpVersion version_;
     std::map<std::string, std::string> heads_;
     std::string content_;
 

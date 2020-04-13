@@ -27,7 +27,7 @@ bool TestRand(RadixTree<Type>& tree,uint64_t cnt)
         struct KV<Type> kv = { std::to_string(i),i };
         kvs.push_back(kv);
     }
-   
+
     //随机顺序取出元素插入radix tree.
     std::map<std::string, Type> kvMap;
     std::default_random_engine random;
@@ -42,7 +42,7 @@ bool TestRand(RadixTree<Type>& tree,uint64_t cnt)
         //std::cout << "{ " << kv.key << "," << kv.value << "}"<<std::endl;
         kvMap[kv.key] = kv.value;
     }
-    
+
     //遍历对比kvmap与radix tree值
     for (auto& kv : kvMap)
     {
@@ -60,7 +60,7 @@ bool TestRand(RadixTree<Type>& tree,uint64_t cnt)
             std::cout << "error key " << kv.first << " value " << kv.second << " but " << value << std::endl;
             return false;
         }
-        
+
     }
     return true;
 
@@ -69,7 +69,7 @@ int main(int argc, char** args)
 {
     std::cout << "wait ..." << std::endl;
     int cnt = 1000000;
-    RadixTree<int> tree;
+    RadixTree<uint64_t> tree;
     //生成cnt个kv并随机顺序插入检测。
     if (TestRand(tree, cnt))
     {

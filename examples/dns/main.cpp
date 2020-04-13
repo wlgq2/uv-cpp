@@ -22,10 +22,10 @@ int main(int argc, char** args)
 
     int rst = dnsGet.GetIP("www.github.com");
 
-	if (rst != 0) 
+    if (rst != 0) 
     {
         uv::LogWriter::Instance()->error(uv::EventLoop::GetErrorMessage(rst));
-	}
+    }
     loop->run();
-	delete loop;
+    delete loop;
 }

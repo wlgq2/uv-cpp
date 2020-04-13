@@ -167,7 +167,7 @@ int Request::unpack(std::string& data)
         return ParseResult::Error;
     }
     //解析消息头
-    for (auto i = 1; i < headList.size(); i++)
+    for (uint64_t i = 1; i < headList.size(); i++)
     {
         if (AppendHead(headList[i],heads_) != 0)
         {
@@ -272,7 +272,7 @@ void uv::http::Request::packPathParam(std::string& path)
 int uv::http::Request::unpackUrl(std::string& str)
 {
     std::vector<std::string> out;
-    auto pos = SplitStrOfSpace(str, out);
+    SplitStrOfSpace(str, out);
     if (out.size() != 3)
     {
         //解析失败
@@ -288,7 +288,7 @@ int uv::http::Request::unpackUrl(std::string& str)
         return -1;
     }
     version_ = GetHttpVersion(out[2]);
-    
+
     return 0;
 }
 

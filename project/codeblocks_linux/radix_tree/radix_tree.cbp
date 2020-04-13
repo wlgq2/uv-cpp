@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="helloworld" />
+		<Option title="radix_tree" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/helloworld" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/radix_tree" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/helloworld" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/radix_tree" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -38,7 +38,7 @@
 			<Add option="-pthread" />
 			<Add library="../../../libuv1.30.0/lib/gcc8.3.0/libuv.a" />
 		</Linker>
-		<Unit filename="../../../examples/helloworld/main.cpp" />
+		<Unit filename="../../../examples/radix_tree/main.cpp" />
 		<Unit filename="../../../uv/Async.cpp" />
 		<Unit filename="../../../uv/CycleBuffer.cpp" />
 		<Unit filename="../../../uv/DnsGet.cpp" />
