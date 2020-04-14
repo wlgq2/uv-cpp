@@ -13,8 +13,9 @@ Description: https://github.com/wlgq2/uv-cpp
 
 using namespace uv;
 
-uv::SocketAddr::SocketAddr(const std::string && ip, unsigned short port, IPV ipv)
-    :port_(port),
+uv::SocketAddr::SocketAddr(const std::string&& ip, unsigned short port, IPV ipv)
+    :ip_(ip),
+    port_(port),
     ipv_(ipv)
 {
     if (ipv == Ipv6)
@@ -27,7 +28,7 @@ uv::SocketAddr::SocketAddr(const std::string && ip, unsigned short port, IPV ipv
     }
 }
 
-uv::SocketAddr::SocketAddr(const std::string & ip, unsigned short port, IPV ipv)
+uv::SocketAddr::SocketAddr(const std::string& ip, unsigned short port, IPV ipv)
     :SocketAddr(std::move(ip), port, ipv)
 {
 
