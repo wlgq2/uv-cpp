@@ -177,8 +177,8 @@ int Response::isCompletedChunked()
         return -1;
     }
     std::string temp;
-    int p2 = -1;
-    for (int p1 = 0;true;)
+    uint64_t p2 = -1;
+    for (uint64_t p1 = 0;true;)
     {
         p1 = content_.find("\r\n", p2 + 1);
         if (p1 == content_.npos)
