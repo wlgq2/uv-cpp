@@ -2,7 +2,7 @@
 #include <fstream>
 #include <uv/include/uv11.h>
 
-void onHttpResp(int error, uv::http::Response* resp)
+void onHttpResp(uv::http::HttpClient* client,int error, uv::http::Response* resp)
 {
     if (error == uv::http::HttpClient::ConnectFail)
     {
@@ -21,6 +21,8 @@ void onHttpResp(int error, uv::http::Response* resp)
     outfile << resp->getContent();
     outfile.close();
     std::cout << "write test.htmt success" << std::endl;
+    //close connection.
+    delete client;
 }
 
 
@@ -35,17 +37,18 @@ void onGetIp(uv::EventLoop* loop ,int status, std::string& ip)
     //服务器ip地址
     uv::SocketAddr addr(ip, 80);
     uv::http::HttpClient* client = new uv::http::HttpClient(loop);
-    client->setOnResp(std::bind(&onHttpResp, std::placeholders::_1,std::placeholders::_2));
+    client->setOnResp(std::bind(&onHttpResp, client,
+        std::placeholders::_1,std::placeholders::_2));
 
     uv::http::Request req;
-    req.setPath("/s");
+    req.setPath("/search");
     //url参数
-    req.appendUrlParam("ie", "utf-8");
-    req.appendUrlParam("wd", "uv-cpp");
+    req.appendUrlParam("q", "uv-cpp");
     //消息头列表
-    req.appendHead("Host", "www.baidu.com");
-    req.appendHead("Accept - Language", "en");
-    req.appendHead("User - Agent", "Mozilla / 5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko / 20100101 Firefox / 73.0");
+    req.appendHead("Host", "cn.bing.com");
+    req.appendHead("Connection", "keep - alive");
+    req.appendHead("Accept-Language", "en");
+  
 
     //请求http服务
     client->Req(addr,req);
@@ -59,7 +62,7 @@ int main(int argc, char** args)
     uv::DNSGet dnsGet(&loop);
     dnsGet.setOnDNSCallback(std::bind(&onGetIp, &loop, std::placeholders::_1, std::placeholders::_2));
 
-    int rst = dnsGet.GetIP("www.baidu.com","80");
+    int rst = dnsGet.GetIP("cn.bing.com","80");
 
     if (rst != 0)
     {

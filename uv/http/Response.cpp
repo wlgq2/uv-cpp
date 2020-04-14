@@ -157,8 +157,44 @@ int Response::unpackAndCompleted(std::string& data)
 
             }
         }
+        else
+        {
+            it = heads_.find("Transfer-Encoding");
+            if (it != heads_.end() && it->second == "chunked")
+            {
+                return isCompletedChunked();
+            }
+        }
     }
     return -1;
+}
+
+int Response::isCompletedChunked()
+{
+    auto pos = content_.find("0\r\n\r\n");
+    if (pos == content_.npos)
+    {
+        return -1;
+    }
+    std::string temp;
+    int p2 = -1;
+    for (int p1 = 0;true;)
+    {
+        p1 = content_.find("\r\n", p2 + 1);
+        if (p1 == content_.npos)
+        {
+            break;
+        }
+
+        p2 = content_.find("\r\n", p1 + 1);
+        if (p2 == content_.npos)
+        {
+            break;
+        }
+        temp += content_.substr(p1 + 2, p2 - p1 - 2);
+    }
+    content_.swap(temp);
+    return 0;
 }
 
 int Response::parseStatus(std::string& str)

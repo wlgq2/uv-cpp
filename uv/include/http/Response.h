@@ -54,6 +54,7 @@ public:
     int pack(std::string& data);
     int unpack(std::string& data);
     int unpackAndCompleted(std::string& data);
+    int isCompletedChunked();
 
 private:
     HttpVersion version_;
