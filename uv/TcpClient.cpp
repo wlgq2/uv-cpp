@@ -114,7 +114,7 @@ void uv::TcpClient::close(std::function<void(std::string&)> callback)
     {
         connection_->close([this, callback](std::string& name)
         {
-            onClose(name);
+            //onClose(name);
             if (callback)
                 callback(name);
         });

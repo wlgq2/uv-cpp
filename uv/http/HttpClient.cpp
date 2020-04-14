@@ -101,6 +101,5 @@ void HttpClient::onMessage(const char* data, ssize_t size)
     if (0 == resp.unpackAndCompleted(buffer_))
     {
         onResp(Success, &resp);
-        client_->close(nullptr);
     }
 }
