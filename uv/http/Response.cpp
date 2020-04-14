@@ -95,15 +95,15 @@ int Response::pack(std::string& data)
     data += std::to_string(statusCode_);
     data += " ";
     data += content_;
-    data += Crlf;
+    data.append(Crlf, sizeof(Crlf));
     for (auto it = heads_.begin();it != heads_.end();it++)
     {
         data += it->first;
         data += ": ";
         data += it->second;
-        data += Crlf;
+        data.append(Crlf, sizeof(Crlf));
     }
-    data += Crlf;
+    data.append(Crlf, sizeof(Crlf));
     data += content_;
     return 0;
 }

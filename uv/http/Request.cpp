@@ -138,15 +138,15 @@ int Request::pack(std::string& data)
     packPathParam(data);
     data += " ";
     data += HttpVersionToStr(version_);
-    data += Crlf;
+    data.append(Crlf, sizeof(Crlf));
     for (auto it = heads_.begin();it != heads_.end();it++)
     {
         data += it->first;
         data += ": ";
         data += it->second;
-        data += Crlf;
+        data.append(Crlf, sizeof(Crlf));
     }
-    data += Crlf;
+    data.append(Crlf, sizeof(Crlf));
     data += content_;
     return 0;
 }
