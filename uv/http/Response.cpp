@@ -135,7 +135,7 @@ int Response::unpack(std::string& data)
     return ParseResult::Success;
 }
 
-int Response::unpackAndCompleted(std::string& data)
+ParseResult Response::unpackAndCompleted(std::string& data)
 {
     int rst = unpack(data);
     if (rst == 0)
@@ -150,7 +150,11 @@ int Response::unpackAndCompleted(std::string& data)
             try
             {
                 uint64_t size = std::stoi(it->second);
-                return size != content_.size();
+                if (size == content_.size())
+                {
+                    return ParseResult::Success;
+                }
+                return ParseResult::Fail;
             }
             catch (...)
             {
@@ -166,35 +170,41 @@ int Response::unpackAndCompleted(std::string& data)
             }
         }
     }
-    return -1;
+    return ParseResult::Fail;
 }
 
-int Response::isCompletedChunked()
+ParseResult Response::isCompletedChunked()
 {
-    auto pos = content_.find("0\r\n\r\n");
-    if (pos == content_.npos)
-    {
-        return -1;
-    }
     std::string temp;
-    uint64_t p2 = -1;
-    for (uint64_t p1 = 0;true;)
+    uint64_t p1 = 0;
+    for (uint64_t p2 = 0;true;)
     {
-        p1 = content_.find("\r\n", p2 + 1);
-        if (p1 == content_.npos)
-        {
-            break;
-        }
-
         p2 = content_.find("\r\n", p1 + 1);
         if (p2 == content_.npos)
         {
-            break;
+            return ParseResult::Fail;
         }
-        temp += content_.substr(p1 + 2, p2 - p1 - 2);
+        try
+        {
+            uint64_t num = std::stoi(content_.substr(p1, p2 - p1),nullptr,16);
+            if (num == 0)
+            {
+                content_.swap(temp);
+                return ParseResult::Success;
+            }
+            p1 = p2 + 2 + num;
+            if (p1 > content_.size())
+            {
+                return ParseResult::Fail;
+            }
+            temp += content_.substr(p2 + 2, num);
+
+        }
+        catch(...)
+        {
+            return ParseResult::Error;
+        }
     }
-    content_.swap(temp);
-    return 0;
 }
 
 int Response::parseStatus(std::string& str)

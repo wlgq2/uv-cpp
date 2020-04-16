@@ -98,8 +98,15 @@ void HttpClient::onMessage(const char* data, ssize_t size)
     std::copy(data, data + size, out);
 
     Response resp;
-    if (0 == resp.unpackAndCompleted(buffer_))
+    auto rst = resp.unpackAndCompleted(buffer_);
+    if (rst == ParseResult::Success)
     {
         onResp(Success, &resp);
+    }
+    else if (rst == ParseResult::Error)
+    {
+        uv::LogWriter::Instance()->error("parse http's response error.");
+        //解析出错
+        buffer_.clear();
     }
 }
