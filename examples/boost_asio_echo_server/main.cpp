@@ -21,6 +21,14 @@ void startTimer(deadline_timer& timer);
 
 std::atomic<uint64_t> cnt(0);
 
+void write(SocketPtr ptr,size_t size)
+{
+    ptr->pSocket->async_write_some( buffer(ptr->writeBuffer, size), [ptr](const boost::system::error_code& error,std::size_t size)
+    {
+        startRead(ptr);
+    });
+}
+
 void onRead(SocketPtr ptr,const boost::system::error_code& error,std::size_t size)
 {
     if(error)
@@ -29,10 +37,7 @@ void onRead(SocketPtr ptr,const boost::system::error_code& error,std::size_t siz
     }
     cnt += size;
     std::copy(ptr->readBuffer, ptr->readBuffer+size, ptr->writeBuffer);
-    ptr->pSocket->async_write_some( buffer(ptr->writeBuffer, size), [](const boost::system::error_code& error,std::size_t size)
-    {
-    });
-    startRead(ptr);
+    write(ptr,size);
 }
 
 void startRead(SocketPtr ptr)
