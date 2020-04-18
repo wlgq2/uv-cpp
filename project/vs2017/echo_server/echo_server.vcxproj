@@ -78,7 +78,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\echo_server\EchoServer.cpp" />
     <ClCompile Include="..\..\..\examples\echo_server\main.cpp" />
     <ClCompile Include="..\..\..\uv\Async.cpp" />
     <ClCompile Include="..\..\..\uv\CycleBuffer.cpp" />
@@ -103,9 +102,6 @@
     <ClCompile Include="..\..\..\uv\Timer.cpp" />
     <ClCompile Include="..\..\..\uv\TimerWheel.cpp" />
     <ClCompile Include="..\..\..\uv\Udp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\examples\echo_server\EchoServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
