@@ -21,7 +21,7 @@ int main(int argc, char** args)
 
     SocketAddr addr("0.0.0.0", 10005, SocketAddr::Ipv4);
 
-    std::atomic<uint64_t> dataSize;
+    std::atomic<uint64_t> dataSize(0);
     uv::TcpServer server(loop);
     server.setMessageCallback([&dataSize](uv::TcpConnectionPtr ptr,const char* data, ssize_t size)
     {
@@ -34,8 +34,9 @@ int main(int argc, char** args)
 
     uv::Timer timer(loop, 1000, 1000, [&dataSize](uv::Timer* ptr)
     {
-        std::cout << "send data:" << (dataSize >> 10) << "kbyte/s";
+        std::cout << "send data:" << (dataSize >> 10) << " kbyte/s" << std::endl;
         dataSize = 0;
     });
+    timer.start();
     loop->run();
 }
