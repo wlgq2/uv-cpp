@@ -11,14 +11,14 @@
 uv-cpp is a simple interface, high-performance network library based on C++11.
 
 ## Dependencies
- * [libuv][2]
+ * [libuv][1]
 ## Features
 * C++11 functional/bind style callback instead of C-style function pointer.
 * `TCP` and `UDP` wrapper.
 * `DNS`and`Http`：DNS query and http support，Http routing based on radix tree.
 * `Timer`and`TimerWheel`：Heartbeat timeout judgment with time complexity of O(1).
-* `Async`：libuv async wrapper，but optimized the [problem][1] of calling multiple times  but callback  will only be called once. 
-* `Packet`and`PacketBuffer`：Send and receive packet of Tcp data stream.
+* `Async`：libuv async wrapper，but optimized the [problem][2] of calling multiple times  but callback  will only be called once. 
+* `Packet`and`PacketBuffer`：Send and receive packet of Tcp data stream. Support custom data packet structure (such as [uvnsq][3])
 * Log interface.
 ** **
 ## Build Instructions
@@ -87,5 +87,8 @@ int main(int argc, char** args)
 
 ```
 
-[1]: http://docs.libuv.org/en/v1.x/async.html
-[2]: https://github.com/libuv/libuv
+
+[1]: https://github.com/libuv/libuv
+[2]: http://docs.libuv.org/en/v1.x/async.html
+[3]: https://github.com/wlgq2/uvnsq
+
