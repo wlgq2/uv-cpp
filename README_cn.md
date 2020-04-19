@@ -28,12 +28,16 @@
 ### ping-pong VS boost.asio 1.67
 <br>environment：Intel Core i5 8265U + debian8 + gcc8.3.0 + libuv1.30.0 + '-O2'优化</br>
 
-   libuv_cpp | no use PacketBuffer|CycleBuffer|ListBuffer|
+包大小| 1K bytes|2K bytes|4K bytes|
 :---------:|:--------:|:--------:|:--------:|
-次/秒     | 192857 |141487|12594|
+uv-cpp | 0 |0|0|
+boost.asio | 0 |0|0|
 ### Apache bench VS nginx 1.14.2
 <br>environment：Intel Core i5 8265U + debian8 + gcc8.3.0 + libuv1.30.0 + '-O2'</br>
-
+ 并发数 | 100 |200|500|1000|
+:---------:|:--------:|:--------:|:--------:|:--------:|
+uv-cpp | 0 |0|0|0|
+nginx | 0 |0|0|0|
 ## 例程
 十行代码实现简单echo服务
 ```C++
