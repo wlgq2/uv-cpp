@@ -87,8 +87,10 @@ int main(int argc, char** args)
 }
 
 ```
+More examples [here][4].
 
 [1]: https://github.com/libuv/libuv
 [2]: http://docs.libuv.org/en/v1.x/async.html
 [3]: https://github.com/wlgq2/uvnsq
+[4]: https://github.com/wlgq2/uv-cpp/tree/master/examples
 
