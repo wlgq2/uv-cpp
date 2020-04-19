@@ -8,6 +8,8 @@
 * [Englishi](README.md)
 * [简体中文](README_cn.md)
 ** **
+uv-cpp is a simple interface, high-performance network library based on C++11.
+
 ## Dependencies
  * [libuv][2]
 ## Features
@@ -24,7 +26,7 @@
 * Codeblocks (linux)
 * CMake (linux)
 ** **
-## Simple test
+## Benchmark
 one thread 1k bytes ping-pong。
 <br>environment：Intel Core i5 6402 + ubuntu14.04.5 + gcc5.5.0 + libuv1.22.0 + O2优化</br>
 
