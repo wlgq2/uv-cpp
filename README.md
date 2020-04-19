@@ -49,15 +49,15 @@ A simple echo server
 int main(int argc, char** args)
 {
     uv::EventLoop* loop = uv::EventLoop::DefaultLoop();
-
-    uv::SocketAddr addr("0.0.0.0", 10005, uv::SocketAddr::Ipv4);
+	
     uv::TcpServer server(loop);
     server.setMessageCallback([](uv::TcpConnectionPtr ptr,const char* data, ssize_t size)
     {
         ptr->write(data, size, nullptr);
     });
-    //heartbeat timeout.
-    //server.setTimeout(60);
+    //server.setTimeout(60); //heartbeat timeout.
+	
+	uv::SocketAddr addr("0.0.0.0", 10005, uv::SocketAddr::Ipv4);
     server.bindAndListen(addr);
     loop->run();
 }
@@ -72,6 +72,7 @@ int main(int argc, char** args)
     uv::http::HttpServer::SetBufferMode(uv::GlobalConfig::BufferMode::CycleBuffer);
 
     uv::http::HttpServer server(&loop);
+	
     //example:  127.0.0.1:10010/test
     server.Get("/test",std::bind(&func1,std::placeholders::_1,std::placeholders::_2));
     
