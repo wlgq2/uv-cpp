@@ -10,8 +10,8 @@ using namespace boost::asio;
 struct SocketStr
 {
     std::shared_ptr<ip::tcp::socket> pSocket;
-    char readBuffer[1024*4];
-    char writeBuffer[1024*4];
+    char readBuffer[1024*32];
+    char writeBuffer[1024*32];
 };
 using SocketPtr = std::shared_ptr<SocketStr>;
 
