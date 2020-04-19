@@ -38,54 +38,26 @@ Times/Sec | 192857 |141487|12594|
 <br>environment：Intel Core i5 8265U + debian8 + gcc8.3.0 + libuv1.30.0 + '-O2'</br>
 
 ## Quick start
+A simple echo server
 ```C++
 #include <iostream>
-#include <uv/uv11.h>
-
+#include <uv/include/uv11.h>
 
 int main(int argc, char** args)
 {
-    //event's loop
-    //uv::EventLoop* loop = new uv::EventLoop();
-    //or
-    uv::EventLoop* loop = uv::EventLoop::DefalutLoop();
-    
-    uv::SocketAddr serverAddr("127.0.0.1", 10000, uv::SocketAddr::Ipv4);
-    //Tcp Server
+    uv::EventLoop* loop = uv::EventLoop::DefaultLoop();
+
+    uv::SocketAddr addr("0.0.0.0", 10005, uv::SocketAddr::Ipv4);
     uv::TcpServer server(loop);
-    server.setMessageCallback(
-        [](uv::TcpConnectionPtr conn, const char* data , ssize_t size)
+    server.setMessageCallback([](uv::TcpConnectionPtr ptr,const char* data, ssize_t size)
     {
-        std::cout << std::string(data, size) << std::endl;
-        std::string str("hex :");
-        uv::LogWriter::ToHex(str, data, (unsigned int)size);
-        std::cout << str << std::endl;
-        conn->write(data, size,nullptr);
+        ptr->write(data, size, nullptr);
     });
-    server.bindAndListen(serverAddr);
-
-
-    //Tcp Client
-    uv::TcpClient client(loop);
-    client.setConnectStatusCallback(
-        [&client](uv::TcpClient::ConnectStatus status)
-    {
-        if (status == uv::TcpClient::ConnectStatus::OnConnectSuccess)
-        {
-            char data[] = "hello world!";
-            client.write(data, sizeof(data));
-        }
-        else
-        {
-            std::cout << "Error : connect to server fail" << std::endl;
-        }
-    });
-    client.connect(serverAddr);
-
+    //heartbeat timeout.
+    //server.setTimeout(60);
+    server.bindAndListen(addr);
     loop->run();
 }
-
-
 
 ```
 
