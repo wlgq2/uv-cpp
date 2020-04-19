@@ -5,9 +5,9 @@
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
 
-<br>对libuv的C++11风格的跨平台封装库，用于线上项目。跑过压测，很稳定，正确使用接口情况下，未发现core dump或内存泄漏。</br>
+<br>基于libuv实现的C++11风格网络库。接口简洁，性能优越，做过业务压测，稳定线上运行。正确使用接口情况下，未发现core dump或内存泄漏。</br>
 ## 依赖项
- * [libuv][3]
+ * [libuv][1]
 ## 特性
 ** **
 * C++11风格回调函数：非C语言函数回调，支持非静态类成员函数及lambda。
@@ -16,7 +16,7 @@
 * `Timer`及`TimerWheel`：定时器及时间复杂度为O(1)的心跳超时踢出机制。
 * `Async`：异步机制封装。相对于原生libuv async接口，优化了调用多次可能只运行一次的[问题(特性)][2]。由于libuv几乎所有api都非线程安全，建议使用writeInLoop接口代替直接write（writeInLoop会检查当前调用的线程，如果在loop线程中调用则直接write，否则把write加到loop线程中执行）。
 * libuv信号封装。   
-* `Packet`与`PacketBuffer`：包与缓存，发送/接受包，用于从TCP字节流解析协议包。由ListBuffer和CycleBuffer两种实现(前者空间友好，后者时间友好)。提供默认Packet消息协议，也可实现自定义任意消息协议(参考[uvnsq][1]实现NSQ消息协议)。
+* `Packet`与`PacketBuffer`：包与缓存，发送/接受包，用于从TCP字节流解析协议包。由ListBuffer和CycleBuffer两种实现(前者空间友好，后者时间友好)。提供默认Packet消息协议，也可实现自定义任意消息协议(参考[uvnsq][3]实现NSQ消息协议)。
 * Log日志输出接口，可绑定至自定义Log库。
 ** **
 ## 编译
@@ -25,69 +25,71 @@
 * CMake (linux)
 ** **
 ## 简单性能测试
-单线程1k字节ping-pong。
-<br>环境：Intel Core i5 6402 + ubuntu14.04.5 + gcc5.5.0 + libuv1.22.0 + O2优化</br>
+### ping-pong VS boost.asio 1.67
+<br>environment：Intel Core i5 8265U + debian8 + gcc8.3.0 + libuv1.30.0 + '-O2'优化</br>
 
    libuv_cpp | no use PacketBuffer|CycleBuffer|ListBuffer|
 :---------:|:--------:|:--------:|:--------:|
 次/秒     | 192857 |141487|12594|
+### Apache bench VS nginx 1.14.2
+<br>environment：Intel Core i5 8265U + debian8 + gcc8.3.0 + libuv1.30.0 + '-O2'</br>
 
-## 第一个例程
+## 例程
+十行代码实现简单echo服务
 ```C++
 #include <iostream>
-#include <uv/uv11.h>
-
+#include <uv/include/uv11.h>
 
 int main(int argc, char** args)
 {
-    //event's loop
-    //uv::EventLoop* loop = new uv::EventLoop();
-    //or
-    uv::EventLoop* loop = uv::EventLoop::DefalutLoop();
-    
-    uv::SocketAddr serverAddr("127.0.0.1", 10000, uv::SocketAddr::Ipv4);
-    //Tcp Server
+    uv::EventLoop* loop = uv::EventLoop::DefaultLoop();
+
+    uv::SocketAddr addr("0.0.0.0", 10005, uv::SocketAddr::Ipv4);
     uv::TcpServer server(loop);
-    server.setMessageCallback(
-        [](uv::TcpConnectionPtr conn, const char* data , ssize_t size)
+    server.setMessageCallback([](uv::TcpConnectionPtr ptr,const char* data, ssize_t size)
     {
-        std::cout << std::string(data, size) << std::endl;
-        std::string str("hex :");
-        uv::LogWriter::ToHex(str, data, (unsigned int)size);
-        std::cout << str << std::endl;
-        conn->write(data, size,nullptr);
+        ptr->write(data, size, nullptr);
     });
-    server.bindAndListen(serverAddr);
-
-
-    //Tcp Client
-    uv::TcpClient client(loop);
-    client.setConnectStatusCallback(
-        [&client](uv::TcpClient::ConnectStatus status)
-    {
-        if (status == uv::TcpClient::ConnectStatus::OnConnectSuccess)
-        {
-            char data[] = "hello world!";
-            client.write(data, sizeof(data));
-        }
-        else
-        {
-            std::cout << "Error : connect to server fail" << std::endl;
-        }
-    });
-    client.connect(serverAddr);
-
+    //heartbeat timeout.
+    //server.setTimeout(60);
+    server.bindAndListen(addr);
     loop->run();
 }
 
 ```
+简单的http服务器，基于Radix Tree实现的路由机制，支持通配符、设置参数。
+```C++
+int main(int argc, char** args)
+{
+    uv::EventLoop loop;
+    uv::http::HttpServer::SetBufferMode(uv::GlobalConfig::BufferMode::CycleBuffer);
 
+    uv::http::HttpServer server(&loop);
+    //example:  127.0.0.1:10010/test
+    server.Get("/test",std::bind(&func1,std::placeholders::_1,std::placeholders::_2));
+    
+    //example:  127.0.0.1:10010/some123abc
+    server.Get("/some*",std::bind(&func2, std::placeholders::_1, std::placeholders::_2));
+    
+    //example:  127.0.0.1:10010/value:1234
+    server.Get("/value:",std::bind(&func3, std::placeholders::_1, std::placeholders::_2));
+    
+    //example:  127.0.0.1:10010/sum?param1=100&param2=23
+    server.Get("/sum",std::bind(&func4, std::placeholders::_1, std::placeholders::_2));
+    
+    uv::SocketAddr addr("127.0.0.1", 10010);
+    server.bindAndListen(addr);
+    loop.run();
+}
+
+```
+更多的例程 [here][4].
 ** **
 <br>**！对于诸如`uv::Timer`,`uv::TcpClient`等对象的释放需要调用close接口并在回调函数中释放对象,否则可能会出错。**</br>
 <br>**！切勿在Loop线程外创建注册该Loop下的事件相关对象（`uv::TcpClient`，`uv::TcpServer`，`uv::Timer`……），建议每个Loop都绑定独立线程运行。**</br>
 <br>一点微小的工作。</br>
 
-
-[1]: https://github.com/wlgq2/uvnsq
+[1]: https://github.com/libuv/libuv
 [2]: http://docs.libuv.org/en/v1.x/async.html
-[3]: https://github.com/libuv/libuv
+[3]: https://github.com/wlgq2/uvnsq
+[4]: https://github.com/wlgq2/uv-cpp/tree/master/examples
