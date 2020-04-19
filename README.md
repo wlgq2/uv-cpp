@@ -30,8 +30,8 @@ uv-cpp is a simple interface, high-performance network library based on C++11.
 ### ping-pong VS boost.asio-1.67
 <br>environment：Intel Core i5 8265U + debian8 + gcc8.3.0 + libuv1.30.0 + '-O2'</br>
 
- size peer pack | 1K bytes|2K bytes|4K bytes|
-:---------:|:--------:|:--------:|:--------:|
+ size peer pack | 1K bytes|2K bytes|4K bytes|8K bytes|
+:---------:|:--------:|:--------:|:--------:|:--------:|
 uv-cpp | 0 |0|0|0|
 boost.asio | 0 |0|0|0|
 ### Apache bench VS nginx-1.14.2
