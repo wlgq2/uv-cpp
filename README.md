@@ -61,6 +61,32 @@ int main(int argc, char** args)
 
 ```
 
+A simple http service router which based on radix tree.
+```C++
+int main(int argc, char** args)
+{
+    uv::EventLoop loop;
+    uv::http::HttpServer::SetBufferMode(uv::GlobalConfig::BufferMode::CycleBuffer);
+
+    uv::http::HttpServer server(&loop);
+    //example:  127.0.0.1:10010/test
+    server.Get("/test",std::bind(&func1,std::placeholders::_1,std::placeholders::_2));
+    
+    //example:  127.0.0.1:10010/some123abc
+    server.Get("/some*",std::bind(&func2, std::placeholders::_1, std::placeholders::_2));
+    
+    //example:  127.0.0.1:10010/value:1234
+    server.Get("/value:",std::bind(&func3, std::placeholders::_1, std::placeholders::_2));
+    
+    //example:  127.0.0.1:10010/sum?param1=100&param2=23
+    server.Get("/sum",std::bind(&func4, std::placeholders::_1, std::placeholders::_2));
+    
+    uv::SocketAddr addr("127.0.0.1", 10010);
+    server.bindAndListen(addr);
+    loop.run();
+}
+
+```
 
 [1]: https://github.com/libuv/libuv
 [2]: http://docs.libuv.org/en/v1.x/async.html
