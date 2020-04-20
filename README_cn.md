@@ -30,20 +30,18 @@
 
 包大小| 1K bytes|2K bytes|4K bytes|8K bytes|
 :---------:|:--------:|:--------:|:--------:|:--------:|
-uv-cpp | 0 |0|0|0|
-boost.asio | 0 |0|0|0|
+uv-cpp | 16138 kbyte|32071 kbyte|59264 kbyte|123813 kbyte|
+boost.asio | 16119 kbyte|31566 kbyte|58322 kbyte|126210 kbyte|
 
 <br>环境：i5-8265U + 4G内存 + 4k字节ping-pong</br>
 并发数| 10|100|1000|5000|
 :---------:|:--------:|:--------:|:--------:|:--------:|
-uv-cpp | 0 |0|0|0|
-boost.asio | 0 |0|0|0|
+uv-cpp | 654282 kbyte|591869 kbyte|401500 kbyte|412855 kbyte|
+boost.asio | 633818 kbyte|585716 kbyte|371386 kbyte|382402 kbyte|
 ### Apache bench VS nginx 1.14.2
 <br>环境：Intel Core i5 8265U + debian8 + gcc8.3.0 + libuv1.30.0 + '-O2'</br>
- 并发数 | 100 |200|500|1000|
-:---------:|:--------:|:--------:|:--------:|:--------:|
-uv-cpp | 0 |0|0|0|
-nginx | 0 |0|0|0|
+1000 并发 && 100000 次请求。
+
 ## 例程
 十行代码实现简单echo服务
 ```C++
