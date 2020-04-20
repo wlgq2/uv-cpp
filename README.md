@@ -32,20 +32,19 @@ uv-cpp is a simple interface, high-performance network library based on C++11.
 
  size peer pack | 1K bytes|2K bytes|4K bytes|8K bytes|
 :---------:|:--------:|:--------:|:--------:|:--------:|
-uv-cpp | 0 |0|0|0|
-boost.asio | 0 |0|0|0|
+uv-cpp | 16138 kbyte|32071 kbyte|59264 kbyte|123813 kbyte|
+boost.asio | 16119 kbyte|31566 kbyte|58322 kbyte|126210 kbyte|
 
 <br>environment：i5-8265U + 4G memory + 4k bytes ping-pong</br>
 concurrency| 10|100|1000|5000|
 :---------:|:--------:|:--------:|:--------:|:--------:|
-uv-cpp | 0 |0|0|0|
-boost.asio | 0 |0|0|0|
+uv-cpp | 654282 kbyte|591869 kbyte|401500 kbyte|412855 kbyte|
+boost.asio | 633818 kbyte|585716 kbyte|371386 kbyte|382402 kbyte|
+
 ### Apache bench VS nginx-1.14.2
 <br>environment：Intel Core i5 8265U + debian8 + gcc8.3.0 + libuv1.30.0 + '-O2'</br>
- concurrency | 100 |200|500|1000|
-:---------:|:--------:|:--------:|:--------:|:--------:|
-uv-cpp | 0 |0|0|0|
-nginx | 0 |0|0|0|
+1000 concurrency && 100000 request.
+
 ## Quick start
 A simple echo server
 ```C++
