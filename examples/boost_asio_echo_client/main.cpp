@@ -44,21 +44,24 @@ void startRead(SocketPtr ptr)
     pSocket->async_read_some(buffer(buff,size),std::bind(&onRead,ptr,std::placeholders::_1,std::placeholders::_2));
 }
 
-void startClients(io_service& io,std::vector<SocketPtr>& sockets,ip::tcp::endpoint& endpoint, int cnt)
+void startClients(io_service& io,std::vector<SocketPtr>& sockets,ip::tcp::endpoint& endpoint, uint64_t cnt)
 {
-    SocketPtr ptr = std::make_shared<SocketStr>();
-    sockets.push_back(ptr);
-    ptr->pSocket = std::make_shared<ip::tcp::socket>(io);
-    ptr->pSocket->async_connect(endpoint, [ptr](const boost::system::error_code& error)
+    for(uint64_t i=0;i<cnt;i++)
     {
-        if(error)
+        SocketPtr ptr = std::make_shared<SocketStr>();
+        sockets.push_back(ptr);
+        ptr->pSocket = std::make_shared<ip::tcp::socket>(io);
+        ptr->pSocket->async_connect(endpoint, [ptr](const boost::system::error_code& error)
         {
-            std::cout<<"connect fail"<<std::endl;
-            return;
-        }
-        uint64_t size = 1024*4;
-        write(ptr,size);
-    });
+            if(error)
+            {
+                std::cout<<"connect fail"<<std::endl;
+                return;
+            }
+            uint64_t size = 1024*8;
+            write(ptr,size);
+        });
+    }
 }
 
 int main(int argc, char* argv[])
