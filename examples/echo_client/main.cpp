@@ -17,7 +17,7 @@ void startClients(uv::EventLoop* loop,uv::SocketAddr& addr,std::vector<uv::TcpCl
     {
         uv::TcpClientPtr client = std::make_shared<uv::TcpClient>(loop);
         client->setConnectStatusCallback(
-            [&client](uv::TcpClient::ConnectStatus status)
+            [client](uv::TcpClient::ConnectStatus status)
         {
             if (status == uv::TcpClient::ConnectStatus::OnConnectSuccess)
             {
@@ -29,7 +29,7 @@ void startClients(uv::EventLoop* loop,uv::SocketAddr& addr,std::vector<uv::TcpCl
                 std::cout << "Error : connect to server fail" << std::endl;
             }
         });
-        client->setMessageCallback([&client](const char* data,ssize_t size)
+        client->setMessageCallback([client](const char* data,ssize_t size)
         {
             client->write(data,size,nullptr);
         });
