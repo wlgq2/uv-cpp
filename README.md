@@ -36,7 +36,7 @@ uv-cpp | 0 |0|0|0|
 boost.asio | 0 |0|0|0|
 
 <br>environment：i5-8265U + 4G memory + 4k bytes ping-pong</br>
-并发数| 10|100|1000|5000|
+concurrency| 10|100|1000|5000|
 :---------:|:--------:|:--------:|:--------:|:--------:|
 uv-cpp | 0 |0|0|0|
 boost.asio | 0 |0|0|0|
