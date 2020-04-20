@@ -35,7 +35,7 @@ uv-cpp is a simple interface, high-performance network library based on C++11.
 uv-cpp | 0 |0|0|0|
 boost.asio | 0 |0|0|0|
 
-<br>environment：i5-8265U + 4G memory</br>
+<br>environment：i5-8265U + 4G memory + 4k bytes ping-pong</br>
 并发数| 10|100|1000|5000|
 :---------:|:--------:|:--------:|:--------:|:--------:|
 uv-cpp | 0 |0|0|0|
