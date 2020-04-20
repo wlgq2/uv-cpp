@@ -64,12 +64,6 @@
     <ClCompile Include="..\..\..\uv\Udp.cpp">
       <Filter>uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\examples\clients\Client.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\examples\clients\main.cpp">
-      <Filter>example</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\uv\http\HttpClient.cpp">
       <Filter>uv\http</Filter>
     </ClCompile>
@@ -88,10 +82,8 @@
     <ClCompile Include="..\..\..\uv\DnsGet.cpp">
       <Filter>uv</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\examples\clients\Client.h">
+    <ClCompile Include="..\..\..\examples\echo_client\main.cpp">
       <Filter>example</Filter>
-    </ClInclude>
+    </ClCompile>
   </ItemGroup>
 </Project>

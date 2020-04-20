@@ -1,4 +1,14 @@
-﻿#include <iostream>
+﻿/*
+   Copyright © 2017-2020, orcaer@yeah.net  All rights reserved.
+
+   Author: orcaer@yeah.net
+
+   Last modified: 2020-4-20
+
+   Description: https://github.com/wlgq2/uv-cpp
+*/
+
+#include <iostream>
 #include <uv/include/uv11.h>
 
 void startClients(uv::EventLoop* loop,uv::SocketAddr& addr,std::vector<uv::TcpClientPtr>& clients,uint64_t cnt)

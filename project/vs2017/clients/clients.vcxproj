@@ -78,8 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\clients\Client.cpp" />
-    <ClCompile Include="..\..\..\examples\clients\main.cpp" />
+    <ClCompile Include="..\..\..\examples\echo_client\main.cpp" />
     <ClCompile Include="..\..\..\uv\Async.cpp" />
     <ClCompile Include="..\..\..\uv\CycleBuffer.cpp" />
     <ClCompile Include="..\..\..\uv\DnsGet.cpp" />
@@ -103,9 +102,6 @@
     <ClCompile Include="..\..\..\uv\Timer.cpp" />
     <ClCompile Include="..\..\..\uv\TimerWheel.cpp" />
     <ClCompile Include="..\..\..\uv\Udp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\examples\clients\Client.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
