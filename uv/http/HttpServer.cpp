@@ -77,7 +77,7 @@ void uv::http::HttpServer::onMesage(TcpConnectionPtr conn, const char* data, ssi
     std::string out;
     packetbuf->readBufferN(out, packetbuf->readSize());
     Request req;
-    auto rst = req.unpack(out);
+    auto rst = req.unpackAndCompleted(out);
     if (ParseResult::Error == rst)
     {
         //parse error,clear buffer.

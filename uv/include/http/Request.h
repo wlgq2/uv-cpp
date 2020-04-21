@@ -48,7 +48,8 @@ public:
     Methon getMethon();
 
     int pack(std::string& data);
-    int unpack(std::string& data);
+    ParseResult unpack(std::string& data);
+    ParseResult unpackAndCompleted(std::string& data);
 
     static std::string MethonToStr(Methon methon);
     static Methon StrToMethon(std::string& str);

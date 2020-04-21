@@ -94,7 +94,7 @@ int Response::pack(std::string& data)
     data += " ";
     data += std::to_string(statusCode_);
     data += " ";
-    data += content_;
+    data += statusInfo_;
     data.append(Crlf, sizeof(Crlf));
     for (auto it = heads_.begin();it != heads_.end();it++)
     {

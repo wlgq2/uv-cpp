@@ -152,7 +152,7 @@ int Request::pack(std::string& data)
 }
 
 
-int Request::unpack(std::string& data)
+ParseResult Request::unpack(std::string& data)
 {
     std::vector<std::string> headList;
     auto pos = SplitHttpOfCRLF(data, headList);
@@ -176,7 +176,37 @@ int Request::unpack(std::string& data)
     }
     //conent数据
     content_ = std::string(data, pos + 4);
-    return 0;
+    return ParseResult::Success;
+}
+
+ParseResult Request::unpackAndCompleted(std::string & data)
+{
+    auto rst = unpack(data);
+    if (rst == ParseResult::Success)
+    {
+        auto it = heads_.find("Content-Length");
+        if (it == heads_.end())
+        {
+            it = heads_.find("content-length");
+        }
+        if (it != heads_.end())
+        {
+            try
+            {
+                uint64_t size = std::stoi(it->second);
+                if (size == content_.size())
+                {
+                    return ParseResult::Success;
+                }
+                return ParseResult::Fail;
+            }
+            catch (...)
+            {
+                return ParseResult::Success;
+            }
+        }
+    }
+    return rst;
 }
 
 std::string Request::MethonToStr(Methon methon)
