@@ -92,6 +92,10 @@ void TcpConnection::onSocketClose()
 
 void TcpConnection::close(std::function<void(std::string&)> callback)
 {
+    onMessageCallback_ = nullptr;
+    onConnectCloseCallback_ = nullptr;
+    closeCompleteCallback_ = nullptr;
+
     closeCompleteCallback_ = callback;
     uv_tcp_t* ptr = handle_.get();
     if (::uv_is_active((uv_handle_t*)ptr))
