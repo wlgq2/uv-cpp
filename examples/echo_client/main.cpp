@@ -31,7 +31,7 @@ void startClients(uv::EventLoop* loop,uv::SocketAddr& addr,std::vector<uv::TcpCl
         });
         client->setMessageCallback([client](const char* data,ssize_t size)
         {
-            client->write(data,size,nullptr);
+            client->write(data,(unsigned)size,nullptr);
         });
 
         client->connect(addr);

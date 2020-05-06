@@ -25,8 +25,7 @@ HttpClient::~HttpClient()
 {
     if (isConnected)
     {
-        auto client = client_;
-        client->close([client](std::string& name)
+        client_->close([](uv::TcpClient* client)
         {
             delete client;
         });

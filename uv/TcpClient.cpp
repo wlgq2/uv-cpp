@@ -108,22 +108,21 @@ void TcpClient::onMessage(shared_ptr<TcpConnection> connection,const char* buf,s
         onMessageCallback_(buf,size);
 }
 
-void uv::TcpClient::close(std::function<void(std::string&)> callback)
+void uv::TcpClient::close(std::function<void(uv::TcpClient*)> callback)
 {
     if (connection_)
     {
-        connection_->close([this, callback](std::string& name)
+        connection_->close([this, callback](std::string&)
         {
             //onClose(name);
             if (callback)
-                callback(name);
+                callback(this);
         });
 
     }
     else if(callback)
     {
-        std::string str("");
-        callback(str);
+        callback(this);
     }
 }
 
