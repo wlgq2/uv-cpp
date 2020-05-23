@@ -103,7 +103,6 @@ int main(int argc, char** args)
 
 ```
 More examples [here][4].
-<br></br>
 API's document [here][5].
 
 [1]: https://github.com/libuv/libuv
