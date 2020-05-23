@@ -17,7 +17,7 @@ static EventLoop* DefaultLoop()
 获取单例Loop
 <br></br>
 ```C++ 
-int run();
+int run()
 ```
 阻塞运行loop
 <br></br>
