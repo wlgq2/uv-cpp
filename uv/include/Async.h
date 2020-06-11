@@ -22,7 +22,6 @@
 namespace uv
 {
 
-using AsyncCallback = std::function<void()>;
 class Async  : public std::enable_shared_from_this<Async>
 {
 public:
@@ -31,16 +30,16 @@ public:
     Async(EventLoop* loop);
     virtual ~Async();
 
-    void runInThisLoop(AsyncCallback callback);
-    void process();
+    void runInThisLoop(DefaultCallback callback);
+    
 
-    void close(AsyncCallback callback);
+    void close(DefaultCallback callback);
 private:
     std::mutex mutex_;
     uv_async_t* handle_;
-    std::queue<AsyncCallback> callbacks_;
+    std::queue<DefaultCallback> callbacks_;
 
-
+    void process();
     static void Callback(uv_async_t* handle);
 
 };

@@ -23,7 +23,7 @@ Async::~Async()
 
 }
 
-void Async::runInThisLoop(AsyncCallback callback)
+void Async::runInThisLoop(DefaultCallback callback)
 {
     {
         std::lock_guard<std::mutex> lock(mutex_);
@@ -43,7 +43,7 @@ void uv::Async::process()
     }
 }
 
-void uv::Async::close(AsyncCallback callback)
+void uv::Async::close(DefaultCallback callback)
 {
     if (::uv_is_closing((uv_handle_t*)handle_) == 0)
     {
