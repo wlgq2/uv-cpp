@@ -20,7 +20,7 @@ Register a callback function run in eventloop.
 ```C++
 void close(DefaultCallback callback)
 ```
-clost async object. When the callback function is called, the async's object can be released safely.
+Close async object. The async's object can be released safely when the callback function is called, 
 
 * DefaultCallback callback : Is called when the close is complete.
 <br></br>
