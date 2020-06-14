@@ -10,10 +10,10 @@ Constructor.
 ```C++
 void setOnDNSCallback(OnGetIPAddrCallback callback)
 ```
-<br>set DNS callback function.</br>
+<br>Set DNS callback function.</br>
 OnGetIPAddrCallback  function format :  void (int statue, std::string& ip)
 <br>int status : will 0 while successed.</br>
-<br>std::string& ip : hostname's ip address</br>
+std::string& ip : hostname's ip address
 <br></br>
 
 ```C++
