@@ -19,7 +19,7 @@ OnGetIPAddrCallback  function format :  void (int statue, std::string& ip)
 ```C++
 int GetIP(std::string& hostname, std::string service = "")
 ```
-get hostname's ip address.
+Get hostname's ip address.
 * std::string& hostname : hostname, like "www.google.com"
 * std::string service : service,  like "http"、"ftp"、"80"……
 * return  : return 0 while successed.
