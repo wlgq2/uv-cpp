@@ -24,14 +24,14 @@ void DNSGet::setOnDNSCallback(OnGetIPAddrCallback callback)
     callback_ = callback;
 }
 
-int DNSGet::GetIP(std::string& ip, std::string service )
+int DNSGet::GetIP(std::string& hostname, std::string service )
 {
-    return uv_getaddrinfo(loop_->handle(), &handle_, DNSGet::onDNSGet, ip.c_str(), service.c_str(), NULL);
+    return uv_getaddrinfo(loop_->handle(), &handle_, DNSGet::onDNSGet, hostname.c_str(), service.c_str(), NULL);
 }
 
-int DNSGet::GetIP(std::string&& ip, std::string service)
+int DNSGet::GetIP(std::string&& hostname, std::string service)
 {
-    return GetIP(ip, service);
+    return GetIP(hostname, service);
 }
 
 void DNSGet::OnCallback(int status, addrinfo* res)
