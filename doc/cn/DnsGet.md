@@ -11,7 +11,7 @@ DNSGet(uv::EventLoop* loop)
 void setOnDNSCallback(OnGetIPAddrCallback callback)
 ```
 <br>设置获取DNS回调函数</br>
-OnGetIPAddrCallback : void (int statue, std::string& ip)
+OnGetIPAddrCallback  函数原型:  void (int statue, std::string& ip)
 <br>int status : 状态码，获取成功则为0。</br>
 <br>std::string& ip : 返回域名ip地址</br>
 <br></br>

@@ -5,6 +5,7 @@ Asynchronous interface, used to across threads.
 Async(EventLoop* loop)
 ```
 Constructor.
+* EventLoop* loop : EventLoop's handle.
 <br></br>
 ```C++
 ~Async()
