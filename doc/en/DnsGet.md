@@ -27,5 +27,5 @@ get hostname's ip address.
 ```C++
 int GetIP(std::string&& hostname, std::string service = "");
 ```
-same.
+The same.
 <br></br>
