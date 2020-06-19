@@ -45,13 +45,6 @@ int getLevel();
 <br></br>
 
 ```C++
-int getLevel();
-```
-获取日志输出等级阈值。
-* 返回值 ：当前日志输出等级阈值。
-<br></br>
-
-```C++
 const std::string& getLevelName(int level);
 ```
 获取日志等级对应字符串。
