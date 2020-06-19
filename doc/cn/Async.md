@@ -8,7 +8,7 @@ Async(EventLoop* loop)
 * EventLoop* loop : EventLoop对象句柄。
 <br></br>
 ```C++
-~Async()
+virtual ~Async()
 ```
 析构函数
 <br></br>

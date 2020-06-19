@@ -8,7 +8,7 @@ Constructor.
 * EventLoop* loop : EventLoop's handle.
 <br></br>
 ```C++
-~Async()
+virtual ~Async()
 ```
 Destructor.
 <br></br>

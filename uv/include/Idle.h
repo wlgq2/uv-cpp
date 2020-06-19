@@ -22,7 +22,7 @@ public:
     Idle(EventLoop* loop);
     virtual ~Idle();
 
-    void onCallback();
+    
     void setCallback(DefaultCallback callback);
 
 private:
@@ -31,6 +31,7 @@ private:
     DefaultCallback callback_;
 
 private:
+    void onCallback();
     static void idleCallback(uv_idle_t *handle);
 };
 
