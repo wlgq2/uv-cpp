@@ -30,14 +30,14 @@ public:
     virtual ~Signal();
 
     void setHandle(SignalHandle handle);
-    bool handle(int signum);
-
-    void closeComplete();
     static void Ignore(int sig);
 private:
     uv_signal_t* signal_;
     SignalHandle handle_;
     DefaultCallback closeCallback_;
+
+    bool handle(int signum);
+    void closeComplete();
     static void onSignal(uv_signal_t* handle, int signum);
 };
 
