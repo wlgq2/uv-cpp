@@ -36,7 +36,7 @@ public:
     void setNewConnectinonCallback( NewConnectionCallback callback);
 
     EventLoop* Loop();
-    void onNewConnect(UVTcpPtr client);
+    
 
 private:
     bool listened_;
@@ -46,6 +46,7 @@ private:
 
     uv_tcp_t server_;
 
+    void onNewConnect(UVTcpPtr client);
 };
 
 }
