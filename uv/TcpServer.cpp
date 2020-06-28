@@ -119,7 +119,7 @@ void TcpServer::closeConnection(const string& name)
                 {
                     onConnectCloseCallback_(connection);
                 }
-                connnections_.erase(name);
+                removeConnnection(name);
             }
 
         });

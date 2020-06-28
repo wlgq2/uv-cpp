@@ -34,16 +34,15 @@ public:
     TcpServer(EventLoop* loop, bool tcpNoDelay = true);
     virtual ~TcpServer();
     int bindAndListen(SocketAddr& addr);
-    void addConnnection(std::string& name,TcpConnectionPtr connection);
-    void removeConnnection(std::string& name);
+    
+    
     TcpConnectionPtr getConnnection(const std::string& name);
     void closeConnection(const std::string& name);
 
-    void onMessage(TcpConnectionPtr connection,const char* buf,ssize_t size);
-    void setMessageCallback(OnMessageCallback callback);
-
     void setNewConnectCallback(OnConnectionStatusCallback callback);
     void setConnectCloseCallback(OnConnectionStatusCallback callback);
+
+    void setMessageCallback(OnMessageCallback callback);
 
     void write(TcpConnectionPtr connection,const char* buf,unsigned int size, AfterWriteCallback callback = nullptr);
     void write(std::string& name,const char* buf,unsigned int size, AfterWriteCallback callback =nullptr);
@@ -53,6 +52,10 @@ public:
     void setTimeout(unsigned int);
 private:
     void onAccept(EventLoop* loop, UVTcpPtr client);
+
+    void addConnnection(std::string& name, TcpConnectionPtr connection);
+    void removeConnnection(std::string& name);
+    void onMessage(TcpConnectionPtr connection, const char* buf, ssize_t size);
 protected:
     EventLoop* loop_;
 private:
