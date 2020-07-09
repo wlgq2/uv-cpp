@@ -22,16 +22,23 @@ namespace uv
 
 //algorithm complexity  o(1).
 
-class  ConnectionElement : public std::enable_shared_from_this<ConnectionElement>
+class  ConnectionWrapper : public std::enable_shared_from_this<ConnectionWrapper>
 {
 public:
-    ConnectionElement(TcpConnectionPtr connection)
+    ConnectionWrapper(TcpConnectionPtr connection)
         :connection_(connection)
     {
-
+        
     }
-
-    ~ConnectionElement()
+    void setWrapper()
+    {
+        auto connection = connection_.lock();
+        if (connection)
+        {
+            connection->setWrapper(shared_from_this());
+        }
+    }
+    ~ConnectionWrapper()
     {
         TcpConnectionPtr connection = connection_.lock();
         if(connection)
@@ -43,7 +50,6 @@ public:
 private:
     std::weak_ptr<TcpConnection> connection_;
 };
-
 
 class TimerWheel
 {
@@ -60,7 +66,7 @@ private:
     unsigned int timeoutSec_;
     Timer timer_;
 
-    std::vector< std::set< std::shared_ptr<ConnectionElement>>> wheel;
+    std::vector<std::set<std::shared_ptr<ConnectionWrapper>>> wheel_;
 
     void wheelCallback();
 

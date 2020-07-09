@@ -173,14 +173,14 @@ void TcpConnection::writeInLoop(const char* buf, ssize_t size, AfterWriteCallbac
 }
 
 
-void TcpConnection::setElement(shared_ptr<ConnectionElement> conn)
+void TcpConnection::setWrapper(shared_ptr<ConnectionWrapper> conn)
 {
-    element_ = conn;
+    wrapper_ = conn;
 }
 
-std::weak_ptr<ConnectionElement> TcpConnection::Element()
+std::shared_ptr<ConnectionWrapper> TcpConnection::getWrapper()
 {
-    return element_;
+    return wrapper_.lock();
 }
 
 void  TcpConnection::onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf)
@@ -246,7 +246,7 @@ bool uv::TcpConnection::isConnected()
     return connected_;
 }
 
-std::string & uv::TcpConnection::Name()
+const std::string& uv::TcpConnection::Name()
 {
     return name_;
 }

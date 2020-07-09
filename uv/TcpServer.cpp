@@ -52,7 +52,7 @@ void uv::TcpServer::onAccept(EventLoop * loop, UVTcpPtr client)
     string key;
     SocketAddr::AddrToStr(client.get(), key, ipv_);
 
-    uv::LogWriter::Instance()->info("new connect  " + key);
+    uv::LogWriter::Instance()->debug("new connect  " + key);
     shared_ptr<TcpConnection> connection(new TcpConnection(loop, key, client));
     if (connection)
     {

@@ -38,7 +38,7 @@ struct WriteInfo
 
 class TcpConnection ;
 class TcpServer;
-class ConnectionElement;
+class ConnectionWrapper;
 
 using TcpConnectionPtr = std::shared_ptr<TcpConnection>;
 using AfterWriteCallback =  std::function<void (WriteInfo& )> ;
@@ -52,34 +52,31 @@ class TcpConnection : public std::enable_shared_from_this<TcpConnection>
 public :
     TcpConnection(EventLoop* loop,std::string& name,UVTcpPtr client,bool isConnected = true);
     virtual ~TcpConnection();
-    void onMessage(const char* buf,ssize_t size);
+    
     void onSocketClose();
     void close(std::function<void(std::string&)> callback);
 
     int write(const char* buf,ssize_t size,AfterWriteCallback callback);
     void writeInLoop(const char* buf,ssize_t size,AfterWriteCallback callback);
 
-
-    void setElement(std::shared_ptr<ConnectionElement> conn);
-    std::weak_ptr<ConnectionElement> Element();
-
-    static void  onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf);
+    void setWrapper(std::shared_ptr<ConnectionWrapper> conn);
+    std::shared_ptr<ConnectionWrapper> getWrapper();
 
     void setMessageCallback(OnMessageCallback callback);
-
     void setConnectCloseCallback(OnCloseCallback callback);
-
-    void CloseComplete();
-
+    
     void setConnectStatus(bool status);
-
     bool isConnected();
-    std::string& Name();
-
-    char* resizeData(size_t size);
+    
+    const std::string& Name();
 
     PacketBufferPtr getPacketBuffer();
-
+private:
+    void onMessage(const char* buf, ssize_t size);
+    void CloseComplete();
+    char* resizeData(size_t size);
+    static void  onMesageReceive(uv_stream_t* client, ssize_t nread, const uv_buf_t* buf);
+    
 private :
     std::string name_;
     bool connected_;
@@ -87,12 +84,11 @@ private :
     UVTcpPtr handle_;
     std::string data_;
     PacketBufferPtr buffer_;
-    std::weak_ptr<ConnectionElement> element_;
+    std::weak_ptr<ConnectionWrapper> wrapper_;
 
     OnMessageCallback onMessageCallback_;
     OnCloseCallback onConnectCloseCallback_;
     CloseCompleteCallback closeCompleteCallback_;
 };
-
 }
 #endif

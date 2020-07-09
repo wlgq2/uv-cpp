@@ -14,7 +14,7 @@ using namespace uv;
 using namespace std;
 
 TimerWheel::TimerWheel(EventLoop* loop)
-    :TimerWheel(loop,0)
+    :TimerWheel(loop, 0)
 {
 
 }
@@ -36,7 +36,7 @@ void TimerWheel::start()
 {
     if(timeoutSec_)
     {
-        wheel.resize(timeoutSec_);
+        wheel_.resize(timeoutSec_);
         timer_.start();
     }
 }
@@ -45,21 +45,20 @@ void TimerWheel::insert(shared_ptr<TcpConnection> connnection)
 {
     if(!timeoutSec_)
         return;
-    shared_ptr<ConnectionElement> conn = connnection->Element().lock();
+    shared_ptr<ConnectionWrapper> conn = connnection->getWrapper();
     if(conn)
     {
-        wheel[index_].insert(conn);
+        wheel_[index_].insert(conn);
     }
 }
-
 
 void TimerWheel::insertNew(shared_ptr<TcpConnection> connection)
 {
     if(!timeoutSec_)
         return;
-    shared_ptr<ConnectionElement> conn(new ConnectionElement(connection));
-    connection->setElement(conn);
-    wheel[index_].insert(conn);
+    shared_ptr<ConnectionWrapper> wrapper = std::make_shared<ConnectionWrapper>(connection);
+    wrapper->setWrapper();
+    wheel_[index_].insert(wrapper);
 }
 
 void TimerWheel::wheelCallback()
@@ -70,5 +69,5 @@ void TimerWheel::wheelCallback()
     {
         index_=0;
     }
-    wheel[index_].clear();
+    wheel_[index_].clear();
 }
