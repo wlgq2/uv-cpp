@@ -31,7 +31,7 @@ int write(const char* buf,ssize_t size,AfterWriteCallback callback)
 ```
 Write tcp buffer.
 * const char* buf : Write data buffer.
-* ssize_t size : data's length.
+* ssize_t size : Data's length.
 * AfterWriteCallback callback : Callback function after writing data.
 * return : 0 for success.
 <br></br>

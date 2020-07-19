@@ -38,12 +38,6 @@ void close(std::function<void(uv::TcpClient*)> callback)
 * std::function<void(uv::TcpClient*)> callback : 关闭完成回调函数，参数为Client指针，回调被调用可以安全删除客户端对象。
 <br></br>
 ```C++
-void close(std::function<void(uv::TcpClient*)> callback)
-```
-关闭客户端。
-* std::function<void(uv::TcpClient*)> callback : 关闭完成回调函数，参数为Client指针，回调被调用可以安全删除客户端对象。
-<br></br>
-```C++
 void write(const char* buf, unsigned int size, AfterWriteCallback callback = nullptr)
 ```
 写tcp socket缓存。
