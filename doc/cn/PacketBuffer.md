@@ -45,3 +45,21 @@ irtual uint64_t readSize() = 0
 当前可读数据字节长度。
 * 返回值 : 可读字节长度。
 <br></br>
+```C++
+int readString(std::string& out)
+```
+从缓存中读取一个字符串数据包。
+* std::string& out : 字符串数据包。
+<br></br>
+```C++
+int readPacket(Packet& out)
+```
+从缓存中读取一个Packet对象数据包。
+* Packet& out : Packet对象数据包。
+<br></br>
+```C++
+int readGeneric(void* out)
+```
+从缓存中读取一个自定义对象数据包。
+* void* out : 自定义数据对象指针。
+<br></br>
