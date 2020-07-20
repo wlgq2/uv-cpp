@@ -2,12 +2,15 @@
 Packet class.
 <br></br>
 //Packet:
+<br></br>
 //------------------------------------------------
+<br></br>
 //  head  |  size   | data   |  end   |
+<br></br>
 // 1 byte | 2 bytes | N bytes| 1 byte |
+<br></br>
 //------------------------------------------------
-
-
+<br></br>
 ```C++
 Packet()
 ```
