@@ -25,6 +25,7 @@ class PacketBuffer
 {
 
 public:
+    PacketBuffer() {}
     virtual ~PacketBuffer(){}
 
     virtual int append(const char* data, uint64_t size) = 0;
