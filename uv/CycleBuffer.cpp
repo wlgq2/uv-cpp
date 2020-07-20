@@ -12,20 +12,20 @@ Description: https://github.com/wlgq2/uv-cpp
 
 using namespace uv;
 
-uv::ArrayBuffer::ArrayBuffer()
+CycleBuffer::CycleBuffer()
     :writeIndex_(0),
     readIndex_(0)
 {
     buffer_ = new uint8_t[GlobalConfig::GlobalConfig::CycleBufferSize];
 }
 
-uv::ArrayBuffer::~ArrayBuffer()
+CycleBuffer::~CycleBuffer()
 {
     delete[] buffer_;
 }
 
 
-int uv::ArrayBuffer::append(const char* data, uint64_t size)
+int CycleBuffer::append(const char* data, uint64_t size)
 {
     SizeInfo info;
     usableSizeInfo(info);
@@ -49,7 +49,7 @@ int uv::ArrayBuffer::append(const char* data, uint64_t size)
 
 }
 
-int uv::ArrayBuffer::readBufferN(std::string& data, uint64_t N)
+int CycleBuffer::readBufferN(std::string& data, uint64_t N)
 {
     SizeInfo info;
     readSizeInfo(info);
@@ -76,7 +76,7 @@ int uv::ArrayBuffer::readBufferN(std::string& data, uint64_t N)
     return 0;
 }
 
-int uv::ArrayBuffer::clearBufferN(uint64_t N)
+int CycleBuffer::clearBufferN(uint64_t N)
 {
     if(N>readSize())
     {
@@ -86,14 +86,14 @@ int uv::ArrayBuffer::clearBufferN(uint64_t N)
     return 0;
 }
 
-int uv::ArrayBuffer::clear()
+int CycleBuffer::clear()
 {
     writeIndex_ = 0;
     readIndex_ = 0;
     return 0;
 }
 
-uint64_t uv::ArrayBuffer::usableSize()
+uint64_t CycleBuffer::usableSize()
 {
     uint64_t usable;
     if (writeIndex_ < readIndex_)
@@ -107,7 +107,7 @@ uint64_t uv::ArrayBuffer::usableSize()
     return usable;
 }
 
-void uv::ArrayBuffer::usableSizeInfo(SizeInfo& info)
+void CycleBuffer::usableSizeInfo(SizeInfo& info)
 {
     if (writeIndex_ < readIndex_)
     {
@@ -123,14 +123,14 @@ void uv::ArrayBuffer::usableSizeInfo(SizeInfo& info)
     info.size = info.part1 + info.part2;
 }
 
-uint64_t uv::ArrayBuffer::readSize()
+uint64_t CycleBuffer::readSize()
 {
     SizeInfo info;
     readSizeInfo(info);
     return info.size;
 }
 
-void uv::ArrayBuffer::readSizeInfo(SizeInfo& info)
+void CycleBuffer::readSizeInfo(SizeInfo& info)
 {
     if (writeIndex_ >= readIndex_)
     {
@@ -145,7 +145,7 @@ void uv::ArrayBuffer::readSizeInfo(SizeInfo& info)
     info.size = info.part1 + info.part2;
 }
 
-int uv::ArrayBuffer::addWriteIndex(uint64_t size)
+int CycleBuffer::addWriteIndex(uint64_t size)
 {
     if (size > GlobalConfig::CycleBufferSize)
         return -1;
@@ -155,7 +155,7 @@ int uv::ArrayBuffer::addWriteIndex(uint64_t size)
     return 0;
 }
 
-int uv::ArrayBuffer::addReadIndex(uint64_t size)
+int CycleBuffer::addReadIndex(uint64_t size)
 {
     if (size > GlobalConfig::CycleBufferSize)
         return -1;

@@ -74,7 +74,7 @@ TcpConnection::TcpConnection(EventLoop* loop, std::string& name, UVTcpPtr client
     }
     else if(GlobalConfig::BufferModeStatus == GlobalConfig::CycleBuffer)
     {
-        buffer_ = std::make_shared<ArrayBuffer>();
+        buffer_ = std::make_shared<CycleBuffer>();
     }
 }
 

@@ -38,11 +38,11 @@ struct SizeInfo
     uint64_t part2;
 };
 
-class ArrayBuffer :public PacketBuffer
+class CycleBuffer :public PacketBuffer
 {
 public:
-    ArrayBuffer();
-    ~ArrayBuffer();
+    CycleBuffer();
+    ~CycleBuffer();
 
     //写字节时必须距离读字节一个字节，否则无法区分缓存满/空。
     int append(const char* data, uint64_t size) override;
