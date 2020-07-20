@@ -51,11 +51,11 @@ public:
     int clear() override;
     uint64_t readSize()  override;
 
+private:
     uint64_t usableSize();
     void usableSizeInfo(SizeInfo& info);
     void readSizeInfo(SizeInfo& info);
 
-private:
     int addWriteIndex(uint64_t size);
     int addReadIndex(uint64_t size);
 
