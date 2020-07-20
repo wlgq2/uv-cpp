@@ -28,16 +28,16 @@ public:
     Packet();
     ~Packet();
 
-    static int readFromBuffer(PacketBuffer*, Packet&);
-
     void pack(const char* data, uint16_t size);
-
     const char* getData();
     const uint16_t DataSize();
     const std::string& Buffer();
     const uint32_t PacketSize();
 
     void swap(std::string& str);
+    
+    static int readFromBuffer(PacketBuffer*, Packet&);
+    
     template<typename NumType>
     static void UnpackNum(const uint8_t* data, NumType& num);
 
