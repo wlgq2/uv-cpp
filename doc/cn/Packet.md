@@ -1,12 +1,8 @@
 # Packet
-Packet class.
-<br></br>
-<br> //Packet: </br>
-<br> //------------------------------------------------ </br>
-<br> //  head  |  size   | data   |  end   | </br>
-<br> // 1 byte | 2 bytes | N bytes| 1 byte | </br>
-<br> //------------------------------------------------ </br>
-<br></br>
+<br> Packet format: </br>
+header | size|data|end|
+:---------:|:--------:|:--------:|:--------:|
+1 byte | 2 bytes|N bytes|1 byte|
 ```C++
 Packet()
 ```
