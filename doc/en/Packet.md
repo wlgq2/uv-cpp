@@ -1,8 +1,8 @@
 # Packet
-<br> 数据包长度: </br>
-包头 | 数据长度|数据段|包尾|
+<br> Packet format: </br>
+header | size|data|end|
 :---------:|:--------:|:--------:|:--------:|
-1字节 | 2字节|N字节|1字节|
+1 byte | 2 bytes|N bytes|1 byte|
 ```C++
 Packet()
 ```
