@@ -6,83 +6,76 @@ header | size|data|end|
 ```C++
 Packet()
 ```
-构造函数。
+Constructor.
 <br></br>
 ```C++
 ~Packet()
 ```
-析构函数。
+Destructor.
 <br></br>
 ```C++
 void pack(const char* data, uint16_t size)
 ```
-数据写入packet类。
-* const char* data : 写入数据地址。
-* uint16_t size : 写入数据长度。
-<br></br>
-```C++
-void pack(const char* data, uint16_t size)
-```
-数据写入packet类。
-* const char* data : 写入数据地址。
-* uint16_t size : 写入数据长度。
+Write data to packet.
+* const char* data : Data's address.
+* uint16_t size : Data's length.
 <br></br>
 ```C++
 const char* getData()
 ```
-读取数据缓存指针。
-* 返回值 : 数据缓存地址。
+Get data's address.
+* return : Data's address.
 <br></br>
 ```C++
 const uint16_t DataSize()
 ```
-读取数据缓存长度。
-* 返回值 : 数据缓存长度。
+Get data's length.
+* return : data's length.
 <br></br>
 ```C++
 const std::string& Buffer()
 ```
-读取包缓存。
-* 返回值 : 数据包缓存。
+Get packet buffer address.
+* return : packet buffer address.
 <br></br>
 ```C++
 const uint32_t PacketSize()
 ```
-读取包缓存长度。
-* 返回值 : 数据包缓存长度。
+Get packet buffer length.
+* return : Packet buffer length.
 <br></br>
 ```C++
 void swap(std::string& str)
 ```
-交换缓存。
-* std::string& str : 交换缓存string。
+Swap packet buffer.
+* std::string& str : Buffer string.
 <br></br>
 ```C++
 static int readFromBuffer(PacketBuffer*, Packet&)
 ```
-从PacketBuffer接口中读取包数据。
-* PacketBuffer* : PacketBuffer接口。
-* Packet& ：读取的Packet对象。
+Read packet data from PacketBuffer interface.
+* PacketBuffer* : PacketBuffer interface.
+* Packet& ：Packet obj.
 <br></br>
 ```C++
 template<typename NumType>
 static void UnpackNum(const uint8_t* data, NumType& num)
 ```
-从字节流中解析数字。
-* const uint8_t* data : 字节流。
-* NumType& num ：解析出的数字。
+Unpack Num from data stream.
+* const uint8_t* data : Data stream.
+* NumType& num : Num variable.
 <br></br>
 ```C++
 template<typename NumType>
 static void PackNum(char* data, NumType num)
 ```
-把数字打包刀字节流。
-* char* data : 字节流。
-* NumType num ：被打包的数字。
+Write a num to data stream.
+* char* data : Data stream.
+* NumType num : Num variable.
 <br></br>
 ```C++
 static uint32_t PacketMinSize()
 ```
-数据包最小长度(包头+数据长度字段+包尾)
-* 返回值 : 数据包最小长度。
+Min Packet size.(header+data size+end)
+* return : Min Packet size.
 <br></br>

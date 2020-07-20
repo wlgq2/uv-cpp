@@ -21,13 +21,6 @@ void pack(const char* data, uint16_t size)
 * uint16_t size : 写入数据长度。
 <br></br>
 ```C++
-void pack(const char* data, uint16_t size)
-```
-数据写入packet类。
-* const char* data : 写入数据地址。
-* uint16_t size : 写入数据长度。
-<br></br>
-```C++
 const char* getData()
 ```
 读取数据缓存指针。
