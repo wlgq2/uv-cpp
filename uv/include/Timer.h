@@ -19,8 +19,8 @@ namespace uv
 class Timer
 {
 public:
-    using TimerCallback = std::function<void(Timer* ptr)>;
-    using TimerCloseComplete = std::function<void(Timer* ptr)>;
+    using TimerCallback = std::function<void(Timer*)>;
+    using TimerCloseComplete = std::function<void(Timer*)>;
 
     Timer(EventLoop* loop, uint64_t timeout, uint64_t repeat, TimerCallback callback);
     virtual ~Timer();
