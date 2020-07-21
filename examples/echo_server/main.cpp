@@ -29,7 +29,7 @@ int main(int argc, char** args)
         ptr->write(data, size, nullptr);
     });
     //心跳超时
-    //server.setTimeout(40);
+    //server.setTimeout(15);
     server.bindAndListen(addr);
 
     uv::Timer timer(loop, 1000, 1000, [&dataSize](uv::Timer* ptr)

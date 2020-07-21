@@ -104,7 +104,6 @@
     <ClCompile Include="..\..\..\uv\TcpConnection.cpp" />
     <ClCompile Include="..\..\..\uv\TcpServer.cpp" />
     <ClCompile Include="..\..\..\uv\Timer.cpp" />
-    <ClCompile Include="..\..\..\uv\TimerWheel.cpp" />
     <ClCompile Include="..\..\..\uv\Udp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -59,7 +59,7 @@ public :
     int write(const char* buf,ssize_t size,AfterWriteCallback callback);
     void writeInLoop(const char* buf,ssize_t size,AfterWriteCallback callback);
 
-    void setWrapper(std::shared_ptr<ConnectionWrapper> conn);
+    void setWrapper(std::shared_ptr<ConnectionWrapper> wrapper);
     std::shared_ptr<ConnectionWrapper> getWrapper();
 
     void setMessageCallback(OnMessageCallback callback);
@@ -90,5 +90,27 @@ private :
     OnCloseCallback onConnectCloseCallback_;
     CloseCompleteCallback closeCompleteCallback_;
 };
+
+class  ConnectionWrapper : public std::enable_shared_from_this<ConnectionWrapper>
+{
+public:
+    ConnectionWrapper(TcpConnectionPtr connection)
+        :connection_(connection)
+    {
+    }
+
+    ~ConnectionWrapper()
+    {
+        TcpConnectionPtr connection = connection_.lock();
+        if (connection)
+        {
+            connection->onSocketClose();
+        }
+    }
+
+private:
+    std::weak_ptr<TcpConnection> connection_;
+};
+using ConnectionWrapperPtr = std::shared_ptr<ConnectionWrapper>;
 }
 #endif

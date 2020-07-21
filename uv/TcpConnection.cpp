@@ -173,9 +173,9 @@ void TcpConnection::writeInLoop(const char* buf, ssize_t size, AfterWriteCallbac
 }
 
 
-void TcpConnection::setWrapper(shared_ptr<ConnectionWrapper> conn)
+void TcpConnection::setWrapper(ConnectionWrapperPtr wrapper)
 {
-    wrapper_ = conn;
+    wrapper_ = wrapper;
 }
 
 std::shared_ptr<ConnectionWrapper> TcpConnection::getWrapper()

@@ -68,7 +68,7 @@ private:
     OnMessageCallback onMessageCallback_;
     OnConnectionStatusCallback onNewConnectCallback_;
     OnConnectionStatusCallback onConnectCloseCallback_;
-    TimerWheel timerWheel_;
+    TimerWheel<ConnectionWrapper> timerWheel_;
 };
 
 

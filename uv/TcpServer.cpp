@@ -59,7 +59,12 @@ void uv::TcpServer::onAccept(EventLoop * loop, UVTcpPtr client)
         connection->setMessageCallback(std::bind(&TcpServer::onMessage, this, placeholders::_1, placeholders::_2, placeholders::_3));
         connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection, this, placeholders::_1));
         addConnnection(key, connection);
-        timerWheel_.insertNew(connection);
+        if (timerWheel_.getTimeout() > 0)
+        {
+            auto wrapper = std::make_shared<ConnectionWrapper>(connection);
+            connection->setWrapper(wrapper);
+            timerWheel_.insert(wrapper);
+        }
         if (onNewConnectCallback_)
             onNewConnectCallback_(connection);
     }
@@ -131,7 +136,10 @@ void TcpServer::onMessage(TcpConnectionPtr connection,const char* buf,ssize_t si
 {
     if(onMessageCallback_)
         onMessageCallback_(connection,buf,size);
-    timerWheel_.insert(connection);
+    if (timerWheel_.getTimeout() > 0)
+    {
+        timerWheel_.insert(connection->getWrapper());
+    }
 }
 
 

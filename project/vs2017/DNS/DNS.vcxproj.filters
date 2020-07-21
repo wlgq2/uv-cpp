@@ -57,9 +57,6 @@
     <ClCompile Include="..\..\..\uv\Timer.cpp">
       <Filter>uv</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\uv\TimerWheel.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\uv\Udp.cpp">
       <Filter>uv</Filter>
     </ClCompile>
