@@ -62,7 +62,6 @@
 		<Unit filename="../../../uv/TcpConnection.cpp" />
 		<Unit filename="../../../uv/TcpServer.cpp" />
 		<Unit filename="../../../uv/Timer.cpp" />
-		<Unit filename="../../../uv/TimerWheel.cpp" />
 		<Unit filename="../../../uv/Udp.cpp" />
 		<Unit filename="../../../uv/http/HttpClient.cpp" />
 		<Unit filename="../../../uv/http/HttpCommon.cpp" />
