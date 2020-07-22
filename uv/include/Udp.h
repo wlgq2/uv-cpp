@@ -29,19 +29,15 @@ public:
     virtual ~Udp();
 
     int bindAndRead(SocketAddr& addr);
-
     int send(SocketAddr& to, const char* buf, unsigned size);
-
     void close(DefaultCallback callback);
-
-    void onCloseCompleted();
-
-    void onMessage(const sockaddr* from, const char* data, unsigned size);
     void setMessageCallback(OnUdpMessageCallback callback);
 
-public:
+private:
+    void onCloseCompleted();
+    void onMessage(const sockaddr* from, const char* data, unsigned size);
+
     static void onMesageReceive(uv_udp_t* handle, ssize_t nread, const uv_buf_t* buf, const struct sockaddr* addr, unsigned flags);
-    
 private:
     SocketAddr::IPV ipv_;
     uv_udp_t* handle_;

@@ -28,7 +28,7 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
     //不使用buffer
     if (uv::GlobalConfig::BufferModeStatus == uv::GlobalConfig::NoBuffer)
     {
-        std::cout << "reserve data :" << std::string(buf, size) << std::endl;
+        std::cout << "receive data :" << std::string(buf, size) << std::endl;
 #if       1   //直接发送
         connection->write(buf, size, nullptr);
 
@@ -59,7 +59,7 @@ void EchoServer::newMessage(shared_ptr<TcpConnection> connection,const char* buf
             //循环读取buffer
             while (0 == packetbuf->readPacket(packet))
             {
-                std::cout << "reserve data "<< packet.DataSize()<<":" << packet.getData() << std::endl;
+                std::cout << "receive data "<< packet.DataSize()<<":" << packet.getData() << std::endl;
                 connection->write(packet.Buffer().c_str(), packet.PacketSize(), nullptr);
             }
         }
