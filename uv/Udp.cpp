@@ -12,7 +12,7 @@ Description: https://github.com/wlgq2/uv-cpp
 
 using namespace uv;
 
-uv::Udp::Udp(EventLoop* loop)
+Udp::Udp(EventLoop* loop)
     :handle_(new uv_udp_t()),
     onMessageCallback_(nullptr)
 {
@@ -20,12 +20,12 @@ uv::Udp::Udp(EventLoop* loop)
     handle_->data = this;
 }
 
-uv::Udp::~Udp()
+Udp::~Udp()
 {
     delete handle_;
 }
 
-int uv::Udp::bindAndRead(SocketAddr& addr)
+int Udp::bindAndRead(SocketAddr& addr)
 {
     ipv_ = addr.Ipv();
     auto rst = uv_udp_bind(handle_, addr.Addr(), 0);
@@ -46,7 +46,7 @@ int uv::Udp::bindAndRead(SocketAddr& addr)
         &Udp::onMesageReceive);
 }
 
-int uv::Udp::send(SocketAddr& to, const char* buf, unsigned size)
+int Udp::send(SocketAddr& to, const char* buf, unsigned size)
 {
     uv_udp_send_t* sendHandle = new uv_udp_send_t();
     const uv_buf_t uvbuf = uv_buf_init(const_cast<char*>(buf), size);
@@ -63,7 +63,7 @@ int uv::Udp::send(SocketAddr& to, const char* buf, unsigned size)
     });
 }
 
-void uv::Udp::close(DefaultCallback callback)
+void Udp::close(DefaultCallback callback)
 {
     onClose_ = callback;
     if (uv_is_active((uv_handle_t*)handle_))
@@ -85,7 +85,7 @@ void uv::Udp::close(DefaultCallback callback)
 
 }
 
-void uv::Udp::onCloseCompleted()
+void Udp::onCloseCompleted()
 {
     if (onClose_)
     {
@@ -93,7 +93,7 @@ void uv::Udp::onCloseCompleted()
     }
 }
 
-void uv::Udp::onMessage(const sockaddr* from, const char* data, unsigned size)
+void Udp::onMessage(const sockaddr* from, const char* data, unsigned size)
 {
     if (nullptr != onMessageCallback_)
     {
@@ -102,12 +102,12 @@ void uv::Udp::onMessage(const sockaddr* from, const char* data, unsigned size)
     }
 }
 
-void uv::Udp::setMessageCallback(OnUdpMessageCallback callback)
+void Udp::setMessageCallback(OnUdpMessageCallback callback)
 {
     onMessageCallback_ = callback;
 }
 
-void uv::Udp::onMesageReceive(uv_udp_t* handle, ssize_t nread, const uv_buf_t* buf, const sockaddr* addr, unsigned flags)
+void Udp::onMesageReceive(uv_udp_t* handle, ssize_t nread, const uv_buf_t* buf, const sockaddr* addr, unsigned flags)
 {
     if (nread < 0) 
     {
