@@ -57,7 +57,7 @@ public:
     static uint8_t EndByte;
     static DataMode Mode;
 
-private:
+protected:
     std::string buffer_;
     uint16_t dataSize_;
 };
