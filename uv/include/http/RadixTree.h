@@ -38,7 +38,7 @@ public:
     void set(std::string& key, Type value);
     void set(std::string&& key, Type value);
 
-    RadixTreeNodePtr<Type> begin();
+    RadixTreeNodePtr<Type> Root();
     bool get(std::string& key, Type& value);
     bool get(std::string&& key, Type& value);
 
@@ -83,7 +83,7 @@ inline void RadixTree<Type>::set(std::string&& key, Type value)
 }
 
 template<typename Type>
-inline RadixTreeNodePtr<Type> RadixTree<Type>::begin()
+inline RadixTreeNodePtr<Type> RadixTree<Type>::Root()
 {
     return root_;
 }
