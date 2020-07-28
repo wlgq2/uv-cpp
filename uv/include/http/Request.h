@@ -26,6 +26,11 @@ public:
     Request();
     Request(HttpVersion version, Methon methon);
 
+    void setVersion(HttpVersion version);
+    void setMethon(Methon methon);
+    HttpVersion getVersion();
+    Methon getMethon();
+
     void swapContent(std::string& str);
     void swapContent(std::string&& str);
     std::string& getContent();
@@ -38,14 +43,10 @@ public:
     std::string getUrlParam(std::string& key);
     std::string getUrlParam(std::string&& key);
 
-    void setVersion(HttpVersion version);
-    void setMethon(Methon methon);
     void setPath(std::string&& path);
     void setPath(std::string& path);
     std::string& getValue();
     std::string& getPath();
-    HttpVersion getVersion();
-    Methon getMethon();
 
     int pack(std::string& data);
     ParseResult unpack(std::string& data);
