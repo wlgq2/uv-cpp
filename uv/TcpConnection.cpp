@@ -165,10 +165,20 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
 
 void TcpConnection::writeInLoop(const char* buf, ssize_t size, AfterWriteCallback callback)
 {
+    std::weak_ptr<uv::TcpConnection> conn = shared_from_this();
     loop_->runInThisLoop(
-        [this,buf,size, callback]()
+        [conn,buf,size, callback]()
     {
-        write(buf, size, callback);
+        std::shared_ptr<uv::TcpConnection> ptr = conn.lock();
+        if (ptr != nullptr)
+        {
+            ptr->write(buf, size, callback);
+        }
+        else
+        {
+            struct WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),static_cast<unsigned long>(size) };
+            callback(info);
+        }
     });
 }
 
