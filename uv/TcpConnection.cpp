@@ -130,7 +130,7 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
         rst = ::uv_write((uv_write_t*)req, (uv_stream_t*)ptr, &req->buf, 1,
             [](uv_write_t *req, int status)
         {
-            WriteReq *wr = (WriteReq*)req;
+            WriteReq* wr = (WriteReq*)req;
             if (nullptr != wr->callback)
             {
                 struct WriteInfo info;
@@ -149,6 +149,7 @@ int TcpConnection::write(const char* buf, ssize_t size, AfterWriteCallback callb
                 struct WriteInfo info = { rst,const_cast<char*>(buf),static_cast<unsigned long>(size) };
                 callback(info);
             }
+            delete req;
         }
     }
     else
