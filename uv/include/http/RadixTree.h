@@ -39,15 +39,15 @@ public:
     void set(std::string&& key, Type value);
 
     RadixTreeNodePtr<Type> Root();
-    bool get(std::string& key, Type& value);
-    bool get(std::string&& key, Type& value);
+    bool get(const std::string& key, Type& value);
+    bool get(const std::string&& key, Type& value);
 
     static char WildCard;
 private:
     RadixTreeNodePtr<Type> root_;
 
     void setNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value);
-    bool getNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value);
+    bool getNode(RadixTreeNodePtr<Type>& node, const std::string& key, Type& value);
 };
 
 template<typename Type>
@@ -89,13 +89,13 @@ inline RadixTreeNodePtr<Type> RadixTree<Type>::Root()
 }
 
 template<typename Type>
-inline bool RadixTree<Type>::get(std::string& key, Type& value)
+inline bool RadixTree<Type>::get(const std::string& key, Type& value)
 {
     return getNode(root_, key, value);
 }
 
 template<typename Type>
-inline bool RadixTree<Type>::get(std::string&& key, Type& value)
+inline bool RadixTree<Type>::get(const std::string&& key, Type& value)
 {
     return get(key, value);
 }
@@ -173,7 +173,7 @@ inline void RadixTree<Type>::setNode(RadixTreeNodePtr<Type>& node, std::string& 
 }   
 
 template<typename Type>
-inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, std::string& key, Type& value)
+inline bool RadixTree<Type>::getNode(RadixTreeNodePtr<Type>& node, const std::string& key, Type& value)
 {
     auto commonLength = GetCommomStringLength(node->key, key);
     //通配符判定

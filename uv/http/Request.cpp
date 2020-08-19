@@ -109,12 +109,12 @@ void Request::setPath(std::string& path)
     path_ = path;
 }
 
-std::string& Request::getValue()
+const std::string& Request::getValue()
 {
     return value_;
 }
 
-std::string& Request::getPath()
+const std::string& Request::getPath()
 {
     return path_;
 }

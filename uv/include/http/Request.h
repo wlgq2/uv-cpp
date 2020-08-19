@@ -45,9 +45,9 @@ public:
 
     void setPath(std::string&& path);
     void setPath(std::string& path);
-    std::string& getValue();
-    std::string& getPath();
-
+    const std::string& getPath();
+    const std::string& getValue();
+ 
     int pack(std::string& data);
     ParseResult unpack(std::string& data);
     ParseResult unpackAndCompleted(std::string& data);
