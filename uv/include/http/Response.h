@@ -41,7 +41,7 @@ public:
     void setStatus(StatusCode code,std::string info);
     HttpVersion getVersion();
     StatusCode getStatusCode();
-    std::string& getStatusInfo();
+    const std::string& getStatusInfo();
 
     void appendHead(std::string& key, std::string& value);
     void appendHead(std::string&& key, std::string&& value);
@@ -49,7 +49,7 @@ public:
     std::string getHead(std::string& key);
     void swapContent(std::string& body);
     void swapContent(std::string&& body);
-    std::string& getContent();
+    const std::string& getContent();
 
     int pack(std::string& data);
     int unpack(std::string& data);

@@ -46,7 +46,7 @@ Response::StatusCode Response::getStatusCode()
     return statusCode_;
 }
 
-std::string& Response::getStatusInfo()
+const std::string& Response::getStatusInfo()
 {
     return statusInfo_;
 }
@@ -81,7 +81,7 @@ void Response::swapContent(std::string&& body)
     content_.swap(body);
 }
 
-std::string& Response::getContent()
+const std::string& Response::getContent()
 {
     return content_;
 }
