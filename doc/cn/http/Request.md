@@ -17,7 +17,7 @@ Request(HttpVersion version, Methon methon)
 void setVersion(HttpVersion version)
 ```
 设置请求HTTP协议版本。
-* HttpVersion version : Http协议版本。    Unknown、Http1_0、Http1_1、
+* HttpVersion version : Http协议版本。 Unknown、Http1_0、Http1_1。
 <br></br>
 ```C++
 void setMethon(Methon methon)
@@ -47,7 +47,7 @@ void swapContent(std::string& str)
 void swapContent(std::string&& str)
 ```
 将字符串变量与http请求内容交换。
-* std::string& str : 交换内容字符串右值变量。
+* std::string&& str : 交换内容字符串右值变量。
 <br></br>
 ```C++
 const std::string& getContent()
