@@ -34,7 +34,7 @@ void Request::swapContent(std::string&& str)
     swapContent(str);
 }
 
-std::string& Request::getContent()
+const std::string& Request::getContent()
 {
     return content_;
 }

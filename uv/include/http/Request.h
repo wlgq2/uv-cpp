@@ -33,7 +33,7 @@ public:
 
     void swapContent(std::string& str);
     void swapContent(std::string&& str);
-    std::string& getContent();
+    const std::string& getContent();
     void appendHead(std::string& key, std::string& value);
     void appendHead(std::string&& key, std::string&& value);
     std::string getHead(std::string& key);
