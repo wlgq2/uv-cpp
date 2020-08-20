@@ -52,7 +52,7 @@ public:
     const std::string& getContent();
 
     int pack(std::string& data);
-    int unpack(std::string& data);
+    ParseResult unpack(std::string& data);
     ParseResult unpackAndCompleted(std::string& data);
     ParseResult isCompletedChunked();
 

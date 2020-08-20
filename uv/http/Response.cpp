@@ -108,7 +108,7 @@ int Response::pack(std::string& data)
     return 0;
 }
 
-int Response::unpack(std::string& data)
+ParseResult Response::unpack(std::string& data)
 {
     std::vector<std::string> headList;
     auto pos = SplitHttpOfCRLF(data, headList);
