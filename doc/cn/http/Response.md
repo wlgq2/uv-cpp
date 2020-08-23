@@ -54,7 +54,7 @@ StatusCode getStatusCode()
 ```C++
 const std::string& getStatusInfo()
 ```
-获取Http状态码。
+获取Http状态信息。
 * 返回值 : 状态信息。
 <br></br>
 ```C++
