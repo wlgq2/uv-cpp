@@ -2,7 +2,7 @@
 压缩前缀树。
 <br></br>
 ```C++
-Request()
+RadixTree()
 ```
 构造函数
 <br></br>
