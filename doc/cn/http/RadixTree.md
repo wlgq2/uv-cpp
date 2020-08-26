@@ -19,13 +19,6 @@ void set(std::string& key, Type value)
 * Type value : 存储值。
 <br></br>
 ```C++
-void set(std::string& key, Type value)
-```
-设置key和存储值。
-* std::string& key : 键值。
-* Type value : 存储值。
-<br></br>
-```C++
 void set(std::string&& key, Type value)
 ```
 设置key和存储值。
