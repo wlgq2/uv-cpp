@@ -23,7 +23,6 @@ namespace http
 class HttpClient 
 {
 public:
-    using OnRespCallback = std::function<void(int,Response*)>;
     enum ReqResult
     {
         Success = 0,
@@ -31,7 +30,7 @@ public:
         ParseFail = 2,
         Unknow = 3,
     };
-
+    using OnRespCallback = std::function<void(ReqResult, Response*)>;
 public:
     HttpClient(EventLoop* loop);
     virtual ~HttpClient();
@@ -47,7 +46,7 @@ private:
     std::string buffer_;
 
 private:
-    void onResp(int rst, Response* resp);
+    void onResp(ReqResult rst, Response* resp);
     void onConnectStatus(TcpClient::ConnectStatus status);
     void onMessage(const char* data, ssize_t size);
     bool isConnected;

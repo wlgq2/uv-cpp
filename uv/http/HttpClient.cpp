@@ -51,7 +51,7 @@ void HttpClient::setOnResp(OnRespCallback callback)
     callback_ = callback;
 }
 
-void HttpClient::onResp(int rst, Response* resp)
+void HttpClient::onResp(ReqResult rst, Response* resp)
 {
     if (nullptr != callback_)
     {
