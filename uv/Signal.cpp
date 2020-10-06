@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
+   Copyright © 2017-2020, orcaer@yeah.net  All rights reserved.
 
    Author: orcaer@yeah.net
     

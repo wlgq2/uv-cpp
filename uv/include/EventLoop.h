@@ -29,7 +29,12 @@ public:
         Default,
         New
     };
-
+    enum Status
+    {
+        NotRun,
+        Runed,
+        Stop
+    };
     EventLoop();
     ~EventLoop();
 
@@ -37,6 +42,9 @@ public:
 
     int run();
     int runNoWait();
+    int stop();
+    bool isStoped();
+    Status getStatus();
     bool isRunInLoopThread();
     void runInThisLoop(const DefaultCallback func);
     uv_loop_t* handle();
@@ -47,9 +55,9 @@ private:
     EventLoop(Mode mode);
 
     std::thread::id loopThreadId_;
-    std::atomic<bool> isRun_;
     uv_loop_t* loop_;
     Async* async_;
+    std::atomic<Status> status_;
 };
 
 using EventLoopPtr = std::shared_ptr<uv::EventLoop>;

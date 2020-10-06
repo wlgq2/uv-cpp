@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
+   Copyright © 2017-2020, orcaer@yeah.net  All rights reserved.
 
    Author: orcaer@yeah.net
     
@@ -20,9 +20,9 @@ EventLoop::EventLoop()
 }
 
 EventLoop::EventLoop(EventLoop::Mode mode)
-    : isRun_(false),
-    loop_(nullptr),
-    async_(nullptr)
+    :loop_(nullptr),
+    async_(nullptr),
+    status_(NotRun)
 {
     if (mode == EventLoop::Mode::New)
     {
@@ -41,8 +41,8 @@ EventLoop::~EventLoop()
     if (loop_ != uv_default_loop())
     {   
         uv_loop_close(loop_);
-        delete loop_;
         delete async_;
+        delete loop_;
     }
 }
 
@@ -59,22 +59,59 @@ uv_loop_t* EventLoop::handle()
 
 int EventLoop::run()
 {
-    loopThreadId_ = std::this_thread::get_id();
-    isRun_ = true;
-    return ::uv_run(loop_, UV_RUN_DEFAULT);
+    if (status_ == Status::NotRun)
+    {
+        async_->init();
+        loopThreadId_ = std::this_thread::get_id();
+        status_ = Status::Runed;
+        auto rst = ::uv_run(loop_, UV_RUN_DEFAULT);
+        status_ = Status::Stop;
+        return rst;
+    }
+    return -1;
 }
 
 int uv::EventLoop::runNoWait()
 {
-    loopThreadId_ = std::this_thread::get_id();
-    isRun_ = true;
-    return ::uv_run(loop_, UV_RUN_NOWAIT);
+    if (status_ == Status::NotRun)
+    {
+        async_->init();
+        loopThreadId_ = std::this_thread::get_id();
+        status_ = Status::Runed;
+        auto rst = ::uv_run(loop_, UV_RUN_NOWAIT);
+        status_ = Status::NotRun;
+        return rst;
+    }
+    return -1;
+}
+
+int uv::EventLoop::stop()
+{
+    if (status_ == Status::Runed)
+    {
+        async_->close([](Async* ptr)
+        {
+            ::uv_stop(ptr->Loop()->handle());
+        });
+        return 0;
+    }
+    return -1;
+}
+
+bool EventLoop::isStoped()
+{
+    return status_ == Status::Stop;
+}
+
+EventLoop::Status EventLoop::getStatus()
+{
+    return status_;
 }
 
 
 bool EventLoop::isRunInLoopThread()
 {
-    if (isRun_)
+    if (status_ == Status::Runed)
     {
         return std::this_thread::get_id() == loopThreadId_;
     }
@@ -87,7 +124,7 @@ void uv::EventLoop::runInThisLoop(const DefaultCallback func)
     if (nullptr == func)
         return;
 
-    if (isRunInLoopThread())
+    if (isRunInLoopThread() || isStoped())
     {
         func();
         return;

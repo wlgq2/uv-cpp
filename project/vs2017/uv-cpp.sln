@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "http_server", "http_server\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "radix_tree", "radix_tree\radix_tree.vcxproj", "{D056BD33-B0CC-4CDD-B94F-61308A39F38F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "loop_exit", "loop_exit\loop_exit.vcxproj", "{48C846D1-B433-4E7D-AA6F-0CAEBBE3F148}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -75,6 +77,10 @@ Global
 		{D056BD33-B0CC-4CDD-B94F-61308A39F38F}.Debug|x64.Build.0 = Debug|x64
 		{D056BD33-B0CC-4CDD-B94F-61308A39F38F}.Release|x64.ActiveCfg = Release|x64
 		{D056BD33-B0CC-4CDD-B94F-61308A39F38F}.Release|x64.Build.0 = Release|x64
+		{48C846D1-B433-4E7D-AA6F-0CAEBBE3F148}.Debug|x64.ActiveCfg = Debug|x64
+		{48C846D1-B433-4E7D-AA6F-0CAEBBE3F148}.Debug|x64.Build.0 = Debug|x64
+		{48C846D1-B433-4E7D-AA6F-0CAEBBE3F148}.Release|x64.ActiveCfg = Release|x64
+		{48C846D1-B433-4E7D-AA6F-0CAEBBE3F148}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
