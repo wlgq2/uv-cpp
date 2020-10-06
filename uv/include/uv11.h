@@ -1,9 +1,9 @@
 ﻿/*
-   Copyright © 2017-2019, orcaer@yeah.net  All rights reserved.
+   Copyright © 2017-2020, orcaer@yeah.net  All rights reserved.
 
    Author: orcaer@yeah.net
 
-   Last modified: 2020-4-13
+   Last modified: 2020-10-6
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -11,7 +11,7 @@
 #ifndef UV_UV11_H
 #define UV_UV11_H
 
-#define    UV_CPP_VERSION     "1.4.8"
+#define    UV_CPP_VERSION     "1.5.1"
 
 #include   "Async.h"
 #include   "Signal.h"
