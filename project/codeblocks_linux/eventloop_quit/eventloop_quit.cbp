@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="eventloop_quit" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/eventloop_quit" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/eventloop_quit" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c++11" />
+			<Add directory="../../../libuv1.30.0/include" />
+			<Add directory="../../../" />
+		</Compiler>
+		<Linker>
+			<Add option="-pthread" />
+			<Add library="../../../libuv1.30.0/lib/gcc8.3.0/libuv.a" />
+		</Linker>
+		<Unit filename="../../../examples/loop_exit/main.cpp" />
+		<Unit filename="../../../uv/Async.cpp" />
+		<Unit filename="../../../uv/CycleBuffer.cpp" />
+		<Unit filename="../../../uv/DnsGet.cpp" />
+		<Unit filename="../../../uv/EventLoop.cpp" />
+		<Unit filename="../../../uv/GlobalConfig.cpp" />
+		<Unit filename="../../../uv/Idle.cpp" />
+		<Unit filename="../../../uv/ListBuffer.cpp" />
+		<Unit filename="../../../uv/LogWriter.cpp" />
+		<Unit filename="../../../uv/Packet.cpp" />
+		<Unit filename="../../../uv/Signal.cpp" />
+		<Unit filename="../../../uv/SocketAddr.cpp" />
+		<Unit filename="../../../uv/TcpAccepter.cpp" />
+		<Unit filename="../../../uv/TcpClient.cpp" />
+		<Unit filename="../../../uv/TcpConnection.cpp" />
+		<Unit filename="../../../uv/TcpServer.cpp" />
+		<Unit filename="../../../uv/Timer.cpp" />
+		<Unit filename="../../../uv/Udp.cpp" />
+		<Unit filename="../../../uv/http/HttpClient.cpp" />
+		<Unit filename="../../../uv/http/HttpCommon.cpp" />
+		<Unit filename="../../../uv/http/HttpServer.cpp" />
+		<Unit filename="../../../uv/http/Request.cpp" />
+		<Unit filename="../../../uv/http/Response.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
