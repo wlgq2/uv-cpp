@@ -3,7 +3,7 @@
 
    Author: orcaer@yeah.net
 
-   Last modified: 2020-10-6
+   Last modified: 2020-10-8
 
    Description: https://github.com/wlgq2/uv-cpp
 */
@@ -11,7 +11,7 @@
 #ifndef UV_UV11_H
 #define UV_UV11_H
 
-#define    UV_CPP_VERSION     "1.5.1"
+#define    UV_CPP_VERSION     "1.5.2"
 
 #include   "Async.h"
 #include   "Signal.h"
