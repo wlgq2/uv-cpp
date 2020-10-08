@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "radix_tree", "radix_tree\ra
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "loop_exit", "loop_exit\loop_exit.vcxproj", "{48C846D1-B433-4E7D-AA6F-0CAEBBE3F148}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sever_quit", "sever_quit\sever_quit.vcxproj", "{F5A3473F-F676-4DD5-B734-6D256E5B4F22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,10 @@ Global
 		{48C846D1-B433-4E7D-AA6F-0CAEBBE3F148}.Debug|x64.Build.0 = Debug|x64
 		{48C846D1-B433-4E7D-AA6F-0CAEBBE3F148}.Release|x64.ActiveCfg = Release|x64
 		{48C846D1-B433-4E7D-AA6F-0CAEBBE3F148}.Release|x64.Build.0 = Release|x64
+		{F5A3473F-F676-4DD5-B734-6D256E5B4F22}.Debug|x64.ActiveCfg = Debug|x64
+		{F5A3473F-F676-4DD5-B734-6D256E5B4F22}.Debug|x64.Build.0 = Debug|x64
+		{F5A3473F-F676-4DD5-B734-6D256E5B4F22}.Release|x64.ActiveCfg = Release|x64
+		{F5A3473F-F676-4DD5-B734-6D256E5B4F22}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

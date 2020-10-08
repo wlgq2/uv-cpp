@@ -18,7 +18,8 @@ TcpAccepter::TcpAccepter(EventLoop* loop, bool tcpNoDelay)
     :listened_(false),
     tcpNoDelay_(tcpNoDelay),
     loop_(loop),
-    callback_(nullptr)
+    callback_(nullptr),
+    onCloseCompletCallback_(nullptr)
 {
     ::uv_tcp_init(loop_->handle(), &server_);
     if (tcpNoDelay_)
@@ -44,6 +45,12 @@ void TcpAccepter::onNewConnect(UVTcpPtr client)
     {
         callback_(loop_,client);
     }
+}
+
+void uv::TcpAccepter::onCloseComlet()
+{
+    if (onCloseCompletCallback_)
+        onCloseCompletCallback_();
 }
 
 int uv::TcpAccepter::bind(SocketAddr& addr)
@@ -87,6 +94,30 @@ int TcpAccepter::listen()
 bool TcpAccepter::isListen()
 {
     return listened_;
+}
+
+void uv::TcpAccepter::close(DefaultCallback callback)
+{
+    onCloseCompletCallback_ = callback;
+    auto ptr = &server_;
+    if (::uv_is_active((uv_handle_t*)ptr))
+    {
+        ::uv_read_stop((uv_stream_t*)ptr);
+    }
+    if (::uv_is_closing((uv_handle_t*)ptr) == 0)
+    {
+        //libuv 在loop轮询中会检测关闭句柄，delete会导致程序异常退出。
+        ::uv_close((uv_handle_t*)ptr,
+            [](uv_handle_t* handle)
+        {
+            auto accept = static_cast<TcpAccepter*>(handle->data);
+            accept->onCloseComlet();
+        });
+    }
+    else
+    {
+        onCloseComlet();
+    }
 }
 
 bool uv::TcpAccepter::isTcpNoDelay()

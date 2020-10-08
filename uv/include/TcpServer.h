@@ -34,7 +34,7 @@ public:
     TcpServer(EventLoop* loop, bool tcpNoDelay = true);
     virtual ~TcpServer();
     int bindAndListen(SocketAddr& addr);
-    
+    void close(DefaultCallback callback);
     
     TcpConnectionPtr getConnnection(const std::string& name);
     void closeConnection(const std::string& name);

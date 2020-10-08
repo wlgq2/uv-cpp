@@ -32,6 +32,7 @@ public:
     int bind(SocketAddr& addr);
     int listen();
     bool isListen();
+    void close(DefaultCallback callback);
     bool isTcpNoDelay();
     void setNewConnectinonCallback( NewConnectionCallback callback);
 
@@ -43,10 +44,11 @@ private:
     bool tcpNoDelay_;
     EventLoop* loop_;
     NewConnectionCallback callback_;
-
+    DefaultCallback onCloseCompletCallback_;
     uv_tcp_t server_;
 
     void onNewConnect(UVTcpPtr client);
+    void onCloseComlet();
 };
 
 }

@@ -88,7 +88,18 @@ int TcpServer::bindAndListen(SocketAddr& addr)
     return accetper_->listen();
 }
 
-
+void TcpServer::close(DefaultCallback callback)
+{
+    if (accetper_)
+        accetper_->close([this, callback]()
+    {
+        for (auto& connection : connnections_)
+        {
+            connection.second->onSocketClose();
+        }
+        callback();
+    });
+}
 
 void TcpServer::addConnnection(std::string& name,TcpConnectionPtr connection)
 {
