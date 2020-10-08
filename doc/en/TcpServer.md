@@ -21,6 +21,12 @@ Bind and Listen ip&&port.
 * return :  Successed  if return zero.
 <br></br>
 ```C++
+void close(DefaultCallback callback)
+```
+close and stop server.
+* DefaultCallback callback : Callback function after closing the server.
+<br></br>
+```C++
 TcpConnectionPtr getConnnection(const std::string& name)
 ```
 Get new tcp's connection object.

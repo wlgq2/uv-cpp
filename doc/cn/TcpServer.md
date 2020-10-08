@@ -21,6 +21,12 @@ int bindAndListen(SocketAddr& addr)
 * 返回值 : 0为成功。
 <br></br>
 ```C++
+void close(DefaultCallback callback)
+```
+关闭服务并停止监听。
+* DefaultCallback callback : 关闭完成后回调函数。
+<br></br>
+```C++
 TcpConnectionPtr getConnnection(const std::string& name)
 ```
 获取连接对象。
