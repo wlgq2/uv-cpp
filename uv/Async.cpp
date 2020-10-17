@@ -47,12 +47,16 @@ void Async::runInThisLoop(DefaultCallback callback)
 
 void uv::Async::process()
 {
-    std::lock_guard<std::mutex> lock(mutex_);
-    while (!callbacks_.empty())
+    std::queue<DefaultCallback> callbacks;
     {
-        auto func = callbacks_.front();
+        std::lock_guard<std::mutex> lock(mutex_);
+        callbacks_.swap(callbacks);
+    }
+    while (!callbacks.empty())
+    {
+        auto func = callbacks.front();
         func();
-        callbacks_.pop();
+        callbacks.pop();
     }
 }
 
