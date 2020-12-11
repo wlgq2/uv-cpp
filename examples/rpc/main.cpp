@@ -12,8 +12,8 @@
 #include <iostream>
 #include <chrono>
 
-#include "RpcServer.h"
-#include "RpcCtrl.h"
+#include "RpcServer.hpp"
+#include "RpcCtrl.hpp"
 
 using namespace std;
 

@@ -8,7 +8,7 @@
    Description: https://github.com/wlgq2/uv-cpp
 */
 
-#include "RpcServer.h"
+#include "RpcServer.hpp"
 
 using namespace uv;
 using namespace std;

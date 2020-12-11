@@ -8,7 +8,7 @@
    Description: https://github.com/wlgq2/uv-cpp
 */
 
-#include "../include/http/Request.h"
+#include "../include/http/Request.hpp"
 
 using namespace uv;
 using namespace uv::http;

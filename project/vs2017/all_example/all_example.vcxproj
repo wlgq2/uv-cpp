@@ -102,10 +102,6 @@
     <ClCompile Include="..\..\..\uv\Timer.cpp" />
     <ClCompile Include="..\..\..\uv\Udp.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\examples\all_example\Clinet.h" />
-    <ClInclude Include="..\..\..\examples\all_example\EchoServer.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

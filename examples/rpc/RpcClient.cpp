@@ -7,7 +7,7 @@
 
    Description: https://github.com/wlgq2/uv-cpp
 */
-#include "RpcClient.h"
+#include "RpcClient.hpp"
 
 using namespace uv;
 using namespace std;

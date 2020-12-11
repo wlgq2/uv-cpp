@@ -8,9 +8,9 @@
    Description: https://github.com/wlgq2/uv-cpp
 */
 
-#include "include/Signal.h"
-#include "include/LogWriter.h"
-#include "include/EventLoop.h"
+#include "include/Signal.hpp"
+#include "include/LogWriter.hpp"
+#include "include/EventLoop.hpp"
 
 using namespace uv;
 using namespace std;

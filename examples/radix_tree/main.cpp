@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <random>
 #include <map>
-#include <uv/include/http/RadixTree.h>
+#include <uv/include/http/RadixTree.hpp>
 
 
 using namespace uv;
@@ -31,7 +31,7 @@ bool TestRand(RadixTree<Type>& tree,uint64_t cnt)
     //随机顺序取出元素插入radix tree.
     std::map<std::string, Type> kvMap;
     std::default_random_engine random;
-    std::uniform_int_distribution<int> dis(0, cnt);
+    std::uniform_int_distribution<int> dis(0, (int)cnt);
     while (!kvs.empty())
     {
         int index = dis(random) % kvs.size();

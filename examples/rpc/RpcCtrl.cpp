@@ -8,9 +8,9 @@
    Description: https://github.com/wlgq2/uv-cpp
 */
 
-#include "RpcCtrl.h"
+#include "RpcCtrl.hpp"
 #include <thread>
-#include "RpcClient.h"
+#include "RpcClient.hpp"
 
 
 using namespace uv;

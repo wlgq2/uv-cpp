@@ -7,8 +7,8 @@ Last modified: 2020-3-29
 
 Description: https://github.com/wlgq2/uv-cpp
 */
-#include "include/DnsGet.h"
-#include "include/LogWriter.h"
+#include "include/DnsGet.hpp"
+#include "include/LogWriter.hpp"
 
 using namespace uv;
 

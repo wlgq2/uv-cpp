@@ -8,11 +8,11 @@ Last modified: 2019-12-31
 Description: https://github.com/wlgq2/uv-cpp
 */
 
-#include "include/TcpConnection.h"
-#include "include/TcpServer.h"
-#include "include/Async.h"
-#include "include/LogWriter.h"
-#include "include/GlobalConfig.h"
+#include "include/TcpConnection.hpp"
+#include "include/TcpServer.hpp"
+#include "include/Async.hpp"
+#include "include/LogWriter.hpp"
+#include "include/GlobalConfig.hpp"
 
 using namespace std;
 using namespace std::chrono;

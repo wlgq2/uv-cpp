@@ -85,12 +85,4 @@
       <Filter>uv</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\examples\all_example\Clinet.h">
-      <Filter>example</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\examples\all_example\EchoServer.h">
-      <Filter>example</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>

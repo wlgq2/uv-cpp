@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <atomic>
-#include <uv/include/uv11.h>
+#include <uv/include/uv11.hpp>
 
 using namespace uv;
 
