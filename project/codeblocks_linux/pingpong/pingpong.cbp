@@ -38,9 +38,7 @@
 			<Add option="-pthread" />
 			<Add library="../../../libuv1.30.0/lib/gcc8.3.0/libuv.a" />
 		</Linker>
-		<Unit filename="../../../examples/pingpang/Clinet.h" />
 		<Unit filename="../../../examples/pingpang/EchoServer.cpp" />
-		<Unit filename="../../../examples/pingpang/EchoServer.h" />
 		<Unit filename="../../../examples/pingpang/main.cpp" />
 		<Unit filename="../../../uv/Async.cpp" />
 		<Unit filename="../../../uv/CycleBuffer.cpp" />

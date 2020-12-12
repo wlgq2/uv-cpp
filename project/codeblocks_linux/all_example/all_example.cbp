@@ -38,9 +38,7 @@
 			<Add option="-pthread" />
 			<Add library="../../../libuv1.30.0/lib/gcc8.3.0/libuv.a" />
 		</Linker>
-		<Unit filename="../../../examples/all_example/Clinet.h" />
 		<Unit filename="../../../examples/all_example/EchoServer.cpp" />
-		<Unit filename="../../../examples/all_example/EchoServer.h" />
 		<Unit filename="../../../examples/all_example/main.cpp" />
 		<Unit filename="../../../uv/Async.cpp" />
 		<Unit filename="../../../uv/CycleBuffer.cpp" />
