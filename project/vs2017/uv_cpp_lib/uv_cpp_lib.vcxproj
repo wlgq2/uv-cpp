@@ -15,6 +15,7 @@
     <ProjectGuid>{D7782A2D-0176-4E67-832E-02D106CAD71D}</ProjectGuid>
     <RootNamespace>createlib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <ProjectName>uv_cpp_lib</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -65,7 +66,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>../../../libuv1.30.0/lib/win_sdk10.0.10240/Release;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libuv.lib;ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libuv.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -79,7 +80,7 @@
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>../../../libuv1.30.0/lib/win_sdk10.0.10240/Release;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libuv.lib;ws2_32.lib;Psapi.lib;userenv.lib;Iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libuv.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

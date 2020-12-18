@@ -5,83 +5,10 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="uv">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="uv\http">
-      <UniqueIdentifier>{44d6c2fc-71a2-4151-bf67-d702414dcaad}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\radix_tree\main.cpp">
       <Filter>example</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\http\HttpClient.cpp">
-      <Filter>uv\http</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\http\HttpCommon.cpp">
-      <Filter>uv\http</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\http\Request.cpp">
-      <Filter>uv\http</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\http\Response.cpp">
-      <Filter>uv\http</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\Async.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\CycleBuffer.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\DnsGet.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\EventLoop.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\GlobalConfig.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\Idle.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\ListBuffer.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\LogWriter.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\Packet.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\Signal.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\SocketAddr.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\TcpAccepter.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\TcpClient.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\TcpConnection.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\TcpServer.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\Timer.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\Udp.cpp">
-      <Filter>uv</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\uv\http\HttpServer.cpp">
-      <Filter>uv\http</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
