@@ -36,7 +36,7 @@ public:
     int bindAndListen(SocketAddr& addr);
     void close(DefaultCallback callback);
     
-    TcpConnectionPtr getConnnection(const std::string& name);
+    TcpConnectionPtr getConnection(const std::string& name);
     void closeConnection(const std::string& name);
 
     void setNewConnectCallback(OnConnectionStatusCallback callback);
@@ -54,7 +54,7 @@ private:
     void onAccept(EventLoop* loop, UVTcpPtr client);
 
     void addConnection(std::string& name, TcpConnectionPtr connection);
-    void removeConnnection(std::string& name);
+    void removeConnection(std::string& name);
     void onMessage(TcpConnectionPtr connection, const char* buf, ssize_t size);
 protected:
     EventLoop* loop_;

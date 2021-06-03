@@ -27,7 +27,7 @@ void close(DefaultCallback callback)
 * DefaultCallback callback : 关闭完成后回调函数。
 <br></br>
 ```C++
-TcpConnectionPtr getConnnection(const std::string& name)
+TcpConnectionPtr getConnection(const std::string& name)
 ```
 获取连接对象。
 * std::string& name : 连接名称，ip&&端口。
