@@ -53,7 +53,7 @@ public:
 private:
     void onAccept(EventLoop* loop, UVTcpPtr client);
 
-    void addConnnection(std::string& name, TcpConnectionPtr connection);
+    void addConnection(std::string& name, TcpConnectionPtr connection);
     void removeConnnection(std::string& name);
     void onMessage(TcpConnectionPtr connection, const char* buf, ssize_t size);
 protected:
