@@ -191,10 +191,10 @@ void TcpClient::update()
         ::uv_tcp_nodelay(socket_.get(), 1 );
 }
 
-void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus success)
+void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus status)
 {
     if (connectCallback_)
-        connectCallback_(success);
+        connectCallback_(status);
 }
 
 void uv::TcpClient::onClose(std::string& name)
