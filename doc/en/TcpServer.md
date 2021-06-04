@@ -27,7 +27,7 @@ close and stop server.
 * DefaultCallback callback : Callback function after closing the server.
 <br></br>
 ```C++
-TcpConnectionPtr getConnnection(const std::string& name)
+TcpConnectionPtr getConnection(const std::string& name)
 ```
 Get new tcp's connection object.
 * std::string& name : tcp connection name，ip&&port.

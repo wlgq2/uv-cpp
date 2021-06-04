@@ -58,7 +58,7 @@ void uv::TcpServer::onAccept(EventLoop * loop, UVTcpPtr client)
     {
         connection->setMessageCallback(std::bind(&TcpServer::onMessage, this, placeholders::_1, placeholders::_2, placeholders::_3));
         connection->setConnectCloseCallback(std::bind(&TcpServer::closeConnection, this, placeholders::_1));
-        addConnnection(key, connection);
+	    addConnection(key, connection);
         if (timerWheel_.getTimeout() > 0)
         {
             auto wrapper = std::make_shared<ConnectionWrapper>(connection);
@@ -101,17 +101,17 @@ void TcpServer::close(DefaultCallback callback)
     });
 }
 
-void TcpServer::addConnnection(std::string& name,TcpConnectionPtr connection)
+void TcpServer::addConnection(std::string& name, TcpConnectionPtr connection)
 {
     connnections_.insert(pair<string,shared_ptr<TcpConnection>>(std::move(name),connection));
 }
 
-void TcpServer::removeConnnection(string& name)
+void TcpServer::removeConnection(string& name)
 {
     connnections_.erase(name);
 }
 
-shared_ptr<TcpConnection> TcpServer::getConnnection(const string& name)
+shared_ptr<TcpConnection> TcpServer::getConnection(const string &name)
 {
     auto rst = connnections_.find(name);
     if(rst == connnections_.end())
@@ -123,19 +123,19 @@ shared_ptr<TcpConnection> TcpServer::getConnnection(const string& name)
 
 void TcpServer::closeConnection(const string& name)
 {
-    auto connection = getConnnection(name);
+    auto connection = getConnection(name);
     if (nullptr != connection)
     {
         connection->close([this](std::string& name)
         {
-            auto connection = getConnnection(name);
+            auto connection = getConnection(name);
             if (nullptr != connection)
             {
                 if (onConnectCloseCallback_)
                 {
                     onConnectCloseCallback_(connection);
                 }
-                removeConnnection(name);
+                removeConnection(name);
             }
 
         });
@@ -175,7 +175,7 @@ void TcpServer::write(shared_ptr<TcpConnection> connection,const char* buf,unsig
 
 void TcpServer::write(string& name,const char* buf,unsigned int size,AfterWriteCallback callback)
 {
-    auto connection = getConnnection(name);
+    auto connection = getConnection(name);
     write(connection, buf, size, callback);
 }
 
@@ -195,7 +195,7 @@ void TcpServer::writeInLoop(shared_ptr<TcpConnection> connection,const char* buf
 
 void TcpServer::writeInLoop(string& name,const char* buf,unsigned int size,AfterWriteCallback callback)
 {
-    auto connection = getConnnection(name);
+    auto connection = getConnection(name);
     writeInLoop(connection, buf, size, callback);
 }
 
