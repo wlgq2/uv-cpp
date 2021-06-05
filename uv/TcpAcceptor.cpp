@@ -8,13 +8,13 @@
    Description: https://github.com/wlgq2/uv-cpp
 */
 
-#include "include/TcpAccepter.hpp"
+#include "include/TcpAcceptor.hpp"
 #include "include/LogWriter.hpp"
 
 using namespace std;
 using namespace uv;
 
-TcpAccepter::TcpAccepter(EventLoop* loop, bool tcpNoDelay)
+TcpAcceptor::TcpAcceptor(EventLoop* loop, bool tcpNoDelay)
     :listened_(false),
     tcpNoDelay_(tcpNoDelay),
     loop_(loop),
@@ -29,17 +29,17 @@ TcpAccepter::TcpAccepter(EventLoop* loop, bool tcpNoDelay)
 
 
 
-TcpAccepter:: ~TcpAccepter()
+TcpAcceptor:: ~TcpAcceptor()
 {
 
 }
 
-EventLoop* TcpAccepter::Loop()
+EventLoop* TcpAcceptor::Loop()
 {
     return loop_;
 }
 
-void TcpAccepter::onNewConnect(UVTcpPtr client)
+void TcpAcceptor::onNewConnect(UVTcpPtr client)
 {
     if(nullptr !=callback_)
     {
@@ -47,18 +47,18 @@ void TcpAccepter::onNewConnect(UVTcpPtr client)
     }
 }
 
-void uv::TcpAccepter::onCloseComlet()
+void uv::TcpAcceptor::onCloseComplete()
 {
     if (onCloseCompletCallback_)
         onCloseCompletCallback_();
 }
 
-int uv::TcpAccepter::bind(SocketAddr& addr)
+int uv::TcpAcceptor::bind(SocketAddr& addr)
 {
     return ::uv_tcp_bind(&server_, addr.Addr(), 0);
 }
 
-int TcpAccepter::listen()
+int TcpAcceptor::listen()
 {
     auto rst = ::uv_listen((uv_stream_t*) &server_, 128,
     [](uv_stream_t *server, int status)
@@ -68,7 +68,7 @@ int TcpAccepter::listen()
             uv::LogWriter::Instance()->error (std::string("New connection error :")+ EventLoop::GetErrorMessage(status));
             return;
         }
-        TcpAccepter* accept = static_cast<TcpAccepter*>(server->data);
+        TcpAcceptor* accept = static_cast<TcpAcceptor*>(server->data);
         UVTcpPtr client = make_shared<uv_tcp_t>();
         ::uv_tcp_init(accept->Loop()->handle(), client.get());
         if (accept->isTcpNoDelay())
@@ -91,12 +91,12 @@ int TcpAccepter::listen()
 }
 
 
-bool TcpAccepter::isListen()
+bool TcpAcceptor::isListen()
 {
     return listened_;
 }
 
-void uv::TcpAccepter::close(DefaultCallback callback)
+void uv::TcpAcceptor::close(DefaultCallback callback)
 {
     onCloseCompletCallback_ = callback;
     auto ptr = &server_;
@@ -110,22 +110,22 @@ void uv::TcpAccepter::close(DefaultCallback callback)
         ::uv_close((uv_handle_t*)ptr,
             [](uv_handle_t* handle)
         {
-            auto accept = static_cast<TcpAccepter*>(handle->data);
-            accept->onCloseComlet();
+            auto accept = static_cast<TcpAcceptor*>(handle->data);
+	        accept->onCloseComplete();
         });
     }
     else
     {
-        onCloseComlet();
+	    onCloseComplete();
     }
 }
 
-bool uv::TcpAccepter::isTcpNoDelay()
+bool uv::TcpAcceptor::isTcpNoDelay()
 {
     return tcpNoDelay_;
 }
 
-void TcpAccepter::setNewConnectinonCallback(NewConnectionCallback callback)
+void TcpAcceptor::setNewConnectionCallback(NewConnectionCallback callback)
 {
     callback_ = callback;
 }

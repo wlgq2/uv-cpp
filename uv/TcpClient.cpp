@@ -64,9 +64,9 @@ void TcpClient::connect(SocketAddr& addr)
     });
 }
 
-void TcpClient::onConnect(bool successed)
+void TcpClient::onConnect(bool success)
 {
-    if(successed)
+    if(success)
     {
         string name;
         SocketAddr::AddrToStr(socket_.get(),name,ipv);
@@ -128,7 +128,7 @@ void uv::TcpClient::close(std::function<void(uv::TcpClient*)> callback)
 
 void uv::TcpClient::afterConnectFail()
 {
-    runConnectCallback(TcpClient::OnConnnectFail);
+    runConnectCallback(TcpClient::OnConnectFail);
 }
 
 void uv::TcpClient::write(const char* buf, unsigned int size, AfterWriteCallback callback)
@@ -191,15 +191,15 @@ void TcpClient::update()
         ::uv_tcp_nodelay(socket_.get(), 1 );
 }
 
-void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus satus)
+void uv::TcpClient::runConnectCallback(TcpClient::ConnectStatus status)
 {
     if (connectCallback_)
-        connectCallback_(satus);
+        connectCallback_(status);
 }
 
 void uv::TcpClient::onClose(std::string& name)
 {
     //connection_ = nullptr;
     uv::LogWriter::Instance()->info("Close tcp client connection complete.");
-    runConnectCallback(TcpClient::OnConnnectClose);
+    runConnectCallback(TcpClient::OnConnectClose);
 }

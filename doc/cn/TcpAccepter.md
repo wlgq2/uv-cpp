@@ -1,15 +1,15 @@
-# TcpAccepter
+# TcpAcceptor
 Tcp监听类，监听接收tcp连接。
 <br></br>
 ```C++
-TcpAccepter(EventLoop* loop, bool tcpNoDelay)
+TcpAcceptor(EventLoop* loop, bool tcpNoDelay)
 ```
 构造函数。
 * EventLoop* loop : Event loop句柄。
 * bool tcpNoDelay :  Nagle 算法, true : 不延迟 false : 延迟。
 <br></br>
 ```C++
-virtual ~TcpAccepter()
+virtual TcpAcceptor()
 ```
 析构函数。
 <br></br>
@@ -45,7 +45,7 @@ EventLoop* Loop()
 * 返回值 : EventLoop句柄。
 <br></br>
 ```C++
-void setNewConnectinonCallback( NewConnectionCallback callback)
+void setNewConnectionCallback( NewConnectionCallback callback)
 ```
 设置新连接回调函数。
 * NewConnectionCallback callback : 新连接回调函数。

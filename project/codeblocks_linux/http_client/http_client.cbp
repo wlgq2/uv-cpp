@@ -50,7 +50,7 @@
 		<Unit filename="../../../uv/Packet.cpp" />
 		<Unit filename="../../../uv/Signal.cpp" />
 		<Unit filename="../../../uv/SocketAddr.cpp" />
-		<Unit filename="../../../uv/TcpAccepter.cpp" />
+		<Unit filename="../../../uv/TcpAcceptor.cpp" />
 		<Unit filename="../../../uv/TcpClient.cpp" />
 		<Unit filename="../../../uv/TcpConnection.cpp" />
 		<Unit filename="../../../uv/TcpServer.cpp" />

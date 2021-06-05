@@ -16,7 +16,7 @@
 #include <set>
 #include <map>
 
-#include "TcpAccepter.hpp"
+#include "TcpAcceptor.hpp"
 #include "TcpConnection.hpp"
 #include "TimerWheel.hpp"
 
@@ -61,7 +61,7 @@ protected:
 private:
     bool tcpNoDelay_;
     SocketAddr::IPV ipv_;
-    std::shared_ptr <TcpAccepter> accetper_;
+    std::shared_ptr <TcpAcceptor> accetper_;
     std::map<std::string ,TcpConnectionPtr>  connnections_;
 
 

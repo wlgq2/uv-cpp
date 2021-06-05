@@ -27,8 +27,8 @@ public:
     enum ConnectStatus
     {
         OnConnectSuccess,
-        OnConnnectFail,
-        OnConnnectClose
+        OnConnectFail,
+        OnConnectClose
     };
     using ConnectStatusCallback = std::function<void(ConnectStatus)>;
 public:
@@ -51,7 +51,7 @@ public:
 protected:
     EventLoop* loop_;
 
-    void onConnect(bool successed);
+    void onConnect(bool success);
     void onConnectClose(std::string& name);
     void onMessage(TcpConnectionPtr connection, const char* buf, ssize_t size);
     void afterConnectFail();
@@ -66,7 +66,7 @@ private:
 
     TcpConnectionPtr connection_;
     void update();
-    void runConnectCallback(TcpClient::ConnectStatus successed);
+    void runConnectCallback(TcpClient::ConnectStatus success);
     void onClose(std::string& name);
 };
 

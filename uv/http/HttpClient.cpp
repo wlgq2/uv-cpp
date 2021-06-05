@@ -68,7 +68,7 @@ void HttpClient::onConnectStatus(TcpClient::ConnectStatus status)
         req_.pack(str);
         client_->write(str.c_str(), (unsigned int)str.size());
     }
-    else if (status == uv::TcpClient::ConnectStatus::OnConnnectFail)
+    else if (status == uv::TcpClient::ConnectStatus::OnConnectFail)
     {
         isConnected = false;
         onResp(ConnectFail, nullptr);
