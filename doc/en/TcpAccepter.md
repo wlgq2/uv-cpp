@@ -1,15 +1,15 @@
-# TcpAccepter
+# TcpAcceptor
 Tcp's accepter,listen and accept tcp connection.
 <br></br>
 ```C++
-TcpAccepter(EventLoop* loop, bool tcpNoDelay);
+TcpAcceptor(EventLoop* loop, bool tcpNoDelay);
 ```
 Constructor.
 * EventLoop* loop : Event loop's handle.
 * bool tcpNoDelay :  Nagle’s Algorithm, true : no delay, false : delay.
 <br></br>
 ```C++
-virtual ~TcpAccepter()
+virtual TcpAcceptor()
 ```
 Destructor.
 <br></br>
@@ -45,7 +45,7 @@ Return event loop's handle.
 * return : Event loop's handle.
 <br></br>
 ```C++
-void setNewConnectinonCallback( NewConnectionCallback callback)
+void setNewConnectionCallback( NewConnectionCallback callback)
 ```
 Set callback while new tcp's connection.
 * NewConnectionCallback callback : callback.

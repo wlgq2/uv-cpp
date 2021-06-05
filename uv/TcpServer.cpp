@@ -77,13 +77,13 @@ void uv::TcpServer::onAccept(EventLoop * loop, UVTcpPtr client)
 int TcpServer::bindAndListen(SocketAddr& addr)
 {
     ipv_ = addr.Ipv();
-    accetper_ = std::make_shared<TcpAccepter>(loop_, tcpNoDelay_);
+    accetper_ = std::make_shared<TcpAcceptor>(loop_, tcpNoDelay_);
     auto rst = accetper_->bind(addr);
     if (0 != rst)
     {
         return rst;
     }
-    accetper_->setNewConnectinonCallback(std::bind(&TcpServer::onAccept, this, std::placeholders::_1, std::placeholders::_2));
+	accetper_->setNewConnectionCallback(std::bind(&TcpServer::onAccept, this, std::placeholders::_1, std::placeholders::_2));
     timerWheel_.start();
     return accetper_->listen();
 }
