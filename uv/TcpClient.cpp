@@ -131,11 +131,11 @@ void uv::TcpClient::afterConnectFail()
     runConnectCallback(TcpClient::OnConnectFail);
 }
 
-void uv::TcpClient::write(const char* buf, unsigned int size, AfterWriteCallback callback)
+int uv::TcpClient::write(const char* buf, unsigned int size, AfterWriteCallback callback)
 {
     if (connection_)
     {
-        connection_->write(buf, size, callback);
+        return connection_->write(buf, size, callback);
     }
     else if(callback)
     {
@@ -143,7 +143,7 @@ void uv::TcpClient::write(const char* buf, unsigned int size, AfterWriteCallback
         WriteInfo info = { WriteInfo::Disconnected,const_cast<char*>(buf),size };
         callback(info);
     }
-
+    return -1;
 }
 
 void uv::TcpClient::writeInLoop(const char * buf, unsigned int size, AfterWriteCallback callback)

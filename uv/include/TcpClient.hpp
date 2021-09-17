@@ -40,7 +40,7 @@ public:
     void connect(SocketAddr& addr);
     void close(std::function<void(uv::TcpClient*)> callback);
 
-    void write(const char* buf, unsigned int size, AfterWriteCallback callback = nullptr);
+    int write(const char* buf, unsigned int size, AfterWriteCallback callback = nullptr);
     void writeInLoop(const char* buf, unsigned int size, AfterWriteCallback callback);
 
     void setConnectStatusCallback(ConnectStatusCallback callback);
