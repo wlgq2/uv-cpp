@@ -13,7 +13,7 @@
 
 
 #include <string>
-#include "uv/include/uv11.h"
+#include "uv/include/uv11.hpp"
 
 
 class Client : public uv::TcpClient
