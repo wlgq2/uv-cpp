@@ -44,7 +44,7 @@ public:
     int run();
     int runNoWait();
     int stop();
-    bool isStoped();
+    bool isStopped();
     Status getStatus();
     bool isRunInLoopThread();
     void runInThisLoop(const DefaultCallback func);

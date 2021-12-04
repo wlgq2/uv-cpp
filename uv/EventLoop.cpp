@@ -98,7 +98,7 @@ int uv::EventLoop::stop()
     return -1;
 }
 
-bool EventLoop::isStoped()
+bool EventLoop::isStopped()
 {
     return status_ == Status::Stop;
 }
@@ -124,7 +124,7 @@ void uv::EventLoop::runInThisLoop(const DefaultCallback func)
     if (nullptr == func)
         return;
 
-    if (isRunInLoopThread() || isStoped())
+    if (isRunInLoopThread() || isStopped())
     {
         func();
         return;
