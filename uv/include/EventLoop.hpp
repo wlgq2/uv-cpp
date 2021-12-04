@@ -32,9 +32,9 @@ public:
     };
     enum Status
     {
-        NotRun,
-        Runed,
-        Stop
+        NotStarted,
+        Started,
+        Stopped
     };
     EventLoop();
     ~EventLoop();
