@@ -15,6 +15,7 @@
 #include <thread>
 #include <atomic>
 #include <functional>
+#include <memory>
 
 namespace uv
 {
@@ -31,9 +32,9 @@ public:
     };
     enum Status
     {
-        NotRun,
-        Runed,
-        Stop
+        NotStarted,
+        Started,
+        Stopped
     };
     EventLoop();
     ~EventLoop();
@@ -43,7 +44,7 @@ public:
     int run();
     int runNoWait();
     int stop();
-    bool isStoped();
+    bool isStopped();
     Status getStatus();
     bool isRunInLoopThread();
     void runInThisLoop(const DefaultCallback func);

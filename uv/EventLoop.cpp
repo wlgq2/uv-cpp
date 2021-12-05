@@ -22,7 +22,7 @@ EventLoop::EventLoop()
 EventLoop::EventLoop(EventLoop::Mode mode)
     :loop_(nullptr),
     async_(nullptr),
-    status_(NotRun)
+    status_(NotStarted)
 {
     if (mode == EventLoop::Mode::New)
     {
@@ -59,13 +59,13 @@ uv_loop_t* EventLoop::handle()
 
 int EventLoop::run()
 {
-    if (status_ == Status::NotRun)
+    if (status_ == Status::NotStarted)
     {
         async_->init();
         loopThreadId_ = std::this_thread::get_id();
-        status_ = Status::Runed;
+        status_ = Status::Started;
         auto rst = ::uv_run(loop_, UV_RUN_DEFAULT);
-        status_ = Status::Stop;
+        status_ = Status::Stopped;
         return rst;
     }
     return -1;
@@ -73,13 +73,13 @@ int EventLoop::run()
 
 int uv::EventLoop::runNoWait()
 {
-    if (status_ == Status::NotRun)
+    if (status_ == Status::NotStarted)
     {
         async_->init();
         loopThreadId_ = std::this_thread::get_id();
-        status_ = Status::Runed;
+        status_ = Status::Started;
         auto rst = ::uv_run(loop_, UV_RUN_NOWAIT);
-        status_ = Status::NotRun;
+        status_ = Status::NotStarted;
         return rst;
     }
     return -1;
@@ -87,7 +87,7 @@ int uv::EventLoop::runNoWait()
 
 int uv::EventLoop::stop()
 {
-    if (status_ == Status::Runed)
+    if (status_ == Status::Started)
     {
         async_->close([](Async* ptr)
         {
@@ -98,9 +98,9 @@ int uv::EventLoop::stop()
     return -1;
 }
 
-bool EventLoop::isStoped()
+bool EventLoop::isStopped()
 {
-    return status_ == Status::Stop;
+    return status_ == Status::Stopped;
 }
 
 EventLoop::Status EventLoop::getStatus()
@@ -111,7 +111,7 @@ EventLoop::Status EventLoop::getStatus()
 
 bool EventLoop::isRunInLoopThread()
 {
-    if (status_ == Status::Runed)
+    if (status_ == Status::Started)
     {
         return std::this_thread::get_id() == loopThreadId_;
     }
@@ -124,7 +124,7 @@ void uv::EventLoop::runInThisLoop(const DefaultCallback func)
     if (nullptr == func)
         return;
 
-    if (isRunInLoopThread() || isStoped())
+    if (isRunInLoopThread() || isStopped())
     {
         func();
         return;
