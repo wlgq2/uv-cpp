@@ -22,47 +22,47 @@ uv::http::HttpServer::HttpServer(EventLoop* loop)
 
 void uv::http::HttpServer::Get(std::string path, OnHttpReqCallback callback)
 {
-    route_[Methon::Get].set(path, callback);
+    route_[Method::Get].set(path, callback);
 }
 
 void uv::http::HttpServer::Post(std::string path, OnHttpReqCallback callback)
 {
-    route_[Methon::Post].set(path, callback);
+    route_[Method::Post].set(path, callback);
 }
 
 void uv::http::HttpServer::Head(std::string path, OnHttpReqCallback callback)
 {
-    route_[Methon::Head].set(path, callback);
+    route_[Method::Head].set(path, callback);
 }
 
 void uv::http::HttpServer::Put(std::string path, OnHttpReqCallback callback)
 {
-    route_[Methon::Put].set(path, callback);
+    route_[Method::Put].set(path, callback);
 }
 
 void uv::http::HttpServer::Delete(std::string path, OnHttpReqCallback callback)
 {
-    route_[Methon::Delete].set(path, callback);
+    route_[Method::Delete].set(path, callback);
 }
 
 void uv::http::HttpServer::Connect(std::string path, OnHttpReqCallback callback)
 {
-    route_[Methon::Connect].set(path, callback);
+    route_[Method::Connect].set(path, callback);
 }
 
 void uv::http::HttpServer::Options(std::string path, OnHttpReqCallback callback)
 {
-    route_[Methon::Options].set(path, callback);
+    route_[Method::Options].set(path, callback);
 }
 
 void uv::http::HttpServer::Trace(std::string path, OnHttpReqCallback callback)
 {
-    route_[Methon::Trace].set(path, callback);
+    route_[Method::Trace].set(path, callback);
 }
 
 void uv::http::HttpServer::Patch(std::string path, OnHttpReqCallback callback)
 {
-    route_[Methon::Patch].set(path, callback);
+    route_[Method::Patch].set(path, callback);
 }
 
 void uv::http::HttpServer::onMesage(TcpConnectionPtr conn, const char* data, ssize_t size)
@@ -88,7 +88,7 @@ void uv::http::HttpServer::onMesage(TcpConnectionPtr conn, const char* data, ssi
         packetbuf->clear();
         //搜寻回调函数
         OnHttpReqCallback callback(nullptr);
-        if (route_[req.getMethon()].get(req.getPath(), callback))
+        if (route_[req.getMethod()].get(req.getPath(), callback))
         {
             if (nullptr != callback)
             {

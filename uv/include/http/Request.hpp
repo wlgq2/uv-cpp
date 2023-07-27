@@ -23,13 +23,12 @@ namespace http
 class Request
 {
 public:
-    Request();
-    Request(HttpVersion version, Methon methon);
+    Request(HttpVersion version=HttpVersion::Http1_1, Method method=Method::Get);
 
     void setVersion(HttpVersion version);
-    void setMethon(Methon methon);
+    void setMethod(Method method);
     HttpVersion getVersion();
-    Methon getMethon();
+    Method getMethod();
 
     void swapContent(std::string& str);
     void swapContent(std::string&& str);
@@ -47,16 +46,16 @@ public:
     void setPath(std::string& path);
     const std::string& getPath();
     const std::string& getValue();
- 
+
     int pack(std::string& data);
     ParseResult unpack(std::string& data);
     ParseResult unpackAndCompleted(std::string& data);
 
-    static std::string MethonToStr(Methon methon);
-    static Methon StrToMethon(std::string& str);
+    static std::string MethodToStr(Method method);
+    static Method StrToMethod(std::string& str);
 private:
     HttpVersion version_;
-    Methon methon_;
+    Method method_;
     std::string path_;
     std::string value_;
     std::map <std::string, std::string> urlParms_;

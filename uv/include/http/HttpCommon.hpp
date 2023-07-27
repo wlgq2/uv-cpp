@@ -33,7 +33,7 @@ enum HttpVersion
     Http1_1,
 };
 
-enum Methon
+enum Method
 {
     Get = 0,
     Post,

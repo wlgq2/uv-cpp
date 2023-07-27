@@ -13,14 +13,9 @@
 using namespace uv;
 using namespace uv::http;
 
-Request::Request()
-    :Request(HttpVersion::Http1_1,Methon::Get)
-{
-}
-
-Request::Request(HttpVersion version, Methon methon)
+Request::Request(HttpVersion version, Method method)
     :version_(version),
-    methon_(methon)
+    method_(method)
 {
 }
 
@@ -94,9 +89,9 @@ void Request::setVersion(HttpVersion version)
     version_ = version;
 }
 
-void Request::setMethon(Methon methon)
+void Request::setMethod(Method method)
 {
-    methon_ = methon;
+    method_ = method;
 }
 
 void Request::setPath(std::string&& path)
@@ -124,16 +119,16 @@ HttpVersion Request::getVersion()
     return version_;
 }
 
-Methon Request::getMethon()
+Method Request::getMethod()
 {
-    return methon_;
+    return method_;
 }
 
 int Request::pack(std::string& data)
 {
     data.resize(1024);
     data.clear();
-    data += MethonToStr(methon_);
+    data += MethodToStr(method_);
     data += " ";
     packPathParam(data);
     data += " ";
@@ -209,9 +204,9 @@ ParseResult Request::unpackAndCompleted(std::string & data)
     return rst;
 }
 
-std::string Request::MethonToStr(Methon methon)
+std::string Request::MethodToStr(Method method)
 {
-    switch (methon)
+    switch (method)
     {
     case Get :
         return "GET";
@@ -236,45 +231,45 @@ std::string Request::MethonToStr(Methon methon)
     }
 }
 
-Methon uv::http::Request::StrToMethon(std::string& str)
+Method uv::http::Request::StrToMethod(std::string& str)
 {
     if (str == "GET")
     {
-        return Methon::Get;
+        return Method::Get;
     }
     if (str == "POST")
     {
-        return Methon::Post;
+        return Method::Post;
     }
     if (str == "HEAD")
     {
-        return Methon::Head;
+        return Method::Head;
     }
     if (str == "PUT")
     {
-        return Methon::Put;
+        return Method::Put;
     }
     if (str == "DELETE")
     {
-        return Methon::Delete;
+        return Method::Delete;
     }
     if (str == "CONNECT")
     {
-        return Methon::Connect;
+        return Method::Connect;
     }
     if (str == "OPTIONS")
     {
-        return Methon::Options;
+        return Method::Options;
     }
     if (str == "TRACE")
     {
-        return Methon::Trace;
+        return Method::Trace;
     }
     if (str == "PATCH")
     {
-        return Methon::Patch;
+        return Method::Patch;
     }
-    return Methon::Invalid;
+    return Method::Invalid;
 }
 
 void uv::http::Request::packPathParam(std::string& path)
@@ -308,8 +303,8 @@ int uv::http::Request::unpackUrl(std::string& str)
         //解析失败
         return -1;
     }
-    methon_ = StrToMethon(out[0]);
-    if (methon_ == Methon::Invalid)
+    method_ = StrToMethod(out[0]);
+    if (method_ == Method::Invalid)
     {
         return -1;
     }

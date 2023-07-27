@@ -39,7 +39,7 @@ public:
     void Patch(std::string path, OnHttpReqCallback callback);
 
 private:
-    RadixTree<OnHttpReqCallback> route_[Methon::Invalid];
+    RadixTree<OnHttpReqCallback> route_[Method::Invalid];
 
     void onMesage(TcpConnectionPtr conn, const char* data, ssize_t size);
 
