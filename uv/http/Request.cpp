@@ -134,6 +134,14 @@ int Request::pack(std::string& data)
     data += " ";
     data += HttpVersionToStr(version_);
     data.append(Crlf, sizeof(Crlf));
+    if(heads_.find("User-Agent")==heads_.end())
+    {
+        heads_["User-Agent"]="uv-cpp-http-client";
+    }
+    if(content_.size()>0)
+    {
+        heads_["Content-Length"]=std::to_string(content_.size());
+    }
     for (auto it = heads_.begin();it != heads_.end();it++)
     {
         data += it->first;
