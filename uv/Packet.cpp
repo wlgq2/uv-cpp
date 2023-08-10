@@ -87,7 +87,7 @@ const char* uv::Packet::getData()
     return buffer_.c_str()+sizeof(HeadByte)+sizeof(dataSize_);
 }
 
-const uint16_t uv::Packet::DataSize()
+uint16_t uv::Packet::DataSize()
 {
     return dataSize_;
 }
