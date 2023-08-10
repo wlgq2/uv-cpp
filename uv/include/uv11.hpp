@@ -11,7 +11,7 @@
 #ifndef UV_UV11_HPP
 #define UV_UV11_HPP
 
-#define    UV_CPP_VERSION     "1.5.4"
+#define    UV_CPP_VERSION     "1.5.5"
 
 #include   "Async.hpp"
 #include   "Signal.hpp"
