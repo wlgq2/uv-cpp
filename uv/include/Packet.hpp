@@ -30,7 +30,7 @@ public:
 
     void pack(const char* data, uint16_t size);
     const char* getData();
-    const uint16_t DataSize();
+    uint16_t DataSize();
     const std::string& Buffer();
     const uint32_t PacketSize();
 
