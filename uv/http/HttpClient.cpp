@@ -66,7 +66,16 @@ void HttpClient::onConnectStatus(TcpClient::ConnectStatus status)
         isConnected = true;
         std::string str;
         req_.pack(str);
-        client_->write(str.c_str(), (unsigned int)str.size());
+        //std::function<void(const char*,ssize_t)>
+        client_->write(str.c_str(), (unsigned int)str.size(),[this](WriteInfo& info)
+        {
+            if (0 != info.status)
+            {
+                onResp(WriteFail, nullptr);
+                //打印错误信息
+                LogWriter::Instance()->error("Http Write error ：" +std::string(EventLoop::GetErrorMessage(info.status)));
+            }
+        });
     }
     else if (status == uv::TcpClient::ConnectStatus::OnConnectFail)
     {

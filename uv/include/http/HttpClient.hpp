@@ -20,7 +20,7 @@ namespace uv
 namespace http
 {
 
-class HttpClient 
+class HttpClient
 {
 public:
     enum ReqResult
@@ -29,6 +29,7 @@ public:
         ConnectFail = 1,
         ParseFail = 2,
         Unknow = 3,
+        WriteFail=4,
     };
     using OnRespCallback = std::function<void(ReqResult, Response*)>;
 public:
