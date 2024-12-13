@@ -10,6 +10,12 @@ Description: https://github.com/wlgq2/uv-cpp
 
 #include "include/SocketAddr.hpp"
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <iomanip>
+#include <stdexcept> 
+#include <cstdlib> 
+
 
 using namespace uv;
 
@@ -111,5 +117,24 @@ uint16_t uv::SocketAddr::GetIpAndPort(const sockaddr_storage* addr, std::string&
         return htons(addr4->sin_port);
     }
 }
+
+std::pair<std::string, int> uv::SocketAddr::ExtractIpAndPort(const std::string& str) 
+{
+    size_t delim_pos = str.find(':');
+    if (delim_pos == std::string::npos) {
+        throw std::invalid_argument("Invalid format: missing ':' delimiter.");
+    }
+
+    std::string ip = str.substr(0, delim_pos);
+    std::string port_str = str.substr(delim_pos + 1);
+
+    try {
+        int port = std::stoi(port_str);
+        return std::make_pair(ip, port);
+    } catch (const std::exception& e) {
+        throw std::invalid_argument("Invalid port: cannot convert to an integer.");
+    }
+}
+
 
 
