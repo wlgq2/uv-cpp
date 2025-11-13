@@ -3,6 +3,7 @@
 [![Platform](https://img.shields.io/badge/platform-%20%20%20%20Linux,%20Windows-green.svg?style=flat)](https://github.com/wlgq2/uv-cpp)
 [![License](https://img.shields.io/badge/license-%20%20MIT-yellow.svg?style=flat)](LICENSE)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/wlgq2/uv-cpp?utm_source=oss&utm_medium=github&utm_campaign=wlgq2%2Fuv-cpp&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
 <br>Language Translations:</br>
 * [English](README.md)
