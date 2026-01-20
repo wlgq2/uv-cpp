@@ -40,7 +40,7 @@ public:
 
     static  void AddrToStr(uv_tcp_t* client, std::string& addrStr, IPV ipv = Ipv4);
     static  uint16_t  GetIpAndPort(const sockaddr_storage* addr, std::string& out, IPV ipv = Ipv4);
-
+    std::pair<std::string, int> ExtractIpAndPort(const std::string& str);
 private:
     std::string ip_;
     unsigned short port_;

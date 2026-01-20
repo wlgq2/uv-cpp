@@ -49,7 +49,13 @@ int Udp::bindAndRead(SocketAddr& addr)
 int Udp::send(SocketAddr& to, const char* buf, unsigned size)
 {
     uv_udp_send_t* sendHandle = new uv_udp_send_t();
-    const uv_buf_t uvbuf = uv_buf_init(const_cast<char*>(buf), size);
+
+    char* sendBuf = new char[size];
+    memcpy(sendBuf, buf, size);
+    const uv_buf_t uvbuf = uv_buf_init(sendBuf, size);
+    
+    sendHandle->data = sendBuf;
+
     return ::uv_udp_send(sendHandle, handle_, &uvbuf, 1, to.Addr(),
         [](uv_udp_send_t* handle, int status)
     {
@@ -59,6 +65,11 @@ int Udp::send(SocketAddr& to, const char* buf, unsigned size)
             info += EventLoop::GetErrorMessage(status);
             uv::LogWriter::Instance()->error(info);
         }
+        if(handle->data)
+        {
+            delete[] (char*)handle->data;
+        }
+            
         delete handle;
     });
 }
